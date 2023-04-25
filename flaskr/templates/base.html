@@ -3,16 +3,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
-    <div style="margin-left: 12px;">
+    <div style="margin-left: 20px;">
       <h1>{{ title }}</h1>
     </div>
-    <nav style="display: flex; align-items: center; margin-right: 12px;">
+    <nav style="display: flex; align-items: center; margin-right: 20px;">
       {% for link in links %}
-        {% if link.path %}
-          <a href="{{ link.url }}" style="margin: 4px;"><img title="{{link.title}}" height="36px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-light.png') }}"></a>
-        {% else %}
-          <a href="{{ link.url }}" style="margin: 4px;">{{link.title}}</a>
-        {% endif %}
+        <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)">
+          <img title="{{link.title}}" height="36px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
+        </a>
       {% endfor %}
     </nav>
   </div>
@@ -26,3 +24,26 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
+<script>
+  const closed_width = 40;
+  const open_width = 60;
+
+  function openicon(iconEl) {
+    iconEl.style.setProperty('--w', open_width + 'px');
+    const icons = Array.from(document.getElementsByClassName('slice'));
+    const total_width = icons.length * closed_width;
+    const target_width = (total_width - open_width) / (icons.length - 1);
+    icons.forEach(element => {
+      if (element != iconEl) {
+        element.style.setProperty('--w', target_width + 'px');
+      }
+    });
+  }
+
+  function closeicon(iconEl) {
+    const icons = Array.from(document.getElementsByClassName('slice'));
+    icons.forEach(element => {
+      element.style.setProperty('--w', '40px');
+    });
+  }
+</script>

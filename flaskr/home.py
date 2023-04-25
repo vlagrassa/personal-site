@@ -14,11 +14,25 @@ def hello():
         'title': 'LinkedIn',
         'url': 'https://www.linkedin.com/in/vlagrassa',
         'path': 'linkedin',
+        'color': '#0077B5',
       },
       {
         'title': 'GitHub',
         'url': 'https://github.com/vlagrassa',
         'path': 'github',
+        'color': '#171515',
+      },
+      {
+        'title': 'Facebook',
+        'url': 'https://www.facebook.com/vincent.lagrassa.77',
+        'path': 'facebook',
+        'color': '#1877F2',
+      },
+      {
+        'title': 'University of Chicago',
+        'url': 'https://people.cs.uchicago.edu/~vlagrassa',
+        'path': 'uchicago',
+        'color': '#800000',
       },
     ],
   })
