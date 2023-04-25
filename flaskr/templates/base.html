@@ -1,0 +1,28 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div id="nav">
+  <div id="nav-inner">
+    <div style="margin-left: 12px;">
+      <h1>{{ title }}</h1>
+    </div>
+    <nav style="display: flex; align-items: center; margin-right: 12px;">
+      {% for link in links %}
+        {% if link.path %}
+          <a href="{{ link.url }}" style="margin: 4px;"><img title="{{link.title}}" height="36px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-light.png') }}"></a>
+        {% else %}
+          <a href="{{ link.url }}" style="margin: 4px;">{{link.title}}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>

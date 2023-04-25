@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+}
+
+#nav {
+    border-bottom: 1px solid black;
+    margin-bottom: 30px;
+
+    box-shadow: 0px 0px 10px 2px gray;
+}
+
+#nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 3px solid black;
+    margin-bottom: 1px;
+}
+
+.content {
+    margin: 12px;
+}
