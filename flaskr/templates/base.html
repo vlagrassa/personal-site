@@ -1,5 +1,5 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title>{% block title %}{{title}}{% endblock %} &#x2B26; vlagrassa</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
@@ -17,7 +17,7 @@
 </div>
 <section class="content">
   <header>
-    {% block header %}{% endblock %}
+    {% block header %}{{title}}{% endblock %}
   </header>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
