@@ -6,33 +6,25 @@ home_bp = Blueprint('home', __name__, url_prefix='')
 
 
 @home_bp.route('/')
-def hello():
+def home():
   return render_template('home.html', **{
-    'title': 'Vincent LaGrassa',
-    'links': [
-      {
-        'title': 'LinkedIn',
-        'url': 'https://www.linkedin.com/in/vlagrassa',
-        'path': 'linkedin',
-        'color': '#0077B5',
-      },
-      {
-        'title': 'GitHub',
-        'url': 'https://github.com/vlagrassa',
-        'path': 'github',
-        'color': '#171515',
-      },
-      {
-        'title': 'Facebook',
-        'url': 'https://www.facebook.com/vincent.lagrassa.77',
-        'path': 'facebook',
-        'color': '#1877F2',
-      },
-      {
-        'title': 'University of Chicago',
-        'url': 'https://people.cs.uchicago.edu/~vlagrassa',
-        'path': 'uchicago',
-        'color': '#800000',
-      },
-    ],
+    'title': 'Home',
+  })
+
+@home_bp.route('/projects')
+def projects():
+  return render_template('home.html', **{
+    'title': 'Projects',
+  })
+
+@home_bp.route('/blog')
+def blog():
+  return render_template('home.html', **{
+    'title': 'Blog',
+  })
+
+@home_bp.route('/about')
+def about():
+  return render_template('home.html', **{
+    'title': 'About Me',
   })

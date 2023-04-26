@@ -6,8 +6,8 @@
     <div style="margin-left: 20px;">
       <h1>{{ title }}</h1>
     </div>
-    <nav style="display: flex; align-items: center; margin-right: 20px;">
-      {% for link in links %}
+    <nav style="display: flex; align-items: center; justify-content: center; margin-right: 20px; width: {{ nav_links|length * 40 }}px;">
+      {% for link in nav_links %}
         <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)">
           <img title="{{link.title}}" height="36px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
         </a>
