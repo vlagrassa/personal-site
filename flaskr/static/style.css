@@ -2,7 +2,11 @@
 
 
 :root {
-    --color-primary: #840032;
+    --color-primary:   #840032;
+    --color-secondary: #3C38B5;
+    --color-tertiary:  #CBA135;
+    --color-link: #93B7BE;
+    --color-header-border: black;
 }
 
 
@@ -33,7 +37,7 @@ h1, h2 {
 }
 
 #nav {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--color-header-border);
     margin-bottom: 30px;
 
     box-shadow: 0px 0px 10px 2px gray;
@@ -44,7 +48,7 @@ h1, h2 {
     justify-content: space-between;
     align-items: center;
 
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--color-header-border);
     margin-bottom: 1px;
 }
 
