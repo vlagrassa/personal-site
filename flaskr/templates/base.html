@@ -3,8 +3,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
-    <div style="margin-left: 20px;">
-      <h1>{{ title }}</h1>
+    <div style="margin-left: 20px;"><div>
+      <h1 class="my-logo">vlagrassa</h1>
+    </div></div>
+    <div style="display: flex; align-items: center;">
+      {% for section in nav_sections %}
+      {% if loop.index0 > 0 %}
+      <div class="header-separator">&#x2B26;</div>
+      {% endif %}
+      <div class="header-button">
+        <a {% if section.link %}href="{{section.link}}"{% endif %}>{{section.text}}</a><div class="header-button-underline"></div>
+      </div>
+      {% endfor %}
     </div>
     <nav style="display: flex; align-items: center; justify-content: center; margin-right: 20px; width: {{ nav_links|length * 40 }}px;">
       {% for link in nav_links %}

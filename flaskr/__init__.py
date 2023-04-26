@@ -59,6 +59,24 @@ def create_app(test_config=None):
           'color': '#800000',
         },
       ],
+      'nav_sections': [
+        {
+          'text': 'Home',
+          'link': url_for('home.home'),
+        },
+        {
+          'text': 'Projects',
+          'link': url_for('home.projects'),
+        },
+        {
+          'text': 'Blog',
+          'link': url_for('home.blog'),
+        },
+        {
+          'text': 'About Me',
+          'link': url_for('home.about'),
+        },
+      ]
     }
 
   return app

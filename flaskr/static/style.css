@@ -19,6 +19,37 @@ h1, h2 {
     font-family: 'Kanit', sans-serif;
 }
 
+h1 {
+    margin-block-start: 0.33em;
+    margin-block-end: 0.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.my-logo {
+    width: fit-content;
+    background: linear-gradient(
+        0deg,
+        var(--color-secondary) 0%,
+        var(--color-secondary) 20%,
+        var(--color-primary) 60%,
+        var(--color-primary) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: var(--color-secondary);
+}
+
 .highlight {
     color: var(--color-primary);
     text-decoration: underline;
@@ -32,8 +63,40 @@ h1, h2 {
     text-underline-offset: 5px;
 }
 
+
+.header-button {
+    transition: color 0.1s, transform 0.1s;
+    cursor: pointer;
+    transform: translateY(2px);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.header-button:hover {
+    color: var(--color-primary);
+    transform: scale(1.1) translateY(2px);
+    font-weight: bold;
+    /* text-decoration: underline;
+    text-underline-offset: 2.5px; */
+}
+
+.header-button-underline {
+    border-top: 1.5px solid var(--color-primary);
+    border-bottom: 0.75px solid var(--color-primary);
+    height: 0.75px;
+    width: 100%;
+    transition: transform 0.1s;
+    transform: translateX(0%) scaleX(0);
+}
+
+.header-button:hover .header-button-underline {
+    transform: translateX(0%) scaleX(1);
+}
+
+
 .header-separator {
     margin: 0px 25px;
+    cursor: default;
+    color: var(--color-secondary);
 }
 
 #nav {
