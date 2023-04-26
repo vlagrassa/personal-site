@@ -4,7 +4,7 @@
 <div id="nav">
   <div id="nav-inner">
     <div style="margin-left: 20px;"><div>
-      <h1 class="my-logo">vlagrassa</h1>
+      <h1 class="my-logo" onmouseenter="title_hover(this, true)" onmouseleave="title_hover(this, false)">vlagrassa</h1>
     </div></div>
     <div style="display: flex; align-items: center;">
       {% for section in nav_sections %}
@@ -55,5 +55,13 @@
     icons.forEach(element => {
       element.style.setProperty('--w', '40px');
     });
+  }
+
+  function title_hover(el, val) {
+    if (val) {
+      // TODO: hover
+    } else {
+      // TODO: no hover
+    }
   }
 </script>
