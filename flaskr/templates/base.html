@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
-    <div style="margin-left: 20px;"><div>
+    <div style="margin-left: 20px;">
       <h1 class="my-logo" onmouseenter="title_hover(this, true)" onmouseleave="title_hover(this, false)">vlagrassa</h1>
-    </div></div>
+    </div>
     <div style="display: flex; align-items: center;">
       {% for section in nav_sections %}
       {% if loop.index0 > 0 %}

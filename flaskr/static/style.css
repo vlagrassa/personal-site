@@ -7,6 +7,8 @@
     --color-tertiary:  #CBA135;
     --color-link: #93B7BE;
     --color-header-border: black;
+
+    --logo-line-thickness: 0.08em;
 }
 
 
@@ -32,6 +34,9 @@ a {
 }
 
 .my-logo {
+    position: relative;
+    z-index: 10;
+
     width: fit-content;
     background: linear-gradient(
         0deg,
@@ -45,9 +50,26 @@ a {
     -webkit-text-fill-color: transparent;
 
     text-decoration: underline;
-    text-decoration-thickness: 0.08em;
+    text-decoration-thickness: var(--logo-line-thickness);
     text-underline-offset: 0.1em;
     text-decoration-color: var(--color-secondary);
+}
+
+.my-logo::before {
+    content: "v";
+    position: absolute;
+    z-index: -1;
+    top: 0.2em;
+    border-top: var(--logo-line-thickness) solid var(--color-primary);
+}
+
+.my-logo::after {
+    content: "agrassa";
+    position: absolute;
+    z-index: -1;
+    top: 0.2em;
+    right: 0;
+    border-top: var(--logo-line-thickness) solid var(--color-primary);
 }
 
 .highlight {
