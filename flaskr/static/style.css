@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@400&family=Zen+Kaku+Gothic+New:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@700&family=Kanit&family=Montserrat:wght@400&family=Zen+Kaku+Gothic+New:wght@400&display=swap');
+
+
+@font-face {
+    font-family: 'Montserrat Tj';
+    src: url('fonts/Montserrat-Tj-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Kanit Tj';
+    src: url('fonts/Kanit-Tj-Regular.ttf');
+}
 
 
 :root {
@@ -10,10 +21,10 @@
 
     --logo-line-thickness: 0.08em;
 
-    --font-head-ltn: 'Kanit', sans-serif;
-    --font-head-jpn: 'Zen Kaku Gothic New', sans-serif;
 
-    --font-body-ltn: 'Montserrat', sans-serif;
+    --font-head-ltn: 'Kanit Tj', 'Kanit', sans-serif;
+    --font-head-jpn: 'BIZ UDGothic', sans-serif;
+    --font-body-ltn: 'Montserrat Tj', 'Montserrat', sans-serif;
     --font-body-jpn: 'Zen Kaku Gothic New', sans-serif;
 }
 
@@ -25,6 +36,10 @@ body {
 
 h1, h2 {
     font-family: var(--font-head-ltn);
+}
+
+h1, h2 [lang="ja"] {
+    font-family: var(--font-head-jpn);
 }
 
 [lang="ja"] {
@@ -80,7 +95,7 @@ a {
 }
 
 .my-logo::after {
-    content: "agrassa";
+    content: "ɒgrɒssɒ";
     position: absolute;
     z-index: -1;
     top: 0.2em;

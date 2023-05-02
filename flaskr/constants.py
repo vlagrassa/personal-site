@@ -28,7 +28,7 @@ PAGE_TITLES = [
     'title': {
       'en': 'About Me',
       'ja': '私の事',
-      'tj': 'Nʒԑn3',
+      'tj': 'Nʒɛn',
     },
   }
 ]
