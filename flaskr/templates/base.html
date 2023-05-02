@@ -1,5 +1,5 @@
 <!doctype html>
-<title>{% block title %}{{title}}{% endblock %} &#x2B26; vlagrassa</title>
+<title>{% block title %}{{title[lang]}}{% endblock %} &#x2B26; vlagrassa</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
@@ -12,7 +12,10 @@
       <div class="header-separator">&#x2B26;</div>
       {% endif %}
       <div class="header-button">
-        <a {% if section.link %}href="{{section.link}}"{% endif %}>{{section.text}}</a><div class="header-button-underline"></div>
+        <a {% if section.link %}href="{{section.link}}"{% endif %}>
+          {% for l, t in section.title.items() %}<span lang="{{l}}" data-lang="{{l}}">{{t}}</span>{% endfor %}
+        </a>
+        <div class="header-button-underline"></div>
       </div>
       {% endfor %}
     </div>
@@ -26,15 +29,38 @@
   </div>
 </div>
 <section class="content">
-  <header>
-    {% block header %}{{title}}{% endblock %}
-  </header>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
-  {% block content %}{% endblock %}
+
+  <header>
+    {% block header %}
+    {% if title %}
+      <div style="text-align: center;">
+        <h2>
+          {% for l, t in title.items() %}
+            <span lang="{{l}}" data-lang="{{l}}">{{t}}</span>
+          {% endfor %}
+        </h2>
+      </div>
+    {% endif %}
+    {% endblock %}
+  </header>
+
+  <div style="margin: 0px 30px; background-color: white; border-radius: 8px; display: flex;">
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      {% for l in langs %}
+      <button id="button-{{l.code}}" lang="{{l.code}}" onclick="set_language('{{l.code}}')">{{l.name}}</button>
+      {% endfor %}
+    </div>
+    <div style="flex: 5">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
 </section>
 <script>
+  const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
+
   const closed_width = 40;
   const open_width = 60;
 
@@ -64,4 +90,19 @@
       // TODO: no hover
     }
   }
+
+  function set_language(val) {
+    LANGS.forEach((lang_code) => {
+      document.getElementById(`button-${lang_code}`).classList.toggle('active', val === lang_code)
+      document.querySelectorAll(`[data-lang="${lang_code}"]`).forEach((el) => {
+        el.classList.toggle('hide', val !== lang_code)
+      })
+    })
+    {% if title %}
+    {% for l, t in title.items() %}
+    if (val === "{{l}}") document.title = "{{t}} {% if l != 'en' %}({{title.en}}) {% endif %}⬦ vlagrassa";
+    {% endfor %}
+    {% endif %}
+  }
+  set_language("{{lang}}")
 </script>

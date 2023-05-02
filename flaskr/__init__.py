@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, url_for
 
+from .constants import *
 from .home import home_bp
 
 
@@ -61,22 +62,25 @@ def create_app(test_config=None):
       ],
       'nav_sections': [
         {
-          'text': 'Home',
-          'link': url_for('home.home'),
+          'title': section['title'],
+          'link': url_for(f'home.{section["name"]}'),
+        }
+          for section in PAGE_TITLES
+      ],
+      'langs': [
+        {
+          'name': 'English',
+          'code': 'en',
         },
         {
-          'text': 'Projects',
-          'link': url_for('home.projects'),
+          'name': '日本語',
+          'code': 'ja',
         },
         {
-          'text': 'Blog',
-          'link': url_for('home.blog'),
+          'name': 'Tʒeramot',
+          'code': 'tj',
         },
-        {
-          'text': 'About Me',
-          'link': url_for('home.about'),
-        },
-      ]
+      ],
     }
 
   return app
