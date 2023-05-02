@@ -3,10 +3,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
-    <div style="margin-left: 20px;">
+    <div class="header-left">
       <h1 class="my-logo" onmouseenter="title_hover(this, true)" onmouseleave="title_hover(this, false)">vlɒgrɒssɒ</h1>
     </div>
-    <div style="display: flex; align-items: center;">
+    <div class="header-middle">
       {% for section in nav_sections %}
       {% if loop.index0 > 0 %}
       <div class="header-separator">&#x2B26;</div>
@@ -19,10 +19,10 @@
       </div>
       {% endfor %}
     </div>
-    <nav style="display: flex; align-items: center; justify-content: center; margin-right: 20px; width: {{ nav_links|length * 40 }}px;">
+    <nav class="header-right" style="width: {{ nav_links|length * 38 }}px;">
       {% for link in nav_links %}
-        <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)">
-          <img title="{{link.title}}" height="36px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
+        <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
+          <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
         </a>
       {% endfor %}
     </nav>
@@ -64,7 +64,7 @@
 <script>
   const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
 
-  const closed_width = 40;
+  const closed_width = 38;
   const open_width = 60;
 
   function openicon(iconEl) {
@@ -82,7 +82,7 @@
   function closeicon(iconEl) {
     const icons = Array.from(document.getElementsByClassName('slice'));
     icons.forEach(element => {
-      element.style.setProperty('--w', '40px');
+      element.style.setProperty('--w', closed_width + 'px');
     });
   }
 
