@@ -35,7 +35,7 @@
 
   <header>
     {% block header %}
-    {% if title %}
+    {% if title and not hide_title %}
       <div style="text-align: center;">
         <h2>
           {% for l, t in title.items() %}

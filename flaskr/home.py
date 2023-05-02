@@ -10,8 +10,9 @@ home_bp = Blueprint('home', __name__, url_prefix='')
 @home_bp.route('/')
 def home():
   return render_template('home.html', **{
-    'title': None,
+    'title': PAGE_TITLES[0]['title'],
     'lang': 'en',
+    'hide_title': True,
   })
 
 @home_bp.route('/projects')
