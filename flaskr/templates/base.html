@@ -46,6 +46,9 @@
     {% endif %}
     {% endblock %}
   </header>
+  {% if title and not hide_title %}
+    <div class="header-underbar">&#x2B26;</div>
+  {% endif %}
 
   <div style="margin: 0px 30px; background-color: white; border-radius: 8px; display: flex;">
     <div style="flex: 1; display: flex; flex-direction: column;">

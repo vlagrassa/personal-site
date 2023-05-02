@@ -197,3 +197,31 @@ a {
 .slice:hover {
     filter: saturate(1);
 }
+
+
+
+.header-underbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -15px auto 20px;
+    width: 100%;
+}
+
+.header-underbar::before {
+    content: "";
+    width: 30px;
+    height: 0px;
+    border-top: 1px solid black;
+    border-image: linear-gradient(90deg, transparent, black 30%, black) 1;
+    transform: translateY(1px);
+}
+
+.header-underbar::after {
+    content: "";
+    width: 30px;
+    height: 0px;
+    border-top: 1px solid black;
+    border-image: linear-gradient(-90deg, transparent, black 30%, black) 1;
+    transform: translateY(1px);
+}
