@@ -1,3 +1,5 @@
+{% from '_includes/lang.j2' import set_lang with context %}
+
 {#
   Render the site logo, with optional extra class(es) and hover function.
 #}
@@ -21,7 +23,7 @@
   {% endif %}
   <div class="header-button">
     <a {% if section.link %}href="{{section.link}}"{% endif %}>
-      {% for l, t in section.title.items() %}<span lang="{{l}}" data-lang="{{l}}">{{t}}</span>{% endfor %}
+      {% for l, t in section.title.items() %}<span {{set_lang(l)}}>{{t}}</span>{% endfor %}
     </a>
     <div class="header-button-underline"></div>
   </div>

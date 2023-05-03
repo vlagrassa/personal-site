@@ -1,4 +1,5 @@
-{% from '_includes/header.j2' import render_logo, render_sections, render_links %}
+{% from '_includes/lang.j2'   import set_lang with context %}
+{% from '_includes/header.j2' import render_logo, render_sections, render_links with context %}
 <!doctype html>
 <head>
   <meta charset="UTF-8">
@@ -28,11 +29,7 @@
     {% block header %}
     {% if title and not hide_title %}
       <div style="text-align: center;">
-        <h2>
-          {% for l, t in title.items() %}
-            <span lang="{{l}}" data-lang="{{l}}">{{t}}</span>
-          {% endfor %}
-        </h2>
+        <h2>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h2>
       </div>
     {% endif %}
     {% endblock %}

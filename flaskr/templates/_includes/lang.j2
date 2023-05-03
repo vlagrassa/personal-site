@@ -1,0 +1,3 @@
+{%- macro set_lang(l) -%}
+lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %}
+{%- endmacro -%}
