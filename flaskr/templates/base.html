@@ -1,7 +1,11 @@
 {% from '_includes/header.j2' import render_logo, render_links %}
 <!doctype html>
-<title>{% block title %}{{title[lang]}}{% endblock %} &#x2B26; vlagrassa</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{{title[lang]}}{% endblock %} &#x2B26; vlagrassa</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
 <div id="nav">
   <div id="nav-inner">
     <div class="header-left">
