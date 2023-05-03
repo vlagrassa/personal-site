@@ -17,21 +17,21 @@ def home():
 
 @home_bp.route('/projects')
 def projects():
-  return render_template('home.html', **{
+  return render_template('placeholder.html', **{
     'title': PAGE_TITLES[1]['title'],
     'lang': 'en',
   })
 
 @home_bp.route('/blog')
 def blog():
-  return render_template('home.html', **{
+  return render_template('placeholder.html', **{
     'title': PAGE_TITLES[2]['title'],
     'lang': 'en',
   })
 
 @home_bp.route('/about')
 def about():
-  return render_template('home.html', **{
+  return render_template('placeholder.html', **{
     'title': PAGE_TITLES[3]['title'],
     'lang': 'en',
   })
