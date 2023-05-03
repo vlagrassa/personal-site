@@ -225,9 +225,6 @@ a {
 
 
 .slice {
-    --w: 38px;
-
-    display: inline-block;
     height: 50px;
     width: var(--w);
     clip-path: polygon(0% 100%, 10px 0%, 100% 0%, calc(var(--w) - 10px) 100%);
