@@ -1,10 +1,11 @@
+{% from '_includes/header.j2' import render_logo, render_links %}
 <!doctype html>
 <title>{% block title %}{{title[lang]}}{% endblock %} &#x2B26; vlagrassa</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div id="nav">
   <div id="nav-inner">
     <div class="header-left">
-      <h1 class="my-logo" onmouseenter="title_hover(this, true)" onmouseleave="title_hover(this, false)">vlɒgrɒssɒ</h1>
+      {{ render_logo(hover="title_hover") }}
     </div>
     <div class="header-middle">
       {% for section in nav_sections %}
@@ -20,11 +21,7 @@
       {% endfor %}
     </div>
     <nav class="header-right" style="width: {{ nav_links|length * 38 }}px;">
-      {% for link in nav_links %}
-        <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
-          <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
-        </a>
-      {% endfor %}
+      {{ render_links(nav_links, 38, 60) }}
     </nav>
   </div>
 </div>
@@ -63,28 +60,6 @@
 </section>
 <script>
   const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
-
-  const closed_width = 38;
-  const open_width = 60;
-
-  function openicon(iconEl) {
-    iconEl.style.setProperty('--w', open_width + 'px');
-    const icons = Array.from(document.getElementsByClassName('slice'));
-    const total_width = icons.length * closed_width;
-    const target_width = (total_width - open_width) / (icons.length - 1);
-    icons.forEach(element => {
-      if (element != iconEl) {
-        element.style.setProperty('--w', target_width + 'px');
-      }
-    });
-  }
-
-  function closeicon(iconEl) {
-    const icons = Array.from(document.getElementsByClassName('slice'));
-    icons.forEach(element => {
-      element.style.setProperty('--w', closed_width + 'px');
-    });
-  }
 
   function title_hover(el, val) {
     if (val) {

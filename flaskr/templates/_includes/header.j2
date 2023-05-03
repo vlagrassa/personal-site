@@ -1,0 +1,43 @@
+{% macro render_logo(classes=None, hover=None) -%}
+<h1
+    class="my-logo{% if class %} {{class}}{% endif %}"
+    {% if hover %}
+    onmouseenter="{{hover}}(this, true)" onmouseleave="{{hover}}(this, false)"
+    {% endif %}
+>vlɒgrɒssɒ</h1>
+{%- endmacro %}
+
+
+{#
+  Render a list of links as a responsive set of slashes
+#}
+{% macro render_links(links, closed_width, open_width) %}
+  {% for link in links %}
+    <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
+      <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
+    </a>
+  {% endfor %}
+  <script>
+    const closed_width = {{closed_width}};
+    const open_width   = {{open_width}};
+
+    function openicon(iconEl) {
+      iconEl.style.setProperty('--w', open_width + 'px');
+      const icons = Array.from(document.getElementsByClassName('slice'));
+      const total_width = icons.length * closed_width;
+      const target_width = (total_width - open_width) / (icons.length - 1);
+      icons.forEach(element => {
+        if (element != iconEl) {
+          element.style.setProperty('--w', target_width + 'px');
+        }
+      });
+    }
+
+    function closeicon(iconEl) {
+      const icons = Array.from(document.getElementsByClassName('slice'));
+      icons.forEach(element => {
+        element.style.setProperty('--w', closed_width + 'px');
+      });
+    }
+  </script>
+{% endmacro %}
