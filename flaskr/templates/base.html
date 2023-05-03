@@ -1,4 +1,4 @@
-{% from '_includes/header.j2' import render_logo, render_links %}
+{% from '_includes/header.j2' import render_logo, render_sections, render_links %}
 <!doctype html>
 <head>
   <meta charset="UTF-8">
@@ -12,17 +12,7 @@
       {{ render_logo(hover="title_hover") }}
     </div>
     <div class="header-middle">
-      {% for section in nav_sections %}
-      {% if loop.index0 > 0 %}
-      <div class="header-separator">&#x2B26;</div>
-      {% endif %}
-      <div class="header-button">
-        <a {% if section.link %}href="{{section.link}}"{% endif %}>
-          {% for l, t in section.title.items() %}<span lang="{{l}}" data-lang="{{l}}">{{t}}</span>{% endfor %}
-        </a>
-        <div class="header-button-underline"></div>
-      </div>
-      {% endfor %}
+      {{ render_sections(nav_sections) }} {# sep="&#11041;" #}
     </div>
     <nav class="header-right" style="width: {{ nav_links|length * 38 }}px;">
       {{ render_links(nav_links, 38, 60) }}

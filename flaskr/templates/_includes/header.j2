@@ -1,3 +1,6 @@
+{#
+  Render the site logo, with optional extra class(es) and hover function.
+#}
 {% macro render_logo(classes=None, hover=None) -%}
 <h1
     class="my-logo{% if class %} {{class}}{% endif %}"
@@ -9,7 +12,25 @@
 
 
 {#
-  Render a list of links as a responsive set of slashes
+  Render a list of section pages as header buttons, separated by the given character.
+#}
+{% macro render_sections(sections, sep="&#x2B26;") %}
+  {% for section in sections %}
+  {% if loop.index0 > 0 %}
+    <div class="header-separator">{{sep}}</div>
+  {% endif %}
+  <div class="header-button">
+    <a {% if section.link %}href="{{section.link}}"{% endif %}>
+      {% for l, t in section.title.items() %}<span lang="{{l}}" data-lang="{{l}}">{{t}}</span>{% endfor %}
+    </a>
+    <div class="header-button-underline"></div>
+  </div>
+  {% endfor %}
+{% endmacro %}
+
+
+{#
+  Render a list of links as a responsive set of slashes.
 #}
 {% macro render_links(links, closed_width, open_width) %}
   {% for link in links %}
