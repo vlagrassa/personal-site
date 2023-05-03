@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<div id="nav">
-  <div id="nav-inner">
+<div id="page-container">
+
+  <!-- Header Nav -->
+  <div id="header">
     <div class="header-left">
       {{ render_logo(hover="title_hover") }}
     </div>
@@ -19,7 +21,6 @@
       {{ render_links(nav_links, 38, 60) }}
     </nav>
   </div>
-</div>
 <section class="content">
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
@@ -49,6 +50,10 @@
     </div>
   </div>
 </section>
+
+</div>
+
+
 <script>
   const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
 
