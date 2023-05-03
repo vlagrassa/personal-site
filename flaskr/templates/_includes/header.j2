@@ -18,9 +18,13 @@
     </a>
   {% endfor %}
   <script>
+    const icons = Array.from(document.getElementsByClassName('slice'));
+    icons.forEach(element => {
+      element.style.setProperty('--w', '{{closed_width}}px');
+    })
+
     function openicon(iconEl) {
       iconEl.style.setProperty('--w', '{{open_width}}px');
-      const icons = Array.from(document.getElementsByClassName('slice'));
       {%- with total_width = links|length * closed_width %}
       const target_width = {{total_width - open_width}} / ({{links|length}} - 1);
       icons.forEach(element => {
@@ -30,15 +34,11 @@
       });
       {%- endwith %}
     }
+
     function closeicon(iconEl) {
-      const icons = Array.from(document.getElementsByClassName('slice'));
       icons.forEach(element => {
         element.style.setProperty('--w', '{{closed_width}}px');
       });
     }
-    const icons = Array.from(document.getElementsByClassName('slice'));
-    icons.forEach(element => {
-      element.style.setProperty('--w', '{{closed_width}}px');
-    })
   </script>
 {% endmacro %}
