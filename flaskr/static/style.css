@@ -19,6 +19,10 @@
     --color-link: #93B7BE;
     --color-header-border: black;
 
+    /* --color-select-bg:  #fa96bc; */
+    --color-select-bg:  #f0c965;
+    --color-select-txt: white;
+
     --color-bg-head-light: white;
     --color-bg-body-light: #F8F8F8;
 
@@ -29,6 +33,13 @@
     --font-head-jpn: 'BIZ UDGothic', sans-serif;
     --font-body-ltn: 'Montserrat Tj', 'Montserrat', sans-serif;
     --font-body-jpn: 'Zen Kaku Gothic New', sans-serif;
+}
+
+
+::selection {
+    background: var(--color-select-bg);
+    color: var(--color-select-txt);
+    -webkit-text-fill-color: var(--color-select-txt);
 }
 
 
