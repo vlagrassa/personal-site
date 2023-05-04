@@ -270,6 +270,33 @@ a {
 }
 
 
+.panel {
+    background-color: var(--color-bg-head-light);
+    border-radius: 8px;
+    border: 1px solid black;
+    margin: 0px 3px;
+}
+
+.panel-left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    /* margin-right: 3px; */
+    text-align: center;
+    padding-bottom: 8px;
+}
+
+.panel-center {
+    flex: 12;
+    /* margin: 0px 3px; */
+}
+
+.panel-right {
+    flex: 1;
+    /* margin-left: 3px; */
+}
+
+
 .slice {
     height: 50px;
     width: var(--w);
@@ -286,6 +313,53 @@ a {
 
 .slice:focus, .slice:hover {
     filter: saturate(1);
+}
+
+
+
+.lang-button {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0;
+
+    text-decoration: none;
+    font-family: var(--font-body-ltn);
+    font-size: 0.7rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.1s ease-in-out,
+                transform 150ms ease,
+                color 0.1s, border 0.1s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background: white;
+    color: black;
+}
+
+.lang-button:hover {
+    filter: brightness(92%);
+}
+
+.lang-button:focus {
+    outline-offset: -6px;
+}
+
+.lang-button:focus, .lang-button:active {
+    filter: brightness(88%);
+}
+
+.lang-button:focus > div, .lang-button:active > div {
+    transition: transform 150ms ease;
+    transform: scale(0.99);
+}
+
+.lang-button.selected {
+    border-right: 3px solid var(--color-primary);
+    border-left:  3px solid var(--color-primary);
+    font-weight: bold;
+    color: var(--color-primary);
 }
 
 

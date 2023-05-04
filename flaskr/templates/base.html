@@ -26,6 +26,7 @@
     <div class="flash">{{ message }}</div>
   {% endfor %}
 
+  <!-- Page Title -->
   <header>
     {% block header %}
     {% if title and not hide_title %}
@@ -39,15 +40,30 @@
     <div class="header-underbar">&#x2B26;</div>
   {% endif %}
 
-  <div style="margin: 0px 30px; background-color: white; border-radius: 8px; display: flex;">
-    <div style="flex: 1; display: flex; flex-direction: column;">
+  <!-- Page Body -->
+  <div style="margin: 0px 30px; display: flex;">
+
+    <!-- Left Panel -->
+    <div class="panel panel-left">
+      <h4>
+        <span {{ set_lang("en") }}>Language</span>
+        <span {{ set_lang("ja") }}>言語</span>
+        <span {{ set_lang("tj") }}>Tʒoga</span>
+      </h4>
       {% for l in langs %}
-      <button id="button-{{l.code}}" lang="{{l.code}}" onclick="set_language('{{l.code}}')">{{l.name}}</button>
+      <button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
+        <div>{{l.name}}</div>
+      </button>
       {% endfor %}
     </div>
-    <div style="flex: 5">
+
+    <!-- Center Panel -->
+    <div class="panel panel-center">
       {% block content %}{% endblock %}
     </div>
+
+    <!-- Right Panel -->
+    <div class="panel panel-right"></div>
   </div>
 </section>
 
@@ -67,7 +83,7 @@
 
   function set_language(val) {
     LANGS.forEach((lang_code) => {
-      document.getElementById(`button-${lang_code}`).classList.toggle('active', val === lang_code)
+      document.getElementById(`button-${lang_code}`).classList.toggle('selected', val === lang_code)
       document.querySelectorAll(`[data-lang="${lang_code}"]`).forEach((el) => {
         el.classList.toggle('hide', val !== lang_code)
       })
