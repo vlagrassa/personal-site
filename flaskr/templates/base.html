@@ -14,12 +14,12 @@
     <div class="header-left">
       {{ render_logo(hover="title_hover") }}
     </div>
-    <div class="header-middle">
+    <nav class="header-middle">
       {{ render_sections(nav_sections) }} {# sep="&#11041;" #}
-    </div>
-    <nav class="header-right" style="width: {{ nav_links|length * 38 }}px;">
-      {{ render_links(nav_links, 38, 60) }}
     </nav>
+    <div class="header-right" style="width: {{ nav_links|length * 38 }}px;">
+      {{ render_links(nav_links, 38, 60) }}
+    </div>
   </div>
 <section class="content">
   {% for message in get_flashed_messages() %}
