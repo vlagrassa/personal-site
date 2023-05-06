@@ -218,6 +218,7 @@ a {
     margin: 0px 25px;
     cursor: default;
     color: var(--color-secondary-4);
+    user-select: none;
 }
 
 #header {
@@ -363,6 +364,7 @@ a {
     transition: width 0.4s, clip-path 0.4s;
 
     filter: saturate(25%);
+    user-select: none;
 }
 
 .slice:focus, .slice:hover {
@@ -429,6 +431,7 @@ a {
     justify-content: center;
     margin: -15px auto 20px;
     width: 100%;
+    user-select: none;
 }
 
 .header-underbar::before {
