@@ -13,14 +13,34 @@
 
 
 :root {
-    --color-primary:   #840032;
-    --color-secondary: #3C38B5;
-    --color-tertiary:  #CBA135;
-    --color-link: #93B7BE;
-    --color-header-border: black;
+    /* Primary color: Magenta */
+    --color-primary:     #9F234F;
+    --color-primary-1:   #E26692;
+    --color-primary-2:   #C0406D;
+    --color-primary-3:   #760D32;
+    --color-primary-4:   #3D0016;
 
-    /* --color-select-bg:  #fa96bc; */
-    --color-select-bg:  #f0c965;
+    /* Secondary color: Cyan */
+    --color-secondary:   #1D5C71;
+    --color-secondary-1: #4E90A6;
+    --color-secondary-2: #317389;
+    --color-secondary-3: #0C4254;
+    --color-secondary-4: #01212C;
+
+    /* Tertiary color: Gold */
+    --color-tertiary:    #B5AA28;
+    --color-tertiary-1:  #FFF473;
+    --color-tertiary-2:  #DBCF49;
+    --color-tertiary-3:  #867D0E;
+    --color-tertiary-4:  #464000;
+
+
+    /* Misc Colors */
+    --color-link: var(--color-secondary-1);
+
+    --color-header-border: var(--color-secondary-4);
+
+    --color-select-bg: var(--color-tertiary-2);
     --color-select-txt: white;
 
     --color-bg-head-light: white;
@@ -110,9 +130,11 @@ a {
     width: fit-content;
     background: linear-gradient(
         0deg,
-        var(--color-secondary) 0% 30%,
+        var(--color-secondary-1) 0%,
+        var(--color-secondary-3) 30%,
         black 40%,
-        var(--color-primary) 50% 100%
+        var(--color-primary-3) 50%,
+        var(--color-primary-1) 100%
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -195,7 +217,7 @@ a {
 .header-separator {
     margin: 0px 25px;
     cursor: default;
-    color: var(--color-secondary);
+    color: var(--color-secondary-4);
 }
 
 #header {
@@ -209,7 +231,7 @@ a {
     align-items: center;
     flex-wrap: wrap;
 
-    border-top:    4px solid var(--color-primary);
+    border-top:    4px solid var(--color-primary-3);
     border-bottom: 3px solid var(--color-header-border);
     padding: 0px 20px;
 
@@ -305,7 +327,7 @@ a {
 .panel {
     background-color: var(--color-bg-head-light);
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid var(--color-header-border);
     margin: 0px 3px;
 }
 
@@ -388,10 +410,15 @@ a {
 }
 
 .lang-button.selected {
-    border-right: 3px solid var(--color-primary);
-    border-left:  3px solid var(--color-primary);
+    --c: var(--color-primary);
+    color: var(--c);
+    border-right: 3px solid var(--c);
+    border-left:  3px solid var(--c);
     font-weight: bold;
-    color: var(--color-primary);
+}
+
+.lang-button.selected:hover {
+    --c: var(--color-primary-4);
 }
 
 
