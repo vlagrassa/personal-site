@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
+{% block style %}{% endblock %}
+
 <div id="page-container">
 
   <!-- Header Nav -->
@@ -106,3 +108,5 @@
   }
   set_language("{{lang}}")
 </script>
+
+{% block script %}{% endblock %}

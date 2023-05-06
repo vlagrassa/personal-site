@@ -1,5 +1,42 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+  @keyframes blink {
+    from {
+      border-color: white;
+    }
+    to {
+      border-color: transparent;
+    }
+  }
+  #blinker {
+    border-left: 2px solid white;
+  }
+  #blinker.blinker {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+  }
+
+  .desc-button {
+    cursor: pointer;
+    float: right;
+    margin-left: 4px;
+  }
+
+  .desc-button-bg {
+    fill: rgba(0, 0, 0, 0.3)
+  }
+
+  .desc-button-bg:hover {
+    fill: rgba(0, 0, 0, 0.55);
+  }
+</style>
+{% endblock %}
+
 {% block bigimage %}
 <div id="bg-img" class="center-content" style="background-image: url('{{url_for('static', filename='images/home-bg.jpg')}}');">
   <div style="flex: 3; display: flex; align-items: center; flex-direction: column; text-align: center;">
@@ -10,6 +47,16 @@
       <div class="header-underbar">&#x2B26;</div>
       <div style="width: 70%;">
         {% include '_includes/blurb.html' %}
+        <p style="height: 2.5em; overflow-y: visible; margin-bottom: -0.5em;">Often described <span id="third-point"></span><span id="blinker"></span></p>
+      </div>
+      <div style="width: 90%">
+        <svg class="desc-button" viewBox="0 0 10 10" width="18px" height="18px">
+          {% include '_includes/svg.j2' %}
+          <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+        </svg>
+        <svg class="desc-button" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
+          <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-pause)" />
+        </svg>
       </div>
     </div>
   </div>
@@ -36,4 +83,32 @@
     この間、ネットで私を見て考えてみてください！
   </p>
 </div></div>
+{% endblock %}
+
+{% block script %}
+<script>
+  {% include '_scripts/phrase-manager.js' %}
+
+  const target  = document.getElementById('third-point');
+  const blinker = document.getElementById('blinker');
+
+  var play = true;
+
+  fetch("{{url_for('home.get_descriptors')}}").then((foo) => foo.json()).then(async (descriptors) => {
+    phraseManager.init(
+      target,
+      descriptors,
+      () => play,
+      (typing_status) => blinker.classList.toggle('blinker', !typing_status),
+    );
+  })
+
+  function toggle_play() {
+    play = !play;
+    document.getElementById('play-btn').setAttribute('mask', `url(#svg-mask-${play ? 'pause' : 'play'})`);
+    target.dispatchEvent(new CustomEvent('play', {
+      detail: {play}
+    }));
+  }
+</script>
 {% endblock %}
