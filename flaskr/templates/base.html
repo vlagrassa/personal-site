@@ -26,6 +26,10 @@
   <!-- Scrollable Body -->
   <div style="overflow-y: scroll; flex: 1 1 auto; position: relative;">
 
+    <section class="big-image">
+      {% block bigimage %}{% endblock %}
+    </section>
+
     <section class="content">
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>

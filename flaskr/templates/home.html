@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 
+{% block bigimage %}
+<div id="bg-img" class="center-content" style="background-image: url('{{url_for('static', filename='images/home-bg.jpg')}}');">
+  <div style="flex: 3; display: flex; align-items: center; flex-direction: column; text-align: center;">
+    <div class="bg-img-overlay center-content">
+      <h1 style="font-size: 3.5em;">
+        Vincent LɒGrɒssɒ
+      </h1>
+      <div class="header-underbar">&#x2B26;</div>
+      <div style="width: 70%;">
+        {% include '_includes/blurb.html' %}
+      </div>
+    </div>
+  </div>
+  <div style="flex: 2"></div>
+</div>
+{% endblock %}
+
 {% block content %}
 <div class="center-content" style="height: 100%; text-align: center;"><div>
   <p {{set_lang("en")}}>
