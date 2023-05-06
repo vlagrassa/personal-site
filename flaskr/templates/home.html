@@ -50,11 +50,11 @@
         <p style="height: 2.5em; overflow-y: visible; margin-bottom: -0.5em;">Often described <span id="third-point"></span><span id="blinker"></span></p>
       </div>
       <div style="width: 90%">
-        <svg class="desc-button" viewBox="0 0 10 10" width="18px" height="18px">
+        <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px">
           {% include '_includes/svg.j2' %}
           <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
         </svg>
-        <svg class="desc-button" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
+        <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
           <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-pause)" />
         </svg>
       </div>
