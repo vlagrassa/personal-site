@@ -5,7 +5,10 @@ from flask import Flask, url_for
 from .constants import *
 from .database import db
 
-from .home import home_bp
+from .home           import home_bp
+from .views.projects import projects_bp
+from .views.blog     import blog_bp
+from .views.about    import about_bp
 
 
 def create_app(test_config=None):
@@ -34,6 +37,9 @@ def create_app(test_config=None):
 
   # Register blueprints
   app.register_blueprint(home_bp)
+  app.register_blueprint(projects_bp)
+  app.register_blueprint(blog_bp)
+  app.register_blueprint(about_bp)
 
   @app.context_processor
   def inject_navbar():
@@ -67,7 +73,7 @@ def create_app(test_config=None):
       'nav_sections': [
         {
           'title': section['title'],
-          'link': url_for(f'home.{section["name"]}'),
+          'link': url_for(f'{section["name"]}.{section["name"]}'),
         }
           for section in PAGE_TITLES
       ],
