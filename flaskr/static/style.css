@@ -11,6 +11,13 @@
     src: url('fonts/Kanit-Tj-Regular.ttf');
 }
 
+/* Overwrite font face to render roman characters in roman font */
+@font-face {
+    font-family: 'Zen Kaku Gothic New';
+    src: url('fonts/Montserrat-Tj-Regular.ttf');
+    unicode-range: U+00-52F, U+1E00-1FFF, U+2200-22FF;
+}
+
 
 :root {
     /* Primary color: Magenta */
