@@ -1,4 +1,5 @@
 import os
+import datetime
 
 from flask import Flask, url_for
 
@@ -40,6 +41,8 @@ def create_app(test_config=None):
   app.register_blueprint(projects_bp)
   app.register_blueprint(blog_bp)
   app.register_blueprint(about_bp)
+
+  add_template_filters(app)
 
   @app.context_processor
   def inject_navbar():
@@ -95,3 +98,26 @@ def create_app(test_config=None):
 
   return app
 
+
+
+def add_template_filters(app):
+
+  @app.template_filter('postdateformat')
+  def postdateformat(value, lang='en'):
+      today = datetime.datetime.today().date().day
+
+      if value is None:
+        return '???'
+
+      if value.day == today:
+        if lang == 'en': return 'Today'
+        if lang == 'ja': return '今日'
+      if value.day == today - 1:
+        if lang == 'en': return 'Yesterday'
+        if lang == 'ja': return '昨日'
+      if value.day == today - 2:
+        if lang == 'ja': return '一昨日'
+
+      if lang == 'ja':
+        return value.strftime('%Y{}%m{}%d{}').format(*'年月日')
+      return value.strftime('%b %d, %Y')
