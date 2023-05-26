@@ -3,6 +3,8 @@ import os
 from flask import Flask, url_for
 
 from .constants import *
+from .database import db
+
 from .home import home_bp
 
 
@@ -12,7 +14,9 @@ def create_app(test_config=None):
   app.config.from_mapping(
     SECRET_KEY = 'dev',
     DATABASE = os.path.join(app.instance_path, 'flaskr.sqlite'),
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///project.db'
   )
+  db.init_app(app)
 
   # Load the instance config, if it exists, when not testing
   if test_config is None:
