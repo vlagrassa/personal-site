@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+  /* https://cssgrid-generator.netlify.app/ */
+
+  .blog-card {
+    display: inline-flex;
+    flex-direction: row;
+
+    border: 1px solid gray;
+    background-color: white;
+    margin: 8px 0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .blog-card-inner {
+    border-left: 1px solid gray;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    padding: 0px 10px;
+  }
+
+  .blog-thumb {
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    background-color:
+  }
+
+  .blog-title {
+    grid-area: 1 / 1 / 2 / 5;
+    color: black;
+    margin-bottom: 0.25em;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .blog-group {
+    grid-area: 2 / 1 / 3 / 4;
+    color: var(--color-secondary-4);
+    font-size: smaller;
+  }
+
+  .blog-date {
+    grid-area: 2 / 4 / 4 / 5;
+    color: var(--color-secondary-4);
+    text-align: right;
+    font-size: smaller;
+  }
+
+  .blog-tags {
+    grid-area: 3 / 1 / 4 / 4;
+  }
+
+  .blog-tag-item {
+    font-size: 0.75em;
+    background-color: var(--color-secondary-1);
+    color: var(--color-secondary-4);
+    border: 1px solid var(--color-secondary-4);
+    padding: 2px;
+    border-radius: 0.5em;
+  }
+
+
+  .blog-container {
+    margin-right: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 16px;
+  }
+
+  @media(max-width: 950px) {
+    .blog-container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div>
+  <form>
+    <input id="searchbar" type="text" oninput="apply_filter(this.value)">
+  </form>
+
+  <br />
+
+  <div class="blog-container">
+    {% for post in posts %}
+    <div id="card-{{post.id}}" class="blog-card">
+      <div class="blog-thumb"></div>
+      <div class="blog-card-inner">
+        <h4 class="blog-title">
+          <a href="{{url_for('blog.post', name=(post.id))}}">{{post.title}}</a>
+        </h4>
+        <div class="blog-group"><i>{{post.group}}</i></div>
+        <div class="blog-tags">
+          {% for tag in post.tags %}
+            <span class="blog-tag-item">{{tag}}</span>
+          {% endfor %}
+        </div>
+        <div class="blog-date">
+          <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
+          <span {{set_lang("ja")}} class="ja-ltn">{{post.date|postdateformat('ja')}}</span>
+          <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+  const post_list = {
+    {% for post in posts %}"card-{{post.id}}": "{{post.title}}", {% endfor %}
+  }
+  function apply_filter(val) {
+    val = val.toLowerCase();
+    for (let key in post_list) {
+      document.getElementById(key).style.display = post_list[key].toLowerCase().includes(val) ? 'inline-flex' : 'none';
+    }
+  }
+</script>
+{% endblock %}
