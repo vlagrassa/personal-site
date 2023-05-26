@@ -5,7 +5,7 @@ from flask import Flask, url_for
 from .constants import *
 from .database import db
 
-from .home           import home_bp
+from .views.home     import home_bp
 from .views.projects import projects_bp
 from .views.blog     import blog_bp
 from .views.about    import about_bp
