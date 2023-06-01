@@ -86,9 +86,10 @@
 {% endblock %}
 
 {% block content %}
+{% from '_includes/lang.j2' import render_searchbar %}
 <div>
   <form>
-    <input id="searchbar" type="text" oninput="apply_filter(this.value)">
+    {{ render_searchbar(id='searchbar', oninput='apply_filter') }}
   </form>
 
   <br />

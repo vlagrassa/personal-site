@@ -105,6 +105,10 @@
     if (val === "{{l}}") document.title = "{{t}} {% if l != 'en' %}({{title.en}}) {% endif %}⬦ vlagrassa";
     {% endfor %}
     {% endif %}
+
+    document.dispatchEvent(new CustomEvent('set-language', {
+      'detail': { 'language': val },
+    }));
   }
   set_language("{{lang}}")
 </script>
