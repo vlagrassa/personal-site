@@ -1,0 +1,9 @@
+{% macro date_year_range(start, end) %}
+  {% if start.year and end.year %}
+    {% if start.year == end.year %}{{start.year}}{% else %}{{start.year}}-{{end.year}}{% endif %}
+  {% elif start.year %}
+    {{ start.year }}
+  {% elif end.year %}
+    {{ end.year }}
+  {% endif %}
+{% endmacro %}

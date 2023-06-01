@@ -37,6 +37,11 @@
       <a class="hex hexicon-border">
         <div class="hex hexicon">
           <div class="hexicon-body">
+            {% if project.get('created_date') or project.get('modified_date') %}
+            <div class="hexicon-overlay-date">
+              {{ date_year_range(project.get('created_date'), project.get('modified_date')) }}
+            </div>
+            {% endif %}
             <div class="hexicon-overlay">
               <h2 style="margin: 0px 10px; font-weight: normal;">{{project.name}}</h2>
             </div>
