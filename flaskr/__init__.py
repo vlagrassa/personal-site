@@ -102,6 +102,13 @@ def create_app(test_config=None):
 
 def add_template_filters(app):
 
+  @app.template_filter('nb')
+  def nb(txt):
+    '''
+      Intersperse a string with word joiner characters, to prevent line breaks within the string.
+    '''
+    return '\u2060'.join(txt)
+
   @app.template_filter('postdateformat')
   def postdateformat(value, lang='en'):
       today = datetime.datetime.today().date().day
@@ -119,5 +126,5 @@ def add_template_filters(app):
         if lang == 'ja': return '一昨日'
 
       if lang == 'ja':
-        return f'{value.year}年{value.month}\u2060月\u2060{value.day}\u2060日'
+        return nb(str(value.year) + '年') + nb(f'{value.month}月{value.day}日')
       return value.strftime('%b\u00A0%d, %Y')
