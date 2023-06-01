@@ -34,7 +34,7 @@
   <div class="main">
     <div class="container">
       {% for project in projects %}
-      <a class="hex hexicon-border">
+      <a class="hex hexicon-border" href="{{url_for('projects.summary', name=(project.id))}}">
         <div class="hex hexicon">
           <div class="hexicon-body">
             {% if project.get('created_date') or project.get('modified_date') %}

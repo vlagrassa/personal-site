@@ -30,3 +30,15 @@ def projects():
       parse_project_object(p) for p in Project.query.all()
     ],
   })
+
+@projects_bp.route('/<string:name>')
+def summary(name):
+  proj = Project.query.get_or_404(name)
+  return render_template('placeholder.html', **{
+    'title': {
+      'en': proj.title,
+      'ja': proj.title,
+      'tj': proj.title,
+    },
+    'lang': 'en',
+  })
