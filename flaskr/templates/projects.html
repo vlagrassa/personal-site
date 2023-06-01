@@ -38,14 +38,14 @@
         <div class="hex hexicon">
           <div class="hexicon-body">
             {% if project.get('created_date') or project.get('modified_date') %}
-            <div class="hexicon-overlay-date">
+            <div class="hexicon-overlay hexicon-overlay-date">
               {{ date_year_range(project.get('created_date'), project.get('modified_date')) }}
             </div>
             {% endif %}
-            <div class="hexicon-overlay">
+            <div class="hexicon-overlay hexicon-overlay-middle">
               <h2 style="margin: 0px 10px; font-weight: normal;">{{project.name}}</h2>
             </div>
-            <div class="hexicon-overlay-bottom">
+            <div class="hexicon-overlay hexicon-overlay-bottom">
               {{ project_icon(project.location) }}
             </div>
           </div>
