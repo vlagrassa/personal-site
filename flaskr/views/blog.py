@@ -28,9 +28,9 @@ def blog():
     'posts': [ parse_post_object(post) for post in posts ],
   })
 
-@blog_bp.route('/group/<int:name>')
-def group(name):
-  category = PostGroup.query.get_or_404(name)
+@blog_bp.route('/<string:slug>')
+def group(slug):
+  category = PostGroup.query.filter_by(slug=slug).first_or_404()
   return render_template('placeholder.html', **{
     'title': {
       'en': category.name,

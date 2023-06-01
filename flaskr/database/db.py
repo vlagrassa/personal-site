@@ -59,6 +59,7 @@ class Post(db.Model):
 
 class PostGroup(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
+  slug = sa.Column(sa.String(50), unique=True)
   name = sa.Column(sa.String(50), nullable=False)
 
 class PostTagMap(db.Model):
