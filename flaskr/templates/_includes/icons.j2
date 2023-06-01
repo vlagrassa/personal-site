@@ -1,3 +1,12 @@
+{%- macro project_icon(v) -%}
+  <span class="material-symbols-outlined">
+    {% if   v == ProjectLocation.IRL %}account_box
+    {% elif v == ProjectLocation.INT %}open_in_browser
+    {% elif v == ProjectLocation.EXT %}open_in_new
+    {% endif %}
+  </span>
+{%- endmacro -%}
+
 {% macro date_year_range(start, end) %}
   {% if start.year and end.year %}
     {% if start.year == end.year %}{{start.year}}{% else %}{{start.year}}-{{end.year}}{% endif %}
