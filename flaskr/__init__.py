@@ -106,7 +106,7 @@ def add_template_filters(app):
   def postdateformat(value, lang='en'):
       today = datetime.datetime.today().date().day
 
-      if value is None:
+      if value is None or value == '':
         return '???'
 
       if value.day == today:
@@ -119,5 +119,5 @@ def add_template_filters(app):
         if lang == 'ja': return '一昨日'
 
       if lang == 'ja':
-        return value.strftime('%Y{}%m{}%d{}').format(*'年月日')
-      return value.strftime('%b %d, %Y')
+        return f'{value.year}年{value.month}\u2060月\u2060{value.day}\u2060日'
+      return value.strftime('%b\u00A0%d, %Y')
