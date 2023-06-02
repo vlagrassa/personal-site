@@ -53,6 +53,7 @@ class Post(db.Model):
   id = sa.Column(sa.String(50), primary_key=True)
   title = sa.Column(sa.String(120), nullable=False)
   date = sa.Column(sa.Date)
+  description = sa.Column(sa.String(300))
   visible = sa.Column(sa.Boolean, default=False, nullable=False)
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
   category = db.relationship('PostGroup')

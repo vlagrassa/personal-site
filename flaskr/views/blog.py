@@ -13,6 +13,7 @@ def parse_post_object(post):
   return {
     'id':    post.id,
     'title': post.title,
+    'desc':  post.description or '',
     'group': post.category.name,
     'date':  post.date,
     'tags':  PostTagMap.query_by_post(post, name_only=True),
