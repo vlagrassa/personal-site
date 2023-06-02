@@ -2,6 +2,7 @@ import enum
 
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
+from flask import url_for
 
 db = SQLAlchemy()
 
@@ -28,6 +29,9 @@ class Project(db.Model):
   location = sa.Column(sa.Enum(ProjectLocation))
   created_date  = sa.Column(sa.Date)
   modified_date = sa.Column(sa.Date)
+
+  def get_thumbnail_url(self):
+    return url_for('static', filename=f'images/home-bg.jpg')
 
 class TagType(enum.Enum):
   LANGUAGE = 'Language'

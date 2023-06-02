@@ -35,7 +35,7 @@
     <div class="container">
       {% for project in projects %}
       <a class="hex hexicon-border" href="{{url_for('projects.summary', name=(project.id))}}">
-        <div class="hex hexicon">
+        <div class="hex hexicon" style="background-image: url({{project.img}}); background-size: cover;">
           <div class="hexicon-body">
             {% if project.get('created_date') or project.get('modified_date') %}
             <div class="hexicon-overlay hexicon-overlay-date">
