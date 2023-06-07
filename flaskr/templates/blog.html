@@ -85,6 +85,41 @@
       grid-template-columns: repeat(1, 1fr);
     }
   }
+
+
+
+  .blog-title-text {
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+  }
+
+  .outline {
+    text-shadow:
+      -1px -1px 0 white,
+       1px -1px 0 white,
+      -1px  1px 0 white,
+       1px  1px 0 white;
+  }
+
+  .blog-title-text:hover {
+    color: var(--color-primary);
+  }
+
+  .blog-title-underline {
+    border-top: 1.5px solid var(--color-primary);
+    border-bottom: 0.75px solid var(--color-primary);
+    height: 0.75px;
+    width: 100%;
+    transition: transform 0.1s;
+    transform: translate(0%, -4px) scaleX(0);
+    z-index: -10;
+    position: absolute;
+  }
+
+  .blog-title-text:hover .blog-title-underline {
+    transform: translate(0%, -4px) scaleX(1);
+  }
 </style>
 {% endblock %}
 
@@ -99,15 +134,16 @@
 
 {% block content %}
 <div>
-
-
   <div class="blog-container">
     {% for post in posts %}
     <div id="card-{{post.id}}" class="blog-card">
       <div class="blog-thumb"></div>
       <div class="blog-card-inner">
         <h4 class="blog-title">
-          <a href="{{url_for('blog.post', name=(post.id))}}">{{post.title}}</a>
+          <span class="blog-title-text">
+            <a class="outline" href="{{url_for('blog.post', name=post.id)}}">{{post.title}}</a>
+            <div class="blog-title-underline"></div>
+          </span>
         </h4>
         <div class="blog-group"><i>{{post.group}}</i></div>
         <div class="blog-tags">
