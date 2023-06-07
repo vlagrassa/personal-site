@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base-sidepanel.html' %}
 
 {% block style %}
 <style>
@@ -85,14 +85,18 @@
 </style>
 {% endblock %}
 
-{% block content %}
-{% from '_includes/lang.j2' import render_searchbar %}
-<div>
-  <form>
-    {{ render_searchbar(id='searchbar', oninput='apply_filter') }}
-  </form>
 
-  <br />
+{% block leftpanel %}
+{% from '_includes/lang.j2' import render_searchbar %}
+<form>
+  {{ render_searchbar(id='searchbar', oninput='apply_filter') }}
+</form>
+{% endblock %}
+
+
+{% block content %}
+<div>
+
 
   <div class="blog-container">
     {% for post in posts %}

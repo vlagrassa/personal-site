@@ -38,49 +38,24 @@
         <div class="flash">{{ message }}</div>
       {% endfor %}
 
-      <!-- Page Title -->
-      <header>
-        {% block header %}
-        {% if title and not hide_title %}
-          <div style="text-align: center;">
-            <h2>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h2>
-          </div>
-        {% endif %}
-        {% endblock %}
-      </header>
-      {% if title and not hide_title %}
-        <div class="header-underbar">&#x2B26;</div>
-      {% endif %}
-
-      <!-- Page Body -->
-      <div style="margin: 0px 30px; display: flex;">
-
-        <!-- Left Panel -->
-        <div class="panel panel-left">
-          <h4>
-            <span {{ set_lang("en") }}>Language</span>
-            <span {{ set_lang("ja") }}>言語</span>
-            <span {{ set_lang("tj") }}>Tʒoga</span>
-          </h4>
-          {% for l in langs %}
-          <button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
-            <div>{{l.name}}</div>
-          </button>
-          {% endfor %}
-        </div>
-
-        <!-- Center Panel -->
-        <div class="panel panel-center">
-          {% block content %}{% endblock %}
-        </div>
-
-        <!-- Right Panel -->
-        <div class="panel panel-right"></div>
-      </div>
+      {% block body %}{% endblock %}
     </section>
   </div>
   <!-- /Scrollable Body -->
 </div>
+
+{% block lang_selector %}
+  <h4>
+    <span {{ set_lang("en") }}>Language</span>
+    <span {{ set_lang("ja") }}>言語</span>
+    <span {{ set_lang("tj") }}>Tʒoga</span>
+  </h4>
+  {% for l in langs %}
+  <button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
+    <div>{{l.name}}</div>
+  </button>
+  {% endfor %}
+{% endblock %}
 
 
 <script>

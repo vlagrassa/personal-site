@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<!-- Page Body -->
+<div style="margin: 0px 30px; display: flex; align-items: flex-start;">
+
+  <!-- Left Panel -->
+  <div class="panel-left" style="flex: 2;">
+    <div class="panel" style="display: flex; flex-direction: column; padding-bottom: 8px; text-align: center;">
+
+      <!-- Page Title -->
+      <header>
+        {% block header %}
+        {% if title and not hide_title %}
+          <div style="text-align: center;">
+            <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
+          </div>
+        {% endif %}
+        {% endblock %}
+      </header>
+      {% if title and not hide_title %}
+        <div class="header-underbar">&#x2B26;</div>
+      {% endif %}
+
+      {% block leftpanel %}{% endblock %}
+    </div>
+
+    {% block lang_selector %}
+      {{ super() }}
+    {% endblock %}
+  </div>
+
+  <!-- Center Panel -->
+  <div class="panel-center panel" style="height: 100%; flex: 4; overflow-y: scroll;">
+    {% block content %}{% endblock %}
+  </div>
+
+</div>
+
+{% endblock %}
