@@ -7,14 +7,20 @@
 {% block leftpanel %}
 {% from '_includes/lang.j2' import render_searchbar %}
 <p style="padding: 0 16px;">
-  <span {{ set_lang("en") }}>This is a library of projects I've made over the years.</span>
+  <span {{ set_lang("en") }}>
+    This is a library of projects I've made over the years.
+  </span>
   <span {{ set_lang("ja") }}>
     ここは私が作った{{'プロジェクト'|nb}}の{{'宝庫'|nb}}{{'です。'|nb}}
   </span>
 </p>
-<p>
-  <span {{ set_lang("en") }}>Many of the projects have interactive web-app components. Please check them out!</span>
-  <span {{ set_lang("ja") }}>たくさんウェブ・アプリがあります。見てください！</span>
+<p style="padding: 0 16px;">
+  <span {{ set_lang("en") }}>
+    Many of the projects have interactive web-app components. Please check them out!
+  </span>
+  <span {{ set_lang("ja") }}>
+    たくさんウェブ・アプリが{{'あります。'|nb}}{{'見てください！'|nb}}
+  </span>
 </p>
 
 <form>
