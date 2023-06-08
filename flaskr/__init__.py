@@ -90,7 +90,7 @@ def create_app(test_config=None):
           'code': 'ja',
         },
         {
-          'name': 'Tʒeramot',
+          'name': 'Tʒeramɔt',
           'code': 'tj',
         },
       ],
