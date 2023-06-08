@@ -90,6 +90,14 @@ body {
     position: relative;
 }
 
+/* footer {
+    border-top: 2px solid var(--color-primary);
+    border-bottom: 4px solid var(--color-primary);
+    height: 2px;
+    position: absolute;
+    width: 100%;
+} */
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-head-ltn);
 }
