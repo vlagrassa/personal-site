@@ -1,5 +1,9 @@
 {% extends 'base-sidepanel.html' %}
 
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='blog.css') }}">
+{% endblock %}
+
 {% block style %}
 <style>
   /* https://cssgrid-generator.netlify.app/ */
@@ -73,9 +77,8 @@
 
 
   .blog-container {
-    margin-right: 24px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-column-gap: 16px;
   }
 
@@ -132,31 +135,11 @@
 
 
 {% block content %}
-<div>
-  <div class="blog-container">
-    {% for post in posts %}
-    <div id="card-{{post.id}}" class="blog-card">
-      <div class="blog-thumb"></div>
-      <div class="blog-card-inner">
-        <h4 class="blog-title">
-          <span class="blog-title-text">
-            <a class="outline" href="{{url_for('blog.post', name=post.id)}}">{{post.title}}</a>
-            <div class="blog-title-underline"></div>
-          </span>
-        </h4>
-        <div class="blog-group"><i>{{post.group}}</i></div>
-        <div class="blog-desc">
-          <span style="font-size: 0.9em">{{ post.desc }}</span>
-        </div>
-        <div class="blog-date">
-          <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
-          <span {{set_lang("ja")}}>{{post.date|postdateformat('ja')}}</span>
-          <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+{% from '_includes/blog-post-card.j2' import render_blog_card with context %}
+<div class="blog-container">
+  {% for post in posts %}
+    {{ render_blog_card(post) }}
+  {% endfor %}
 </div>
 {% endblock %}
 

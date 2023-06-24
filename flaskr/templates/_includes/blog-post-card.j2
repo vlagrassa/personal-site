@@ -1,0 +1,81 @@
+{% macro render_blog_card_old(post) %}
+<div id="card-{{post.id}}" class="blog-card">
+  <div class="blog-thumb"></div>
+  <div class="blog-card-inner">
+    <h4 class="blog-title">
+      <span class="blog-title-text">
+        <a class="outline" href="{{url_for('blog.post', name=post.id)}}">{{post.title}}</a>
+        <div class="blog-title-underline"></div>
+      </span>
+    </h4>
+    <div class="blog-group"><i>{{post.group}}</i></div>
+    <div class="blog-desc">
+      <span style="font-size: 0.9em">{{ post.desc }}</span>
+    </div>
+    <div class="blog-date">
+      <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
+      <span {{set_lang("ja")}}>{{post.date|postdateformat('ja')}}</span>
+      <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro render_blog_card(post) %}
+<div id="card-{{post.id}}" class="card mb-3 blog-card-bs">
+  <div class="row g-0">
+
+    {# Image #}
+    <div class="col-md-2" style="user-select: none;">
+      <div class="ratio ratio-1x1 h-100">
+        <img
+          src="{{url_for('static', filename='images/home-bg.jpg')}}"
+          class="img-fluid object-fit-cover"
+          alt="this is an image wooo"
+        >
+      </div>
+    </div>
+
+    {# Body #}
+    <div class="col-md-10">
+      <div class="card-body">
+
+        {# Header Row #}
+        <div class="row ml-auto">
+
+          {# Title #}
+          <div class="col-9 pe-0 blog-title-container">
+            <h5 class="card-title text-truncate">
+              <a class="outline" href="{{url_for('blog.post', name=post.id)}}" style="width: fit-content; position: relative;">
+                {{post.title}}
+                <div class="blog-title-underline"></div>
+              </a>
+            </h5>
+          </div>
+
+          {# Date #}
+          <small class="col-3 text-end">
+            <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
+            <span {{set_lang("ja")}}>{{post.date|postdateformat('ja')}}</span>
+            <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
+          </small>
+        </div>
+        {# /Header Row #}
+
+        {# Group #}
+        <p class="card-text">
+          <small class="text-body-secondary">
+            <a href="{{url_for('blog.group', slug=post.slug)}}"><i>{{post.group}}</i></a>
+          </small>
+        </p>
+
+        {# Description #}
+        <p class="card-text">{{ post.desc }}</p>
+      </div>
+    </div>
+    {# /Body #}
+
+  </div>
+</div>
+{% endmacro %}
