@@ -60,6 +60,22 @@
     --font-head-jpn: 'BIZ UDGothic', sans-serif;
     --font-body-ltn: 'Montserrat Tj', 'Montserrat', sans-serif;
     --font-body-jpn: 'Zen Kaku Gothic New', sans-serif;
+
+
+    --header-outline-color: var(--color-secondary-4);
+    --header-outline-inner: 3px solid var(--header-outline-color);
+    --header-outline-outer: 1px solid var(--header-outline-color);
+    --header-outline-space: -4.5px;
+
+    --panel-outline-color: black;
+    --panel-outline-inner: 1.75px solid var(--panel-outline-color);
+    --panel-outline-outer: 1.25px solid var(--panel-outline-color);
+    --panel-outline-space: 1.25px;
+
+    --card-outline-color: black;
+    --card-outline-inner: 1.5px solid var(--card-outline-color);
+    --card-outline-outer: 1.0px solid var(--card-outline-color);
+    --card-outline-space: 1px;
 }
 
 
@@ -248,7 +264,7 @@ a {
     flex-wrap: wrap;
 
     border-top:    4px solid var(--color-primary-3);
-    border-bottom: 3px solid var(--color-header-border);
+    border-bottom: var(--header-outline-inner);
     padding: 0px 20px;
 
     background-color: var(--color-bg-head-light);
@@ -268,9 +284,9 @@ a {
     content: "";
     width: 100%;
     position: absolute;
-    bottom: -4.5px;
+    bottom: var(--header-outline-space);
     left: 0;
-    border-bottom: 1px solid var(--color-header-border);
+    border-bottom: var(--header-outline-outer);
     z-index: 10;
 }
 
@@ -343,8 +359,11 @@ a {
 .panel {
     background-color: var(--color-bg-head-light);
     border-radius: 8px;
-    border: 1px solid var(--color-header-border);
     margin: 0px 3px;
+
+    border:  var(--panel-outline-inner);
+    outline: var(--panel-outline-outer);
+    outline-offset: var(--panel-outline-space);
 }
 
 .panel-left {
