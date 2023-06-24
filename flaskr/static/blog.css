@@ -1,3 +1,20 @@
+/* Container */
+
+.blog-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 16px;
+}
+
+@media(max-width: 1200px) {
+  .blog-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
+/* Card */
+
 .blog-card-bs {
   background-color: white;
   margin: 8px 0;
@@ -8,6 +25,9 @@
   outline: var(--card-outline-outer);
   outline-offset: var(--card-outline-space);
 }
+
+
+/* Card Title */
 
 .blog-title-container {
   cursor: pointer;
@@ -33,4 +53,12 @@
 
 .blog-title-container:hover .blog-title-underline {
   transform: translate(0%, -3px) scaleX(1);
+}
+
+.outline {
+  text-shadow:
+    -1px -1px 0 white,
+     1px -1px 0 white,
+    -1px  1px 0 white,
+     1px  1px 0 white;
 }
