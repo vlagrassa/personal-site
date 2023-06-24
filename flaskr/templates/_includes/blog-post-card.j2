@@ -28,7 +28,7 @@
   <div class="row g-0">
 
     {# Image #}
-    <div class="col-2 d-none d-sm-block" style="user-select: none;">
+    <div class="col-2 d-none d-sm-block user-select-none">
       <div class="ratio ratio-1x1 h-100" style="border-right: var(--card-outline-outer)">
         <img
           src="{{url_for('static', filename='images/home-bg.jpg')}}"
@@ -48,7 +48,7 @@
           {# Title #}
           <div class="col-9 pe-0 ge-0 blog-title-container">
             <h5 class="card-title text-truncate">
-              <a title="{{post.title}}" class="outline" href="{{url_for('blog.post', name=post.id)}}" style="width: fit-content; position: relative;">
+              <a title="{{post.title}}" class="blog-title outline" href="{{url_for('blog.post', name=post.id)}}">
                 {{post.title}}
                 <div class="blog-title-underline"></div>
               </a>
@@ -68,16 +68,16 @@
         <div class="row ml-auto flex-nowrap justify-content-between">
 
           {# Group #}
-          <p class="card-text col-auto" style="display: inline-block;">
+          <p class="card-text col-auto d-inline-block">
             <small class="text-body-secondary">
               <a href="{{url_for('blog.group', slug=post.slug)}}"><i>{{post.group}}</i></a>
             </small>
           </p>
 
           {# Tags #}
-          <div class="col-auto">
+          <div class="col-auto user-select-none">
           {% for tag in post.tags %}
-            <span class="badge text-bg-dark">{{tag}}</span>
+            <span class="badge text-bg-dark user-select-all">{{tag}}</span>
           {% endfor %}
           </div>
         </div>

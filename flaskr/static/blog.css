@@ -29,6 +29,11 @@
 
 /* Card Title */
 
+.blog-title {
+  width: fit-content;
+  position: relative;
+}
+
 .blog-title-container {
   cursor: pointer;
   position: relative;
