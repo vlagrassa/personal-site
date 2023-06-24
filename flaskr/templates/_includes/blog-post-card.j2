@@ -46,9 +46,9 @@
         <div class="row ml-auto">
 
           {# Title #}
-          <div class="col-9 pe-0 blog-title-container">
+          <div class="col-9 pe-0 ge-0 blog-title-container">
             <h5 class="card-title text-truncate">
-              <a class="outline" href="{{url_for('blog.post', name=post.id)}}" style="width: fit-content; position: relative;">
+              <a title="{{post.title}}" class="outline" href="{{url_for('blog.post', name=post.id)}}" style="width: fit-content; position: relative;">
                 {{post.title}}
                 <div class="blog-title-underline"></div>
               </a>
@@ -56,7 +56,7 @@
           </div>
 
           {# Date #}
-          <small class="col-3 text-end">
+          <small class="col-3 text-end ps-0">
             <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
             <span {{set_lang("ja")}}>{{post.date|postdateformat('ja')}}</span>
             <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
@@ -72,7 +72,7 @@
         </p>
 
         {# Description #}
-        <p class="card-text">{{ post.desc }}</p>
+        <p class="card-text text-truncate">{{ post.desc }}</p>
       </div>
     </div>
     {# /Body #}
