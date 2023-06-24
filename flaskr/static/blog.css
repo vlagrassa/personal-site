@@ -29,18 +29,18 @@
 
 /* Card Title */
 
-.blog-title {
-  width: fit-content;
-  position: relative;
-}
-
 .blog-title-container {
-  cursor: pointer;
   position: relative;
   z-index: 2;
 }
 
-.blog-title-container:hover {
+.blog-title {
+  width: fit-content;
+  position: relative;
+  cursor: pointer;
+}
+
+.blog-title:hover {
   color: var(--color-primary);
 }
 
@@ -56,7 +56,7 @@
   box-sizing: content-box;
 }
 
-.blog-title-container:hover .blog-title-underline {
+.blog-title:hover .blog-title-underline {
   transform: translate(0%, -3px) scaleX(1);
 }
 
