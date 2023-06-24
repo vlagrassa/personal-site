@@ -1,29 +1,4 @@
-{% macro render_blog_card_old(post) %}
-<div id="card-{{post.id}}" class="blog-card">
-  <div class="blog-thumb"></div>
-  <div class="blog-card-inner">
-    <h4 class="blog-title">
-      <span class="blog-title-text">
-        <a class="outline" href="{{url_for('blog.post', name=post.id)}}">{{post.title}}</a>
-        <div class="blog-title-underline"></div>
-      </span>
-    </h4>
-    <div class="blog-group"><i>{{post.group}}</i></div>
-    <div class="blog-desc">
-      <span style="font-size: 0.9em">{{ post.desc }}</span>
-    </div>
-    <div class="blog-date">
-      <span {{set_lang("en")}}>{{post.date|postdateformat('en')}}</span>
-      <span {{set_lang("ja")}}>{{post.date|postdateformat('ja')}}</span>
-      <span {{set_lang("tj")}}>{{post.date|postdateformat('tj')}}</span>
-    </div>
-  </div>
-</div>
-{% endmacro %}
-
-
 {% macro render_blog_card(post) %}
-{# <div class="card mb-3" style="max-height: 4em;"> #}
 <div id="card-{{post.id}}" class="card mb-3 blog-card">
   <div class="row g-0">
 
