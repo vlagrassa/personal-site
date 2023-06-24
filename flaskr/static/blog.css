@@ -1,12 +1,18 @@
+:root {
+  --card-outline-inner: 1.5px solid black;
+  --card-outline-outer: 1.0px solid black;
+  --card-outline-space: 1px;
+}
+
 .blog-card-bs {
   background-color: white;
   margin: 8px 0;
   border-radius: 6px;
   overflow: hidden;
 
-  border: 1.5px solid black;
-  outline: 1px solid black;
-  outline-offset: 1px;
+  border:  var(--card-outline-inner);
+  outline: var(--card-outline-outer);
+  outline-offset: var(--card-outline-space);
 }
 
 .blog-title-container {

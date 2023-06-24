@@ -23,12 +23,13 @@
 
 
 {% macro render_blog_card(post) %}
+{# <div class="card mb-3" style="max-height: 4em;"> #}
 <div id="card-{{post.id}}" class="card mb-3 blog-card-bs">
   <div class="row g-0">
 
     {# Image #}
     <div class="col-md-2" style="user-select: none;">
-      <div class="ratio ratio-1x1 h-100">
+      <div class="ratio ratio-1x1 h-100" style="border-right: var(--card-outline-outer)">
         <img
           src="{{url_for('static', filename='images/home-bg.jpg')}}"
           class="img-fluid object-fit-cover"
