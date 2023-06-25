@@ -76,6 +76,15 @@
     --card-outline-inner: 1.5px solid var(--card-outline-color);
     --card-outline-outer: 1.0px solid var(--card-outline-color);
     --card-outline-space: 1px;
+
+
+
+    --underline-bg-color: white;
+    --underline-offset: -3px;
+    --underline-color: var(--color-primary);
+    --underline-inner: 1.50px solid var(--underline-color);
+    --underline-outer: 0.75px solid var(--underline-color);
+    --underline-space: 0.75px;
 }
 
 
@@ -215,6 +224,37 @@ a {
     height: 100%;
     padding-bottom: 1px;
     border-bottom: 1px solid var(--color-primary);
+}
+
+.underline-hover-text {
+    width: fit-content;
+    position: relative;
+    text-shadow:
+        -1px -1px 0 var(--bg-color),
+         1px -1px 0 var(--bg-color),
+        -1px  1px 0 var(--bg-color),
+         1px  1px 0 var(--bg-color);
+}
+
+/* TODO: To allow underline color to be overwritten, need to define underline-inner and underline-outer here */
+.underline-hover {
+    border-top:    var(--underline-inner);
+    border-bottom: var(--underline-outer);
+    height:        var(--underline-space);
+    width: 100%;
+    transition: transform 0.1s;
+    transform: translate(0%, var(--underline-offset)) scaleX(0);
+    z-index: -10;
+    position: absolute;
+    box-sizing: content-box;
+}
+
+.underline-hover-text:hover {
+    color: var(--underline-color);
+}
+
+.underline-hover-text:hover .underline-hover {
+    transform: translate(0%, var(--underline-offset)) scaleX(1);
 }
 
 
