@@ -3,7 +3,7 @@ from flask import (
 )
 
 from ..constants import *
-from ..database import Post, PostGroup, PostTagMap
+from ..database import Post, PostGroup, PostTag, PostTagMap
 
 blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
 
@@ -27,6 +27,7 @@ def blog():
     'title': PAGE_TITLES[2]['title'],
     'lang': 'en',
     'posts': [ parse_post_object(post) for post in posts ],
+    'tags': PostTag.query.all(),
   })
 
 @blog_bp.route('/<string:slug>')

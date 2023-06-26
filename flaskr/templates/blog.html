@@ -26,12 +26,30 @@
 {% block script %}
 <script>
   const post_list = {
-    {% for post in posts %}"card-{{post.id}}": "{{post.title}}", {% endfor %}
+    {%- for post in posts %}
+    "card-{{post.id}}": {
+      "title": "{{post.title}}",
+      "tags": [ {% for tag in post.tags %}"{{tag.id}}",{% endfor %} ],
+    },
+    {%- endfor %}
   }
   function apply_filter(val) {
     val = val.toLowerCase();
     for (let key in post_list) {
-      document.getElementById(key).style.display = post_list[key].toLowerCase().includes(val) ? 'inline-flex' : 'none';
+      document.getElementById(key).style.display = post_list[key]['title'].toLowerCase().includes(val) ? 'inline-flex' : 'none';
+    }
+  }
+
+  function select_tag(tag) {
+    if (tag) {
+      for (let key in post_list) {
+        document.getElementById(key).style.display = post_list[key]['tags'].includes(tag) ? 'inline-flex' : 'none';
+      }
+    }
+    else {
+      for (let key in post_list) {
+        document.getElementById(key).style.display = 'inline-flex';
+      }
     }
   }
 </script>

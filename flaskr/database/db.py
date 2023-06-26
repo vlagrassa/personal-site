@@ -67,15 +67,21 @@ class PostGroup(db.Model):
   slug = sa.Column(sa.String(50), unique=True)
   name = sa.Column(sa.String(50), nullable=False)
 
+class PostTag(db.Model):
+  id = sa.Column(sa.String(24), primary_key=True)
+  name_en = sa.Column(sa.String(32), unique=True)
+  name_ja = sa.Column(sa.String(32), unique=True)
+  name_tj = sa.Column(sa.String(32), unique=True)
+
 class PostTagMap(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
-  post_id = sa.Column(sa.Integer, sa.ForeignKey('post.id'))
-  tag = sa.Column(sa.String(30))
+  post_id = sa.Column(sa.Integer,    sa.ForeignKey('post.id'))
+  tag_id  = sa.Column(sa.String(24), sa.ForeignKey('post_tag.id'))
 
   @classmethod
   def query_by_post(cls, post, name_only=False):
-    query = cls.query.filter_by(post_id=post.id).order_by(PostTagMap.tag.asc())
+    query = cls.query.filter_by(post_id=post.id).order_by(PostTagMap.tag_id.asc())
     if name_only:
-      return [ t.tag for t in query.all() ]
+      return [ PostTag.query.get(t.tag_id) for t in query.all() ]
     else:
       return query
