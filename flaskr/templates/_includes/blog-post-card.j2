@@ -1,9 +1,9 @@
 {% macro render_blog_card(post) %}
 <div id="card-{{post.id}}" class="card mb-3 blog-card">
-  <div class="row g-0">
+  <div class="row g-0 h-100">
 
     {# Image #}
-    <div class="col-2 d-none d-sm-block user-select-none">
+    <div class="col-2 d-none d-md-block user-select-none">
       <div class="ratio ratio-1x1 h-100" style="border-right: var(--card-outline-outer)">
         <img
           src="{{url_for('static', filename='images/home-bg.jpg')}}"
@@ -14,7 +14,7 @@
     </div>
 
     {# Body #}
-    <div class="col-12 col-sm-10">
+    <div class="col-12 col-md-10">
       <div class="card-body">
 
         {# Header Row #}
@@ -22,7 +22,7 @@
 
           {# Title #}
           <div class="col-9 pe-0 ge-0 blog-title-container">
-            <h5 class="card-title text-truncate">
+            <h5 class="card-title text-truncate my-0">
               <a title="{{post.title}}" class="underline-hover-text" href="{{url_for('blog.post', name=post.id)}}">
                 {{post.title}}
                 <div class="underline-hover"></div>
