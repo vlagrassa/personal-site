@@ -3,10 +3,10 @@
 
 {% block body %}
 <!-- Page Body -->
-<div style="margin: 0px 30px; display: flex; align-items: flex-start;">
+<div class="row h-100" style="height: 100%;">
 
   <!-- Left Panel -->
-  <div class="panel-left" style="flex: 2;">
+  <div class="panel-left col-6 col-sm-5 col-md-4 col-lg-3 col-xx-2">
     <div class="panel" style="display: flex; flex-direction: column; padding-bottom: 8px; text-align: center;">
 
       <!-- Page Title -->
@@ -23,6 +23,7 @@
         <div class="header-underbar">&#x2B26;</div>
       {% endif %}
 
+      <!-- Left Panel Content -->
       {% block leftpanel %}{% endblock %}
     </div>
 
@@ -32,7 +33,7 @@
   </div>
 
   <!-- Center Panel -->
-  <div class="panel-center panel" style="height: 100%; flex: 4; overflow-y: scroll;">
+  <div class="panel-center col overflow-y-scroll">
     {% block content %}{% endblock %}
   </div>
 
