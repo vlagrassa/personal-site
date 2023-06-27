@@ -111,18 +111,18 @@ def add_template_filters(app):
 
   @app.template_filter('postdateformat')
   def postdateformat(value, lang='en'):
-      today = datetime.datetime.today().date().day
+      today = datetime.datetime.today().date()
 
       if value is None or value == '':
         return '???'
 
-      if value.day == today:
+      if value == today:
         if lang == 'en': return 'Today'
         if lang == 'ja': return '今日'
-      if value.day == today - 1:
+      if value == today - datetime.timedelta(days=1):
         if lang == 'en': return 'Yesterday'
         if lang == 'ja': return '昨日'
-      if value.day == today - 2:
+      if value == today - datetime.timedelta(days=2):
         if lang == 'ja': return '一昨日'
 
       if lang == 'ja':
