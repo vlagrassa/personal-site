@@ -55,20 +55,6 @@
   <span class="material-symbols-outlined">table_view</span>
 </div>
 
-{% block lang_selector %}
-  <h4>
-    <span {{ set_lang("en") }}>Language</span>
-    <span {{ set_lang("ja") }}>言語</span>
-    <span {{ set_lang("tj") }}>Tʒoga</span>
-  </h4>
-  {% for l in langs %}
-  <button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
-    <div>{{l.name}}</div>
-  </button>
-  {% endfor %}
-{% endblock %}
-
-
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
