@@ -65,3 +65,19 @@
     }
   </script>
 {% endmacro %}
+
+
+{#
+  Render a button in the footer menu.
+#}
+{% macro render_footer_button(icon, name) %}
+  <div style="display: inline-block;">
+    <span
+      id="footer-{{icon}}"
+      class="material-symbols-outlined"
+      style="cursor: pointer; user-select: none; padding: 0px 2px;"
+    >
+      {{icon}}
+    </span>
+  </div>
+{% endmacro %}

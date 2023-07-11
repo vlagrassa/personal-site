@@ -1,5 +1,5 @@
 {% from '_includes/lang.j2'   import set_lang with context %}
-{% from '_includes/header.j2' import render_logo, render_sections, render_links with context %}
+{% from '_includes/header.j2' import render_logo, render_sections, render_links, render_footer_button with context %}
 <!doctype html>
 <head>
   <meta charset="UTF-8">
@@ -50,10 +50,11 @@
   </div>
   <!-- /Main Body -->
 
-<div id="footer">
-  <span class="material-symbols-outlined">language</span>
-  <span class="material-symbols-outlined">table_view</span>
-</div>
+  <div id="footer">
+    {{ render_footer_button('language', "Language") }}
+    {{ render_footer_button('table_view', "Layout") }}
+    {{ render_footer_button('settings', "Settings") }}
+  </div>
 
 </body>
 
