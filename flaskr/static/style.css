@@ -261,10 +261,10 @@ a {
     width: fit-content;
     position: relative;
     text-shadow:
-        -1px -1px 0 var(--bg-color),
-         1px -1px 0 var(--bg-color),
-        -1px  1px 0 var(--bg-color),
-         1px  1px 0 var(--bg-color);
+        -1px -1px 0 var(--color-bg-body-light),
+         1px -1px 0 var(--color-bg-body-light),
+        -1px  1px 0 var(--color-bg-body-light),
+         1px  1px 0 var(--color-bg-body-light);
 }
 
 /* TODO: To allow underline color to be overwritten, need to define underline-inner and underline-outer here */
