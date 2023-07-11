@@ -5,7 +5,7 @@
 {% from '_includes/lang.j2' import render_lang_selector %}
 
 <!-- Page Body -->
-<div class="row h-100" style="height: 100%;">
+<div class="row h-100 gx-0">
 
   <!-- Left Panel -->
   <div class="panel-left col-6 col-sm-5 col-md-4 col-lg-3 col-xx-2">
@@ -33,7 +33,7 @@
   </div>
 
   <!-- Center Panel -->
-  <div class="panel-center col overflow-y-scroll">
+  <div class="panel-center col overflow-y-scroll" style="padding-right: calc(var(--scrollbar-width) + 15px);">
     {% block content %}{% endblock %}
   </div>
 
