@@ -38,34 +38,40 @@
 {% endblock %}
 
 {% block bigimage %}
-<div id="bg-img" class="center-content" style="background-image: url('{{ bigimage }}');">
-  <div style="flex: 3; display: flex; align-items: center; flex-direction: column; text-align: center;">
-    <div class="bg-img-overlay center-content">
-      <h1 style="font-size: 3.5em;">
-        Vincent LɒGrɒssɒ
-      </h1>
-      <div class="header-underbar">&#x2B26;</div>
-      <div style="width: 70%;">
-        {% include '_includes/blurb.html' %}
-        <p style="height: 2.5em; overflow-y: visible; margin-bottom: -0.5em;">Often described <span id="third-point"></span><span id="blinker"></span></p>
-      </div>
-      <div style="width: 90%">
-        <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px">
-          {% include '_includes/svg.j2' %}
-          <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
-        </svg>
-        <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
-          <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-pause)" />
-        </svg>
+<div id="bg-img" style="background-image: url('{{ bigimage }}');">
+  <div class="row h-100">
+    <div class="col-12 col-md-8 d-flex align-items-center justify-content-center">
+      <div class="bg-img-overlay d-flex flex-column align-items-center justify-content-center text-center">
+
+        <h1 class="mx-4" style="font-size: 3.5em;">
+          <span {{set_lang("en")}}>Vincent LɒGrɒssɒ</span>
+          <span {{set_lang("ja")}}>ヴィンセント ラグラッサ</span>
+          <span {{set_lang("tj")}}>Vincent LɒGrɒssɒ</span>
+        </h1>
+        <div class="header-underbar">&#x2B26;</div>
+
+        <div class="mx-5 fs-5">
+          {% include '_includes/blurb.html' %}
+          <p style="height: 2.5em; overflow-y: visible; margin-bottom: -0.0em;">Often described <span id="third-point"></span><span id="blinker"></span></p>
+        </div>
+
+        <div style="width: 92%">
+          <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px">
+            {% include '_includes/svg.j2' %}
+            <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+          </svg>
+          <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
+            <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-pause)" />
+          </svg>
+        </div>
       </div>
     </div>
+    <div class="d-none d-md-block col-4"></div>
   </div>
-  <div style="flex: 2"></div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="center-content" style="height: 100%; text-align: center;"><div>
   <p {{set_lang("en")}}>
     This site is currently <span class="double-underline">under construction</span>.
   </p>
