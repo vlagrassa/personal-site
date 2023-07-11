@@ -125,6 +125,16 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-head-ltn);
+    line-height: 1.5em;
+    font-weight: 700;
+}
+
+h5, h6 {
+    line-height: 1.2em;
+}
+
+div {
+    line-height: 1.2em;
 }
 
 h1[lang="ja"], h2[lang="ja"], h3[lang="ja"], h4[lang="ja"], h5[lang="ja"], h6[lang="ja"] {
