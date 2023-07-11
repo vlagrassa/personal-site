@@ -2,22 +2,26 @@
 lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %}
 {%- endmacro -%}
 
-{% macro render_searchbar(id=none, oninput=none) %}
-  <input
-    id="{{id}}"
-    type="text"
-    {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
-  >
 
-  <script>
-    const placeholder_texts = {
-      'en': 'Search',
-      'ja': '検索',
-      'tj': 'Vlanu',
-    }
+{% macro render_searchbar(id=none, oninput=none, label=none, class='', fixed_inputs=none) %}
+  <div class="searchbar-container {{class}}">
+    <input
+      id="{{id}}"
+      type="text"
+      title=""
+      required
+      {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
+      data-bs-toggle="dropdown"
+    >
+    {% if label is mapping %}
+      <label for="{{id}}">
+      {% for l, t in label.items() %}
+        <span {{ set_lang(l) }}>{{ t }}</span>
+      {% endfor %}
+      </label>
+    {% elif label %}
+      <label for="{{id}}">{{label}}</label>
+    {% endif %}
 
-    document.addEventListener('set-language', ({detail}) => {
-      document.getElementById('{{id}}').placeholder = placeholder_texts[detail.language] + '...';
-    });
-  </script>
+  </div>
 {% endmacro %}

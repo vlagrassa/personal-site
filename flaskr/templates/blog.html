@@ -2,13 +2,37 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='blog.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
 {% endblock %}
 
 
 {% block leftpanel %}
 {% from '_includes/lang.j2' import render_searchbar %}
-<form>
-  {{ render_searchbar(id='searchbar', oninput='apply_filter') }}
+
+<form style="width: 90%; margin: auto;">
+  {{ render_searchbar(
+    id='search-text', oninput='search_text',
+    label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
+    ) }}
+  {{ render_searchbar(
+    id='search-tags',
+    label={'en': 'Tags', 'ja': 'タグ', 'tj': 'Tags'},
+  ) }}
+  <div style="display: flex; justify-content: space-between; margin-top: -10px;">
+    <div style="flex: 1">
+      {{ render_searchbar(
+        id='search-date-1',
+        label={'en': 'Start Date', 'ja': '開始日', 'tj': 'Start Date'},
+      ) }}
+    </div>
+    <div style="width: 8px"></div>
+    <div style="flex: 1">
+      {{ render_searchbar(
+        id='search-date-2',
+        label={'en': 'End Date', 'ja': '終了日', 'tj': 'End Date'},
+      ) }}
+    </div>
+  </div>
 </form>
 {% endblock %}
 
@@ -33,7 +57,8 @@
     },
     {%- endfor %}
   }
-  function apply_filter(val) {
+
+  function search_text(val) {
     val = val.toLowerCase();
     for (let key in post_list) {
       document.getElementById(key).style.display = post_list[key]['title'].toLowerCase().includes(val) ? 'inline-flex' : 'none';
