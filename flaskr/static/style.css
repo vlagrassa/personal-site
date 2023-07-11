@@ -92,6 +92,7 @@
     background: var(--color-select-bg);
     color: var(--color-select-txt);
     -webkit-text-fill-color: var(--color-select-txt);
+    text-shadow: none;
 }
 
 
