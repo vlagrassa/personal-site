@@ -3,34 +3,38 @@
 
 {% block body %}
 
-<div class="row overflow-y-scroll overflow-x-hidden" style="height: 100%">
+{% set inner_scroll = 'hidden' if bigimage else 'scroll' %}
+<div class="overflow-y-{{ inner_scroll }} overflow-x-hidden h-100">
+  <div class="mb-5 {% if hide_title %}mt-5{% endif %}" style="margin-left: 110px; margin-right: 110px;">
+    <div class="row">
 
-  <div class="col-12">
-    <!-- Page Title -->
-    <header>
-      {% block header %}
-      {% if title and not hide_title %}
-        <div style="text-align: center;">
-          <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
+      <!-- Page Title -->
+      <div class="col-12">
+        <header>
+          {% block header %}
+          {% if title and not hide_title %}
+            <div class="text-center">
+              <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
+            </div>
+          {% endif %}
+          {% endblock %}
+        </header>
+        {% if title and not hide_title %}
+          <div class="header-underbar">&#x2B26;</div>
+        {% endif %}
+      </div>
+      <!-- /Page Title -->
+
+      <!-- Page Body (Center Panel) -->
+      <div class="col-12">
+        <div class="panel px-4 py-4">
+          {% block content %}{% endblock %}
         </div>
-      {% endif %}
-      {% endblock %}
-    </header>
-    {% if title and not hide_title %}
-      <div class="header-underbar">&#x2B26;</div>
-    {% endif %}
-  </div>
+      </div>
+      <!-- /Page Body -->
 
-  <!-- Page Body -->
-  <div class="col-12" style="margin: 0px 30px;">
-
-    <!-- Center Panel -->
-    <div class="panel-center panel">
-      {% block content %}{% endblock %}
     </div>
-
   </div>
-
 </div>
 
 {% endblock %}

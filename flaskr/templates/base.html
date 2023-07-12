@@ -31,8 +31,8 @@
   <!-- /Header Nav -->
 
   <!-- Main Body -->
-  {% set main_scroll = 'y-scroll' if bigimage else 'hidden' %}
-  <div class="overflow-{{ main_scroll }}" style="flex-grow: 1;">
+  {% set main_scroll = 'scroll' if bigimage else 'hidden' %}
+  <div class="overflow-y-{{ main_scroll }} overflow-x-hidden w-100 flex-grow-1">
 
     {% if bigimage %}
     <section class="position-relative h-100">
@@ -40,7 +40,7 @@
     </section>
     {% endif %}
 
-    <div class="overflow-hidden" style="height: 100%">
+    <div class="overflow-hidden {% if not bigimage %}h-100{% endif %}">
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
       {% endfor %}
