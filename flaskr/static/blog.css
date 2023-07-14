@@ -33,3 +33,11 @@
   position: relative;
   z-index: 2;
 }
+
+.blog-subtitle {
+  color: var(--color-secondary-4);
+}
+
+.blog-subtitle:hover {
+  color: var(--color-secondary-1);
+}
