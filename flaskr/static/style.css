@@ -185,6 +185,13 @@ h1 {
     transition: transform 0.1s;
 }
 
+.footer-icon:hover {
+    background: var(--color-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .footer-icon-container-offscreen {
     z-index: -1;
 }
