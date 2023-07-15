@@ -113,10 +113,10 @@
       })
     })
     {% if title %}
-    {% for l, t in title.items() %}
+    {%- for l, t in title.items() %}
     if (val === "{{l}}") document.title = "{{t}} {% if l != 'en' %}({{title.en}}) {% endif %}⬦ vlagrassa";
-    {% endfor %}
-    {% endif %}
+    {%- endfor %}
+    {%- endif %}
 
     document.dispatchEvent(new CustomEvent('set-language', {
       'detail': { 'language': val },
