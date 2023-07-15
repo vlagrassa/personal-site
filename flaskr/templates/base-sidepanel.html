@@ -2,7 +2,6 @@
 
 
 {% block body %}
-{% from '_includes/lang.j2' import render_lang_selector %}
 
 <!-- Page Body -->
 <div class="row h-100 w-100 gx-0">
@@ -28,8 +27,6 @@
       <!-- Left Panel Content -->
       {% block leftpanel %}{% endblock %}
     </div>
-
-    {{ render_lang_selector(langs) }}
   </div>
 
   <!-- Center Panel -->

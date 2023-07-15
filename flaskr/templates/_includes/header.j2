@@ -70,7 +70,7 @@
 {#
   Render a button in the footer menu.
 #}
-{% macro render_footer_button(icon, name) %}
+{% macro render_footer_button(icon) %}
   <div style="display: inline-block;">
     <span
       id="footer-{{icon}}"
@@ -80,4 +80,32 @@
       {{icon}}
     </span>
   </div>
+{% endmacro %}
+
+
+{#
+  Render a button in the footer menu with an associated offcanvas menu.
+#}
+{% macro render_footer_button_menu(icon, name, label) %}
+  <a data-bs-toggle="offcanvas" href="#{{ label }}" role="button" aria-controls="{{ label }}">
+    {{ render_footer_button(icon) }}
+  </a>
+
+  {# Offcanvas menu #}
+  <div id="{{ label }}" class="offcanvas offcanvas-bottom offcanvas-footer-menu rounded-top" tabindex="-1" aria-labelledby="{{ label }}-label">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title mt-1" id="{{ label }}-label">
+        <span {{ set_lang("en") }}>{{ name.en }}</span>
+        <span {{ set_lang("ja") }}>{{ name.ja }}</span>
+        <span {{ set_lang("tj") }}>{{ name.tj }}</span>
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    {{ caller() }}
+  </div>
+
+  {# Move the offcanvas element to the body #}
+  <script>
+    document.body.appendChild(document.getElementById('{{ label }}'));
+  </script>
 {% endmacro %}

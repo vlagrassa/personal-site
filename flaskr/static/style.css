@@ -176,6 +176,19 @@ h1 {
     font-size: 0;
 }
 
+.offcanvas-footer-menu {
+    --bs-offcanvas-height: auto;
+    width: 180px;
+    left: 18px !important;
+
+    --bs-offcanvas-border-width: 2px;
+    --bs-offcanvas-border-color: black;
+    border: 2px solid black;
+    border-bottom: none;
+    outline: 1px solid black;
+    outline-offset: 1.5px;
+}
+
 
 
 /* Scrollbar */

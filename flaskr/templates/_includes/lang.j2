@@ -3,17 +3,10 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {%- endmacro -%}
 
 
-{% macro render_lang_selector(langs) %}
-<h4>
-  <span {{ set_lang("en") }}>Language</span>
-  <span {{ set_lang("ja") }}>言語</span>
-  <span {{ set_lang("tj") }}>Tʒoga</span>
-</h4>
-{% for l in langs %}
+{% macro render_lang_select_button(l) %}
 <button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
   <div>{{l.name}}</div>
 </button>
-{% endfor %}
 {% endmacro %}
 
 

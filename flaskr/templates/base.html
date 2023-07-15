@@ -1,5 +1,5 @@
-{% from '_includes/lang.j2'   import set_lang with context %}
-{% from '_includes/header.j2' import render_logo, render_sections, render_links, render_footer_button with context %}
+{% from '_includes/lang.j2'   import render_lang_select_button, set_lang with context %}
+{% from '_includes/header.j2' import render_logo, render_sections, render_links, render_footer_button, render_footer_button_menu with context %}
 <!doctype html>
 <head>
   <meta charset="UTF-8">
@@ -51,7 +51,17 @@
   <!-- /Main Body -->
 
   <div id="footer">
-    {{ render_footer_button('language', "Language") }}
+
+    <!-- Language Selector -->
+    {% call render_footer_button_menu('language', { 'en': "Language", 'ja': '言語', 'tj': 'Tʒoga' }, "select-language") %}
+      <div class="offcanvas-body px-0 pt-0">
+        {%- for l in langs %}
+        {{ render_lang_select_button(l) }}
+        {%- endfor %}
+      </div>
+    {% endcall %}
+    <!-- /Language Selector -->
+
     {{ render_footer_button('table_view', "Layout") }}
     {{ render_footer_button('settings', "Settings") }}
   </div>
