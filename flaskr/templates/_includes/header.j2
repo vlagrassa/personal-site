@@ -71,6 +71,12 @@
   Render a button in the footer menu.
 #}
 {% macro render_footer_button(icon, name) %}
+  {% if not icon is string %}
+  {% set alt_icon = icon[1] %}
+  {% set icon = icon[0] %}
+  {% else %}
+  {% set alt_icon = none %}
+  {% endif %}
   <span
     id="footer-{{icon}}" class="material-symbols-outlined footer-icon"
     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<span class='font-{{ lang }}'>{{ name[lang] }}</span>"
@@ -84,6 +90,16 @@
       const titles = {{ name }};
       tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` })
     }))
+
+    {% if alt_icon %}
+    const icon_el = document.getElementById('footer-{{ icon }}');
+    icon_el.onmouseenter = () => {
+      icon_el.innerHTML = '{{ alt_icon }}';
+    }
+    icon_el.onmouseleave = () => {
+      icon_el.innerHTML = '{{ icon }}';
+    }
+    {% endif %}
   </script>
 {% endmacro %}
 
@@ -102,9 +118,21 @@
     </span>
   </div>
 
+  {%- if not icon_1[0] is string %}
+  {%- set icon_1_name = icon_1[0][0] %}
+  {%- else %}
+  {%- set icon_1_name = icon_1[0] %}
+  {%- endif %}
+
+  {%- if not icon_2[0] is string %}
+  {%- set icon_2_name = icon_2[0][0] %}
+  {%- else %}
+  {%- set icon_2_name = icon_2[0] %}
+  {%- endif %}
+
   <script type="module">
-    const el_1 = document.getElementById('footer-{{ icon_1[0] }}');
-    const el_2 = document.getElementById('footer-{{ icon_2[0] }}');
+    const el_1 = document.getElementById('footer-{{ icon_1_name }}');
+    const el_2 = document.getElementById('footer-{{ icon_2_name }}');
 
     function show_el(el)  {
       el.classList.remove('footer-icon-offscreen');
