@@ -73,7 +73,7 @@
 {% macro render_footer_button(icon, name) %}
   <span
     id="footer-{{icon}}" class="material-symbols-outlined footer-icon"
-    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="{{ name[lang] }}"
+    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<span class='font-{{ lang }}'>{{ name[lang] }}</span>"
   >
     {{ icon }}
   </span>
@@ -82,7 +82,7 @@
     const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ icon }}') // Returns a Bootstrap tooltip instance
     document.addEventListener('set-language', (({detail}) => {
       const titles = {{ name }};
-      tooltip.setContent({ '.tooltip-inner': titles[detail.language] })
+      tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` })
     }))
   </script>
 {% endmacro %}
