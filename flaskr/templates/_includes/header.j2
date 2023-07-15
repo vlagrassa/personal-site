@@ -89,6 +89,49 @@
 
 
 {#
+  Render a button in the footer menu that will toggle between options.
+#}
+{% macro render_footer_button_toggle( icon_1, icon_2 ) %}
+
+  <div style="position: relative; display: inline-block;">
+    <span style="transition: transform 0.1s;">
+      {{ render_footer_button( *icon_1 ) }}
+    </span>
+    <span style="position: absolute; top: 0; left: 0; transition: transform 0.1s;">
+      {{ render_footer_button( *icon_2 ) }}
+    </span>
+  </div>
+
+  <script type="module">
+    const el_1 = document.getElementById('footer-{{ icon_1[0] }}');
+    const el_2 = document.getElementById('footer-{{ icon_2[0] }}');
+
+    function show_el(el)  {
+      el.classList.remove('footer-icon-offscreen');
+      el.parentElement.classList.remove('footer-icon-container-offscreen');
+    }
+
+    function hide_el(el) {
+      el.classList.add('footer-icon-offscreen');
+      el.parentElement.classList.add('footer-icon-container-offscreen');
+    }
+
+    el_1.onclick = () => {
+      hide_el(el_1);
+      show_el(el_2);
+    }
+
+    el_2.onclick = () => {
+      hide_el(el_2);
+      show_el(el_1);
+    }
+
+    hide_el(el_2);
+  </script>
+{% endmacro %}
+
+
+{#
   Render a button in the footer menu with an associated offcanvas menu.
 #}
 {% macro render_footer_button_menu(icon, name, label) %}

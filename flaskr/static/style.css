@@ -185,6 +185,16 @@ h1 {
     user-select: none;
     padding: 0px 2px;
     display: inline-block;
+    transition: transform 0.1s;
+}
+
+.footer-icon-container-offscreen {
+    z-index: -1;
+}
+
+.footer-icon-offscreen {
+    transform: translateY(36px);
+    z-index: -1;
 }
 
 .offcanvas-footer-menu {
