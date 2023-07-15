@@ -176,6 +176,13 @@ h1 {
     font-size: 0;
 }
 
+.footer-icon {
+    cursor: pointer;
+    user-select: none;
+    padding: 0px 2px;
+    display: inline-block;
+}
+
 .offcanvas-footer-menu {
     --bs-offcanvas-height: auto;
     width: 180px;
