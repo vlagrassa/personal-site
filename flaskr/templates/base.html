@@ -69,7 +69,13 @@
     ) }}
     <!-- /Light & Dark Mode Selector -->
 
-    {{ render_footer_button('table_view', { 'en': "Layout",   'ja': '形式', 'tj': 'Layout'   }) }}
+    <!-- Layout Selector -->
+    {{ render_footer_button_toggle(
+      ('grid_view',  { 'en': "Simple Layout",  'ja': '簡単な形式', 'tj': 'Simple Layout'  }),
+      ('view_quilt', { 'en': "Complex Layout", 'ja': '複雑な形式', 'tj': 'Complex Layout' }),
+    ) }}
+    <!-- /Layout Selector -->
+
     {{ render_footer_button('settings',   { 'en': "Settings", 'ja': '設定', 'tj': 'Settings' }) }}
   </div>
 
