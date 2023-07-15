@@ -173,16 +173,38 @@ h1 {
     position: fixed;
     bottom: 0;
     user-select: none;
-    padding: 10px 15px;
+    padding: 10px 10px;
     font-size: 0;
 }
+
+.footer-h {}
+
+.footer-v {}
 
 .footer-icon {
     cursor: pointer;
     user-select: none;
+    transition: transform 0.1s;
+}
+
+.footer-h .footer-icon {
     padding: 0px 2px;
     display: inline-block;
-    transition: transform 0.1s;
+}
+
+.footer-v .footer-icon {
+    padding: 2px 0px;
+    display: block;
+}
+
+.footer-h .footer-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-v .footer-icon-container {
+    position: relative;
+    display: block;
 }
 
 .footer-icon:hover {
@@ -196,8 +218,13 @@ h1 {
     z-index: -1;
 }
 
-.footer-icon-offscreen {
+.footer-h .footer-icon-offscreen {
     transform: translateY(36px);
+    z-index: -1;
+}
+
+.footer-v .footer-icon-offscreen {
+    transform: translateX(-36px);
     z-index: -1;
 }
 
