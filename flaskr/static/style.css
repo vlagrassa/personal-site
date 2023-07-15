@@ -310,6 +310,7 @@ a {
 }
 
 .underline-hover-text {
+    z-index: 10;
     width: fit-content;
     position: relative;
     text-shadow:
@@ -351,6 +352,11 @@ a {
     font-family: var(--font-body-ltn);
 }
 
+.header-button > a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .header-button:hover {
     color: var(--color-primary);
     transform: scale(1.1) translateY(2px);
@@ -360,14 +366,14 @@ a {
 .header-button-underline {
     border-top: 1.5px solid var(--color-primary);
     border-bottom: 0.75px solid var(--color-primary);
-    height: 0.75px;
+    height: 2.75px;
     width: 100%;
     transition: transform 0.1s;
-    transform: translateX(0%) scaleX(0);
+    transform: translateX(0%) translateY(-1.5px) scaleX(0);
 }
 
 .header-button:hover .header-button-underline {
-    transform: translateX(0%) scaleX(1);
+    transform: translateX(0%) translateY(-1.5px) scaleX(1);
 }
 
 
@@ -463,7 +469,7 @@ a {
 
 .big-image::after {
     content: "";
-    height: 1px;
+    height: 5px;
     border-top:    1px solid var(--color-header-border);
     border-bottom: 3px solid var(--color-header-border);
     width: 100%;
