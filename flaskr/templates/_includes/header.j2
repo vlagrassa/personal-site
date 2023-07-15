@@ -98,13 +98,12 @@
 
   {# Offcanvas menu #}
   <div id="{{ label }}" class="offcanvas offcanvas-bottom offcanvas-footer-menu rounded-top" tabindex="-1" aria-labelledby="{{ label }}-label">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title mt-1" id="{{ label }}-label">
+    <div class="offcanvas-header justify-content-center">
+      <h5 class="offcanvas-title text-center mt-1" id="{{ label }}-label">
         <span {{ set_lang("en") }}>{{ name.en }}</span>
         <span {{ set_lang("ja") }}>{{ name.ja }}</span>
         <span {{ set_lang("tj") }}>{{ name.tj }}</span>
       </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     {{ caller() }}
   </div>
