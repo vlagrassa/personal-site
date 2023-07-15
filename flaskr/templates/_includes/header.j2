@@ -70,7 +70,7 @@
 {#
   Render a button in the footer menu.
 #}
-{% macro render_footer_button(icon, name) %}
+{% macro render_footer_button(icon, name, class='') %}
   {% if not icon is string %}
   {% set alt_icon = icon[1] %}
   {% set icon = icon[0] %}
@@ -78,7 +78,7 @@
   {% set alt_icon = none %}
   {% endif %}
   <span
-    id="footer-{{icon}}" class="material-symbols-outlined footer-icon"
+    id="footer-{{icon}}" class="material-symbols-outlined footer-icon {{class}}"
     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<span class='font-{{ lang }}'>{{ name[lang] }}</span>"
   >
     {{ icon }}

@@ -64,8 +64,8 @@
 
     <!-- Light & Dark Mode Selector -->
     {{ render_footer_button_toggle(
-      ('dark_mode',  { 'en': "Dark Mode",  'ja': '夜', 'tj': 'Dark Mode'  } ),
-      ('light_mode', { 'en': "Light Mode", 'ja': '日', 'tj': 'Light Mode' } ),
+      ('dark_mode',  { 'en': "Dark Mode",  'ja': '夜', 'tj': 'Dark Mode'  }, 'hover-rotate-90-m'),
+      ('light_mode', { 'en': "Light Mode", 'ja': '日', 'tj': 'Light Mode' }, 'hover-rotate-45'),
     ) }}
     <!-- /Light & Dark Mode Selector -->
 
@@ -76,7 +76,7 @@
     ) }}
     <!-- /Layout Selector -->
 
-    {{ render_footer_button('settings',   { 'en': "Settings", 'ja': '設定', 'tj': 'Settings' }) }}
+    {{ render_footer_button('settings',   { 'en': "Settings", 'ja': '設定', 'tj': 'Settings' }, 'hover-rotate-60') }}
   </div>
 
 </body>

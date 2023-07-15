@@ -241,6 +241,27 @@ h1 {
     outline-offset: 1.5px;
 }
 
+.hover-rotate-45 {
+    transition: transform 0.1s;
+}
+.hover-rotate-45:hover {
+    transform: rotate(45deg);
+}
+
+.hover-rotate-60 {
+    transition: transform 0.1s;
+}
+.hover-rotate-60:hover {
+    transform: rotate(60deg);
+}
+
+.hover-rotate-90-m {
+    transition: transform 0.1s;
+}
+.hover-rotate-90-m:hover {
+    transform: rotate(-90deg);
+}
+
 
 
 /* Scrollbar */
