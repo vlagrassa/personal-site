@@ -62,8 +62,8 @@
     {% endcall %}
     <!-- /Language Selector -->
 
-    {{ render_footer_button('table_view', "Layout") }}
-    {{ render_footer_button('settings', "Settings") }}
+    {{ render_footer_button('table_view', { 'en': "Layout",   'ja': '形式', 'tj': 'Layout'   }) }}
+    {{ render_footer_button('settings',   { 'en': "Settings", 'ja': '設定', 'tj': 'Settings' }) }}
   </div>
 
 </body>
@@ -99,6 +99,12 @@
     }));
   }
   set_language("{{lang}}")
+
+
+  // Enable tooltips
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 </script>
 
 {% block script %}{% endblock %}

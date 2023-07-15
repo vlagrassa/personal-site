@@ -70,8 +70,21 @@
 {#
   Render a button in the footer menu.
 #}
-{% macro render_footer_button(icon) %}
-  <span id="footer-{{icon}}" class="material-symbols-outlined footer-icon">{{ icon }}</span>
+{% macro render_footer_button(icon, name) %}
+  <span
+    id="footer-{{icon}}" class="material-symbols-outlined footer-icon"
+    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="{{ name[lang] }}"
+  >
+    {{ icon }}
+  </span>
+
+  <script type="module">
+    const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ icon }}') // Returns a Bootstrap tooltip instance
+    document.addEventListener('set-language', (({detail}) => {
+      const titles = {{ name }};
+      tooltip.setContent({ '.tooltip-inner': titles[detail.language] })
+    }))
+  </script>
 {% endmacro %}
 
 
@@ -80,7 +93,7 @@
 #}
 {% macro render_footer_button_menu(icon, name, label) %}
   <a data-bs-toggle="offcanvas" href="#{{ label }}" role="button" aria-controls="{{ label }}">
-    {{ render_footer_button(icon) }}
+    {{ render_footer_button(icon, name) }}
   </a>
 
   {# Offcanvas menu #}
