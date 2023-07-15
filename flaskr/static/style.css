@@ -536,10 +536,11 @@ a {
 
 
 .lang-button {
-    display: inline-block;
+    display: block;
     border: none;
     padding: 0.5rem 1rem;
     margin: 0;
+    width: 100%;
 
     text-decoration: none;
     font-family: var(--font-body-ltn);
