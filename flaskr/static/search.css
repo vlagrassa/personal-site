@@ -33,14 +33,13 @@
   box-shadow: none;
 }
 
-.searchbar:focus-within {
+.searchbar-container:focus-within > .searchbar {
   outline: none;
   border-color: var(--color-secondary);
 }
 
 /* Label when selected */
-.searchbar:focus-within + label,
-.searchbar-container > input:focus + label, .searchbar-container > input:valid:focus + label {
+.searchbar-container:focus-within > .searchbar + label {
   transform: translateY(-1.1em) scale(0.8);
   color: var(--color-secondary);
   font-weight: bold;
@@ -48,7 +47,7 @@
 }
 
 /* Label when not selected & input exists */
-input:valid + label {
+.searchbar-container.has-value:not(:focus-within) label {
   color: transparent;
   background: transparent;
 }

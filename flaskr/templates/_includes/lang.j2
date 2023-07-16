@@ -26,15 +26,21 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% macro render_searchbar(id=none, oninput=none, label=none, class='', searchbar_class='') %}
   <div id="{{id}}-container" class="searchbar-container {{class}}">
     <div id="{{id}}-searchbar" class="searchbar {{ searchbar_class }}">
-      <input id="{{id}}-input" title="" type="text" required
-        {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
-      >
+      <input id="{{id}}-input" title="" type="text">
     </div>
     {{ render_searchbar_label(id, label) }}
   </div>
+  <script>
+    document.getElementById('{{id}}-input').oninput = (event) => {
+      const value = event.srcElement.value;
+      document.getElementById("{{id}}-container").classList.toggle('has-value', !!value);
+      {% if oninput %} {{ oninput }}(value) {% endif %}
+    }
+  </script>
 {% endmacro %}
 
 
+{# TODO: Handle enter, backspace #}
 {% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
   {{ render_searchbar(id, oninput='filter_tags', label=label, class=class, searchbar_class='searchbar-tags') }}
 
@@ -43,7 +49,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       <div class="card-body">
         <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
           {% for tag in tags %}
-            <button id="{{id}}-tag-{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
+            <button id="{{id}}-tag-{{tag.id}}" data-tag="{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
               <span {{set_lang("en")}}>{{ tag.name_en }}</span>
               <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
               <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
@@ -73,6 +79,11 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.insertBefore(buttonElement, parentElement.childNodes[parentElement.childNodes.length - 2]);
       buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('add_tag', 'remove_tag'))
+
+      const input_el = document.getElementById('{{id}}-input');
+      input_el.value = '';
+      filter_tags(input_el.value);
+      input_el.focus();
     }
 
     function remove_tag(tag) {
@@ -88,10 +99,23 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.appendChild(buttonElement);
       buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
+
+      const input_el = document.getElementById('{{id}}-input');
+      filter_tags(input_el.value);
+      input_el.focus();
     }
 
-    function filter_tags(t) {
-      console.log(t);
+    function filter_tags(value) {
+      document.getElementById("{{id}}-container").classList.toggle('has-value', !!(value || tag_selection.length));
+
+      Array.from(document.getElementById('{{id}}-options').children).forEach((el) => {
+        if (!value) {
+          el.style.display = 'inline';
+        }
+        else {
+          el.style.display = el.dataset.tag.toLowerCase().includes(value.toLowerCase()) ? 'inline' : 'none';
+        }
+      });
     }
   </script>
 {% endmacro %}
