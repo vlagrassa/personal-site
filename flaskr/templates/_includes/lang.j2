@@ -42,16 +42,17 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 
   <div id="search-options-{{id}}" class="collapse multi-collapse" style="transform: translateY(-3px);">
     <div class="card rounded-top-0">
-      <div class="card-body text-start">
-        <button type="button" class="btn-close" aria-label="Clear" onclick="remove_tag()"></button>
-        <br />
-        {% for tag in tags %}
-          <button class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
-            <span {{set_lang("en")}}>{{ tag.name_en }}</span>
-            <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
-            <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
-          </button>
-        {% endfor %}
+      <div class="card-body">
+        <div class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
+          {% for tag in tags %}
+            <button class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
+              <span {{set_lang("en")}}>{{ tag.name_en }}</span>
+              <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
+              <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
+            </button>
+          {% endfor %}
+        </div>
+        <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
       </div>
     </div>
   </div>
