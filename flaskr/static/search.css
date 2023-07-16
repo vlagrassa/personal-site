@@ -20,6 +20,7 @@
   user-select: none;
 }
 
+.searchbar-container > .searchbar,
 .searchbar-container > input {
   background-image: none;
   padding: 8px;
@@ -32,11 +33,13 @@
   box-shadow: none;
 }
 
+.searchbar:focus-within,
 .searchbar-container > input:focus {
   outline: none;
   border-color: var(--color-secondary);
 }
 
+.searchbar:focus-within + label,
 .searchbar-container > input:focus + label, .searchbar-container > input:valid:focus + label {
   transform: translateY(-1.1em) scale(0.8);
   color: var(--color-secondary);
@@ -47,4 +50,29 @@
 input:valid + label {
   color: transparent;
   background: transparent;
+}
+
+
+.searchbar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  background-color: white;
+}
+
+.input-tags {
+  width: 100%;
+  display: inline-block;
+  padding: 0px;
+  border: none;
+  outline: none;
+
+  flex: 1;
+  flex-grow: 1;
+  min-width: 3em;
 }
