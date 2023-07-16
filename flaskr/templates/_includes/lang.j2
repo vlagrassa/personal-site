@@ -10,6 +10,19 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% endmacro %}
 
 
+{% macro render_searchbar_label(id, label) %}
+  {% if label is mapping %}
+    <label for="{{id}}">
+    {% for l, t in label.items() %}
+      <span {{ set_lang(l) }}>{{ t }}</span>
+    {% endfor %}
+    </label>
+  {% elif label %}
+    <label for="{{id}}">{{label}}</label>
+  {% endif %}
+{% endmacro %}
+
+
 {% macro render_searchbar(id=none, oninput=none, label=none, class='') %}
   <div class="searchbar-container {{class}}">
     <input
@@ -19,15 +32,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       required
       {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
     >
-    {% if label is mapping %}
-      <label for="{{id}}">
-      {% for l, t in label.items() %}
-        <span {{ set_lang(l) }}>{{ t }}</span>
-      {% endfor %}
-      </label>
-    {% elif label %}
-      <label for="{{id}}">{{label}}</label>
-    {% endif %}
+    {{ render_searchbar_label(id, label) }}
   </div>
 {% endmacro %}
 
