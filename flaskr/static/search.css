@@ -40,7 +40,7 @@
 
 /* Label when selected */
 .searchbar-container:focus-within > .searchbar + label {
-  transform: translateY(-1.1em) scale(0.8);
+  transform: translateY(-1.2em) scale(0.8);
   color: var(--color-secondary);
   font-weight: bold;
   background: white;
@@ -48,8 +48,8 @@
 
 /* Label when not selected & input exists */
 .searchbar-container.has-value:not(:focus-within) label {
-  color: transparent;
-  background: transparent;
+  transform: translateY(-1.2em) scale(0.8);
+  /* transform: translateY(-0.85em) scaleX(0.8) scaleY(0); */
 }
 
 
