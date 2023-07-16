@@ -12,21 +12,21 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 
 {% macro render_searchbar_label(id, label) %}
   {% if label is mapping %}
-    <label for="{{id}}">
+    <label for="{{id}}-input">
     {% for l, t in label.items() %}
       <span {{ set_lang(l) }}>{{ t }}</span>
     {% endfor %}
     </label>
   {% elif label %}
-    <label for="{{id}}">{{label}}</label>
+    <label for="{{id}}-input">{{label}}</label>
   {% endif %}
 {% endmacro %}
 
 
 {% macro render_searchbar(id=none, oninput=none, label=none, class='', searchbar_class='') %}
-  <div class="searchbar-container {{class}}">
+  <div id="{{id}}-container" class="searchbar-container {{class}}">
     <div id="{{id}}-searchbar" class="searchbar {{ searchbar_class }}">
-      <input id="{{id}}" title="" type="text" required
+      <input id="{{id}}-input" title="" type="text" required
         {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
       >
     </div>
@@ -38,10 +38,10 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
   {{ render_searchbar(id, oninput='filter_tags', label=label, class=class, searchbar_class='searchbar-tags') }}
 
-  <div id="search-options-{{id}}" class="collapse multi-collapse" style="transform: translateY(-3px);">
+  <div id="{{id}}-options-container" class="collapse multi-collapse" style="transform: translateY(-3px);">
     <div class="card rounded-top-0">
       <div class="card-body">
-        <div class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
+        <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
           {% for tag in tags %}
             <button id="{{id}}-tag-{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
               <span {{set_lang("en")}}>{{ tag.name_en }}</span>
@@ -56,11 +56,12 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
   </div>
 
   <script>
-    let input_el = document.getElementById('{{id}}');
-    input_el.parentElement.parentElement.appendChild(document.getElementById('search-options-{{id}}'));
+    let container_el = document.getElementById('{{id}}-container');
+    container_el.appendChild(document.getElementById('{{id}}-options-container'));
 
+    let input_el = document.getElementById('{{id}}-input');
     input_el.setAttribute('data-bs-toggle', 'collapse')
-    input_el.setAttribute('data-bs-target', "#search-options-{{id}}")
+    input_el.setAttribute('data-bs-target', "#{{id}}-options-container")
 
     let tag_selection = [];
 
@@ -83,7 +84,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       }
       {{ oninput }}(tag_selection);
 
-      const parentElement = document.getElementById('search-options-{{id}}').children[0].children[0].children[0];
+      const parentElement = document.getElementById('{{id}}-options');
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.appendChild(buttonElement);
       buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
