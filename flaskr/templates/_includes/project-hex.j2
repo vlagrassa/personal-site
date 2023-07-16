@@ -1,0 +1,28 @@
+{% macro render_project_hex(project) %}
+  {# Border #}
+  <a class="hex hexicon-border" href="{{url_for('projects.summary', name=(project.id))}}">
+    <div class="hex hexicon" style="background-image: url({{project.img}}); background-size: cover;">
+
+      {# Body #}
+      <div class="hexicon-body">
+
+        {# Date #}
+        {% if project.get('created_date') or project.get('modified_date') %}
+        <div class="hexicon-overlay hexicon-overlay-date">
+          {{ date_year_range(project.get('created_date'), project.get('modified_date')) }}
+        </div>
+        {% endif %}
+
+        {# Title #}
+        <div class="hexicon-overlay hexicon-overlay-middle">
+          <h2 style="margin: 0px 10px; font-weight: normal;">{{project.name}}</h2>
+        </div>
+
+        {# Location Category #}
+        <div class="hexicon-overlay hexicon-overlay-bottom">
+          {{ project_icon(project.location) }}
+        </div>
+      </div>
+    </div>
+  </a>
+{% endmacro %}

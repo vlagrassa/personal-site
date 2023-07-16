@@ -38,29 +38,14 @@
 
 {% block content %}
 {% from '_includes/icons.j2' import project_icon, date_year_range with context %}
+{% from '_includes/project-hex.j2' import render_project_hex with context %}
 <div>
 
   <div class="main">
     <div class="container">
-      {% for project in projects %}
-      <a class="hex hexicon-border" href="{{url_for('projects.summary', name=(project.id))}}">
-        <div class="hex hexicon" style="background-image: url({{project.img}}); background-size: cover;">
-          <div class="hexicon-body">
-            {% if project.get('created_date') or project.get('modified_date') %}
-            <div class="hexicon-overlay hexicon-overlay-date">
-              {{ date_year_range(project.get('created_date'), project.get('modified_date')) }}
-            </div>
-            {% endif %}
-            <div class="hexicon-overlay hexicon-overlay-middle">
-              <h2 style="margin: 0px 10px; font-weight: normal;">{{project.name}}</h2>
-            </div>
-            <div class="hexicon-overlay hexicon-overlay-bottom">
-              {{ project_icon(project.location) }}
-            </div>
-          </div>
-        </div>
-      </a>
-      {% endfor %}
+      {%- for project in projects %}
+      {{ render_project_hex(project) }}
+      {%- endfor %}
     </div>
   </div>
 </div>
