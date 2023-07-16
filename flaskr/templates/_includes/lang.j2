@@ -10,7 +10,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% endmacro %}
 
 
-{% macro render_searchbar(id=none, oninput=none, label=none, class='', fixed_inputs=none) %}
+{% macro render_searchbar(id=none, oninput=none, label=none, class='') %}
   <div class="searchbar-container {{class}}">
     <input
       id="{{id}}"
@@ -18,7 +18,6 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       title=""
       required
       {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
-      data-bs-toggle="dropdown"
     >
     {% if label is mapping %}
       <label for="{{id}}">
@@ -29,6 +28,53 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
     {% elif label %}
       <label for="{{id}}">{{label}}</label>
     {% endif %}
-
   </div>
+{% endmacro %}
+
+
+{% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
+  {{ render_searchbar(id=id, oninput=oninput, label=label, class=class ) }}
+
+  <div id="search-options-{{id}}" class="collapse multi-collapse" style="transform: translateY(-3px);">
+    <div class="card rounded-top-0">
+      <div class="card-body text-start">
+        <button type="button" class="btn-close" aria-label="Clear" onclick="remove_tag()"></button>
+        <br />
+        {% for tag in tags %}
+          <button class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
+            <span {{set_lang("en")}}>{{ tag.name_en }}</span>
+            <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
+            <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let input_el = document.getElementById('{{id}}');
+    input_el.parentElement.appendChild(document.getElementById('search-options-{{id}}'));
+
+    input_el.setAttribute('data-bs-toggle', 'collapse')
+    input_el.setAttribute('data-bs-target', "#search-options-{{id}}")
+    input_el.style.position = 'relative';
+    input_el.style.zIndex   = '10';
+
+    let tag_selection = [];
+
+    function add_tag(tag) {
+      tag_selection.push(tag);
+      {{ oninput }}(tag_selection);
+    }
+
+    function remove_tag(tag) {
+      if (tag) {
+        tag_selection = tag_selection.filter((val) => val !== tag);
+      }
+      else {
+        tag_selection = [];
+      }
+      {{ oninput }}(tag_selection);
+    }
+  </script>
 {% endmacro %}

@@ -8,16 +8,17 @@
 
 
 {% block leftpanel %}
-{% from '_includes/lang.j2' import render_searchbar %}
+{% from '_includes/lang.j2' import render_searchbar, render_searchbar_tags %}
 
 <form style="width: 90%; margin: auto;">
   {{ render_searchbar(
     id='search-text', oninput='search_text',
     label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
     ) }}
-  {{ render_searchbar(
-    id='search-tags',
+  {{ render_searchbar_tags(
+    id='search-tags', oninput='apply_tag_filter',
     label={'en': 'Tags', 'ja': 'タグ', 'tj': 'Tags'},
+    tags=tags,
   ) }}
   <div style="display: flex; justify-content: space-between; margin-top: -10px;">
     <div style="flex: 1">
@@ -66,17 +67,25 @@
     }
   }
 
-  function select_tag(tag) {
-    if (tag) {
-      for (let key in post_list) {
-        document.getElementById(key).style.display = post_list[key]['tags'].includes(tag) ? 'inline-flex' : 'none';
-      }
-    }
-    else {
+  function apply_tag_filter(tag_selection) {
+
+    if (tag_selection.length === 0) {
       for (let key in post_list) {
         document.getElementById(key).style.display = 'inline-flex';
       }
+      return;
     }
+
+    for (let key in post_list) {
+      document.getElementById(key).style.display = 'none';
+    }
+    tag_selection.forEach((tag) => {
+      for (let key in post_list) {
+        if (post_list[key]['tags'].includes(tag)) {
+          document.getElementById(key).style.display = 'inline-flex';
+        }
+      }
+    });
   }
 </script>
 {% endblock %}

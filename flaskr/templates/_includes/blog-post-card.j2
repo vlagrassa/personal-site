@@ -52,7 +52,7 @@
           {# Tags #}
           <div class="col-auto user-select-none">
           {% for tag in post.tags %}
-            <button class="btn badge btn-custom" onclick="select_tag('{{tag.id}}');">
+            <button class="btn badge btn-custom" onclick="add_tag('{{tag.id}}');">
               <span {{set_lang("en")}}>{{tag.name_en}}</span>
               <span {{set_lang("ja")}}>{{tag.name_ja}}</span>
               <span {{set_lang("tj")}}>{{tag.name_tj}}</span>
