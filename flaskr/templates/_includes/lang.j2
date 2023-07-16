@@ -23,28 +23,20 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% endmacro %}
 
 
-{% macro render_searchbar(id=none, oninput=none, label=none, class='') %}
+{% macro render_searchbar(id=none, oninput=none, label=none, class='', searchbar_class='') %}
   <div class="searchbar-container {{class}}">
-    <input
-      id="{{id}}"
-      type="text"
-      title=""
-      required
-      {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
-    >
+    <div id="{{id}}-searchbar" class="searchbar {{ searchbar_class }}">
+      <input id="{{id}}" title="" type="text" required
+        {% if oninput %}oninput="{{ oninput }}(this.value)"{% endif %}
+      >
+    </div>
     {{ render_searchbar_label(id, label) }}
   </div>
 {% endmacro %}
 
 
 {% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
-  <div class="searchbar-container {{class}}">
-    <div id="{{id}}-searchbar" class="searchbar searchbar-tags">
-      {# Tags are added here #}
-      <input id="{{id}}" type="text" class="input-tags" oninput="filter_tags(this.value)">
-    </div>
-    {{ render_searchbar_label(id, label) }}
-  </div>
+  {{ render_searchbar(id, oninput='filter_tags', label=label, class=class, searchbar_class='searchbar-tags') }}
 
   <div id="search-options-{{id}}" class="collapse multi-collapse" style="transform: translateY(-3px);">
     <div class="card rounded-top-0">
