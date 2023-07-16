@@ -10,7 +10,7 @@
 {% block leftpanel %}
 {% from '_includes/lang.j2' import render_searchbar, render_searchbar_tags %}
 
-<form style="width: 90%; margin: auto;">
+<form style="width: 90%; margin: auto;" novalidate onsubmit="event.preventDefault();">
   {{ render_searchbar(
     id='search-text', oninput='search_text',
     label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
