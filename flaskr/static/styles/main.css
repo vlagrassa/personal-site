@@ -6,18 +6,18 @@
 
 @font-face {
     font-family: 'Montserrat Tj';
-    src: url('fonts/Montserrat-Tj-Regular.ttf');
+    src: url('../fonts/Montserrat-Tj-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Kanit Tj';
-    src: url('fonts/Kanit-Tj-Regular.ttf');
+    src: url('../fonts/Kanit-Tj-Regular.ttf');
 }
 
 /* Overwrite Japanese body font face to render Roman characters in Roman font */
 @font-face {
     font-family: 'Zen Kaku Gothic New';
-    src: url('fonts/Montserrat-Tj-Regular.ttf');
+    src: url('../fonts/Montserrat-Tj-Regular.ttf');
     unicode-range: U+00-52F, U+1E00-1FFF, U+2200-22FF;
 }
 
