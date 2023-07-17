@@ -6,14 +6,14 @@
   --f: calc(var(--s) * 1.732 + 4 * var(--m) - 1px); 
 }
 
-.container {
+.hex-container {
   font-size: 0; /* disable white space between inline block element */
   padding: calc(2 * var(--m));
   margin-bottom: calc(var(--m) + var(--s) * 0.2885);
   width: fit-content;
 }
 
-.container::before {
+.hex-container::before {
   content: "";
   width: calc(var(--s) / 2 + var(--m));
   float: left;
