@@ -105,6 +105,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
         tag_selection = tag_selection.filter((val) => val !== tag);
       }
       else {
+        tag_selection.forEach((t) => remove_tag_el(t));
         tag_selection = [];
       }
       {{ oninput }}(tag_selection);
