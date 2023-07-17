@@ -10,6 +10,12 @@
 {% block leftpanel %}
 {% from '_includes/lang.j2' import render_searchbar, render_searchbar_tags %}
 
+<p>
+  <span {{ set_lang("en") }}>I write stuff, sometimes.</span>
+  <span {{ set_lang("ja") }}>ときどき何かを書きます。</span>
+  <span {{ set_lang("tj") }}>I write stuff, sometimes.</span>
+</p>
+
 <form novalidate onsubmit="event.preventDefault();">
   {{ render_searchbar(
     id='search-text', oninput='search_text',
