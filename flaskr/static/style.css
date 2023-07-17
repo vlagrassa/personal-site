@@ -14,7 +14,7 @@
     src: url('fonts/Kanit-Tj-Regular.ttf');
 }
 
-/* Overwrite font face to render roman characters in roman font */
+/* Overwrite Japanese body font face to render Roman characters in Roman font */
 @font-face {
     font-family: 'Zen Kaku Gothic New';
     src: url('fonts/Montserrat-Tj-Regular.ttf');
@@ -70,8 +70,11 @@
         var(--color-primary) 100%
     );
 
-    --font-head-ltn: 'Kanit Tj', 'Kanit', sans-serif;
-    --font-head-jpn: 'BIZ UDGothic', sans-serif;
+    /* Define header font to fall back on Japanese font */
+    --font-head: 'Kanit Tj', 'Kanit', 'BIZ UDGothic', serif;
+
+    /* Define separate body fonts for the two scripts */
+    /* This might not be necessary - would a solution like above work? */
     --font-body-ltn: 'Montserrat Tj', 'Montserrat', sans-serif;
     --font-body-jpn: 'Zen Kaku Gothic New', sans-serif;
 
@@ -135,7 +138,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-head-ltn);
+    font-family: var(--font-head);
     line-height: 1.5em;
     font-weight: 700;
 }
@@ -148,8 +151,10 @@ div {
     line-height: 1.2em;
 }
 
-h1[lang="ja"], h2[lang="ja"], h3[lang="ja"], h4[lang="ja"], h5[lang="ja"], h6[lang="ja"] {
-    font-family: var(--font-head-jpn);
+/* Make sure header font is used in header, even if language is marked as Japanese */
+h1[lang="ja"],  h2[lang="ja"],  h3[lang="ja"],  h4[lang="ja"],  h5[lang="ja"],  h6[lang="ja"],
+h1 [lang="ja"], h2 [lang="ja"], h3 [lang="ja"], h4 [lang="ja"], h5 [lang="ja"], h6 [lang="ja"] {
+    font-family: var(--font-head);
 }
 
 .font-ja, .font-jpn, [lang="ja"] {
@@ -316,7 +321,7 @@ a {
 .my-logo {
     position: relative;
     z-index: 10;
-    font-family: var(--font-head-ltn);
+    font-family: var(--font-head);
 
     margin-block-start: 0;
     margin-block-end:   0;
