@@ -63,7 +63,7 @@
   function search_text(val) {
     val = val.toLowerCase();
     for (let key in post_list) {
-      document.getElementById(key).style.display = post_list[key]['title'].toLowerCase().includes(val) ? 'inline-flex' : 'none';
+      document.getElementById(key).classList.toggle('hide', !post_list[key]['title'].toLowerCase().includes(val));
     }
   }
 
@@ -71,18 +71,18 @@
 
     if (tag_selection.length === 0) {
       for (let key in post_list) {
-        document.getElementById(key).style.display = 'inline-flex';
+        document.getElementById(key).classList.remove('hide');
       }
       return;
     }
 
     for (let key in post_list) {
-      document.getElementById(key).style.display = 'none';
+      document.getElementById(key).classList.add('hide');
     }
     tag_selection.forEach((tag) => {
       for (let key in post_list) {
         if (post_list[key]['tags'].includes(tag)) {
-          document.getElementById(key).style.display = 'inline-flex';
+          document.getElementById(key).classList.remove('hide');
         }
       }
     });

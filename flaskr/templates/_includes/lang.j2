@@ -119,10 +119,10 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 
       Array.from(document.getElementById('{{id}}-options').children).forEach((el) => {
         if (!value) {
-          el.style.display = 'inline';
+          el.classList.remove('hide');
         }
         else {
-          el.style.display = el.dataset.tag.toLowerCase().includes(value.toLowerCase()) ? 'inline' : 'none';
+          el.classList.toggle('hide', !el.dataset.tag.toLowerCase().includes(value.toLowerCase()));
         }
       });
     }
