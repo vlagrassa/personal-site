@@ -3,7 +3,7 @@
   --v: 25%;
   --s: 210px;
   --m: 8px;
-  --f: calc(var(--s) * 1.732 + 4 * var(--m) - 1px); 
+  --f: calc(var(--s) * 1.732 + 4 * var(--m) - 1px);
 
   --hex-path: polygon(50% 0%, 100% var(--v), 100% calc(100% - var(--v)), 50% 100%, 0% calc(100% - var(--v)), 0% var(--v));
 }
