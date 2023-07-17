@@ -61,6 +61,14 @@
 
     --logo-line-thickness: 0.08em;
 
+    --color-gradient: linear-gradient(
+        0deg,
+        var(--color-secondary) 0%,
+        var(--color-secondary) 20%,
+        /* black 40%, */
+        var(--color-primary) 60%,
+        var(--color-primary) 100%
+    );
 
     --font-head-ltn: 'Kanit Tj', 'Kanit', sans-serif;
     --font-head-jpn: 'BIZ UDGothic', sans-serif;
@@ -645,6 +653,7 @@ a {
     color: var(--c);
     border-right: 3px solid var(--c);
     border-left:  3px solid var(--c);
+    /* border-image: var(--color-gradient) 1 100%; */
     font-weight: bold;
 }
 
