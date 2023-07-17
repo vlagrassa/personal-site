@@ -71,19 +71,33 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 
     let tag_selection = [];
 
-    function add_tag(tag) {
-      tag_selection.push(tag);
-      {{ oninput }}(tag_selection);
-
+    function add_tag_el(tag) {
       const parentElement = document.getElementById('{{id}}-searchbar');
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.insertBefore(buttonElement, parentElement.childNodes[parentElement.childNodes.length - 2]);
       buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('add_tag', 'remove_tag'))
+    }
 
+    function remove_tag_el(tag) {
+      const parentElement = document.getElementById('{{id}}-options');
+      const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
+      parentElement.appendChild(buttonElement);
+      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
+    }
+
+    function update_input_el(clear = false) {
       const input_el = document.getElementById('{{id}}-input');
-      input_el.value = '';
+      if (clear) input_el.value = '';
       filter_tags(input_el.value);
       input_el.focus();
+    }
+
+    function add_tag(tag) {
+      tag_selection.push(tag);
+      {{ oninput }}(tag_selection);
+
+      add_tag_el(tag);
+      update_input_el(true);
     }
 
     function remove_tag(tag) {
@@ -95,14 +109,8 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       }
       {{ oninput }}(tag_selection);
 
-      const parentElement = document.getElementById('{{id}}-options');
-      const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
-      parentElement.appendChild(buttonElement);
-      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
-
-      const input_el = document.getElementById('{{id}}-input');
-      filter_tags(input_el.value);
-      input_el.focus();
+      remove_tag_el(tag);
+      update_input_el(false);
     }
 
     function filter_tags(value) {
