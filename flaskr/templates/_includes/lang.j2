@@ -124,7 +124,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
       }
       {{ oninput }}(tag_selection);
 
-      remove_tag_el(tag);
+      if (tag) remove_tag_el(tag);
       update_input_el(false);
     }
 
