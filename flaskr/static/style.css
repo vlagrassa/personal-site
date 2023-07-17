@@ -79,7 +79,7 @@
     --header-outline-color: var(--color-secondary-4);
     --header-outline-inner: 3px solid var(--header-outline-color);
     --header-outline-outer: 1px solid var(--header-outline-color);
-    --header-outline-space: -4.5px;
+    --header-outline-space: 4.5px;
 
     --panel-outline-color: black;
     --panel-outline-inner: 1.75px solid var(--panel-outline-color);
@@ -488,7 +488,7 @@ a {
     content: "";
     width: 100%;
     position: absolute;
-    bottom: var(--header-outline-space);
+    bottom: calc(-1 * var(--header-outline-space));
     left: 0;
     border-bottom: var(--header-outline-outer);
     z-index: 10;
