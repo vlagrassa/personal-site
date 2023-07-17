@@ -8,7 +8,7 @@
 
 
 {% block leftpanel %}
-{% from '_includes/search.j2' import render_searchbar, render_searchbar_tags %}
+{% from '_macros/search.j2' import render_searchbar, render_searchbar_tags %}
 
 <p>
   <span {{ set_lang("en") }}>I write stuff, sometimes.</span>
@@ -46,7 +46,7 @@
 
 
 {% block content %}
-{% from '_includes/blog-post-card.j2' import render_blog_card with context %}
+{% from '_macros/blog.j2' import render_blog_card with context %}
 <div class="blog-container">
   {% for post in posts %}
     {{ render_blog_card(post) }}
