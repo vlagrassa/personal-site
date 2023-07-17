@@ -243,8 +243,8 @@ h1 {
 
 .offcanvas-footer-menu {
     --bs-offcanvas-height: auto;
-    width: 180px;
-    left: 18px !important;
+    width: 160px;
+    left: 10px !important;
 
     --bs-offcanvas-border-width: 2px;
     --bs-offcanvas-border-color: black;
