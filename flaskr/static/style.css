@@ -288,17 +288,14 @@ h1 {
 /* Track */
 ::-webkit-scrollbar-track {
     margin-top: 1px;
-    background: #f1f1f1;
-    border-left: 2px solid var(--header-outline-color);
-    border-right: 2px solid var(--header-outline-color);
-    border-top:  1px solid var(--header-outline-color);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: var(--header-outline-color);
-    outline: 1px solid white;
-    outline-offset: -3px;
+    border-radius: 4px;
+    outline: 1px solid var(--color-bg-body-light);
+    outline-offset: -2px;
 }
 
 /* Handle on hover */
