@@ -7,14 +7,14 @@
 <div class="row h-100 w-100 gx-0">
 
   <!-- Left Panel -->
-  <div class="panel-left col-6 col-sm-5 col-md-4 col-lg-3 col-xx-2">
-    <div class="panel" style="display: flex; flex-direction: column; padding-bottom: 8px; text-align: center;">
+  <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xx-2" style="padding: 30px 0px 30px 30px;">
+    <div class="panel d-flex flex-column text-center pb-2">
 
       <!-- Page Title -->
       <header>
         {% block header %}
         {% if title and not hide_title %}
-          <div style="text-align: center;">
+          <div class="text-center">
             <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
           </div>
         {% endif %}
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Center Panel -->
-  <div class="panel-center col overflow-y-scroll overflow-x-hidden" style="padding-right: calc(var(--scrollbar-width) + 15px);">
+  <div class="col overflow-y-scroll overflow-x-hidden h-100" style="padding: 30px calc(var(--scrollbar-width) + 15px) 30px 15px;">
     {% block content %}{% endblock %}
   </div>
 
