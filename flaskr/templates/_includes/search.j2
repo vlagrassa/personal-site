@@ -1,0 +1,135 @@
+{% from '_includes/lang.j2' import set_lang with context %}
+
+
+{% macro render_searchbar_label(id, label) %}
+  {% if label is mapping %}
+    <label for="{{id}}-input">
+    {% for l, t in label.items() %}
+      <span {{ set_lang(l) }}>{{ t }}</span>
+    {% endfor %}
+    </label>
+  {% elif label %}
+    <label for="{{id}}-input">{{label}}</label>
+  {% endif %}
+{% endmacro %}
+
+
+{% macro render_searchbar(id=none, oninput=none, label=none, class='', searchbar_class='') %}
+  <div id="{{id}}-container" class="searchbar-container {{class}}">
+    <div id="{{id}}-searchbar" class="searchbar {{ searchbar_class }}">
+      <input id="{{id}}-input" title="" type="text">
+    </div>
+    {{ render_searchbar_label(id, label) }}
+  </div>
+  <script>
+    document.getElementById('{{id}}-input').oninput = (event) => {
+      const value = event.srcElement.value;
+      document.getElementById("{{id}}-container").classList.toggle('has-value', !!value);
+      {% if oninput %} {{ oninput }}(value) {% endif %}
+    }
+  </script>
+{% endmacro %}
+
+
+{# TODO: Handle enter, backspace #}
+{% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
+  {{ render_searchbar(id, oninput='filter_tags', label=label, class=class, searchbar_class='searchbar-tags') }}
+
+  <div id="{{id}}-options-container" class="collapse multi-collapse" style="transform: translateY(-3px);">
+    <div class="card rounded-top-0">
+      <div class="card-body">
+        <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
+          {% for tag in tags %}
+            <button id="{{id}}-tag-{{tag.id}}" data-tag="{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
+              <span {{set_lang("en")}}>{{ tag.name_en }}</span>
+              <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
+              <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
+            </button>
+          {% endfor %}
+        </div>
+        <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    const input_el = document.getElementById('{{id}}-input');
+    const options_container = new bootstrap.Collapse('#{{id}}-options-container', {
+      toggle: false,
+    });
+    let options_container_timeout;
+
+    input_el.onfocus = (event) => {
+      clearTimeout(options_container_timeout);
+      options_container.show();
+    }
+    input_el.onblur = (event) => {
+      options_container_timeout = setTimeout(() => {
+        options_container.hide();
+      }, 100);
+    }
+  </script>
+
+  <script>
+    let container_el = document.getElementById('{{id}}-container');
+    container_el.appendChild(document.getElementById('{{id}}-options-container'));
+
+    let tag_selection = [];
+
+    function add_tag_el(tag) {
+      const parentElement = document.getElementById('{{id}}-searchbar');
+      const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
+      parentElement.insertBefore(buttonElement, parentElement.childNodes[parentElement.childNodes.length - 2]);
+      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('add_tag', 'remove_tag'))
+    }
+
+    function remove_tag_el(tag) {
+      const parentElement = document.getElementById('{{id}}-options');
+      const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
+      parentElement.appendChild(buttonElement);
+      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
+    }
+
+    function update_input_el(clear = false) {
+      const input_el = document.getElementById('{{id}}-input');
+      if (clear) input_el.value = '';
+      filter_tags(input_el.value);
+      input_el.focus();
+    }
+
+    function add_tag(tag) {
+      tag_selection.push(tag);
+      {{ oninput }}(tag_selection);
+
+      add_tag_el(tag);
+      update_input_el(true);
+    }
+
+    function remove_tag(tag) {
+      if (tag) {
+        tag_selection = tag_selection.filter((val) => val !== tag);
+      }
+      else {
+        tag_selection.forEach((t) => remove_tag_el(t));
+        tag_selection = [];
+      }
+      {{ oninput }}(tag_selection);
+
+      if (tag) remove_tag_el(tag);
+      update_input_el(false);
+    }
+
+    function filter_tags(value) {
+      document.getElementById("{{id}}-container").classList.toggle('has-value', !!(value || tag_selection.length));
+
+      Array.from(document.getElementById('{{id}}-options').children).forEach((el) => {
+        if (!value) {
+          el.classList.remove('hide');
+        }
+        else {
+          el.classList.toggle('hide', !el.dataset.tag.toLowerCase().includes(value.toLowerCase()));
+        }
+      });
+    }
+  </script>
+{% endmacro %}

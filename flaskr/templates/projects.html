@@ -5,8 +5,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
 {% endblock %}
 
+
 {% block leftpanel %}
-{% from '_includes/lang.j2' import render_searchbar %}
+{% from '_includes/search.j2' import render_searchbar, render_searchbar_tags %}
 <p>
   <span {{ set_lang("en") }}>
     This is a library of projects I've made over the years.
