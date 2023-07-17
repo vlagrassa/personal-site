@@ -61,13 +61,27 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
     </div>
   </div>
 
+  <script type="module">
+    const input_el = document.getElementById('{{id}}-input');
+    const options_container = new bootstrap.Collapse('#{{id}}-options-container', {
+      toggle: false,
+    });
+    let options_container_timeout;
+
+    input_el.onfocus = (event) => {
+      clearTimeout(options_container_timeout);
+      options_container.show();
+    }
+    input_el.onblur = (event) => {
+      options_container_timeout = setTimeout(() => {
+        options_container.hide();
+      }, 100);
+    }
+  </script>
+
   <script>
     let container_el = document.getElementById('{{id}}-container');
     container_el.appendChild(document.getElementById('{{id}}-options-container'));
-
-    let input_el = document.getElementById('{{id}}-input');
-    input_el.setAttribute('data-bs-toggle', 'collapse')
-    input_el.setAttribute('data-bs-target', "#{{id}}-options-container")
 
     let tag_selection = [];
 
