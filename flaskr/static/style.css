@@ -557,11 +557,6 @@ a {
 
 /* Panel Layout */
 
-.content {
-    margin: 12px;
-}
-
-
 .panel {
     background-color: var(--color-bg-head-light);
     border-radius: 8px;
