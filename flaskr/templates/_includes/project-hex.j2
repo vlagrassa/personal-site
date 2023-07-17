@@ -3,22 +3,22 @@
   <a class="hex hexicon-border" href="{{url_for('projects.summary', name=(project.id))}}">
     <div class="hex hexicon" style="background-image: url({{project.img}}); background-size: cover;">
 
-      {# Body #}
+      <!-- Body -->
       <div class="hexicon-body">
 
-        {# Date #}
+        <!-- Date -->
         {% if project.get('created_date') or project.get('modified_date') %}
         <div class="hexicon-overlay hexicon-overlay-date">
           {{ date_year_range(project.get('created_date'), project.get('modified_date')) }}
         </div>
         {% endif %}
 
-        {# Title #}
+        <!-- Title -->
         <div class="hexicon-overlay hexicon-overlay-middle">
           <h3 style="margin: 0px 6px; font-weight: normal; line-height: 1.2em;">{{project.name}}</h3>
         </div>
 
-        {# Location Category #}
+        <!-- Location Category -->
         <div class="hexicon-overlay hexicon-overlay-bottom">
           {{ project_icon(project.location) }}
         </div>
