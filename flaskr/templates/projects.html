@@ -47,8 +47,8 @@
 {% from '_macros/projects.j2' import project_icon, date_year_range, render_project_hex with context %}
 <div>
 
-  <div class="main">
-    <div class="hex-container">
+  <div class="hex-container-outer">
+    <div class="hex-container-inner">
       {%- for project in projects %}
       {{ render_project_hex(project) }}
       {%- endfor %}

@@ -1,4 +1,4 @@
-.main {
+.hex-container-outer {
   display: flex;
   --v: 25%;
   --s: 210px;
@@ -12,13 +12,13 @@
   overflow-y: hidden;
 }
 
-.hex-container {
+.hex-container-inner {
   font-size: 0; /* disable white space between inline block element */
   margin-bottom: calc(-1 * var(--margin-offset));
   width: fit-content;
 }
 
-.hex-container::before {
+.hex-container-inner::before {
   content: "";
   width: calc(var(--s) / 2 + var(--m));
   float: left;
