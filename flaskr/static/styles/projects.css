@@ -38,7 +38,9 @@
   margin: var(--m);
   height: calc(var(--s) * 1.1547);
   margin-bottom: calc(var(--m) - (var(--s) * 0.2885));
+
   background: black;
+  cursor: pointer;
 }
 
 .hexicon-border::before {
