@@ -66,9 +66,11 @@
 }
 
 .hexicon {
+  position: absolute;
   width:  calc(100% - 16px);
   height: calc(100% - 16px);
   top:  8px;
+  left: 8px;
   background-color: var(--color-secondary-1);
   background-position-x: left;
   background-position-y: center;
