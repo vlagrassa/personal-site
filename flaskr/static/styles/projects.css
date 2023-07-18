@@ -1,3 +1,5 @@
+/* Containers */
+
 .hex-container-outer {
   display: flex;
   --v: 25%;
@@ -26,6 +28,8 @@
   shape-outside: repeating-linear-gradient(#0000 0 calc(var(--f) - 3px), #000 0 var(--f));
 }
 
+
+/* Hexagons */
 
 .hex {
   clip-path: var(--hex-path);
@@ -81,6 +85,9 @@
   background-position-y: center;
 }
 
+
+/* Body */
+
 .hexicon-body {
   position: absolute;
   top: 0;
@@ -95,6 +102,9 @@
   justify-content: center;
   flex-direction: column;
 }
+
+
+/* Overlays */
 
 .hexicon-overlay {
   backdrop-filter: blur(3px) contrast(0.4) saturate(2) brightness(0.65);
