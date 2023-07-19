@@ -93,5 +93,10 @@
       }
     });
   }
+
+  {%- for t in initial_tags %}
+  add_tag('{{t.id}}');
+  {%- endfor %}
+  document.activeElement.blur();
 </script>
 {% endblock %}

@@ -24,11 +24,19 @@ def parse_post_object(post):
 @blog_bp.route('')
 def blog():
   posts = Post.query.order_by(Post.date.desc()).all()
+
+  initial_tags = request.args.get('tags', '')
+  if initial_tags:
+    initial_tags = [ PostTag.query.filter(PostTag.id == t).one_or_none() for t in initial_tags.split(',') ]
+    initial_tags = [ t for t in initial_tags if t is not None]
+
+
   return render_template('blog.html', **{
     'title': PAGE_TITLES[2]['title'],
     'lang': 'en',
     'posts': [ parse_post_object(post) for post in posts ],
     'tags': PostTag.query.all(),
+    'initial_tags': initial_tags,
   })
 
 @blog_bp.route('/<string:slug>')
