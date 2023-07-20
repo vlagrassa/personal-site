@@ -10,6 +10,15 @@ blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
 
 
 def parse_post_object(post):
+
+  tags = PostTagMap.query_by_post(post, name_only=True)
+  tag_names = [ t.id for t in tags ]
+  for t in tags:
+    t.display = True
+  for t in tags:
+    if t.parent in tag_names:
+      tags[tag_names.index(t.parent)].display = False
+
   return {
     'id':    post.id,
     'title': post.title,
@@ -17,7 +26,7 @@ def parse_post_object(post):
     'group': post.category.name,
     'slug':  post.category.slug,
     'date':  post.date,
-    'tags':  PostTagMap.query_by_post(post, name_only=True),
+    'tags':  tags,
   }
 
 

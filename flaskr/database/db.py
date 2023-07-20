@@ -72,6 +72,7 @@ class PostTag(db.Model):
   name_en = sa.Column(sa.String(32), unique=True)
   name_ja = sa.Column(sa.String(32), unique=True)
   name_tj = sa.Column(sa.String(32), unique=True)
+  parent  = sa.Column(sa.String(24), sa.ForeignKey('post_tag.id'))
 
 class PostTagMap(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
