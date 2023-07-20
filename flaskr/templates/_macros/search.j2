@@ -53,6 +53,7 @@
   </div>
 
   <script type="module">
+    const container_el = document.getElementById('{{id}}-container');
     const input_el = document.getElementById('{{id}}-input');
     const options_container = new bootstrap.Collapse('#{{id}}-options-container', {
       toggle: false,
@@ -63,10 +64,18 @@
       clearTimeout(options_container_timeout);
       options_container.show();
     }
+
+    input_el.onclick = (event) => {
+      clearTimeout(options_container_timeout);
+      options_container.show();
+    }
+
     input_el.onblur = (event) => {
       options_container_timeout = setTimeout(() => {
-        options_container.hide();
-      }, 200);
+        if (!container_el.contains(document.activeElement)) {
+          options_container.hide();
+        }
+      }, 50);
     }
   </script>
 
