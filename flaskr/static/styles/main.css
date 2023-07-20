@@ -710,24 +710,33 @@ a.link:hover::after, a.link:focus::after {
 
 
 .contents-scrollspy a {
+    --c: var(--bs-heading-color);
+    color: var(--c);
+
     font-weight: lighter;
-    /* border-left: 3px solid transparent; */
     border-left: none;
-    /* margin-left: 3px; */
     transition: border 0.1s, color 0.1s;
 }
 
 .contents-scrollspy a:hover {
-    color: var(--color-primary-3);
+    --c: var(--color-primary-3);
 }
 
 .contents-scrollspy a.active {
-    color: var(--color-primary);
-    border-left: 3px solid var(--color-primary);
-    margin-left: none;
+    --c: var(--color-primary);
+    border-left: 3px solid var(--c);
 }
 
 .contents-scrollspy a.active:hover {
-    color: var(--color-primary-4);
-    border-left: 3px solid var(--color-primary-4);
+    --c: var(--color-primary-4);
+}
+
+.contents-scrollspy a.active::before {
+    content: "";
+    position: absolute;
+    height: calc(100% - 2px);
+    top: 1px;
+    left: 1px;
+    border-left: 1px solid var(--c);
+    transition: border 0.1s, color 0.1s;
 }
