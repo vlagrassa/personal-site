@@ -12,14 +12,14 @@
     <div class="row m-0 g-0">
 
       <!-- Table of Contents -->
-      <div class="col-2 p-4 ps-0">
+      <div class="d-none d-sm-block col-sm-2 p-4 ps-0">
         <div id="table-of-contents" class="contents-scrollspy d-flex flex-column gap-2 text-start pt-3" style="position: sticky; top: 1em;">
           {% block sections %}{% endblock %}
         </div>
       </div>
       <!-- /Table of Contents -->
 
-      <div class="col-8">
+      <div class="col-12 col-sm-10 col-lg-8">
         <!-- Page Title -->
         <div class="col-12">
           <header>
@@ -47,7 +47,7 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="col-2 p-4">
+      <div class="d-none d-lg-block col-lg-2 p-4">
         <div id="recent-activity" class="d-flex flex-column gap-3 pt-3" style="position: sticky; top: 1em;">
           <h6 class="pb-0">Recent Activity</h6>
           <div class="panel p-2">
