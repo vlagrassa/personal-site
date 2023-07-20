@@ -3,35 +3,65 @@
 
 {% block body %}
 
-{% set inner_scroll = 'hidden' if bigimage else 'scroll' %}
-<div class="overflow-y-{{ inner_scroll }} overflow-x-hidden h-100">
-  <div class="mb-5 {% if hide_title %}mt-5{% endif %}" style="margin-left: 110px; margin-right: 110px;">
-    <div class="row">
+{% if bigimage %}
+<div class="h-100">
+{% else %}
+<div class="overflow-y-scroll overflow-x-hidden h-100" data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-smooth-scroll="true" tabindex="0">
+{% endif %}
+  <div class="mb-5">
+    <div class="row m-0 g-0">
 
-      <!-- Page Title -->
-      <div class="col-12">
-        <header>
-          {% block header %}
-          {% if title and not hide_title %}
-            <div class="text-center">
-              <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
-            </div>
-          {% endif %}
-          {% endblock %}
-        </header>
-        {% if title and not hide_title %}
-          <div class="header-underbar">&#x2B26;</div>
-        {% endif %}
-      </div>
-      <!-- /Page Title -->
-
-      <!-- Page Body (Center Panel) -->
-      <div class="col-12">
-        <div class="panel px-4 py-4">
-          {% block content %}{% endblock %}
+      <!-- Table of Contents -->
+      <div class="col-2 p-4 ps-0">
+        <div id="table-of-contents" class="contents-scrollspy d-flex flex-column gap-2 text-start pt-3" style="position: sticky; top: 1em;">
+          {% block sections %}{% endblock %}
         </div>
       </div>
-      <!-- /Page Body -->
+      <!-- /Table of Contents -->
+
+      <div class="col-8">
+        <!-- Page Title -->
+        <div class="col-12">
+          <header>
+            {% block header %}
+            {% if title and not hide_title %}
+              <div class="text-center">
+                <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
+              </div>
+            {% endif %}
+            {% endblock %}
+          </header>
+          {% if title and not hide_title %}
+            <div class="header-underbar">&#x2B26;</div>
+          {% endif %}
+        </div>
+        <!-- /Page Title -->
+
+        <!-- Page Body (Center Panel) -->
+        <div class="col-12">
+          <div class="px-4 {% if bigimage %}py-4{% else %}pb-4{% endif %}">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+        <!-- /Page Body -->
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="col-2 p-4">
+        <div id="recent-activity" class="d-flex flex-column gap-3 pt-3" style="position: sticky; top: 1em;">
+          <h6 class="pb-0">Recent Activity</h6>
+          <div class="panel p-2">
+            Blog post
+          </div>
+          <div class="panel p-2">
+            Blog post
+          </div>
+          <div class="panel p-2">
+            Blog post
+          </div>
+        </div>
+      </div>
+      <!-- /Recent Activity -->
 
     </div>
   </div>

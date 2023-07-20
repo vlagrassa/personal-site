@@ -33,7 +33,12 @@
 
   <!-- Main Body -->
   {% set main_scroll = 'scroll' if bigimage else 'hidden' %}
-  <div class="overflow-y-{{ main_scroll }} overflow-x-hidden w-100 flex-grow-1">
+  <div
+    class="overflow-y-{{ main_scroll }} overflow-x-hidden w-100 flex-grow-1"
+    {%- if bigimage %}
+    data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-smooth-scroll="true" data-bs-root-margin="50px 0px -50px" tabindex="0"
+    {%- endif %}
+  >
 
     {% if bigimage %}
     <section class="position-relative h-100">
@@ -41,7 +46,7 @@
     </section>
     {% endif %}
 
-    <div class="overflow-hidden {% if not bigimage %}h-100{% endif %}">
+    <div class="{% if not bigimage %}h-100{% endif %}">
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
       {% endfor %}

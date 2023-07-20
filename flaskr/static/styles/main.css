@@ -706,3 +706,28 @@ a.link:hover::after, a.link:focus::after {
     border-image: linear-gradient(-90deg, transparent, black 30%, black) 1;
     transform: translateY(1px);
 }
+
+
+
+.contents-scrollspy a {
+    font-weight: lighter;
+    /* border-left: 3px solid transparent; */
+    border-left: none;
+    /* margin-left: 3px; */
+    transition: border 0.1s, color 0.1s;
+}
+
+.contents-scrollspy a:hover {
+    color: var(--color-primary-3);
+}
+
+.contents-scrollspy a.active {
+    color: var(--color-primary);
+    border-left: 3px solid var(--color-primary);
+    margin-left: none;
+}
+
+.contents-scrollspy a.active:hover {
+    color: var(--color-primary-4);
+    border-left: 3px solid var(--color-primary-4);
+}
