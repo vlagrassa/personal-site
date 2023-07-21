@@ -70,7 +70,7 @@
 {#
   Render a button in the footer menu.
 #}
-{% macro render_footer_button(icon, name, class='') %}
+{% macro render_footer_button(id, icon, name, class='') %}
   {% if not icon is string %}
   {% set alt_icon = icon[1] %}
   {% set icon = icon[0] %}
@@ -78,21 +78,23 @@
   {% set alt_icon = none %}
   {% endif %}
   <span
-    id="footer-{{icon}}" class="material-symbols-outlined footer-icon {{class}}"
+    id="footer-{{ id }}" class="material-symbols-outlined footer-icon {{class}}"
     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<span class='font-{{ lang }}'>{{ name[lang] }}</span>"
   >
     {{ icon }}
   </span>
 
   <script type="module">
-    const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ icon }}') // Returns a Bootstrap tooltip instance
-    document.addEventListener('set-language', (({detail}) => {
+    const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ id }}') // Returns a Bootstrap tooltip instance
+    document.addEventListener('change-settings', (({detail}) => {
       const titles = {{ name }};
-      tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` })
+      if (detail.language) {
+        tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` });
+      }
     }))
 
     {% if alt_icon %}
-    const icon_el = document.getElementById('footer-{{ icon }}');
+    const icon_el = document.getElementById('footer-{{ id }}');
     icon_el.onmouseenter = () => {
       icon_el.innerHTML = '{{ alt_icon }}';
     }
@@ -107,32 +109,20 @@
 {#
   Render a button in the footer menu that will toggle between options.
 #}
-{% macro render_footer_button_toggle( icon_1, icon_2 ) %}
+{% macro render_footer_button_toggle( id, icon_1, icon_2 ) %}
 
   <div class="footer-icon-container">
     <span style="transition: transform 0.1s;">
-      {{ render_footer_button( *icon_1 ) }}
+      {{ render_footer_button( id + '-' + icon_1[0], *icon_1[1:] ) }}
     </span>
     <span style="position: absolute; top: 0; left: 0; transition: transform 0.1s;">
-      {{ render_footer_button( *icon_2 ) }}
+      {{ render_footer_button( id + '-' + icon_2[0], *icon_2[1:] ) }}
     </span>
   </div>
 
-  {%- if not icon_1[0] is string %}
-  {%- set icon_1_name = icon_1[0][0] %}
-  {%- else %}
-  {%- set icon_1_name = icon_1[0] %}
-  {%- endif %}
-
-  {%- if not icon_2[0] is string %}
-  {%- set icon_2_name = icon_2[0][0] %}
-  {%- else %}
-  {%- set icon_2_name = icon_2[0] %}
-  {%- endif %}
-
   <script type="module">
-    const el_1 = document.getElementById('footer-{{ icon_1_name }}');
-    const el_2 = document.getElementById('footer-{{ icon_2_name }}');
+    const el_1 = document.getElementById('footer-{{ id }}-{{ icon_1[0] }}');
+    const el_2 = document.getElementById('footer-{{ id }}-{{ icon_2[0] }}');
 
     function show_el(el)  {
       el.classList.remove('footer-icon-offscreen');
@@ -162,15 +152,15 @@
 {#
   Render a button in the footer menu with an associated offcanvas menu.
 #}
-{% macro render_footer_button_menu(icon, name, label) %}
-  <a data-bs-toggle="offcanvas" href="#{{ label }}" role="button" aria-controls="{{ label }}">
-    {{ render_footer_button(icon, name) }}
+{% macro render_footer_button_menu(id, icon, name) %}
+  <a data-bs-toggle="offcanvas" href="#select-{{ id }}" role="button" aria-controls="select-{{ id }}">
+    {{ render_footer_button(id, icon, name) }}
   </a>
 
   {# Offcanvas menu #}
-  <div id="{{ label }}" class="offcanvas offcanvas-bottom offcanvas-footer-menu rounded-top" tabindex="-1" aria-labelledby="{{ label }}-label">
+  <div id="select-{{ id }}" class="offcanvas offcanvas-bottom offcanvas-footer-menu rounded-top" tabindex="-1" aria-labelledby="select-{{ id }}-label">
     <div class="offcanvas-header justify-content-center">
-      <h5 class="offcanvas-title text-center mt-1" id="{{ label }}-label">
+      <h5 class="offcanvas-title text-center mt-1" id="select-{{ id }}-label">
         <span {{ set_lang("en") }}>{{ name.en }}</span>
         <span {{ set_lang("ja") }}>{{ name.ja }}</span>
         <span {{ set_lang("tj") }}>{{ name.tj }}</span>
@@ -182,6 +172,6 @@
 
   {# Move the offcanvas element to the body #}
   <script>
-    document.body.appendChild(document.getElementById('{{ label }}'));
+    document.body.appendChild(document.getElementById('select-{{ id }}'));
   </script>
 {% endmacro %}
