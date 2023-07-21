@@ -21,12 +21,23 @@
     </div>
     {{ render_searchbar_label(id, label) }}
   </div>
-  <script>
-    document.getElementById('{{id}}-input').oninput = (event) => {
+  <script type="module">
+    const input_el = document.getElementById('{{id}}-input');
+
+    input_el.oninput = (event) => {
       const value = event.srcElement.value;
       document.getElementById("{{id}}-container").classList.toggle('has-value', !!value);
       {% if oninput %} {{ oninput }}(value) {% endif %}
     }
+
+    input_el.addEventListener('keydown', (event) => {
+      if (event.code === 'Escape') {
+        input_el.blur();
+      }
+      if (event.code === 'Enter') {
+        event.preventDefault();
+      }
+    })
   </script>
 {% endmacro %}
 
@@ -77,6 +88,18 @@
         }
       }, 50);
     }
+
+    input_el.addEventListener('keydown', (event) => {
+      if (event.code === 'Enter') {
+        console.log('Enter!');
+        event.preventDefault();
+      }
+      if (event.code === 'Backspace') {
+        if (input_el.value.length === 0) {
+          remove_tag( tag_selection[tag_selection.length-1] )
+        }
+      }
+    })
   </script>
 
   <script>
