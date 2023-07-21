@@ -106,6 +106,12 @@ def add_template_filters(app):
     '''
     return '\u2060'.join(txt)
 
+  @app.template_filter('capsfirst')
+  def capsfirst(txt):
+    if len(txt) > 0:
+      return txt[0].upper() + txt[1:]
+    return txt
+
   @app.template_filter('postdateformat')
   def postdateformat(value, lang='en'):
       today = datetime.datetime.today().date()
@@ -114,10 +120,10 @@ def add_template_filters(app):
         return '???'
 
       if value == today:
-        if lang == 'en': return 'Today'
+        if lang == 'en': return 'today'
         if lang == 'ja': return '今日'
       if value == today - datetime.timedelta(days=1):
-        if lang == 'en': return 'Yesterday'
+        if lang == 'en': return 'yesterday'
         if lang == 'ja': return '昨日'
       if value == today - datetime.timedelta(days=2):
         if lang == 'ja': return '一昨日'
