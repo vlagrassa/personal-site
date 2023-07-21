@@ -1,0 +1,60 @@
+{% extends 'base-center.html' %}
+
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/buttons.css') }}">
+{% endblock %}
+
+
+{% block bigimage %}
+<div class="big-image" style="background-image: url('{{ bigimage }}'); background-attachment: fixed; background-size: auto {{ bigimage_height }};">
+  <div class="row h-100">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+      <div class="big-image-overlay d-flex flex-column align-items-center justify-content-center text-center">
+        <h1 class="mx-4">
+          <span {{set_lang("en")}}>{{ title["en"] }}</span>
+          <span {{set_lang("ja")}}>{{ title["ja"] }}</span>
+          <span {{set_lang("tj")}}>{{ title["tj"] }}</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block sections %}
+  {% from '_macros/utils.j2' import render_contents_entry %}
+  {{ render_contents_entry('section-1', { 'en': "Header!", 'tj': 'Header', 'ja': 'Header' }) }}
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Sub-Header -->
+<div class="text-body-secondary fst-italic fs-4 text-left mb-2" style="line-height: 1.5em">
+  {{ subtitle }}
+</div>
+<small class="text-body-secondary fst-italic">
+  Posted {{ date|postdateformat('en')|lower }} in <a href="{{url_for('blog.group', slug=slug)}}" class="blog-subtitle"><i>{{group}}</i></a>
+</small>
+<div class="d-flex gap-2 mt-3">
+  {% for tag in tags %}
+    <button class="btn badge btn-custom">
+      <a href="{{ url_for('blog.blog', tags=tag.id) }}">
+        <span {{set_lang("en")}}>{{tag.name_en}}</span>
+        <span {{set_lang("ja")}}>{{tag.name_ja}}</span>
+        <span {{set_lang("tj")}}>{{tag.name_tj}}</span>
+      </a>
+    </button>
+  {% endfor %}
+</div>
+<div class="header-underbar mt-2 mb-2">&#x2B26;</div>
+<!-- /Sub-Header -->
+
+<h3 id="section-1" class="pt-3">Header</h3>
+{% include '_includes/lorem-ipsum.html' %}
+{% include '_includes/lorem-ipsum.html' %}
+
+{% endblock %}

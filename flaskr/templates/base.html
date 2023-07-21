@@ -41,7 +41,7 @@
   >
 
     {% if bigimage %}
-    <section class="position-relative h-100">
+    <section class="position-relative" style="height: {{ bigimage_height or '100%' }};">
       {% block bigimage %}{% endblock %}
     </section>
     {% endif %}

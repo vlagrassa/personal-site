@@ -63,11 +63,22 @@ def group(slug):
 @blog_bp.route('/post/<string:name>')
 def post(name):
   post = Post.query.get_or_404(name)
-  return render_template('placeholder.html', **{
+  return render_template('blog-post.html', **{
     'title': {
       'en': post.title,
       'ja': post.title,
       'tj': post.title,
     },
+    'subtitle': post.description,
+
+    'group': post.category.name,
+    'slug':  post.category.slug,
+    'date':  post.date,
+    'tags': PostTagMap.query_by_post(post, name_only=True),
+
+    'bigimage': url_for('static', filename='images/home-bg.jpg'),
+    'bigimage_height': '45%',
+    'hide_title': True,
+
     'lang': 'en',
   })

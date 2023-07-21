@@ -625,11 +625,14 @@ a.link:hover::after, a.link:focus::after {
 
 
 .lang-button {
+    --c: var(--bs-heading-color);
+
     display: block;
     border: none;
     padding: 0.5rem 1rem;
     margin: 0;
     width: 100%;
+    position: relative;
 
     text-decoration: none;
     font-family: var(--font-body-ltn);
@@ -643,24 +646,14 @@ a.link:hover::after, a.link:focus::after {
     -moz-appearance: none;
 
     background: white;
-    color: black;
 }
 
 .lang-button:hover {
-    filter: brightness(92%);
+    --c: var(--color-primary-3);
 }
 
 .lang-button:focus {
     outline-offset: -6px;
-}
-
-.lang-button:focus, .lang-button:active {
-    filter: brightness(88%);
-}
-
-.lang-button:focus > div, .lang-button:active > div {
-    transition: transform 150ms ease;
-    transform: scale(0.99);
 }
 
 .lang-button.selected {
@@ -674,6 +667,26 @@ a.link:hover::after, a.link:focus::after {
 
 .lang-button.selected:hover {
     --c: var(--color-primary-4);
+}
+
+.lang-button.selected::before {
+    content: "";
+    position: absolute;
+    height: calc(100% - 2px);
+    top: 1px;
+    left: 1px;
+    border-left: 1px solid var(--c);
+    transition: border 0.1s, color 0.1s;
+}
+
+.lang-button.selected::after {
+    content: "";
+    position: absolute;
+    height: calc(100% - 2px);
+    top: 1px;
+    right: 1px;
+    border-left: 1px solid var(--c);
+    transition: border 0.1s, color 0.1s;
 }
 
 
