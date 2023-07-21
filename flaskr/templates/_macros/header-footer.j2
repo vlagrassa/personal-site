@@ -137,14 +137,17 @@
     el_1.onclick = () => {
       hide_el(el_1);
       show_el(el_2);
+      change_settings({ "{{ id }}": "{{ icon_2[0] }}" })
     }
 
     el_2.onclick = () => {
       hide_el(el_2);
       show_el(el_1);
+      change_settings({ "{{ id }}": "{{ icon_1[0] }}" })
     }
 
     hide_el(el_2);
+    change_settings({ "{{ id }}": "{{ icon_1[0] }}" })
   </script>
 {% endmacro %}
 

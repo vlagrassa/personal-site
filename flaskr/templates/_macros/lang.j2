@@ -4,7 +4,7 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 
 
 {% macro render_lang_select_button(l) %}
-<button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="set_language('{{l.code}}')">
+<button id="button-{{l.code}}" class="lang-button" lang="{{l.code}}" onclick="change_settings({ 'language': '{{l.code}}' });">
   <div>{{l.name}}</div>
 </button>
 {% endmacro %}

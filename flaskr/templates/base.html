@@ -112,24 +112,31 @@
     }
   }
 
-  function set_language(val) {
-    LANGS.forEach((lang_code) => {
-      document.getElementById(`button-${lang_code}`).classList.toggle('selected', val === lang_code)
-      document.querySelectorAll(`[data-lang="${lang_code}"]`).forEach((el) => {
-        el.classList.toggle('hide', val !== lang_code)
-      })
-    })
-    {% if title %}
-    {%- for l, t in title.items() %}
-    if (val === "{{l}}") document.title = "{{t}} {% if l != 'en' %}({{title.en}}) {% endif %}⬦ vlagrassa";
-    {%- endfor %}
-    {%- endif %}
+  // Main function for changing settings
+  function change_settings(detail) {
 
-    document.dispatchEvent(new CustomEvent('set-language', {
-      'detail': { 'language': val },
-    }));
+    // Update language
+    if (detail.language) {
+      LANGS.forEach((lang_code) => {
+        document.getElementById(`button-${lang_code}`).classList.toggle('selected', detail.language === lang_code)
+        document.querySelectorAll(`[data-lang="${lang_code}"]`).forEach((el) => {
+          el.classList.toggle('hide', detail.language !== lang_code)
+        })
+      })
+
+      {%- if title %}
+      {%- for l, t in title.items() %}
+      if (detail.language === "{{l}}") document.title = "{{t}} {% if l != 'en' %}({{title.en}}) {% endif %}⬦ vlagrassa";
+      {%- endfor %}
+      {%- endif %}
+    }
+
+    // Broadcast the change for any other listening components
+    document.dispatchEvent(new CustomEvent('change-settings', { 'detail': detail }));
   }
-  set_language("{{lang}}")
+
+  // Set initial language
+  change_settings({'language': "{{lang}}"});
 
 
   // Enable tooltips
