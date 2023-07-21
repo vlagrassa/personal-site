@@ -32,3 +32,20 @@ PAGE_TITLES = [
     },
   }
 ]
+
+
+
+LANGUAGES = [
+  {
+    'name': 'English',
+    'code': 'en',
+  },
+  {
+    'name': '日本語',
+    'code': 'ja',
+  },
+  {
+    'name': 'Tʒeramɔt',
+    'code': 'tj',
+  },
+]

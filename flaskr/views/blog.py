@@ -42,7 +42,6 @@ def blog():
 
   return render_template('blog.html', **{
     'title': PAGE_TITLES[2]['title'],
-    'lang': 'en',
     'posts': [ parse_post_object(post) for post in posts ],
     'tags': PostTag.query.all(),
     'initial_tags': initial_tags,
@@ -57,7 +56,6 @@ def group(slug):
       'ja': category.name,
       'tj': category.name,
     },
-    'lang': 'en',
   })
 
 @blog_bp.route('/post/<string:name>')
@@ -79,6 +77,4 @@ def post(name):
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
     'bigimage_height': '45%',
     'hide_title': True,
-
-    'lang': 'en',
   })

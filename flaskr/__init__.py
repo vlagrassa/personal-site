@@ -1,7 +1,7 @@
 import os
 import datetime
 
-from flask import Flask, url_for
+from flask import Flask, url_for, request
 
 from .constants import *
 from .database import db
@@ -45,6 +45,17 @@ def create_app(test_config=None):
   add_template_filters(app)
 
   @app.context_processor
+  def inject_language():
+    l = request.args.get('l', 'en')
+    if l not in { l['code'] for l in LANGUAGES }:
+      l = 'en'
+
+    return {
+      'lang':  l,
+      'langs': LANGUAGES,
+    }
+
+  @app.context_processor
   def inject_navbar():
     return {
       'nav_links': [
@@ -79,20 +90,6 @@ def create_app(test_config=None):
           'link': url_for(f'{section["name"]}.{section["name"]}'),
         }
           for section in PAGE_TITLES
-      ],
-      'langs': [
-        {
-          'name': 'English',
-          'code': 'en',
-        },
-        {
-          'name': '日本語',
-          'code': 'ja',
-        },
-        {
-          'name': 'Tʒeramɔt',
-          'code': 'tj',
-        },
       ],
     }
 

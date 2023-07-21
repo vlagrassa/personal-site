@@ -28,7 +28,6 @@ def get_descriptors():
 def home():
   return render_template('home.html', **{
     'title': PAGE_TITLES[0]['title'],
-    'lang': 'en',
     'hide_title': True,
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
   })

@@ -25,7 +25,6 @@ def parse_project_object(project):
 def projects():
   return render_template('projects.html', **{
     'title': PAGE_TITLES[1]['title'],
-    'lang': 'en',
     'ProjectLocation': ProjectLocation,
     'projects': [
       parse_project_object(p) for p in Project.query.all()
@@ -41,5 +40,4 @@ def summary(name):
       'ja': proj.title,
       'tj': proj.title,
     },
-    'lang': 'en',
   })

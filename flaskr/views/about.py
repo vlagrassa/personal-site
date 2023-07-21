@@ -11,5 +11,4 @@ about_bp = Blueprint('about', __name__, url_prefix='/about')
 def about():
   return render_template('placeholder.html', **{
     'title': PAGE_TITLES[3]['title'],
-    'lang': 'en',
   })
