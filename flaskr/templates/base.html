@@ -132,7 +132,16 @@
 
   // Enable tooltips
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {
+
+    // Set offset w function, to keep from moving to 'right' at side of screen
+    'offset': ({reference, popper}, el) => {
+      if (el.classList.contains('footer-icon')) {
+        return [Math.max(0, (popper.width / 2) - reference.x), 8]
+      }
+      return [0, 6];
+    },
+  }))
 
 </script>
 
