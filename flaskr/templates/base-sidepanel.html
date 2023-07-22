@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from '_macros/lang.j2' import render_lang_object %}
 
 
 {% block body %}
@@ -14,9 +15,7 @@
       <header>
         {% block header %}
         {% if title and not hide_title %}
-          <div class="text-center">
-            <h1>{%- for l, t in title.items() %}<span {{ set_lang(l) }}>{{t}}</span>{%- endfor %}</h1>
-          </div>
+          <div class="text-center"><h1>{{ render_lang_object(title) }}</h1></div>
         {% endif %}
         {% endblock %}
       </header>

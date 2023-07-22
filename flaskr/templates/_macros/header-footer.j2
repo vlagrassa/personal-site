@@ -1,4 +1,4 @@
-{% from '_macros/lang.j2' import set_lang with context %}
+{% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
 {#
   Render the site logo, with optional extra class(es) and hover function.
@@ -23,7 +23,7 @@
   {% endif %}
   <div class="header-button">
     <a class="underline-hover-text" {% if section.link %}href="{{section.link}}"{% endif %}>
-      {% for l, t in section.title.items() %}<span {{set_lang(l)}}>{{t}}</span>{% endfor %}
+      {{ render_lang_object(section.title) }}
     </a>
     <div class="header-button-underline"></div>
   </div>
@@ -164,9 +164,7 @@
   <div id="select-{{ id }}" class="offcanvas offcanvas-bottom offcanvas-footer-menu rounded-top" tabindex="-1" aria-labelledby="select-{{ id }}-label">
     <div class="offcanvas-header justify-content-center">
       <h5 class="offcanvas-title text-center mt-1" id="select-{{ id }}-label">
-        <span {{ set_lang("en") }}>{{ name.en }}</span>
-        <span {{ set_lang("ja") }}>{{ name.ja }}</span>
-        <span {{ set_lang("tj") }}>{{ name.tj }}</span>
+        {{ render_lang_object(name) }}
       </h5>
       {# <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> #}
     </div>

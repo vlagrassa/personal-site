@@ -1,4 +1,4 @@
-{% from '_macros/lang.j2' import set_lang with context %}
+{% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
 
 {% macro render_searchbar_label(id, label) %}
@@ -52,9 +52,7 @@
         <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
           {% for tag in tags %}
             <button id="{{id}}-tag-{{tag.id}}" data-tag="{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
-              <span {{set_lang("en")}}>{{ tag.name_en }}</span>
-              <span {{set_lang("ja")}}>{{ tag.name_ja }}</span>
-              <span {{set_lang("tj")}}>{{ tag.name_tj }}</span>
+              {{ render_lang_object(tag.name) }}
             </button>
           {% endfor %}
         </div>

@@ -1,12 +1,10 @@
-{% from '_macros/lang.j2' import set_lang with context %}
+{% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
 
 {% macro render_contents_entry(href, titles) %}
 <h6>
   <a class="p-1 ps-3" href="#{{ href }}">
-  {%- for l, t in titles.items() %}
-    <span {{set_lang(l)}}>{{ t }}</span>
-  {%- endfor %}
+  {{ render_lang_object(titles) }}
   </a>
 </h6>
 {% endmacro %}
