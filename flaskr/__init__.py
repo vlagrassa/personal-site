@@ -2,6 +2,7 @@ import os
 import datetime
 
 from flask import Flask, url_for, request
+from flaskext.markdown import Markdown
 
 from .constants import *
 from .database import db
@@ -21,6 +22,7 @@ def create_app(test_config=None):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///project.db'
   )
   db.init_app(app)
+  Markdown(app)
 
   # Load the instance config, if it exists, when not testing
   if test_config is None:

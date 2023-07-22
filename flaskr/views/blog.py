@@ -1,11 +1,49 @@
 from flask import (
-  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify,
+  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
 from ..constants import *
 from ..database import Post, PostGroup, PostTag, PostTagMap
 
 blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
+
+
+
+def get_sections(filename, lang='en'):
+  '''
+    Parse an external markdown file into a list of sections
+  '''
+
+  # Initialize an empty section object
+  section = {
+    'title': None,
+    'code':  'preamble',
+    'body':  '',
+  }
+
+  # Loop through each line in the file
+  with current_app.open_resource(f'static/blog_posts/{filename}/main-{lang}.md') as mkd:
+    for line in mkd.readlines():
+      line = line.decode('utf-8')
+
+      # If line is a header, finish the previous section and start a new one
+      if line.startswith('##'):
+        if section: yield section
+        line = line[2:].strip()
+        section = {
+          'title': {'en': line, 'ja': line, 'tj': line},
+          'code':  line.lower().replace(' ', '-'),
+          'body':  '',
+        }
+
+      # Otherwise, add this line onto the body of the current section
+      else:
+        if section: section['body'] += line
+
+    # Finish the final section
+    # Check is to make sure at least one section was read
+    if section['title'] or section['body']:
+      yield section
 
 
 
@@ -47,6 +85,7 @@ def post(name):
       'tj': post.title,
     },
     'subtitle': post.description,
+    'sections': list(get_sections('hello-world')),
     'post': post,
 
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
