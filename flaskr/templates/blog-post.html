@@ -28,6 +28,7 @@
 
 
 {% block content %}
+{% from '_macros/blog.j2' import render_blog_tag %}
 
 <!-- Sub-Header -->
 <div class="text-body-secondary fst-italic fs-4 text-left mb-2" style="line-height: 1.5em">
@@ -39,11 +40,9 @@
 </small>
 
 <div class="d-flex gap-2 mt-3">
-  {% for tag in post.tags %}
-    <button class="btn badge btn-custom">
-      <a href="{{ url_for('blog.blog', tags=tag.id) }}">{{ render_lang_object(tag.name) }}</a>
-    </button>
-  {% endfor %}
+  {%- for tag in post.tags %}
+  {{ render_blog_tag(tag, href=url_for('blog.blog', tags=tag.id)) }}
+  {%- endfor %}
 </div>
 <div class="header-underbar mt-2 mb-2">&#x2B26;</div>
 <!-- /Sub-Header -->

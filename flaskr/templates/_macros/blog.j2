@@ -1,4 +1,18 @@
-{% from '_macros/lang.j2' import render_lang_object%}
+{% from '_macros/lang.j2' import render_lang_object %}
+
+
+{% macro render_blog_tag(tag, href=none, onclick=none, id=none) %}
+<button
+  {% if id %}id="{{id}}"{% endif %}
+  data-tag="{{tag.id}}"
+  class="btn badge btn-custom"
+  {% if onclick %}onclick="{{ onclick }}('{{ tag.id }}');"{% endif %}
+>
+  {% if href %}<a href="{{ href }}">{% endif %}
+  {{ render_lang_object(tag.name) }}
+  {% if href %}</a>{% endif %}
+</button>
+{% endmacro %}
 
 
 {% macro render_blog_card(post) %}
@@ -56,7 +70,7 @@
           <div class="col-auto user-select-none">
           {%- for tag in post.tags %}
           {%- if tag.display %}
-          <button class="btn badge btn-custom" onclick="add_tag('{{tag.id}}');">{{ render_lang_object(tag.name) }}</button>
+          {{ render_blog_tag(tag, onclick="add_tag") }}
           {%- endif %}
           {%- endfor %}
           </div>

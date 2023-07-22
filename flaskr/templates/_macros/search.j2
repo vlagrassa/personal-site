@@ -1,4 +1,5 @@
 {% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
+{% from '_macros/blog.j2' import render_blog_tag %}
 
 
 {% macro render_searchbar_label(id, label) %}
@@ -50,11 +51,9 @@
     <div class="card rounded-top-0">
       <div class="card-body">
         <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
-          {% for tag in tags %}
-            <button id="{{id}}-tag-{{tag.id}}" data-tag="{{tag.id}}" class="btn badge btn-custom" onclick="add_tag('{{ tag.id }}');">
-              {{ render_lang_object(tag.name) }}
-            </button>
-          {% endfor %}
+          {%- for tag in tags %}
+          {{ render_blog_tag(tag, id=id+"-tag-"+tag.id, onclick="add_tag") }}
+          {%- endfor %}
         </div>
         <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
       </div>
