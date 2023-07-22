@@ -62,16 +62,14 @@
           {# Group #}
           <p class="card-text col-auto d-inline-block">
             <small class="text-body-secondary">
-              <a href="{{url_for('blog.group', slug=post.slug)}}" class="blog-subtitle"><i>{{post.group}}</i></a>
+              <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>
             </small>
           </p>
 
           {# Tags #}
           <div class="col-auto user-select-none">
-          {%- for tag in post.tags %}
-          {%- if tag.display %}
+          {%- for tag in post.display_tags %}
           {{ render_blog_tag(tag, onclick="add_tag") }}
-          {%- endif %}
           {%- endfor %}
           </div>
         </div>

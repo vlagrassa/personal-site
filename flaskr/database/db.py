@@ -67,6 +67,16 @@ class Post(db.Model):
   def tags(self):
     return [ t.tag for t in self.tag_map ]
 
+  @property
+  def display_tags(self):
+    tags = [ (True, t) for t in self.tags ]
+    for i in range(0, len(tags)):
+      for j in range(0, len(tags)):
+        if i == j: continue
+        if self.tags[i].is_descendant_of(self.tags[j]):
+          tags[j] = (False, tags[j][1])
+    return [ t[1] for t in tags if t[0] ]
+
 
 class PostGroup(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
@@ -95,6 +105,16 @@ class PostTag(db.Model):
   def posts(self):
     return [ p.post for p in self.post_map ]
 
+  def is_descendant_of(self, other):
+    p = self
+    while p.parent is not None:
+      p = PostTag.query.get(p.parent)
+      if p == other:
+        return True
+    return False
+
+  def is_ancestor_of(self, other):
+    return other.is_descendant_of(self)
 
 
 class PostTagMap(db.Model):

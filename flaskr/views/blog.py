@@ -9,27 +9,6 @@ blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
 
 
 
-def parse_post_object(post):
-
-  tags = post.tags
-  tag_names = [ t.id for t in tags ]
-  for t in tags:
-    t.display = True
-  for t in tags:
-    if t.parent in tag_names:
-      tags[tag_names.index(t.parent)].display = False
-
-  return {
-    'id':    post.id,
-    'title': post.title,
-    'desc':  post.description or '',
-    'group': post.category.name,
-    'slug':  post.category.slug,
-    'date':  post.date,
-    'tags':  tags,
-  }
-
-
 @blog_bp.route('')
 def blog():
   posts = Post.query.order_by(Post.date.desc()).all()
@@ -42,10 +21,11 @@ def blog():
 
   return render_template('blog.html', **{
     'title': PAGE_TITLES[2]['title'],
-    'posts': [ parse_post_object(post) for post in posts ],
+    'posts': posts,
     'tags': PostTag.query.all(),
     'initial_tags': initial_tags,
   })
+
 
 @blog_bp.route('/<string:slug>')
 def group(slug):
@@ -58,6 +38,7 @@ def group(slug):
     },
   })
 
+
 @blog_bp.route('/post/<string:name>')
 def post(name):
   post = Post.query.get_or_404(name)
@@ -68,7 +49,7 @@ def post(name):
       'tj': post.title,
     },
     'subtitle': post.description,
-    'post': parse_post_object(post),
+    'post': post,
 
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
     'bigimage_height': '45%',

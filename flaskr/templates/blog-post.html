@@ -36,7 +36,7 @@
 </div>
 
 <small class="text-body-secondary fst-italic">
-  Posted {{ post.date|postdateformat('en') }} in <a href="{{url_for('blog.group', slug=post.slug)}}" class="blog-subtitle"><i>{{post.group}}</i></a>
+  Posted {{ post.date|postdateformat('en') }} in <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>
 </small>
 
 <div class="d-flex gap-2 mt-3">
