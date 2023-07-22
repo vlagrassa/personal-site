@@ -13,11 +13,9 @@ blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
 def blog():
   posts = Post.query.order_by(Post.date.desc()).all()
 
-  initial_tags = request.args.get('tags', '')
-  if initial_tags:
-    initial_tags = [ PostTag.query.filter(PostTag.id == t).one_or_none() for t in initial_tags.split(',') ]
-    initial_tags = [ t for t in initial_tags if t is not None]
-
+  # If URL var 'tags' is defined, map to list of PostTag objects for initial filter
+  initial_tags = [ PostTag.query.get(t) for t in request.args.get('tags', '').split(',') ]
+  initial_tags = [ t for t in initial_tags if t is not None ]
 
   return render_template('blog.html', **{
     'title': PAGE_TITLES[2]['title'],
