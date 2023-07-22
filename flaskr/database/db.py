@@ -62,10 +62,17 @@ class Post(db.Model):
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
   category = db.relationship('PostGroup')
 
+  # Connect to PostTag table through PostTagMap backref
+  @property
+  def tags(self):
+    return [ t.tag for t in self.tag_map ]
+
+
 class PostGroup(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
   slug = sa.Column(sa.String(50), unique=True)
   name = sa.Column(sa.String(50), nullable=False)
+
 
 class PostTag(db.Model):
   id = sa.Column(sa.String(24), primary_key=True)
@@ -74,15 +81,18 @@ class PostTag(db.Model):
   name_tj = sa.Column(sa.String(32), unique=True)
   parent  = sa.Column(sa.String(24), sa.ForeignKey('post_tag.id'))
 
+  # Connect to PostTag table through PostTagMap backref
+  @property
+  def posts(self):
+    return [ p.post for p in self.post_map ]
+
+
+
 class PostTagMap(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
   post_id = sa.Column(sa.Integer,    sa.ForeignKey('post.id'))
   tag_id  = sa.Column(sa.String(24), sa.ForeignKey('post_tag.id'))
 
-  @classmethod
-  def query_by_post(cls, post, name_only=False):
-    query = cls.query.filter_by(post_id=post.id).order_by(PostTagMap.tag_id.asc())
-    if name_only:
-      return [ PostTag.query.get(t.tag_id) for t in query.all() ]
-    else:
-      return query
+  # Connect Post and PostTag tables to this mapping table
+  post = db.relationship('Post',    backref='tag_map')
+  tag  = db.relationship('PostTag', backref='post_map')
