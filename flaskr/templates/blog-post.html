@@ -36,7 +36,15 @@
 </div>
 
 <small class="text-body-secondary fst-italic">
-  Posted {{ post.date|postdateformat('en') }} in <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>
+  <span {{set_lang("en")}}>
+    Posted {{ post.date|postdateformat('en') }} in <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>
+  </span>
+  <span {{set_lang("ja")}}>
+    {{ post.date|postdateformat('ja') }}で、「<a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>」に
+  </span>
+  <span {{set_lang("tj")}}>
+    {{ post.date|postdateformat('tj')|capsfirst }}, <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a> ktaʒku
+  </span>
 </small>
 
 <div class="d-flex gap-2 mt-3">
