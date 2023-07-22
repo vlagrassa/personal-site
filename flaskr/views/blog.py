@@ -15,9 +15,6 @@ def parse_post_object(post):
   tag_names = [ t.id for t in tags ]
   for t in tags:
     t.display = True
-    t.name = {
-      l.split('_')[1]: getattr(t, l) for l in [ 'name_en', 'name_ja', 'name_tj' ]
-    }
   for t in tags:
     if t.parent in tag_names:
       tags[tag_names.index(t.parent)].display = False

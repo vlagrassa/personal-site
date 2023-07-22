@@ -81,6 +81,15 @@ class PostTag(db.Model):
   name_tj = sa.Column(sa.String(32), unique=True)
   parent  = sa.Column(sa.String(24), sa.ForeignKey('post_tag.id'))
 
+  # Convert individual name fields into a single dict
+  @property
+  def name(self):
+    return {
+      'en': self.name_en,
+      'ja': self.name_ja,
+      'tj': self.name_tj,
+    }
+
   # Connect to PostTag table through PostTagMap backref
   @property
   def posts(self):
