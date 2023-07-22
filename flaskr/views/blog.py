@@ -71,11 +71,7 @@ def post(name):
       'tj': post.title,
     },
     'subtitle': post.description,
-
-    'group': post.category.name,
-    'slug':  post.category.slug,
-    'date':  post.date,
-    'tags': PostTagMap.query_by_post(post, name_only=True),
+    'post': parse_post_object(post),
 
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
     'bigimage_height': '45%',
