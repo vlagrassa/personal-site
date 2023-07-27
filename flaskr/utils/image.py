@@ -15,3 +15,12 @@ class HeaderImage():
     self.y_align = y_align
 
     self.alt_text = 'Alt text'
+
+
+
+def get_post_image(post_id):
+  return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')
+
+
+def get_project_image(project_id):
+  return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')

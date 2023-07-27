@@ -17,7 +17,7 @@ def parse_project_object(project):
     'modified_date': project.modified_date or None,
     'role':     project.role,
     'location': project.location,
-    'img': project.get_thumbnail_url(),
+    'image': project.image,
   }
 
 

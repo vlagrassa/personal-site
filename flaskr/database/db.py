@@ -2,9 +2,8 @@ import enum
 
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
-from flask import url_for
 
-from ..utils.image import HeaderImage
+from ..utils.image import get_post_image, get_project_image
 
 db = SQLAlchemy()
 
@@ -32,8 +31,9 @@ class Project(db.Model):
   created_date  = sa.Column(sa.Date)
   modified_date = sa.Column(sa.Date)
 
-  def get_thumbnail_url(self):
-    return url_for('static', filename=f'images/home-bg.jpg')
+  @property
+  def image(self):
+    return get_project_image(self.id)
 
 class TagType(enum.Enum):
   LANGUAGE = 'Language'
@@ -81,7 +81,7 @@ class Post(db.Model):
 
   @property
   def image(self):
-    return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')
+    return get_post_image(self.id)
 
 
 class PostGroup(db.Model):
