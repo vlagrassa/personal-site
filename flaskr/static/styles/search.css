@@ -19,6 +19,7 @@
   color: gray;
   cursor: text;
   user-select: none;
+  transform-origin: center left;
 }
 
 .searchbar {
