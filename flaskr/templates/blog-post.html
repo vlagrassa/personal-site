@@ -46,13 +46,15 @@
 <div class="header-underbar mt-2 mb-2">&#x2B26;</div>
 <!-- /Sub-Header -->
 
-{%- for sec in sections %}
-<div id="{{ sec['code'] }}">
-  {%- if sec['title'] %}
-  <h3 class="pt-3">{{ render_lang_object(sec['title']) }}</h3>
-  {%- endif %}
-  {{ sec['body']|markdown }}
+<div class="blog-post-body">
+  {%- for sec in sections %}
+  <div id="{{ sec['code'] }}">
+    {%- if sec['title'] %}
+    <h3 class="pt-3">{{ render_lang_object(sec['title']) }}</h3>
+    {%- endif %}
+    {{ sec['body']|markdown }}
+  </div>
+  {%- endfor %}
 </div>
-{%- endfor %}
 
 {% endblock %}
