@@ -4,6 +4,7 @@ from flask import (
 
 from ..constants import *
 from ..utils.image import HeaderImage
+from ..utils.utils import nb
 
 home_bp = Blueprint('home', __name__, url_prefix='')
 
@@ -30,7 +31,7 @@ def home():
   return render_template('home.html', **{
     'title': {
       'en': 'Vincent LɒGrɒssɒ',
-      'ja': 'ヴィンセント ' + '\u2060'.join('ラグラッサ'),
+      'ja': 'ヴィンセント ' + nb('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
     'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),

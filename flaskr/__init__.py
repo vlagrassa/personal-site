@@ -100,19 +100,10 @@ def create_app(test_config=None):
 
 
 def add_template_filters(app):
+  from .utils.utils import nb, capsfirst
 
-  @app.template_filter('nb')
-  def nb(txt):
-    '''
-      Intersperse a string with word joiner characters, to prevent line breaks within the string.
-    '''
-    return '\u2060'.join(txt)
-
-  @app.template_filter('capsfirst')
-  def capsfirst(txt):
-    if len(txt) > 0:
-      return txt[0].upper() + txt[1:]
-    return txt
+  app.template_filter('nb')(nb)
+  app.template_filter('capsfirst')(capsfirst)
 
   @app.template_filter('postdateformat')
   def postdateformat(value, lang='en'):
