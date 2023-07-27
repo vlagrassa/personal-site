@@ -1,4 +1,5 @@
 {% from '_macros/lang.j2' import render_lang_object %}
+{% from '_macros/utils.j2' import parse_header_image_styles %}
 
 
 {% macro render_blog_tag(tag, href=none, onclick=none, id=none) %}
@@ -23,9 +24,10 @@
     <div class="col-2 d-none d-md-block user-select-none">
       <div class="ratio ratio-1x1 h-100" style="border-right: var(--card-outline-outer)">
         <img
-          src="{{url_for('static', filename='images/home-bg.jpg')}}"
+          src="{{ post.image.url }}"
           class="img-fluid object-fit-cover"
-          alt="this is an image wooo"
+          alt="{{ post.image.alt_text }}"
+          style="{{ parse_header_image_styles(post.image) }}"
         >
       </div>
     </div>

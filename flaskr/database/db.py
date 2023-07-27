@@ -4,6 +4,8 @@ import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for
 
+from ..utils.image import HeaderImage
+
 db = SQLAlchemy()
 
 
@@ -76,6 +78,10 @@ class Post(db.Model):
         if self.tags[i].is_descendant_of(self.tags[j]):
           tags[j] = (False, tags[j][1])
     return [ t[1] for t in tags if t[0] ]
+
+  @property
+  def image(self):
+    return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')
 
 
 class PostGroup(db.Model):

@@ -88,6 +88,6 @@ def post(name):
     'sections': list(get_sections('hello-world')),
     'post': post,
 
-    'header_image': url_for('static', filename='images/home-bg.jpg'),
+    'header_image': post.image,
     'header_image_height': '45%',
   })

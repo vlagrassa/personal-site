@@ -8,3 +8,13 @@
   </a>
 </h6>
 {% endmacro %}
+
+
+{%- macro parse_header_image_styles(image) -%}
+  object-position: {{ image.x_align }} {{ image.y_align }}; background-position: {{ image.x_align }} {{ image.y_align }};
+{%- endmacro -%}
+
+
+{% macro offset_to_pct(offset) %}
+{%- if offset == 'top' %}0%{% elif offset == 'center' %}50%{% elif offset == 'bottom' %}100%{% else %}{{offset}}{% endif -%}
+{% endmacro %}

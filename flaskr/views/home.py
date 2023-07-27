@@ -3,6 +3,7 @@ from flask import (
 )
 
 from ..constants import *
+from ..utils.image import HeaderImage
 
 home_bp = Blueprint('home', __name__, url_prefix='')
 
@@ -32,5 +33,5 @@ def home():
       'ja': 'ヴィンセント ' + '\u2060'.join('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
-    'header_image': url_for('static', filename='images/home-bg.jpg'),
+    'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
   })

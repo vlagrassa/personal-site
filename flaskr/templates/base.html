@@ -1,5 +1,6 @@
 {% from '_macros/lang.j2'          import render_lang_select_button, set_lang with context %}
 {% from '_macros/header-footer.j2' import render_logo, render_sections, render_links, render_footer_button, render_footer_button_menu, render_footer_button_toggle with context %}
+{% from '_macros/utils.j2'         import parse_header_image_styles, offset_to_pct %}
 <!doctype html>
 <head>
   <meta charset="UTF-8">
@@ -34,6 +35,7 @@
   <!-- Main Body -->
   {% set main_scroll = 'scroll' if header_image else 'hidden' %}
   <div
+    id="scroll-container"
     class="overflow-y-{{ main_scroll }} overflow-x-hidden w-100 flex-grow-1"
     {%- if header_image %}
     data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-smooth-scroll="true" data-bs-root-margin="50px 0px -50px" tabindex="0"
@@ -42,7 +44,7 @@
 
     {% if header_image %}
     <section class="position-relative" style="height: {{ header_image_height or '100%' }};">
-      <div class="header-image" style="background-image: url('{{ header_image }}');">
+      <div id="header-image" class="header-image" style="background-image: url('{{ header_image.url }}'); {{ parse_header_image_styles( header_image) }}">
         {% block header_image %}
         <div class="row h-100">
           <div class="col-12 d-flex align-items-center justify-content-center">
@@ -167,5 +169,20 @@
   }))
 
 </script>
+
+
+{%- if header_image %}
+<!-- Header Image Parallax Effect -->
+<script>
+  const header_image     = document.getElementById('header-image');
+  const scroll_container = document.getElementById('scroll-container');
+
+  scroll_container.addEventListener("scroll", (event) => {
+    let y = event.srcElement.scrollTop;
+    header_image.style.backgroundPosition =
+      `{{ header_image.x_align }} calc({{ offset_to_pct(header_image.y_align) }} + ${ y / 2 }px)`;
+  });
+</script>
+{%- endif %}
 
 {% block script %}{% endblock %}
