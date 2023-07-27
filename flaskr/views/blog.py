@@ -88,7 +88,7 @@ def post(name):
     'sections': list(get_sections('hello-world')),
     'post': post,
 
-    'bigimage': url_for('static', filename='images/home-bg.jpg'),
-    'bigimage_height': '45%',
+    'header_image': url_for('static', filename='images/home-bg.jpg'),
+    'header_image_height': '45%',
     'hide_title': True,
   })

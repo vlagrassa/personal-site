@@ -559,7 +559,7 @@ a.link:hover::after, a.link:focus::after {
 
 /* Big Image */
 
-.big-image {
+.header-image {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -567,7 +567,7 @@ a.link:hover::after, a.link:focus::after {
     background-position-y: center;
 }
 
-.big-image-overlay {
+.header-image-overlay {
     width: 80%;
     padding-top: 1.33em;
     padding-bottom: 1.66em;
@@ -575,7 +575,7 @@ a.link:hover::after, a.link:focus::after {
     border-radius: 5px;
 }
 
-.big-image::after {
+.header-image::after {
     content: "";
     height: 5px;
     border-top:    1px solid var(--color-header-border);

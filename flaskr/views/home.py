@@ -32,5 +32,5 @@ def home():
       'ja': 'ヴィンセント ' + '\u2060'.join('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
-    'bigimage': url_for('static', filename='images/home-bg.jpg'),
+    'header_image': url_for('static', filename='images/home-bg.jpg'),
   })

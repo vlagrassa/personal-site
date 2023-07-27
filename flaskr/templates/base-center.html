@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{% if bigimage %}
+{% if header_image %}
 <div class="h-100">
 {% else %}
 <div class="overflow-y-scroll overflow-x-hidden h-100" data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-smooth-scroll="true" tabindex="0">
@@ -23,13 +23,13 @@
       <div class="col-12 col-sm-10 col-lg-8">
 
         <!-- Page Title -->
-        {% if title and not hide_title and not bigimage %}
+        {% if title and not hide_title and not header_image %}
         <div class="col-12">
           {% block header %}
           <header class="text-center">
             {% block title_inline %}{{ super() }}{% endblock %}
           </header>
-          {% if title and not hide_title and not bigimage %}
+          {% if title and not hide_title and not header_image %}
           <div class="header-underbar">&#x2B26;</div>
           {% endif %}
           {% endblock %}
@@ -39,7 +39,7 @@
 
         <!-- Page Body (Center Panel) -->
         <div class="col-12">
-          <div class="px-4 {% if bigimage %}py-4{% else %}pb-4{% endif %}">
+          <div class="px-4 {% if header_image %}py-4{% else %}pb-4{% endif %}">
             {% block content %}{% endblock %}
           </div>
         </div>
