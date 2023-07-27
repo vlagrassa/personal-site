@@ -27,7 +27,10 @@ def get_descriptors():
 @home_bp.route('/')
 def home():
   return render_template('home.html', **{
-    'title': PAGE_TITLES[0]['title'],
-    'hide_title': True,
+    'title': {
+      'en': 'Vincent LɒGrɒssɒ',
+      'ja': 'ヴィンセント ' + '\u2060'.join('ラグラッサ'),
+      'tj': 'Vincent LɒGrɒssɒ',
+    },
     'bigimage': url_for('static', filename='images/home-bg.jpg'),
   })

@@ -21,19 +21,20 @@
       <!-- /Table of Contents -->
 
       <div class="col-12 col-sm-10 col-lg-8">
+
         <!-- Page Title -->
+        {% if title and not hide_title and not bigimage %}
         <div class="col-12">
-          <header>
-            {% block header %}
-            {% if title and not hide_title %}
-              <div class="text-center"><h1>{{ render_lang_object(title) }}</h1></div>
-            {% endif %}
-            {% endblock %}
+          {% block header %}
+          <header class="text-center">
+            {% block title_inline %}{{ super() }}{% endblock %}
           </header>
-          {% if title and not hide_title %}
-            <div class="header-underbar">&#x2B26;</div>
+          {% if title and not hide_title and not bigimage %}
+          <div class="header-underbar">&#x2B26;</div>
           {% endif %}
+          {% endblock %}
         </div>
+        {% endif %}
         <!-- /Page Title -->
 
         <!-- Page Body (Center Panel) -->
