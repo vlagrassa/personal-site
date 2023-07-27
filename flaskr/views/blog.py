@@ -90,5 +90,4 @@ def post(name):
 
     'header_image': url_for('static', filename='images/home-bg.jpg'),
     'header_image_height': '45%',
-    'hide_title': True,
   })
