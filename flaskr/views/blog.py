@@ -17,6 +17,7 @@ def get_sections(filename, lang='en'):
   # Initialize an empty section object
   section = {
     'title': None,
+    'level': 0,
     'code':  'preamble',
     'body':  '',
   }
@@ -27,11 +28,20 @@ def get_sections(filename, lang='en'):
       line = line.decode('utf-8')
 
       # If line is a header, finish the previous section and start a new one
-      if line.startswith('##'):
+      if line.startswith('#'):
         if section: yield section
-        line = line[2:].strip()
+
+        # Get section level based on number of hash marks
+        if line.startswith('##'):
+          level = 1
+          line = line[2:].strip()
+        else:
+          level = 0
+          line = line[1:].strip()
+
         section = {
           'title': {'en': line, 'ja': line, 'tj': line},
+          'level': level,
           'code':  line.lower().replace(' ', '-'),
           'body':  '',
         }

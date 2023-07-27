@@ -1,12 +1,16 @@
 {% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
 
-{% macro render_contents_entry(href, titles) %}
-<h6>
-  <a class="p-1 ps-3" href="#{{ href }}">
+{% macro render_contents_entry(href, titles, sub=false) %}
+<a class="p-1 w-100 {%- if sub %} ps-4 small {% else %} ps-3 {% endif -%}" href="#{{ href }}" style="position: relative;">
+  {%- if not sub %}
+  <h6 class="mb-0 w-100">
+  {%- endif %}
   {{ render_lang_object(titles) }}
-  </a>
-</h6>
+  {%- if not sub %}
+  </h6>
+  {%- endif %}
+</a>
 {% endmacro %}
 
 

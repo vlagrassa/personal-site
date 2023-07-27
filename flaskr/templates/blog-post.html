@@ -12,7 +12,7 @@
   {% from '_macros/utils.j2' import render_contents_entry %}
   {%- for sec in sections %}
   {%- if sec['title'] %}
-  {{ render_contents_entry( sec['code'], sec['title'] ) }}
+  {{ render_contents_entry( sec['code'], sec['title'], sub=sec['level'] ) }}
   {%- endif %}
   {%- endfor %}
 {% endblock %}
@@ -50,7 +50,11 @@
   {%- for sec in sections %}
   <div id="{{ sec['code'] }}">
     {%- if sec['title'] %}
+    {%- if sec['level'] == 0 %}
     <h3 class="pt-3">{{ render_lang_object(sec['title']) }}</h3>
+    {%- else %}
+    <h4 class="pt-3">{{ render_lang_object(sec['title']) }}</h4>
+    {%- endif %}
     {%- endif %}
     {{ sec['body']|markdown }}
   </div>
