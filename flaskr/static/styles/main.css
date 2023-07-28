@@ -722,6 +722,8 @@ a.link:hover::after, a.link:focus::after {
 
 
 
+/* Table of Contents */
+
 .contents-scrollspy a {
     --c: var(--bs-heading-color);
     color: var(--c);
@@ -753,3 +755,17 @@ a.link:hover::after, a.link:focus::after {
     border-left: 1px solid var(--c);
     transition: border 0.1s, color 0.1s;
 }
+
+
+
+/* Breadcrumb */
+
+.breadcrumb {
+    list-style-type: '↪';
+}
+
+.breadcrumb li {
+    list-style-position: inside;
+    margin-left: -8px;
+}
+

@@ -14,6 +14,13 @@
 {% endmacro %}
 
 
+{% macro render_breadcrumb_item(name, link) %}
+<li title="{{ name['en'] }}" class="py-1 text-truncate">
+  <a href="{{ link }}">{{ render_lang_object(name) }}</a>
+</li>
+{% endmacro %}
+
+
 {%- macro parse_header_image_styles(image) -%}
   object-position: {{ image.x_align }} {{ image.y_align }}; background-position: {{ image.x_align }} {{ image.y_align }};
 {%- endmacro -%}

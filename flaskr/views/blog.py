@@ -78,6 +78,9 @@ def group(slug):
   category = PostGroup.query.filter_by(slug=slug).first_or_404()
   return render_template('blog-category.html', **{
     'title': category.name,
+    'breadcrumb': [
+      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
+    ],
     'posts': category.posts,
   })
 
@@ -88,6 +91,11 @@ def post(name):
   return render_template('blog-post.html', **{
     'title': post.name,
     'subtitle': post.description,
+    'breadcrumb': [
+      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
+      ( post.category.name,      url_for('blog.group', slug=post.category.slug) ),
+    ],
+
     'sections': list(get_sections('hello-world')),
     'post': post,
 
