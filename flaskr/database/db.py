@@ -65,6 +65,10 @@ class Post(db.Model):
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
   category = db.relationship('PostGroup')
 
+  @property
+  def name(self):
+    return { l['code']: self.title for l in LANGUAGES }
+
   # Connect to PostTag table through PostTagMap backref
   @property
   def tags(self):
@@ -87,8 +91,12 @@ class Post(db.Model):
 
 class PostGroup(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
-  slug = sa.Column(sa.String(50), unique=True)
-  name = sa.Column(sa.String(50), nullable=False)
+  slug  = sa.Column(sa.String(50), unique=True)
+  title = sa.Column(sa.String(50), nullable=False)
+
+  @property
+  def name(self):
+    return { l['code']: self.title for l in LANGUAGES }
 
 
 class PostTag(db.Model):

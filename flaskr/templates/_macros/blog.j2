@@ -64,7 +64,7 @@
           {# Group #}
           <p class="card-text col-auto d-inline-block">
             <small class="text-body-secondary">
-              <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{post.category.name}}</i></a>
+              <a href="{{url_for('blog.group', slug=post.category.slug)}}" class="blog-subtitle"><i>{{ render_lang_object(post.category.name) }}</i></a>
             </small>
           </p>
 

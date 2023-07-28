@@ -77,11 +77,7 @@ def blog():
 def group(slug):
   category = PostGroup.query.filter_by(slug=slug).first_or_404()
   return render_template('placeholder.html', **{
-    'title': {
-      'en': category.name,
-      'ja': category.name,
-      'tj': category.name,
-    },
+    'title': category.name,
   })
 
 
@@ -89,11 +85,7 @@ def group(slug):
 def post(name):
   post = Post.query.get_or_404(name)
   return render_template('blog-post.html', **{
-    'title': {
-      'en': post.title,
-      'ja': post.title,
-      'tj': post.title,
-    },
+    'title': post.name,
     'subtitle': post.description,
     'sections': list(get_sections('hello-world')),
     'post': post,
