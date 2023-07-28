@@ -22,7 +22,7 @@ def create_app(test_config=None):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///project.db'
   )
   db.init_app(app)
-  Markdown(app)
+  Markdown(app, extensions=['sane_lists', 'fenced_code', 'smarty', 'md_in_html', 'markdown_katex'])
 
   # Load the instance config, if it exists, when not testing
   if test_config is None:
