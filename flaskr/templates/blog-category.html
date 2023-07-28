@@ -1,0 +1,31 @@
+{% extends 'base-center.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/buttons.css') }}">
+{% endblock %}
+
+
+{% block sections %}
+  {% from '_macros/utils.j2' import render_contents_entry %}
+  {{ render_contents_entry('about', { 'en': "About", 'tj': 'About', 'ja': 'About' }) }}
+  {{ render_contents_entry('posts', { 'en': "Posts", 'tj': 'Posts', 'ja': 'Posts' }) }}
+{% endblock %}
+
+
+{% block content %}
+{% from '_macros/blog.j2' import render_blog_card with context %}
+
+<div id="about">
+  <!-- <h3 class="pt-3">About</h3> -->
+  {% include '_includes/lorem-ipsum.html' %}
+</div>
+
+<div id="posts">
+  <!-- <h3 class="pt-3">Posts</h3> -->
+  {% for post in posts %}
+    {{ render_blog_card(post) }}
+  {% endfor %}
+</div>
+
+{% endblock %}

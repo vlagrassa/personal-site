@@ -76,8 +76,9 @@ def blog():
 @blog_bp.route('/<string:slug>')
 def group(slug):
   category = PostGroup.query.filter_by(slug=slug).first_or_404()
-  return render_template('placeholder.html', **{
+  return render_template('blog-category.html', **{
     'title': category.name,
+    'posts': category.posts,
   })
 
 
