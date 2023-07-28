@@ -63,7 +63,7 @@ class Post(db.Model):
   description = sa.Column(sa.String(300))
   visible = sa.Column(sa.Boolean, default=False, nullable=False)
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
-  category = db.relationship('PostGroup')
+  category = db.relationship('PostGroup', backref='posts')
 
   @property
   def name(self):
