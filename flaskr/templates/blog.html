@@ -16,6 +16,15 @@
   <span {{ set_lang("tj") }}>I write stuff, sometimes.</span>
 </p>
 
+<div class="d-flex justify-content-around mt-2 mb-3">
+  <button id="toggle-posts" class="toggle-button selected" onclick="show_section(this.id)">
+    <div>Posts</div>
+  </button>
+  <button id="toggle-categories" class="toggle-button" onclick="show_section(this.id)">
+    <div>Categories</div>
+  </button>
+</div>
+
 <form novalidate onsubmit="event.preventDefault();">
   {{ render_searchbar(
     id='search-text', oninput='search_text',
@@ -46,10 +55,17 @@
 
 
 {% block content %}
-{% from '_macros/blog.j2' import render_blog_card with context %}
-<div class="blog-container">
+{% from '_macros/blog.j2' import render_blog_card, render_blog_category_card with context %}
+
+<div id="posts" class="blog-container">
   {% for post in posts %}
     {{ render_blog_card(post) }}
+  {% endfor %}
+</div>
+
+<div id="categories" class="blog-container">
+  {% for category in groups %}
+  {{ render_blog_category_card(category) }}
   {% endfor %}
 </div>
 {% endblock %}
@@ -117,5 +133,28 @@
   add_tag('{{t.id}}');
   {%- endfor %}
   document.activeElement.blur();
+</script>
+
+
+{# Toggle between posts and categories #}
+<script>
+  const sections = ['posts', 'categories']
+  let current_section = 'posts';
+
+  function show_section(toggle_id) {
+    const toggle_section = toggle_id.split('-')[1];
+    if (current_section !== toggle_section) {
+      current_section = toggle_section;
+      update_section();
+    }
+  }
+
+  function update_section() {
+    sections.forEach(section => {
+      document.getElementById(`toggle-${section}`).classList.toggle('selected', (current_section === section));
+      document.getElementById(section).classList.toggle('hide', (current_section !== section));
+    })
+  }
+  update_section();
 </script>
 {% endblock %}
