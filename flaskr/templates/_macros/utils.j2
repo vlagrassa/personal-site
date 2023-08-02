@@ -15,7 +15,7 @@
 
 
 {% macro render_breadcrumb_item(name, link) %}
-<li title="{{ name['en'] }}" class="py-1 text-truncate">
+<li title="{{ name['en'] }}" class="py-1">
   <a href="{{ link }}">{{ render_lang_object(name) }}</a>
 </li>
 {% endmacro %}
