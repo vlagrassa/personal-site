@@ -8,7 +8,7 @@
 
 
 {% block leftpanel %}
-{% from '_macros/search.j2' import render_searchbar, render_searchbar_tags %}
+{% from '_macros/search.j2' import render_searchbar, render_searchbar_select, render_searchbar_tags %}
 
 <p>
   <span {{ set_lang("en") }}>I write stuff, sometimes.</span>
@@ -29,7 +29,12 @@
   {{ render_searchbar(
     id='search-text', oninput='search_text',
     label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
-    ) }}
+  ) }}
+  {{ render_searchbar_select(
+    id='search-category', oninput='select_category',
+    label={'en': 'Category', 'ja': 'カテゴリー', 'tj': 'Category'},
+    options=groups,
+  ) }}
   {{ render_searchbar_tags(
     id='search-tags', oninput='apply_tag_filter',
     label={'en': 'Tags', 'ja': 'タグ', 'tj': 'Tags'},
@@ -77,6 +82,7 @@
     {%- for post in posts %}
     "card-{{post.id}}": {
       "title": "{{post.title}}",
+      "group": "{{post.category.name.en}}",
       "tags": [ {% for tag in post.tags %}"{{tag.id}}",{% endfor %} ],
     },
     {%- endfor %}
@@ -84,11 +90,17 @@
 
   const search_params = {
     'title': null,
+    'group': null,
     'tags':  [],
   }
 
   function search_text(val) {
     search_params.title = val.toLowerCase();
+    apply_searches();
+  }
+
+  function select_category(category) {
+    search_params.group = category;
     apply_searches();
   }
 
@@ -109,12 +121,16 @@
   function filter_post(post, search_params) {
 
     // If no filters are applied, return true for all elements
-    if (!search_params.title && search_params.tags.length == 0) {
+    if (!search_params.title && !search_params.group && search_params.tags.length == 0) {
       return true
     }
 
     // Filter out title mismatches
     if (search_params.title && !post.title.toLowerCase().includes(search_params.title)) {
+      return false;
+    }
+
+    if (search_params.group && !post.group.toLowerCase().includes(search_params.group)) {
       return false;
     }
 

@@ -68,6 +68,7 @@ def blog():
   return render_template('blog.html', **{
     'title': PAGE_TITLES[2]['title'],
     'posts': posts,
+    'groups': PostGroup.query.all(),
     'tags': PostTag.query.all(),
     'initial_tags': initial_tags,
   })
