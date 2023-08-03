@@ -25,7 +25,7 @@
   </button>
 </div>
 
-<form novalidate onsubmit="event.preventDefault();">
+<form id="post-search-form" novalidate onsubmit="event.preventDefault();">
   {{ render_searchbar(
     id='search-text', oninput='search_text',
     label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
@@ -169,6 +169,8 @@
     sections.forEach(section => {
       document.getElementById(`toggle-${section}`).classList.toggle('selected', (current_section === section));
       document.getElementById(section).classList.toggle('hide', (current_section !== section));
+
+      document.getElementById('post-search-form').classList.toggle('hide', current_section !== 'posts');
     })
   }
   update_section();
