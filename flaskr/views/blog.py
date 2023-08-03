@@ -1,3 +1,5 @@
+import os
+
 from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
@@ -89,6 +91,7 @@ def group(slug):
 @blog_bp.route('/post/<string:name>')
 def post(name):
   post = Post.query.get_or_404(name)
+  src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/blog_posts/{name}/main-en.md')) else 'hello-world'
   return render_template('blog-post.html', **{
     'title': post.name,
     'subtitle': post.description,
@@ -97,7 +100,7 @@ def post(name):
       ( post.category.name,      url_for('blog.group', slug=post.category.slug) ),
     ],
 
-    'sections': list(get_sections('hello-world')),
+    'sections': list(get_sections(src_file_temp)),
     'post': post,
 
     'header_image': post.image,
