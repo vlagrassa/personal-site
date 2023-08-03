@@ -280,6 +280,12 @@ h1 {
     transform: rotate(-90deg);
 }
 
+.modal-content {
+    border: 2px solid black;
+    outline: 1px solid black;
+    outline-offset: 1.5px;
+}
+
 
 
 /* Scrollbar */

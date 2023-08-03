@@ -165,3 +165,26 @@
 .toggle-button.selected > div::after {
   transform: scaleX(1);
 }
+
+
+.desc-button {
+  cursor: pointer;
+  float: right;
+  margin-left: 4px;
+}
+
+.desc-button-bg {
+  fill: var(--color-secondary-4);
+}
+
+.desc-button-bg:hover {
+  fill: var(--color-secondary-2);
+}
+
+.desc-button-bg-overlay {
+  fill: rgba(0, 0, 0, 0.3);
+}
+
+.desc-button-bg-overlay:hover {
+  fill: rgba(0, 0, 0, 0.55);
+}

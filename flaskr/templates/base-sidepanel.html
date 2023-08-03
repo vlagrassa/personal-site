@@ -25,6 +25,16 @@
 
       <!-- Left Panel Content -->
       {% block leftpanel %}{% endblock %}
+
+      {# Help Modal Button -- only renders if child defines help_modal_body block #}
+      {% if self.help_modal_body() %}
+      <div class="mt-3 float-end">
+        <svg class="desc-button float-end" tabindex="0" viewBox="0 0 10 10" width="16px" height="16px" data-bs-toggle="modal" data-bs-target="#help">
+          {% include '_includes/svg.html' %}
+          <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+        </svg>
+      </div>
+      {% endif %}
     </div>
   </div>
 
@@ -34,5 +44,24 @@
   </div>
 
 </div>
+
+
+{% if self.help_modal_body() %}
+<div class="modal fade" id="help" tabindex="-1" aria-labelledby="helpLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="helpLabel">
+          {% block help_modal_header %}Help{% endblock %}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% block help_modal_body %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}

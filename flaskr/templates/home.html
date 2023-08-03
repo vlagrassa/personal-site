@@ -21,20 +21,6 @@
     animation-iteration-count: infinite;
 
   }
-
-  .desc-button {
-    cursor: pointer;
-    float: right;
-    margin-left: 4px;
-  }
-
-  .desc-button-bg {
-    fill: rgba(0, 0, 0, 0.3)
-  }
-
-  .desc-button-bg:hover {
-    fill: rgba(0, 0, 0, 0.55);
-  }
 </style>
 {% endblock %}
 
@@ -62,10 +48,10 @@
         <div style="width: 92%">
           <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px">
             {% include '_includes/svg.html' %}
-            <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+            <circle cx="5" cy="5" r="5" class="desc-button-bg-overlay" mask="url(#svg-mask-info)" />
           </svg>
           <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
-            <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-pause)" />
+            <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg-overlay" mask="url(#svg-mask-pause)" />
           </svg>
         </div>
       </div>
