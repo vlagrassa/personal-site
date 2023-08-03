@@ -25,11 +25,11 @@
   <script type="module">
     const input_el = document.getElementById('{{id}}-input');
 
-    input_el.oninput = (event) => {
+    input_el.addEventListener('input', (event) => {
       const value = event.srcElement.value;
       document.getElementById("{{id}}-container").classList.toggle('has-value', !!value);
       {% if oninput %} {{ oninput }}(value) {% endif %}
-    }
+    });
 
     input_el.addEventListener('keydown', (event) => {
       if (event.code === 'Escape') {
@@ -44,15 +44,97 @@
 
 
 {% macro render_searchbar_select(id=none, oninput=none, label=none, class='', options=none) %}
-  {{ render_searchbar(id, oninput='filter_dropdown', label=label, class=class, searchbar_class='searchbar-tags') }}
+  {{ render_searchbar(id, oninput=none, label=label, class=class, searchbar_class='searchbar-tags') }}
 
   <div id="{{id}}-options-container" class="collapse multi-collapse" style="transform: translateY(-3px);">
     <div class="card rounded-top-0 overflow-hidden">
       {% for option in options %}
-      <button id="{{id}}-option-{{option.id}}" class="btn btn-light rounded-0 m-0 w-100" onclick="select('{{ option.id }}')">
+      <button id="{{id}}-option-{{option.id}}" class="btn btn-light rounded-0 m-0 w-100">
         <small>{{ render_lang_object(option.name) }}</small>
       </button>
       {% endfor %}
+    </div>
+  </div>
+
+  <script type="module">
+    const input_el     = document.getElementById('{{id}}-input');
+    const container_el = document.getElementById('{{id}}-container');
+    const options_el   = document.getElementById('{{id}}-options-container');
+
+    container_el.appendChild(options_el);
+
+    const options_container = new bootstrap.Collapse('#{{id}}-options-container', {
+      toggle: false,
+    });
+    let options_container_timeout;
+
+    const options = {
+      {%- for option in options %}
+      '{{ option.id }}': '{{option.name.en}}',
+      {%- endfor %}
+    };
+
+    input_el.onfocus = (event) => {
+      clearTimeout(options_container_timeout);
+      options_container.show();
+    }
+
+    input_el.onclick = (event) => {
+      clearTimeout(options_container_timeout);
+      options_container.show();
+    }
+
+    input_el.onblur = (event) => {
+      options_container_timeout = setTimeout(() => {
+        if (!container_el.contains(document.activeElement)) {
+          options_container.hide();
+        }
+      }, 50);
+    }
+
+    input_el.addEventListener('input', (e) => {
+      filter_dropdown(e.target.value);
+    })
+
+    function filter_dropdown(val) {
+      val = val.toLowerCase();
+
+      Object.entries(options).forEach(([id, name]) => {
+        document.getElementById(`{{id}}-option-${id}`).classList.toggle('hide', !name.toLowerCase().includes(val));
+      });
+
+      {% if oninput %}{{ oninput }}(val);{% endif %}
+    }
+
+    function select(option) {
+      input_el.value = selections[option];
+      container_el.classList.toggle('has-value', !!input_el.value);
+      input_el.focus();
+      input_el.blur();
+      filter_dropdown(input_el.value);
+    }
+
+    Object.entries(options).forEach(([id, name]) => {
+      document.getElementById(`{{id}}-option-${id}`).onclick = () => {select(id);};
+    });
+  </script>
+{% endmacro %}
+
+
+{# TODO: Handle enter, backspace #}
+{% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
+  {{ render_searchbar(id, oninput=none, label=label, class=class, searchbar_class='searchbar-tags') }}
+
+  <div id="{{id}}-options-container" class="collapse multi-collapse" style="transform: translateY(-3px);">
+    <div class="card rounded-top-0">
+      <div class="card-body">
+        <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
+          {%- for tag in tags %}
+          {{ render_blog_tag(tag, id=id+"-tag-"+tag.id, onclick="add_tag") }}
+          {%- endfor %}
+        </div>
+        <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
+      </div>
     </div>
   </div>
 
@@ -85,87 +167,10 @@
         }
       }, 50);
     }
-  </script>
 
-  <script>
-    function filter_dropdown(val) {
-      val = val.toLowerCase();
-
-      const selections = {
-        {%- for option in options %}
-        '{{ option.id }}': '{{option.name.en | lower}}',
-        {%- endfor %}
-      };
-
-      Object.entries(selections).forEach(([id, name]) => {
-        document.getElementById(`{{id}}-option-${id}`).classList.toggle('hide', !name.includes(val));
-      });
-
-      {{ oninput }}(val);
-    }
-
-    function select(option) {
-      const input_el     = document.getElementById('{{id}}-input');
-      const container_el = document.getElementById('{{id}}-container');
-
-      const selections = {
-        {%- for option in options %}
-        '{{ option.id }}': '{{option.name.en}}',
-        {%- endfor %}
-      }
-
-      input_el.value = selections[option];
-      container_el.classList.toggle('has-value', !!input_el.value);
-      input_el.focus();
-      input_el.blur();
-      filter_dropdown(input_el.value);
-    }
-  </script>
-{% endmacro %}
-
-
-{# TODO: Handle enter, backspace #}
-{% macro render_searchbar_tags(id=none, oninput=none, label=none, class='', tags=none) %}
-  {{ render_searchbar(id, oninput='filter_tags', label=label, class=class, searchbar_class='searchbar-tags') }}
-
-  <div id="{{id}}-options-container" class="collapse multi-collapse" style="transform: translateY(-3px);">
-    <div class="card rounded-top-0">
-      <div class="card-body">
-        <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
-          {%- for tag in tags %}
-          {{ render_blog_tag(tag, id=id+"-tag-"+tag.id, onclick="add_tag") }}
-          {%- endfor %}
-        </div>
-        <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module">
-    const container_el = document.getElementById('{{id}}-container');
-    const input_el = document.getElementById('{{id}}-input');
-    const options_container = new bootstrap.Collapse('#{{id}}-options-container', {
-      toggle: false,
-    });
-    let options_container_timeout;
-
-    input_el.onfocus = (event) => {
-      clearTimeout(options_container_timeout);
-      options_container.show();
-    }
-
-    input_el.onclick = (event) => {
-      clearTimeout(options_container_timeout);
-      options_container.show();
-    }
-
-    input_el.onblur = (event) => {
-      options_container_timeout = setTimeout(() => {
-        if (!container_el.contains(document.activeElement)) {
-          options_container.hide();
-        }
-      }, 50);
-    }
+    input_el.addEventListener('input', (event) => {
+      filter_tags(event.target.value);
+    })
 
     input_el.addEventListener('keydown', (event) => {
       if (event.code === 'Enter') {
@@ -181,9 +186,6 @@
   </script>
 
   <script>
-    let container_el = document.getElementById('{{id}}-container');
-    container_el.appendChild(document.getElementById('{{id}}-options-container'));
-
     let tag_selection = [];
 
     function add_tag_el(tag) {
