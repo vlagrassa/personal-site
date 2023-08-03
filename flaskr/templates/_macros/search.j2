@@ -130,7 +130,7 @@
       <div class="card-body">
         <div id="{{id}}-options" class="text-start d-flex flex-wrap align-items-center" style="gap: 3px;">
           {%- for tag in tags %}
-          {{ render_blog_tag(tag, id=id+"-tag-"+tag.id, onclick="add_tag") }}
+          {{ render_blog_tag(tag, id=id+"-tag-"+tag.id) }}
           {%- endfor %}
         </div>
         <button class="btn badge btn-clear w-100 mt-2" aria-label="Clear" onclick="remove_tag()">Clear</button>
@@ -142,6 +142,12 @@
     const input_el     = document.getElementById('{{id}}-input');
     const container_el = document.getElementById('{{id}}-container');
     const options_el   = document.getElementById('{{id}}-options-container');
+
+    let tag_selection = [];
+
+    const tag_ids = [
+      {%- for tag in tags %}'{{ tag.id }}',{% endfor %}
+    ];
 
     container_el.appendChild(options_el);
 
@@ -183,23 +189,32 @@
         }
       }
     })
-  </script>
 
-  <script>
-    let tag_selection = [];
+    input_el.addEventListener('add_tag', ({detail}) => {
+      add_tag(detail.tag_id);
+    })
+
+    tag_ids.forEach(tag_id => {
+      document.getElementById(`{{id}}-tag-${tag_id}`).onclick = (e) => {
+        if (options_el.contains(e.target)) {
+          add_tag(tag_id);
+        } else {
+          remove_tag(tag_id);
+        }
+      };
+    })
+
 
     function add_tag_el(tag) {
       const parentElement = document.getElementById('{{id}}-searchbar');
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.insertBefore(buttonElement, parentElement.childNodes[parentElement.childNodes.length - 2]);
-      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('add_tag', 'remove_tag'))
     }
 
     function remove_tag_el(tag) {
       const parentElement = document.getElementById('{{id}}-options');
       const buttonElement = document.getElementById(`{{id}}-tag-${tag}`);
       parentElement.appendChild(buttonElement);
-      buttonElement.setAttribute('onclick', buttonElement.getAttribute('onclick').replace('remove_tag', 'add_tag'))
     }
 
     function update_input_el(clear = false) {
