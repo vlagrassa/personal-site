@@ -1,6 +1,13 @@
 {% extends 'base-center.html' %}
 
 
+{% block head %}
+<script src="https://unpkg.com/github-calendar@2.3.2/dist/github-calendar.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/github-calendar@2.3.2/dist/github-calendar-responsive.css"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/github-calendar.css') }}">
+{% endblock %}
+
+
 {% block style %}
 <style>
   @keyframes blink {
@@ -65,6 +72,7 @@
   {% from '_macros/utils.j2' import render_contents_entry %}
   {{ render_contents_entry('welcome',  { 'en': "Welcome!",              'tj': "Welcome!",        'ja': 'ようこそ！' }) }}
   {{ render_contents_entry('timeline', { 'en': "Timeline",              'tj': "Timeline",        'ja': 'タイムライン' }) }}
+  {{ render_contents_entry('activity', { 'en': "Activity",              'tj': "Activity",        'ja': '活動' }) }}
   {{ render_contents_entry('another',  { 'en': "Another Section",       'tj': "Another Section", 'ja': '別の部分' }) }}
   {{ render_contents_entry('contact',  { 'en': "Let's Connect!",        'tj': "Let's Connect!",  'ja': '連絡しよう' }) }}
 {% endblock %}
@@ -90,6 +98,28 @@
     <span {{set_lang('tj')}}>Timeline</span>
   </h3>
   {% include '_includes/lorem-ipsum.html' %}
+</div>
+
+<div id="activity">
+  <h3 class="pt-3">
+    <span {{set_lang('en')}}>Activity</span>
+    <span {{set_lang('ja')}}>活動</span>
+    <span {{set_lang('tj')}}>Activity</span>
+  </h3>
+  <p>
+    I'm usually pretty active on GitHub:
+  </p>
+  <div id="calendar" class="calendar">
+    <div class="mb-4">
+      <div class="spinner-border" style="width: 2rem; height: 2rem; color: var(--color-primary-4);" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <p>
+    To see what sort of projects I'm working on,
+    check out my <a class="link" href="github.com">GitHub profile</a> or this site's <a class="link" href="{{ url_for('projects.projects') }}">Projects</a> page.
+  </p>
 </div>
 
 <div id="another">
@@ -145,6 +175,26 @@
     target.dispatchEvent(new CustomEvent('play', {
       detail: {play}
     }));
+  }
+</script>
+
+<script>
+  GitHubCalendar(".calendar", "vlagrassa").then(() => {
+    get_day_label(1).children[1].innerHTML = '{{render_lang_object({"en": "Mon", "tj": "Mon", "ja": "月"})}}';
+    get_day_label(3).children[1].innerHTML = '{{render_lang_object({"en": "Wed", "tj": "Wed", "ja": "水"})}}';
+    get_day_label(5).children[1].innerHTML = '{{render_lang_object({"en": "Fri", "tj": "Fri", "ja": "金"})}}';
+
+    const legend = document.getElementById('calendar').querySelector('.js-calendar-graph').children[1].children[1];
+    legend.style.display = 'flex';
+    legend.style.alignItems = 'center';
+    legend.style.gap = '3px';
+    legend.style.marginTop = '3px';
+    legend.innerHTML = legend.innerHTML.replace('Less', '<small style="padding-right: 3px;">{{render_lang_object({"en": "Less", "tj": "Less", "ja": "小"})}}</small>');
+    legend.innerHTML = legend.innerHTML.replace('More', '<small style="padding-left:  3px;">{{render_lang_object({"en": "More", "tj": "More", "ja": "大"})}}</small>');
+  });
+
+  function get_day_label(i) {
+    return document.getElementById('calendar').querySelector('tbody').children[i].children[0];
   }
 </script>
 {% endblock %}

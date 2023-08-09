@@ -1,0 +1,150 @@
+:root {
+  --color-calendar-graph-day-L1-bg: var(--color-primary-1);
+  --color-calendar-graph-day-L2-bg: var(--color-primary-2);
+  --color-calendar-graph-day-L3-bg: var(--color-primary);
+  --color-calendar-graph-day-L4-bg: var(--color-primary-4);
+  /* --color-calendar-graph-day-L1-bg: var(--color-secondary-1); */
+  /* --color-calendar-graph-day-L2-bg: var(--color-secondary-2); */
+  /* --color-calendar-graph-day-L3-bg: var(--color-secondary); */
+  /* --color-calendar-graph-day-L4-bg: var(--color-secondary-4); */
+}
+
+.GitHub {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+.calendar {
+  font-family: var(--font-body-ltn);
+  border: none;
+  min-height: unset;
+}
+
+.sr-only {
+  display: none;
+}
+
+.ContributionCalendar-label {
+  font-family: var(--font-head);
+}
+
+.ContributionCalendar-label [lang="ja"] {
+  font-family: var(--font-head);
+}
+
+.ContributionCalendar-label span {
+  right: 4px;
+}
+
+table thead .ContributionCalendar-label span {
+  top: -4px !important;
+  left: 0;
+  right: unset;
+}
+
+.js-calendar-graph {
+  width: fit-content;
+  padding-right: 32px;
+  margin: auto !important;
+}
+
+table.js-calendar-graph-table {
+  border-collapse: separate;
+}
+
+.js-calendar-graph-table thead td:first-child {
+  width: 32px !important;
+}
+
+.float-right {
+  float: right;
+}
+
+.contrib-column {
+  display: none;
+}
+
+/* td:first-child {
+  display: none;
+} */
+
+/* div.js-calendar-graph div:last-child {
+  display: none;
+} */
+
+/* table.ContributionCalendar-grid thead {
+  display: none;
+} */
+
+td.ContributionCalendar-day {
+  border-radius: 2px;
+}
+
+td.ContributionCalendar-day[data-level='0'] {
+  background-color: var(--color-calendar-graph-day-bg);
+}
+
+td.ContributionCalendar-day[data-level='1'] {
+  background-color: var(--color-calendar-graph-day-L1-bg);
+}
+
+td.ContributionCalendar-day[data-level='1']:hover {
+  background-color: var(--color-secondary-1);
+  cursor: pointer;
+}
+
+td.ContributionCalendar-day[data-level='2'] {
+  background-color: var(--color-calendar-graph-day-L2-bg);
+}
+
+td.ContributionCalendar-day[data-level='2']:hover {
+  background-color: var(--color-secondary-2);
+  cursor: pointer;
+}
+
+td.ContributionCalendar-day[data-level='3'] {
+  background-color: var(--color-calendar-graph-day-L3-bg);
+}
+
+td.ContributionCalendar-day[data-level='3']:hover {
+  background-color: var(--color-secondary);
+  cursor: pointer;
+}
+
+td.ContributionCalendar-day[data-level='4'] {
+  background-color: var(--color-calendar-graph-day-L4-bg);
+}
+
+td.ContributionCalendar-day[data-level='4']:hover {
+  background-color: var(--color-secondary-3);
+  cursor: pointer;
+}
+
+/* #user-activity-overview {
+  display: unset;
+} */
+
+.js-org-filter-links-container nav {
+  gap: 2em;
+}
+
+.js-org-filter-links-container nav a {
+  border: 1px solid black;
+  border-radius: 3px;
+  outline: 1px solid black;
+  outline-offset: 1px;
+  padding: 0px 4px;
+}
+
+/* .js-org-filter-links-container nav::before {
+  content: "Organizations:";
+} */
+
+.js-activity-overview-graph-container {
+  display: none;
+}
+
+.graph-before-activity-overview {
+  border: none !important;
+}
