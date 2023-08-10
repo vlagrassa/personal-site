@@ -55,6 +55,8 @@ def create_app(test_config=None):
     return {
       'lang':  l,
       'langs': LANGUAGES,
+      'MONTHS': MONTHS,
+      'DAYS': DAYS,
     }
 
   @app.context_processor

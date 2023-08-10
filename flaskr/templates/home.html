@@ -179,10 +179,31 @@
 </script>
 
 <script>
+  const day_els = [
+    {%- for d in DAYS %}
+    '{{render_lang_object(d)}}',
+    {%- endfor %}
+  ];
+  const month_els = [
+    {%- for m in MONTHS %}
+    '{{render_lang_object(m)}}',
+    {%- endfor %}
+  ];
+
   GitHubCalendar(".calendar", "vlagrassa").then(() => {
-    get_day_label(1).children[1].innerHTML = '{{render_lang_object({"en": "Mon", "tj": "Mon", "ja": "月"})}}';
-    get_day_label(3).children[1].innerHTML = '{{render_lang_object({"en": "Wed", "tj": "Wed", "ja": "水"})}}';
-    get_day_label(5).children[1].innerHTML = '{{render_lang_object({"en": "Fri", "tj": "Fri", "ja": "金"})}}';
+
+    // Make calendar day labels change with language selection
+    get_day_label(1).children[1].innerHTML = day_els[1];
+    get_day_label(3).children[1].innerHTML = day_els[3];
+    get_day_label(5).children[1].innerHTML = day_els[5];
+
+    // Make calendar month labels change with language selection
+    const month_labels = get_month_labels();
+    if (month_labels) {
+      month_labels.forEach((a, i) => {
+        a.children[1].innerHTML = month_els[i];
+      });
+    }
 
     const legend = document.getElementById('calendar').querySelector('.js-calendar-graph').children[1].children[1];
     legend.style.display = 'flex';
@@ -195,6 +216,15 @@
 
   function get_day_label(i) {
     return document.getElementById('calendar').querySelector('tbody').children[i].children[0];
+  }
+
+  function get_month_labels() {
+    const arr = Array.from(document.getElementById('calendar').querySelector('thead').children[0].children).slice(1);
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].children[1].innerText === "Jan") {
+        return arr.slice(i).concat(arr.slice(0, i));
+      }
+    }
   }
 </script>
 {% endblock %}
