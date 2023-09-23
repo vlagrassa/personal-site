@@ -25,6 +25,7 @@
                 "--app", "flaskr",
                 "run",
                 "--debug",
+                "-p", "8080",
             ],
             "jinja": true,
         },
