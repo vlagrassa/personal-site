@@ -1,0 +1,61 @@
+{#
+  Render a single entry in the timeline.
+#}
+{% macro render_timeline_entry(id, title, role) %}
+<div id="timeline-{{id}}" class="card m-4 timeline-entry">
+  <div class="card-body">
+
+    {# Header Row #}
+    <div class="d-flex">
+      <div class="flex-fill">
+
+        {# Header #}
+        <div class="row align-items-baseline">
+          <h5 class="card-title text-truncate col-auto d-inline-block mb-0">{{ title }}</h5>
+          <p class="card-text col-auto d-inline-block">
+            <small class="text-body-secondary">{{ role }}</small>
+          </p>
+        </div>
+        {# /Header #}
+
+      </div>
+      <div>
+        <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#timeline-{{id}}-body" aria-expanded="false" aria-controls="collapseExample">+</button>
+      </div>
+    </div>
+    {# /Header Row #}
+
+    {# Body #}
+    <div class="card-text collapse" id="timeline-{{id}}-body">
+      {{ caller() }}
+    </div>
+    {# /Body #}
+
+  </div>
+</div>
+{% endmacro %}
+
+
+{#
+  Render a block of entries in the timeline.
+ #}
+{% macro render_timeline_block(label, side) %}
+<div class="timeline-block timeline-block-{{side}}">
+
+  {# Block label #}
+  {% if label %}
+  <div class="w-100 d-flex justify-content-center">
+    <div id="timeline-{{ label | lower | replace(' ', '') }}" class="timeline-block-label py-2 px-4">
+      <h4 class="my-0">{{ label }}</h4>
+    </div>
+  </div>
+  <div style="margin-top: -2rem;"></div>
+  {% endif %}
+
+  {# Block body #}
+  {{ caller() }}
+
+  {# Spacing for previous label - fix #}
+  <div style="height: 1.5rem;"></div>
+</div>
+{% endmacro %}
