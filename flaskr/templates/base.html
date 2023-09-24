@@ -38,7 +38,8 @@
     id="scroll-container"
     class="overflow-y-{{ main_scroll }} overflow-x-hidden w-100 flex-grow-1"
     {%- if header_image %}
-    data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-smooth-scroll="true" data-bs-root-margin="50px 0px -50px" tabindex="0"
+    data-bs-spy="scroll" data-bs-target="#table-of-contents" data-bs-root-margin="50px 0px -50px" tabindex="0"
+    data-bs-smooth-scroll="true" style="scroll-behavior: smooth;"
     {%- endif %}
   >
 
