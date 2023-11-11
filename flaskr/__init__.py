@@ -5,7 +5,7 @@ from flask import Flask, url_for, request
 from flaskext.markdown import Markdown
 
 from .constants import *
-from .database import db
+from .database import db, TABLES, DB_ENUMS
 
 from .views.home     import home_bp
 from .views.projects import projects_bp
@@ -95,6 +95,13 @@ def create_app(test_config=None):
         }
           for section in PAGE_TITLES
       ],
+    }
+
+  @app.context_processor
+  def inject_db_schemas():
+    return {
+      'TABLES':   TABLES,
+      'DB_ENUMS': DB_ENUMS,
     }
 
   return app
