@@ -68,16 +68,12 @@
 {% endblock %}
 
 
+{# Render table-of-contents entries for each section #}
 {% block sections %}
   {% from '_macros/utils.j2' import render_contents_entry %}
-  {{ render_contents_entry('welcome',  { 'en': "Welcome!",              'tj': "Welcome!",        'ja': 'ようこそ！' }) }}
-  {{ render_contents_entry('timeline', { 'en': "Timeline",              'tj': "Timeline",        'ja': 'タイムライン' }) }}
-  {{ render_contents_entry('timeline-present',   { 'en': "2022 - Present", 'tj': '2022 - Present', 'ja': '2022 - 今' }, sub=true) }}
-  {{ render_contents_entry('timeline-2018-2022', { 'en': "2018 - 2022",    'tj': '2018 - 2022',    'ja': '2018 - 2022' }, sub=true) }}
-  {{ render_contents_entry('timeline-earlier',   { 'en': "2018 & Earlier", 'tj': '2018 & Earlier', 'ja': '2018 & その前' }, sub=true) }}
-  {{ render_contents_entry('activity', { 'en': "Activity",              'tj': "Activity",        'ja': '活動' }) }}
-  {{ render_contents_entry('another',  { 'en': "Another Section",       'tj': "Another Section", 'ja': '別の部分' }) }}
-  {{ render_contents_entry('contact',  { 'en': "Let's Connect!",        'tj': "Let's Connect!",  'ja': '連絡しよう' }) }}
+  {% for section in content %}
+  {{ render_contents_entry(section['id'], section['title'], sub=section['level']) }}
+  {% endfor %}
 {% endblock %}
 
 
@@ -101,72 +97,10 @@
 {% endblock %}
 
 
+{# Render main body content for each section #}
 {% block content %}
-<div id="welcome">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Welcome!</span>
-    <span {{set_lang('ja')}}>ようこそ！</span>
-    <span {{set_lang('tj')}}>Welcome!</span>
-  </h3>
-  <p class="text-body-secondary fst-italic">
-    Hello there
-  </p>
-  {% include '_includes/lorem-ipsum.html' %}
-</div>
-
-<div id="timeline">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Timeline</span>
-    <span {{set_lang('ja')}}>タイムライン</span>
-    <span {{set_lang('tj')}}>Timeline</span>
-  </h3>
-  {% include '_includes/timeline.html' %}
-</div>
-
-<div id="activity">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Activity</span>
-    <span {{set_lang('ja')}}>活動</span>
-    <span {{set_lang('tj')}}>Activity</span>
-  </h3>
-  <p>
-    I'm usually pretty active on GitHub:
-  </p>
-  {% with section_id = 'activity-github' %}
-  {% include '_includes/github-calendar.j2' ignore missing with context %}
-  {% endwith %}
-  <p>
-    To see what sort of projects I'm working on,
-    check out my <a class="link" href="github.com">GitHub profile</a> or this site's <a class="link" href="{{ url_for('projects.projects') }}">Projects</a> page.
-  </p>
-</div>
-
-<div id="another">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Another Section</span>
-    <span {{set_lang('ja')}}>別の部分</span>
-    <span {{set_lang('tj')}}>Another Section</span>
-  </h3>
-  {% include '_includes/lorem-ipsum.html' %}
-  <div class="panel px-4 py-4 mt-2 mb-3">
-    Hello!
-  </div>
-  {% include '_includes/lorem-ipsum.html' %}
-  {% include '_includes/lorem-ipsum.html' %}
-</div>
-
-
-<h3 id="contact" class="pt-3">
-  <span {{set_lang('en')}}>Let's Connect!</span>
-  <span {{set_lang('ja')}}>連絡しよう</span>
-  <span {{set_lang('tj')}}>Let's Connect!</span>
-</h3>
-<p>
-  If you've got questions, comments, or just want to say hi, feel free to reach out at <a class="link" href="mailto:contact@vlagrassa.dev">contact@vlagrassa.dev</a>.
-</p>
-<p>
-  I'd love to hear from you!
-</p>
+  {% from '_macros/utils.j2' import render_content with context %}
+  {{ render_content(content) }}
 {% endblock %}
 
 
