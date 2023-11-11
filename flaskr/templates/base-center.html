@@ -66,16 +66,22 @@
 
       <!-- Recent Activity -->
       <div class="d-none d-lg-block col-lg-2 p-4">
-        <div id="recent-activity" class="d-flex flex-column gap-3 pt-3" style="position: sticky; top: 1em;">
-          <h6 class="pb-0">Recent Activity</h6>
-          <div class="panel p-2">
-            Blog post
-          </div>
-          <div class="panel p-2">
-            Blog post
-          </div>
-          <div class="panel p-2">
-            Blog post
+        <div style="position: sticky; top: 1.5em;">
+          {% block right_panel_top %}
+          {% endblock %}
+          <div id="recent-activity" class="d-flex flex-column gap-3 py-3 px-2">
+            <h6 class="pb-0 mb-0">
+              Recent Activity
+            </h6>
+            <div class="panel p-2">
+              Blog post
+            </div>
+            <div class="panel p-2">
+              Blog post
+            </div>
+            <div class="panel p-2">
+              Blog post
+            </div>
           </div>
         </div>
       </div>

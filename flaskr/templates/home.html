@@ -81,6 +81,26 @@
 {% endblock %}
 
 
+{% block right_panel_top %}
+  <div class="d-flex flex-column gap-3 py-3">
+    <h6 class="pb-0 mb-0">
+      <span {{set_lang('en')}}>Quick Links</span>
+      <span {{set_lang('ja')}}>リンク</span>
+      <span {{set_lang('tj')}}>Quick Links</span>
+    </h6>
+    <div class="panel p-2">
+      Résumé
+    </div>
+    <div class="panel p-2">
+      Experience
+    </div>
+    <div class="panel p-2">
+      Contact
+    </div>
+  </div>
+{% endblock %}
+
+
 {% block content %}
 <div id="welcome">
   <h3 class="pt-3">
