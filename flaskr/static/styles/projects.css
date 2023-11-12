@@ -29,6 +29,67 @@
 }
 
 
+.hex-container-inline {
+  display: flex;
+  justify-content: center;
+  --v: 25%;
+  --s: 210px;
+  --m: 8px;
+  --f: calc(var(--s) * 1.732 + 4 * var(--m) - 1px);
+
+  --margin-offset: 0;
+  --hex-path: polygon(50% 0%, 100% var(--v), 100% calc(100% - var(--v)), 50% 100%, 0% calc(100% - var(--v)), 0% var(--v));
+}
+
+
+.hex-container-column {
+  display: flex;
+  justify-content: center;
+  --v: 25%;
+  --s: 210px;
+  --m: 8px;
+  --f: calc(var(--s) * 1.732 + 4 * var(--m) - 1px);
+
+  --margin-offset: 0;
+  --hex-path: polygon(50% 0%, 100% var(--v), 100% calc(100% - var(--v)), 50% 100%, 0% calc(100% - var(--v)), 0% var(--v));
+
+  flex-direction: column;
+
+  --overlap: calc(var(--m) - (var(--s) * 0.2885));
+}
+
+.hex-container-row {
+  display: flex;
+  /* margin-bottom: var(--overlap); */
+  margin-top: var(--overlap);
+  gap: 1em;
+}
+
+.hex-container-row:nth-child(odd) {
+  flex-direction: row-reverse;
+}
+
+.hex-container-row:first-child {
+  margin-top: calc(var(--overlap) / 2);
+}
+
+.hex-container-row:nth-child(even) {
+  padding-right: 2em;
+}
+
+.hex-container-row:nth-child(odd) {
+  padding-left: 2em;
+}
+
+
+.hex-description {
+  --m1: calc(-1 * (var(--m) - (var(--s) * 0.2885)));
+  --m2: calc(1 * (var(--m) + (var(--panel-outline-space) * 2)));
+  margin-top: calc(var(--m1) + var(--m2));
+}
+
+
+
 /* Hexagons */
 
 .hex {

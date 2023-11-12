@@ -1,0 +1,7 @@
+{% from '_macros/blog.j2' import render_blog_card with context %}
+
+<div class="mb-5 ps-4">
+  {% for post in preview_posts %}
+  {{ render_blog_card(post) }}
+  {% endfor %}
+</div>

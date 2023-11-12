@@ -10,16 +10,32 @@
 # [ja] 活動
 # [tj] Recent Activity
 
-!section-notitle activity-github
+!section-notitle activity-spotlight
+## [en] Spotlight
+## [ja] 総集編
+## [tj] Spotlight
+
+[en]
+  Here are a few of my ongoing projects that I'd like to highlight:
+
+!insert projects-preview
+
+
+[en]
+  You might also like one of my latest blog posts:
+
+!insert blog-preview
+
+
+!section activity-github
 ## [en] GitHub
 ## [ja] GitHub
 ## [tj] GitHub
 
-!insert github-calendar
-
 [en]
-  To see what sort of projects I'm working on,
-  check out my <a class="link" href="https://github.com/vlagrassa">GitHub profile</a>
+  If you'd like to get into the details, you're welcome to check out the latest activity on my <a class="link" href="https://github.com/vlagrassa">GitHub</a> profile.
+
+!insert github-calendar
 
 
 
