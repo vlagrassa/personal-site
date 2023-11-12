@@ -3,9 +3,10 @@
 .timeline-block {
   --timeline-border-width: 2px;
   --timeline-border-radius: 20px;
-  --timeline-border: var(--timeline-border-width) solid rgb(33, 37, 41);
+  --timeline-border-color: rgb(33, 37, 41);
+  --timeline-border: var(--timeline-border-width) solid var(--timeline-border-color);
   --timeline-label-border-width: 2px;
-  --timeline-label-border: var(--timeline-label-border-width) solid rgb(33, 37, 41);
+  --timeline-label-border: var(--timeline-label-border-width) solid var(--timeline-border-color);
 
   border-top:    var(--timeline-border);
   border-bottom: var(--timeline-border);
@@ -45,7 +46,7 @@
   width: fit-content;
   border: var(--timeline-label-border);
   border-radius: 10px;
-  outline: 1px solid black;
+  outline: 1px solid var(--timeline-border-color);
   outline-offset: 1.5px;
 
   position: relative;
@@ -106,7 +107,7 @@
   top: 2rem;
   transform: translateY(-50%);
 
-  outline: 1px solid black;
+  outline: 1px solid var(--timeline-border-color);
   outline-offset: 1.5px;
 }
 
