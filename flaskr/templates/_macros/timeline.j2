@@ -45,7 +45,7 @@
 {#
   Render a block of entries in the timeline.
  #}
-{% macro render_timeline_block(label) %}
+{% macro render_timeline_block(label, is_final=false) %}
 <div class="timeline-block">
 
   {# Block label #}
@@ -64,6 +64,10 @@
   {{ caller() }}
 
   {# Spacing for previous label - fix #}
+  {%- if is_final %}
+  <div style="height: 0.01rem;"></div>
+  {%- else %}
   <div style="height: 2rem;"></div>
+  {%- endif %}
 </div>
 {% endmacro %}

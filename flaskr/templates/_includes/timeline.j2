@@ -6,7 +6,7 @@
 <div class="px-3 pt-3">
 
   {%- for section in timeline %}
-  {%- call render_timeline_block(section.label_en) %}
+  {%- call render_timeline_block(section.label_en, is_final=loop.last) %}
 
     {%- for entry in section.entries %}
     {{ render_timeline_entry(entry) }}
