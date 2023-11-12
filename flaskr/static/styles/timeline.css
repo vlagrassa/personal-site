@@ -52,7 +52,8 @@
 
 /* Left & right timeline blocks */
 
-.timeline-block-left {
+/* Left */
+.timeline-block:nth-of-type(odd) {
   border-left: var(--timeline-border);
   border-top-right-radius:    0px;
   border-bottom-right-radius: 0px;
@@ -61,7 +62,8 @@
   padding-right: calc(-1 * var(--timeline-border-radius));
 }
 
-.timeline-block-right {
+/* Right */
+.timeline-block:nth-of-type(even) {
   border-right: var(--timeline-border);
   border-top-left-radius:    0px;
   border-bottom-left-radius: 0px;
@@ -88,11 +90,11 @@
   top: 1.5rem;
 }
 
-.timeline-block-left .timeline-entry::before {
+.timeline-block:nth-of-type(odd) .timeline-entry::before {
   left: var(--offset);
 }
 
-.timeline-block-right .timeline-entry::before {
+.timeline-block:nth-of-type(even) .timeline-entry::before {
   right: var(--offset);
 }
 
