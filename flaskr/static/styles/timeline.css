@@ -18,7 +18,7 @@
 
 /* Special styling for first & last block */
 
-.timeline-block:nth-of-type(1) {
+.timeline-block:first-of-type {
   border-top: none;
   border-top-left-radius:  0px;
   border-top-right-radius: 0px;
@@ -32,6 +32,9 @@
   border-bottom-left-radius:  0px;
   border-bottom-right-radius: 0px;
 }
+
+
+/* Block labels */
 
 .timeline-block-label-container {
   position: relative;
