@@ -35,7 +35,7 @@ class DocumentLineText(DocumentLine):
     self._last_lang = None
 
   def __iter__(self):
-    return ((k, v) for (k, v) in self._text.items())
+    return ((k, v.strip()) for (k, v) in self._text.items())
 
   def __getitem__(self, l):
     return self._text.get(l, '').strip()
@@ -95,9 +95,8 @@ class DocumentSection():
 
   def add_line(self, v):
     if len(self.body) and self.body[-1].is_empty:
-      self.body = [ *self.body[:-1], v ]
-    else:
-      self.body.append(v)
+      self.body = self.body[:-1]
+    self.body.append(v)
 
 
   def add_text(self, text, lang=None):
