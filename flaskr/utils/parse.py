@@ -164,7 +164,7 @@ class TextDocument():
       self.parse_insert(line)
 
     else:
-      self.parse_body(line)
+      self.parse_text(line)
 
 
   def parse_section(self, line):
@@ -182,7 +182,7 @@ class TextDocument():
     self.latest_section.add_title(r.group(3), lang=r.group(2), level=len(r.group(1)) - 1)
 
 
-  def parse_body(self, line):
+  def parse_text(self, line):
     r = re.match(r'^\[([a-z]+)\]( +|$)', line)
     if r:
       self.latest_section.add_text(
