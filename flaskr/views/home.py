@@ -4,7 +4,7 @@ from flask import (
 
 from ..constants import *
 from ..utils.image import HeaderImage
-from ..utils.parse import parse_content_md
+from ..utils.parse import TextDocument
 from ..utils.utils import nb
 
 home_bp = Blueprint('home', __name__, url_prefix='')
@@ -36,5 +36,5 @@ def home():
       'tj': 'Vincent LɒGrɒssɒ',
     },
     'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
-    'content': list(parse_content_md('home')),
+    'content': TextDocument.parse_file('home'),
   })

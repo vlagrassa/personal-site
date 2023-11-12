@@ -72,7 +72,7 @@
 {% block sections %}
   {% from '_macros/utils.j2' import render_contents_entry %}
   {% for section in content %}
-  {{ render_contents_entry(section['id'], section['title'], sub=section['level']) }}
+  {{ render_contents_entry(section.id, section.head, sub=section.level) }}
   {% endfor %}
 {% endblock %}
 

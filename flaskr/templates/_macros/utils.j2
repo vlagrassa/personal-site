@@ -38,20 +38,18 @@
 
 {%- macro render_content(content) %}
 {%- for section in content %}
-  {%- with section_id = section['id'] %}
+  {%- with section_id = section.id %}
   <div id="{{ section_id }}">
-    {%- if section['show'] %}
-    {{ render_header(section['title'], section['level'] + 3) }}
+    {%- if section.show %}
+    {{ render_header(section.head, section.level + 3) }}
     {%- endif %}
 
-    {%- for line in section['body'] %}
-      {%- if line.get('text') %}
-      <p {{ set_lang(line['lang']) }}>
-        {{ line['text'] }}
-      </p>
-      {%- else %}
-      {% include '_includes/' + line['insert'] + '.j2' ignore missing with context %}
-      {%- endif %}
+    {%- for line in section %}
+    {%- if line.is_text %}
+      <p> {{ render_lang_object(line) }} </p>
+    {%- else %}
+      {% include '_includes/' + line.name + '.j2' ignore missing with context %}
+    {%- endif %}
     {%- endfor %}
   </div>
   {%- endwith %}
