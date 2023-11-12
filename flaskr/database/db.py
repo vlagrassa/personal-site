@@ -159,6 +159,8 @@ class TimelineEntry(db.Model):
   description   = sa.Column(sa.String(2048))
   link_internal = sa.Column(sa.String(256))
   link_external = sa.Column(sa.String(256))
+  has_logo      = sa.Column(sa.Boolean(), nullable=False)
+  bg_color_hex  = sa.Column(sa.String(8))
 
   # The order values should be unique within each section
   __table_args__ = (sa.UniqueConstraint('section_id', 'order', name='_section_order_uc'),)

@@ -2,7 +2,11 @@
   Render a single entry in the timeline.
 #}
 {% macro render_timeline_entry(entry) %}
-<div id="timeline-{{entry.id}}" class="card my-4 mx-3 timeline-entry">
+<div id="timeline-{{entry.id}}" class="card my-4 mx-3 timeline-entry"
+  {%- if entry.has_logo %}
+    style="--bg-url: url({{ url_for('static', filename='logos-timeline/' + entry.id + '/logo-dark.png') }}); --bg-color: #{{ entry.bg_color_hex }}; --size: var(--size-lg);"
+  {%- endif %}
+>
   <div class="card-body">
 
     {# Header Row #}

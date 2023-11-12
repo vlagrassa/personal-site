@@ -76,9 +76,17 @@
 
 /* Entry dots */
 
+.timeline-entry {
+  --bg-url: none;
+  --bg-color: white;
+
+  --size-sm: 16px;
+  --size-lg: 42px;
+  --size: var(--size-sm);
+}
+
 .timeline-entry::before {
-  --size: 14px;
-  --offset: calc(-0.5rem - var(--timeline-border-radius) - (var(--size) / 2) + 0.25px);
+  --offset: calc(-1rem - var(--timeline-border-radius) - (var(--size) / 2) + 0.25px);
 
   content: "";
   position: absolute;
@@ -86,8 +94,17 @@
   height: var(--size);
   width:  var(--size);
   border-radius: calc(var(--size) / 2);
-  background: white;
-  top: 1.5rem;
+  background: var(--bg-color);
+  background-image: var( --bg-url );
+  background-size: 80%;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  top: 2rem;
+  transform: translateY(-50%);
+
+  outline: 1px solid black;
+  outline-offset: 1.5px;
 }
 
 .timeline-block:nth-of-type(odd) .timeline-entry::before {
