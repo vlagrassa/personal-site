@@ -1,9 +1,11 @@
 /* General timeline block */
 
 .timeline-block {
-  --timeline-border-width: 3px;
+  --timeline-border-width: 2px;
   --timeline-border-radius: 20px;
   --timeline-border: var(--timeline-border-width) solid rgb(33, 37, 41);
+  --timeline-label-border-width: 2px;
+  --timeline-label-border: var(--timeline-label-border-width) solid rgb(33, 37, 41);
 
   border-top:    var(--timeline-border);
   border-bottom: var(--timeline-border);
@@ -31,14 +33,19 @@
   border-bottom-right-radius: 0px;
 }
 
+.timeline-block-label-container {
+  position: relative;
+  transform: translateY(calc(-50% - ((16px) / 2)));
+}
 
 .timeline-block-label {
   width: fit-content;
-  border: var(--timeline-border);
+  border: var(--timeline-label-border);
   border-radius: 10px;
+  outline: 1px solid black;
+  outline-offset: 1.5px;
 
   position: relative;
-  transform: translateY(-50%);
   background: white;
 }
 
@@ -68,21 +75,24 @@
 /* Entry dots */
 
 .timeline-entry::before {
+  --size: 14px;
+  --offset: calc(-0.5rem - var(--timeline-border-radius) - (var(--size) / 2) + 0.25px);
+
   content: "";
   position: absolute;
   border: var(--timeline-border);
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
+  height: var(--size);
+  width:  var(--size);
+  border-radius: calc(var(--size) / 2);
   background: white;
   top: 1.5rem;
 }
 
 .timeline-block-left .timeline-entry::before {
-  left: calc(-1.5rem - var(--timeline-border-radius) - 7.5px);
+  left: var(--offset);
 }
 
 .timeline-block-right .timeline-entry::before {
-  right: calc(-1.5rem - var(--timeline-border-radius) - 7.5px);
+  right: var(--offset);
 }
 

@@ -2,7 +2,7 @@
   Render a single entry in the timeline.
 #}
 {% macro render_timeline_entry(id, title, role) %}
-<div id="timeline-{{id}}" class="card m-4 timeline-entry">
+<div id="timeline-{{id}}" class="card my-4 mx-2 timeline-entry">
   <div class="card-body">
 
     {# Header Row #}
@@ -45,17 +45,19 @@
   {# Block label #}
   {% if label %}
   <div class="w-100 d-flex justify-content-center">
-    <div id="timeline-{{ label | lower | replace(' ', '') }}" class="timeline-block-label py-2 px-4">
-      <h4 class="my-0">{{ label }}</h4>
+    <div id="timeline-{{ label | lower | replace(' ', '') }}" class="pt-3 pb-1 timeline-block-label-container">
+    <div class="timeline-block-label py-2 px-4">
+      <h6 class="my-0">{{ label }}</h6>
+    </div>
     </div>
   </div>
-  <div style="margin-top: -2rem;"></div>
+  <div style="margin-top: -2.5rem;"></div>
   {% endif %}
 
   {# Block body #}
   {{ caller() }}
 
   {# Spacing for previous label - fix #}
-  <div style="height: 1.5rem;"></div>
+  <div style="height: 2rem;"></div>
 </div>
 {% endmacro %}
