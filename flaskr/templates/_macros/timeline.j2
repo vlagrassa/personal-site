@@ -1,8 +1,8 @@
 {#
   Render a single entry in the timeline.
 #}
-{% macro render_timeline_entry(id, title, role) %}
-<div id="timeline-{{id}}" class="card my-4 mx-2 timeline-entry">
+{% macro render_timeline_entry(entry) %}
+<div id="timeline-{{entry.id}}" class="card my-4 mx-3 timeline-entry">
   <div class="card-body">
 
     {# Header Row #}
@@ -11,23 +11,25 @@
 
         {# Header #}
         <div class="row align-items-baseline">
-          <h5 class="card-title text-truncate col-auto d-inline-block mb-0">{{ title }}</h5>
+          <h5 class="card-title text-truncate col-auto d-inline-block mb-0">{{ entry.title }}</h5>
           <p class="card-text col-auto d-inline-block">
-            <small class="text-body-secondary">{{ role }}</small>
+            <small class="text-body-secondary">{{ entry.role }}</small>
           </p>
         </div>
         {# /Header #}
 
       </div>
       <div>
-        <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#timeline-{{id}}-body" aria-expanded="false" aria-controls="collapseExample">+</button>
+        <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#timeline-{{entry.id}}-body" aria-expanded="false" aria-controls="collapseExample">+</button>
       </div>
     </div>
     {# /Header Row #}
 
     {# Body #}
-    <div class="card-text collapse" id="timeline-{{id}}-body">
-      {{ caller() }}
+    <div class="card-text collapse" id="timeline-{{entry.id}}-body">
+      <p class="my-2 mx-1">
+        {{ entry.description }}
+      </p>
     </div>
     {# /Body #}
 
@@ -39,7 +41,7 @@
 {#
   Render a block of entries in the timeline.
  #}
-{% macro render_timeline_block(label, side) %}
+{% macro render_timeline_block(label) %}
 <div class="timeline-block">
 
   {# Block label #}

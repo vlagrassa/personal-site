@@ -3,7 +3,7 @@ from flask import (
 )
 
 from ..constants   import *
-from ..database    import Project, Post
+from ..database    import Project, Post, TimelineSection
 from ..utils.image import HeaderImage
 from ..utils.parse import TextDocument
 from ..utils.utils import nb
@@ -55,5 +55,7 @@ def home():
     'preview_posts': [
       Post.query.filter_by(category_id=c).order_by(Post.date.desc()).first()
         for c in range(2, 4)
-    ]
+    ],
+
+    'timeline': TimelineSection.query.order_by(TimelineSection.order.desc()).all(),
   })

@@ -136,3 +136,29 @@ class PostTagMap(db.Model):
   # Connect Post and PostTag tables to this mapping table
   post = db.relationship('Post',    backref='tag_map')
   tag  = db.relationship('PostTag', backref='post_map')
+
+
+
+class TimelineSection(db.Model):
+  id       = sa.Column(sa.Integer(), primary_key=True, autoincrement=True)
+  label_en = sa.Column(sa.String(32))
+  label_ja = sa.Column(sa.String(32))
+  label_tj = sa.Column(sa.String(32))
+  order    = sa.Column(sa.Integer())
+
+  # Connect timeline section to all its entries, in order
+  entries  = db.relationship('TimelineEntry', order_by='TimelineEntry.order')
+
+
+class TimelineEntry(db.Model):
+  id            = sa.Column(sa.String(16), primary_key=True)
+  section_id    = sa.Column(sa.Integer, sa.ForeignKey('timeline_section.id'), nullable=False)
+  order         = sa.Column(sa.Integer(), nullable=False)
+  title         = sa.Column(sa.String(64), nullable=False)
+  role          = sa.Column(sa.String(256), nullable=False)
+  description   = sa.Column(sa.String(2048))
+  link_internal = sa.Column(sa.String(256))
+  link_external = sa.Column(sa.String(256))
+
+  # The order values should be unique within each section
+  __table_args__ = (sa.UniqueConstraint('section_id', 'order', name='_section_order_uc'),)

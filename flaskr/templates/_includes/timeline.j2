@@ -5,63 +5,14 @@
 
 <div class="px-3 pt-3">
 
-  <!-- Present -->
-  {% call render_timeline_block('', 'left') %}
+  {%- for section in timeline %}
+  {%- call render_timeline_block(section.label_en) %}
 
-    {% call render_timeline_entry('nuit', "Northwestern Media & Technology Innovation", 'Full-Stack Developer') %}
-      <div>Description goes here.</div>
-    {% endcall %}
+    {%- for entry in section.entries %}
+    {{ render_timeline_entry(entry) }}
+    {%- endfor %}
 
-  {% endcall %}
+  {%- endcall %}
+  {%- endfor %}
 
-  <!-- College -->
-  {% call render_timeline_block('2018 - 2022', 'right') %}
-
-    {% call render_timeline_entry('uchicago', "University of Chicago", 'M.S. Computer Science, B.A. Linguistics') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-    {% call render_timeline_entry('3dl', "3DL", 'Undergraduate Research Intern') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-    {% call render_timeline_entry('tharzen', "Tharzen Inc.", 'Software Engineer Consultant') %}
-      <ul>
-        <li>Implemented proof-of-concept "reversible" PHP interpreter to backpropagate edits from front-end site to back-end code</li>
-        <li>Thoroughly researched official PHP specifications, enabling interpreter to execute arbitrary PHP code from an AST</li>
-        <li>Mastered proprietary work-in-progress library in two weeks of training, then provided feedback to optimize functionality</li>
-      </ul>
-    {% endcall %}
-
-    {% call render_timeline_entry('techteam', "UChicago TechTeam", 'Project Lead, Software Developer') %}
-      <b>Project Rainbow</b><br>
-      <b>Blackstone Bicycle Works</b>
-    {% endcall %}
-
-    {% call render_timeline_entry('math', "Mathnasium", 'Math Instructor') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-  {% endcall %}
-
-  <!-- High School -->
-  {% call render_timeline_block('Earlier', 'left') %}
-
-    {% call render_timeline_entry('wlhs', "Washington-Liberty High School", 'International Bacchalaureate Full Diploma Graduate') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-    {% call render_timeline_entry('vrgs', "Virginia Governor's School", 'Student, Cybersecurity') %}
-      <div>Summer Residential Governor's School for Mathematics, Science, and Technology</div>
-    {% endcall %}
-
-    {% call render_timeline_entry('data', "Data Clear Email Broadcasting", 'Paid Intern') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-    {% call render_timeline_entry('lbnc', "Long Branch Nature Center", 'Volunteer Naturalist') %}
-      <div>Description goes here.</div>
-    {% endcall %}
-
-  {% endcall %}
 </div>

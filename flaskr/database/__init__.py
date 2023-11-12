@@ -1,4 +1,9 @@
-from .db import db, Project, ProjectRole, ProjectTag, ProjectTagMap, ProjectLocation, Post, PostGroup, PostTag, PostTagMap
+from .db import (
+  db,
+  Project, ProjectRole, ProjectTag, ProjectTagMap, ProjectLocation,
+  Post, PostGroup, PostTag, PostTagMap,
+  TimelineSection, TimelineEntry,
+)
 
 # Map table names to table objects
 # Injected into Flask context, so all table schemas are available in templates if needed
@@ -12,6 +17,9 @@ TABLES = {
     PostGroup,
     PostTag,
     PostTagMap,
+
+    TimelineSection,
+    TimelineEntry,
   }
 }
 
