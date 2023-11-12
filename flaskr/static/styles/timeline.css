@@ -1,19 +1,28 @@
 /* General timeline block */
 
 .timeline-block {
-  --timeline-border-width: 2px;
   --timeline-border-radius: 20px;
   --timeline-border-color: rgb(33, 37, 41);
-  --timeline-border: var(--timeline-border-width) solid var(--timeline-border-color);
-  --timeline-label-border-width: 2px;
-  --timeline-label-border: var(--timeline-label-border-width) solid var(--timeline-border-color);
+  --timeline-border-gap: 1.5px;
 
-  border-top:    var(--timeline-border);
-  border-bottom: var(--timeline-border);
+  --timeline-border-inner-width: 2px;
+  --timeline-border-inner: var(--timeline-border-inner-width) solid var(--timeline-border-color);
+
+  --timeline-border-outer-width: 1px;
+  --timeline-border-outer: var(--timeline-border-outer-width) solid var(--timeline-border-color);
+
+  --timeline-border-label-width: 2px;
+  --timeline-border-label: var(--timeline-border-label-width) solid var(--timeline-border-color);
+
+  --icon-size-sm: 16px;
+  --icon-size-lg: 42px;
+
+  border-top:    var(--timeline-border-inner);
+  border-bottom: var(--timeline-border-inner);
   border-radius: var(--timeline-border-radius);
 
-  margin-top: calc(-1 * var(--timeline-border-width));
-  padding: 0 calc(var(--timeline-border-radius) - var(--timeline-border-width));
+  margin-top: calc(-1 * var(--timeline-border-inner-width));
+  padding: 0 calc(var(--timeline-border-radius) - var(--timeline-border-inner-width));
 }
 
 
@@ -44,10 +53,10 @@
 
 .timeline-block-label {
   width: fit-content;
-  border: var(--timeline-label-border);
+  border: var(--timeline-border-label);
   border-radius: 10px;
-  outline: 1px solid var(--timeline-border-color);
-  outline-offset: 1.5px;
+  outline: var(--timeline-border-outer);
+  outline-offset: var(--timeline-border-gap);
 
   position: relative;
   background: white;
@@ -58,7 +67,7 @@
 
 /* Left */
 .timeline-block:nth-of-type(odd) {
-  border-left: var(--timeline-border);
+  border-left: var(--timeline-border-inner);
   border-top-right-radius:    0px;
   border-bottom-right-radius: 0px;
 
@@ -68,7 +77,7 @@
 
 /* Right */
 .timeline-block:nth-of-type(even) {
-  border-right: var(--timeline-border);
+  border-right: var(--timeline-border-inner);
   border-top-left-radius:    0px;
   border-bottom-left-radius: 0px;
 
@@ -83,10 +92,7 @@
 .timeline-entry {
   --bg-url: none;
   --bg-color: white;
-
-  --size-sm: 16px;
-  --size-lg: 42px;
-  --size: var(--size-sm);
+  --size: var(--icon-size-sm);
 }
 
 .timeline-entry::before {
@@ -94,7 +100,7 @@
 
   content: "";
   position: absolute;
-  border: var(--timeline-border);
+  border: var(--timeline-border-inner);
   height: var(--size);
   width:  var(--size);
   border-radius: calc(var(--size) / 2);
@@ -107,8 +113,8 @@
   top: 2rem;
   transform: translateY(-50%);
 
-  outline: 1px solid var(--timeline-border-color);
-  outline-offset: 1.5px;
+  outline: var(--timeline-border-outer);
+  outline-offset: var(--timeline-border-gap);
 }
 
 .timeline-block:nth-of-type(odd) .timeline-entry::before {
