@@ -23,9 +23,6 @@ def dateformat(value: datetime.date, lang=None) -> str:
     If no `lang` provided, formats using numbers only.
   '''
 
-  # Get current day
-  today = datetime.datetime.today().date()
-
   # Map language identifiers to relevant words & default format
   # Integer indices represent number of days since current day (negative for past)
   # Default is a function mapping an arbitrary date to a standard format
@@ -56,10 +53,8 @@ def dateformat(value: datetime.date, lang=None) -> str:
   if date_config is None:
     return DEFAULT_FORMAT(value)
 
-  # Check for special values
-  for i in range(-2, 2):
-    if value == today + datetime.timedelta(days=i) and date_config.get(i) is not None:
-      return date_config[i]
+  # Get number of days between target date and current date
+  day_diff = (value - datetime.date.today()).days
 
-  # Return the default date format for the lang, falling back to the overall default if necessary
-  return date_config.get('default', DEFAULT_FORMAT)(value)
+  # If difference present in config, use it, otherwise apply the default function to the date value
+  return date_config.get( day_diff, date_config.get('default', DEFAULT_FORMAT)(value) )
