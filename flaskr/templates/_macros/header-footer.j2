@@ -13,7 +13,7 @@
 <h1
     class="my-logo{% if class %} {{class}}{% endif %}"
     {% if hover %}
-    onmouseenter="{{hover}}(this, true)" onmouseleave="{{hover}}(this, false)"
+    onmouseenter="{{hover}}(event, this, true)" onmouseleave="{{hover}}(event, this, false)" onmousemove ="{{hover}}(event, this, null)"
     {% endif %}
 >vlɒgrɒssɒ</h1>
 {%- endmacro %}

@@ -361,6 +361,8 @@ a.link:hover::after, a.link:focus::after {
     z-index: 10;
     font-family: var(--font-head);
 
+    --gradient-middle: 42%;
+
     margin-block-start: 0;
     margin-block-end:   0;
 
@@ -368,9 +370,9 @@ a.link:hover::after, a.link:focus::after {
     background: linear-gradient(
         0deg,
         var(--color-secondary-1) 0%,
-        var(--color-secondary-3) 30%,
-        black 40%,
-        var(--color-primary-3) 50%,
+        var(--color-secondary) calc(var(--gradient-middle) - 10%),
+        black var(--gradient-middle),
+        var(--color-primary) calc(var(--gradient-middle) + 10%),
         var(--color-primary-1) 100%
     );
     background-clip: text;
@@ -380,9 +382,11 @@ a.link:hover::after, a.link:focus::after {
     text-decoration: underline;
     text-decoration-thickness: var(--logo-line-thickness);
     text-underline-offset: 0.1em;
-    text-decoration-color: var(--color-secondary);
+    text-decoration-color: var(--color-secondary-2);
 
     transform: translateY(-0.08em);
+
+    user-select: none;
 }
 
 .my-logo::before {
@@ -390,7 +394,7 @@ a.link:hover::after, a.link:focus::after {
     position: absolute;
     z-index: -1;
     top: 0.4em;
-    border-top: var(--logo-line-thickness) solid var(--color-primary);
+    border-top: var(--logo-line-thickness) solid var(--color-primary-2);
 }
 
 .my-logo::after {
@@ -399,7 +403,7 @@ a.link:hover::after, a.link:focus::after {
     z-index: -1;
     top: 0.4em;
     right: 0;
-    border-top: var(--logo-line-thickness) solid var(--color-primary);
+    border-top: var(--logo-line-thickness) solid var(--color-primary-2);
 }
 
 

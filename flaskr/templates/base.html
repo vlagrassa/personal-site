@@ -121,11 +121,13 @@
 <script>
   const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
 
-  function title_hover(el, val) {
-    if (val) {
-      // TODO: hover
+  function title_hover(e, el, change_state) {
+    if (change_state === false) {
+      el.style.setProperty('--gradient-middle', '42%');
     } else {
-      // TODO: no hover
+      const rect = e.target.getBoundingClientRect();
+      const y = (e.clientY - rect.top) / rect.height;
+      el.style.setProperty('--gradient-middle', Math.round((1 - y) * 100) + '%');
     }
   }
 
