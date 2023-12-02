@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_macros/lang.j2' import render_lang_object with context %}
+{% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 {% from '_macros/utils.j2' import render_breadcrumb_item %}
 
 
@@ -71,7 +71,9 @@
           {% endblock %}
           <div id="recent-activity" class="d-flex flex-column gap-3 py-3 px-2">
             <h6 class="pb-0 mb-0">
-              Recent Activity
+              <span {{set_lang('en')}}>Recent Activity</span>
+              <span {{set_lang('ja')}}>最近の活動</span>
+              <span {{set_lang('tj')}}>Recent Activity</span>
             </h6>
             <div class="panel p-2">
               Blog post
