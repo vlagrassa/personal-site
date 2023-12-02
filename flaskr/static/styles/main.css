@@ -62,13 +62,16 @@
 
     --logo-line-thickness: 0.08em;
 
-    --color-gradient: linear-gradient(
-        0deg,
+    --color-gradient-direction: 0deg;
+    --color-gradient-values:
         var(--color-secondary) 0%,
         var(--color-secondary) 20%,
         /* black 40%, */
         var(--color-primary) 60%,
-        var(--color-primary) 100%
+        var(--color-primary) 100%;
+    --color-gradient: linear-gradient(
+        var(--color-gradient-direction),
+        var(--color-gradient-values),
     );
 
     /* Define header font to fall back on Japanese font */
@@ -226,7 +229,10 @@ h1 {
 }
 
 .footer-icon:hover {
-    background: var(--color-gradient);
+    background: linear-gradient(
+        var(--color-gradient-direction),
+        var(--color-gradient-values)
+    );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -261,6 +267,7 @@ h1 {
 
 .hover-rotate-45 {
     transition: transform 0.1s;
+    --color-gradient-direction: -45deg;
 }
 .hover-rotate-45:hover {
     transform: rotate(45deg);
@@ -268,6 +275,7 @@ h1 {
 
 .hover-rotate-60 {
     transition: transform 0.1s;
+    --color-gradient-direction: -60deg;
 }
 .hover-rotate-60:hover {
     transform: rotate(60deg);
@@ -275,6 +283,7 @@ h1 {
 
 .hover-rotate-90-m {
     transition: transform 0.1s;
+    --color-gradient-direction: 90deg;
 }
 .hover-rotate-90-m:hover {
     transform: rotate(-90deg);
