@@ -1,5 +1,4 @@
 import os
-import datetime
 
 from flask import Flask, url_for, request
 from flaskext.markdown import Markdown
@@ -15,13 +14,18 @@ from .views.about    import about_bp
 
 def create_app(test_config=None):
 
+  # Create the app instance itself
   app = Flask(__name__, instance_relative_config=True)
   app.config.from_mapping(
     SECRET_KEY = 'dev',
     DATABASE = os.path.join(app.instance_path, 'flaskr.sqlite'),
     SQLALCHEMY_DATABASE_URI = 'sqlite:///project.db'
   )
+
+  # Initialize database
   db.init_app(app)
+
+  # Initialize extension(s)
   Markdown(app, extensions=['sane_lists', 'fenced_code', 'smarty', 'md_in_html', 'markdown_katex'])
 
   # Initialization tasks that require app context
@@ -54,6 +58,11 @@ def create_app(test_config=None):
   app.register_blueprint(about_bp)
 
   add_template_filters(app)
+
+
+  #
+  # Context processors -- inject variables common to all pages
+  #
 
   @app.context_processor
   def inject_language():
