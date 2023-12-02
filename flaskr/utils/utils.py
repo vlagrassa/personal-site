@@ -17,39 +17,49 @@ def capsfirst(txt):
   return txt
 
 
-def dateformat(value: datetime, lang=None):
+def dateformat(value: datetime.date, lang=None) -> str:
   '''
     Format a date as a human-readable string, using special values for "yesterday", etc.
     If no `lang` provided, formats using numbers only.
   '''
+
+  # Get current day
   today = datetime.datetime.today().date()
 
-  # Invalid value
-  if value is None or value == '':
-    return '???'
-
-  # Today
-  if value == today:
-    if lang == 'en': return 'today'
-    if lang == 'ja': return '今日'
-
-  # One day ago
-  if value == today - datetime.timedelta(days=1):
-    if lang == 'en': return 'yesterday'
-    if lang == 'ja': return '昨日'
-
-  # Two days ago
-  if value == today - datetime.timedelta(days=2):
-    if lang == 'ja': return '一昨日'
-
-  # Default format for English
-  if lang == 'en':
-    return value.strftime('%b\u00A0%d, %Y')
-
-  # Default format for Japanese
-  if lang == 'ja':
-    return nb(str(value.year) + '年') + nb(f'{value.month}月{value.day}日')
+  # Map language identifiers to relevant words & default format
+  # Integer indices represent number of days since current day (negative for past)
+  # Default is a function mapping an arbitrary date to a standard format
+  DATE_MAP = {
+    'en': {
+      0:  'today',
+      -1: 'yesterday',
+      'default': lambda dt: dt.strftime('%b\u00A0%d, %Y')
+    },
+    'ja': {
+      0:  '今日',
+      -1: '昨日',
+      -2: '一昨日',
+      'default': lambda dt: nb(str(dt.year) + '年') + nb(f'{dt.month}月{dt.day}日')
+    },
+  }
 
   # Default format (no lang) -- plain date without words
   # Insert a zero-width space between month/date and year to put linebreak there
-  return value.strftime('%m/%d/') + '\u200B' + value.strftime('%Y')
+  DEFAULT_FORMAT = lambda dt: dt.strftime('%m/%d/') + '\u200B' + dt.strftime('%Y')
+
+  # Invalid value
+  if value is None:
+    return '???'
+
+  # Get the config object from the map
+  date_config = DATE_MAP.get(lang)
+  if date_config is None:
+    return DEFAULT_FORMAT(value)
+
+  # Check for special values
+  for i in range(-2, 2):
+    if value == today + datetime.timedelta(days=i) and date_config.get(i) is not None:
+      return date_config[i]
+
+  # Return the default date format for the lang, falling back to the overall default if necessary
+  return date_config.get('default', DEFAULT_FORMAT)(value)
