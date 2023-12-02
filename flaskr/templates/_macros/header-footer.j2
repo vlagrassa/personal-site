@@ -1,5 +1,11 @@
 {% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
+
+{%- macro get_page_title(lang, html=false) %}
+{%- if tab_title %}{{ tab_title[lang] }}{% elif title %}{{ title[lang] }}{% endif %} {% if html %}&#x2B26;{% else %}⬦{% endif %} vlagrassa.dev
+{%- endmacro %}
+
+
 {#
   Render the site logo, with optional extra class(es) and hover function.
 #}

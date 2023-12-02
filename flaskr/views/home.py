@@ -45,6 +45,7 @@ def home():
       'ja': 'ヴィンセント ' + nb('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
+    'tab_title': PAGE_TITLES[0]['title'],
     'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
 
     'content': TextDocument.parse_file('home'),
