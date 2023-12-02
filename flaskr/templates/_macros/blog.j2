@@ -52,7 +52,7 @@
           {# Date #}
           <small class="col-3 col-lg-2 text-end ps-0">
             {%- for l in langs %}
-            <span {{set_lang(l.code)}}>{{ post.date|postdateformat(l.code)|capsfirst }}</span>
+            <span {{set_lang(l.code)}}>{{ post.date|dateformat(l.code)|capsfirst }}</span>
             {%- endfor %}
           </small>
         </div>

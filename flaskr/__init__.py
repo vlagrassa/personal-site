@@ -88,32 +88,14 @@ def create_app(test_config=None):
       'DB_ENUMS': DB_ENUMS,
     }
 
+  # Return the newly created app object
   return app
 
 
 
 def add_template_filters(app):
-  from .utils.utils import nb, capsfirst
+  from .utils.utils import nb, capsfirst, dateformat
 
   app.template_filter('nb')(nb)
   app.template_filter('capsfirst')(capsfirst)
-
-  @app.template_filter('postdateformat')
-  def postdateformat(value, lang='en'):
-      today = datetime.datetime.today().date()
-
-      if value is None or value == '':
-        return '???'
-
-      if value == today:
-        if lang == 'en': return 'today'
-        if lang == 'ja': return '今日'
-      if value == today - datetime.timedelta(days=1):
-        if lang == 'en': return 'yesterday'
-        if lang == 'ja': return '昨日'
-      if value == today - datetime.timedelta(days=2):
-        if lang == 'ja': return '一昨日'
-
-      if lang == 'ja':
-        return nb(str(value.year) + '年') + nb(f'{value.month}月{value.day}日')
-      return value.strftime('%b\u00A0%d, %Y')
+  app.template_filter('dateformat')(dateformat)
