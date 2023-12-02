@@ -9,6 +9,20 @@ from ..utils.image import get_post_image, get_project_image
 db = SQLAlchemy()
 
 
+
+#
+# External Profile Links
+#
+
+class ExternalProfile(db.Model):
+  id            = sa.Column(sa.String(16),  primary_key=True)
+  title         = sa.Column(sa.String(64),  nullable=False)
+  order         = sa.Column(sa.Integer(),   nullable=False, unique=True)
+  link_external = sa.Column(sa.String(256), nullable=False)
+  bg_color_hex  = sa.Column(sa.String(8))
+
+
+
 #
 # Projects
 #
@@ -52,9 +66,11 @@ class ProjectTagMap(db.Model):
   tag_id     = sa.Column(sa.Integer, sa.ForeignKey('project_tag.id'), nullable=False)
 
 
+
 #
 # Blog Posts
 #
+
 
 class Post(db.Model):
   id = sa.Column(sa.String(50), primary_key=True)
@@ -137,6 +153,11 @@ class PostTagMap(db.Model):
   post = db.relationship('Post',    backref='tag_map')
   tag  = db.relationship('PostTag', backref='post_map')
 
+
+
+#
+# Timeline
+#
 
 
 class TimelineSection(db.Model):

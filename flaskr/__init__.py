@@ -5,7 +5,7 @@ from flask import Flask, url_for, request
 from flaskext.markdown import Markdown
 
 from .constants import *
-from .database import db, TABLES, DB_ENUMS
+from .database import db, TABLES, DB_ENUMS, ExternalProfile
 
 from .views.home     import home_bp
 from .views.projects import projects_bp
@@ -23,6 +23,15 @@ def create_app(test_config=None):
   )
   db.init_app(app)
   Markdown(app, extensions=['sane_lists', 'fenced_code', 'smarty', 'md_in_html', 'markdown_katex'])
+
+  # Initialization tasks that require app context
+  with app.app_context():
+
+    # Ensure all database tables exist
+    db.create_all()
+
+    # Query for external nav links once, when initializing app
+    NAV_LINKS = ExternalProfile.query.order_by(ExternalProfile.order.asc()).all()
 
   # Load the instance config, if it exists, when not testing
   if test_config is None:
@@ -62,32 +71,7 @@ def create_app(test_config=None):
   @app.context_processor
   def inject_navbar():
     return {
-      'nav_links': [
-        {
-          'title': 'LinkedIn',
-          'url': 'https://www.linkedin.com/in/vlagrassa',
-          'path': 'linkedin',
-          'color': '#0077B5',
-        },
-        {
-          'title': 'GitHub',
-          'url': 'https://github.com/vlagrassa',
-          'path': 'github',
-          'color': '#171515',
-        },
-        {
-          'title': 'Facebook',
-          'url': 'https://www.facebook.com/vincent.lagrassa.77',
-          'path': 'facebook',
-          'color': '#1877F2',
-        },
-        {
-          'title': 'University of Chicago',
-          'url': 'https://people.cs.uchicago.edu/~vlagrassa',
-          'path': 'uchicago',
-          'color': '#800000',
-        },
-      ],
+      'nav_links': NAV_LINKS,
       'nav_sections': [
         {
           'title': section['title'],

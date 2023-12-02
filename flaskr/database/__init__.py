@@ -1,5 +1,6 @@
 from .db import (
   db,
+  ExternalProfile,
   Project, ProjectRole, ProjectTag, ProjectTagMap, ProjectLocation,
   Post, PostGroup, PostTag, PostTagMap,
   TimelineSection, TimelineEntry,
@@ -9,6 +10,8 @@ from .db import (
 # Injected into Flask context, so all table schemas are available in templates if needed
 TABLES = {
   t.__name__: t for t in {
+    ExternalProfile,
+
     Project,
     ProjectTag,
     ProjectTagMap,

@@ -36,8 +36,8 @@
 #}
 {% macro render_links(links, closed_width, open_width) %}
   {% for link in links %}
-    <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
-      <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
+    <a href="{{ link.link_external }}" class="slice" style="background-color: #{{link.bg_color_hex}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
+      <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.id + '/logo-dark.png') }}">
     </a>
   {% endfor %}
   <script>
