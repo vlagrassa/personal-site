@@ -1,3 +1,4 @@
+import json
 import os
 
 from flask import Flask, url_for, request
@@ -66,7 +67,12 @@ def create_app(test_config=None):
 
   @app.context_processor
   def inject_language():
-    l = request.args.get('l', 'en')
+
+    # Read current site settings from session cookie
+    settings = json.loads(request.cookies.get('site_settings', {}))
+
+    # Get target language from URL args or site settings
+    l = request.args.get('l', settings.get('language', 'en'))
     if l not in { l['code'] for l in LANGUAGES }:
       l = 'en'
 

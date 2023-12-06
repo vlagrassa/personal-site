@@ -150,6 +150,9 @@
       {%- endif %}
     }
 
+    // Save current settings in (temporary) session storage
+    document.cookie = `site_settings=${JSON.stringify(detail)}; expires=0; path=/`;
+
     // Broadcast the change for any other listening components
     document.dispatchEvent(new CustomEvent('change-settings', { 'detail': detail }));
   }
@@ -187,5 +190,23 @@
   });
 </script>
 {%- endif %}
+
+<!-- Read session cookies -->
+<script>
+  function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+</script>
 
 {% block script %}{% endblock %}
