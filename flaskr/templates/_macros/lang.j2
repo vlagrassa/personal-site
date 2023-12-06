@@ -10,7 +10,9 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {% endmacro %}
 
 
-{% macro render_lang_object(obj) %}
-{%- for l, txt in dict(obj).items() %}<span {{set_lang(l)}}>{{ txt }}</span>{% endfor -%}
+{% macro render_lang_object(obj, custom_render=none) %}
+{%- for l, txt in dict(obj).items() -%}
+<span {{set_lang(l)}}>{% if custom_render %}{{ custom_render(txt) }}{% else %}{{ txt }}{% endif %}</span>
+{%- endfor -%}
 {% endmacro %}
 

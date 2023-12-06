@@ -36,7 +36,7 @@
 {%- endmacro %}
 
 
-{%- macro render_content(content) %}
+{%- macro render_content(content, custom_render=none) %}
 {%- for section in content %}
   {%- with section_id = section.id %}
   <div id="{{ section_id }}">
@@ -46,7 +46,7 @@
 
     {%- for line in section %}
     {%- if line.is_text %}
-      <p> {{ render_lang_object(line) }} </p>
+      <p> {{ render_lang_object(line, custom_render=custom_render) }} </p>
     {%- else %}
       {% include '_includes/' + line.name + '.j2' ignore missing with context %}
     {%- endif %}

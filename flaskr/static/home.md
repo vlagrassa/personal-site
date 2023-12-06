@@ -16,13 +16,13 @@
 ## [tj] Spotlight
 
 [en]
-  Here are a few of my ongoing projects that I'd like to highlight:
+  Here are a few of my ongoing <a class="link" href="{{ url_for('projects.projects') }}">projects</a> that I'd like to highlight:
 
 !insert projects-preview
 
 
 [en]
-  You might also like one of my latest blog posts:
+  You might also like one of my latest <a class="link" href="{{ url_for('blog.blog') }}">blog posts</a>:
 
 !insert blog-preview
 

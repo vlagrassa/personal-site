@@ -2,13 +2,14 @@ from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify,
 )
 
-from ..constants   import *
-from ..database    import Project, Post, TimelineSection
-from ..utils.image import HeaderImage
-from ..utils.parse import TextDocument
-from ..utils.utils import nb
+from ..constants    import *
+from ..database     import Project, Post, TimelineSection
+from ..utils.image  import HeaderImage
+from ..utils.parse  import TextDocument
+from ..utils.render import custom_render_urls
+from ..utils.utils  import nb
 
-from .projects     import parse_project_object
+from .projects      import parse_project_object
 
 
 
@@ -48,8 +49,11 @@ def home():
     'tab_title': PAGE_TITLES[0]['title'],
     'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
 
+    # Main content
     'content': TextDocument.parse_file('home'),
+    'custom_render': custom_render_urls,
 
+    # Recent activity highlights
     'preview_projects': [
       parse_project_object(Project.query.get(p)) for p in highlight_projects
     ],
@@ -58,5 +62,6 @@ def home():
         for c in range(2, 4)
     ],
 
+    # Timeline entries
     'timeline': TimelineSection.query.order_by(TimelineSection.order.desc()).all(),
   })

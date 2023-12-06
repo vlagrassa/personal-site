@@ -104,7 +104,7 @@
 {# Render main body content for each section #}
 {% block content %}
   {% from '_macros/utils.j2' import render_content with context %}
-  {{ render_content(content) }}
+  {{ render_content(content, custom_render=custom_render or none) }}
 {% endblock %}
 
 
