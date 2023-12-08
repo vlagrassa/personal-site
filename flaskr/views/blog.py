@@ -4,7 +4,6 @@ from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
-from ..constants import *
 from ..database import Post, PostGroup, PostTag, PostTagMap
 
 blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
@@ -68,7 +67,7 @@ def blog():
   initial_tags = [ t for t in initial_tags if t is not None ]
 
   return render_template('blog.html', **{
-    'title': PAGE_TITLES[2]['title'],
+    'title': current_app.config['PAGES']['blog']['title'],
     'posts': posts,
     'groups': PostGroup.query.all(),
     'tags': PostTag.query.all(),
@@ -82,7 +81,7 @@ def group(slug):
   return render_template('blog-category.html', **{
     'title': category.name,
     'breadcrumb': [
-      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
+      ( current_app.config['PAGES']['blog']['title'], url_for('blog.blog') ),
     ],
     'posts': category.posts,
   })
@@ -96,8 +95,8 @@ def post(name):
     'title': post.name,
     'subtitle': post.description,
     'breadcrumb': [
-      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
-      ( post.category.name,      url_for('blog.group', slug=post.category.slug) ),
+      ( current_app.config['PAGES']['blog']['title'], url_for('blog.blog') ),
+      ( post.category.name,                           url_for('blog.group', slug=post.category.slug) ),
     ],
 
     'sections': list(get_sections(src_file_temp)),

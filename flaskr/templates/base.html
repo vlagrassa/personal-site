@@ -24,7 +24,7 @@
       {{ render_logo(hover="title_hover") }}
     </div>
     <nav class="header-middle">
-      {{ render_sections(nav_sections) }} {# sep="&#11041;" #}
+      {{ render_sections(config['PAGES']) }} {# sep="&#11041;" #}
     </nav>
     <div class="header-right" style="width: {{ nav_links|length * 38 }}px;">
       {{ render_links(nav_links, 38, 60) }}

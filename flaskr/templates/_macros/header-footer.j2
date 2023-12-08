@@ -23,12 +23,12 @@
   Render a list of section pages as header buttons, separated by the given character.
 #}
 {% macro render_sections(sections, sep="&#x2B26;") %}
-  {% for section in sections %}
+  {% for section in sections.values() %}
   {% if loop.index0 > 0 %}
     <div class="header-separator">{{sep}}</div>
   {% endif %}
   <div class="header-button">
-    <a class="underline-hover-text" {% if section.link %}href="{{section.link}}"{% endif %}>
+    <a class="underline-hover-text" {% if section.endpoint %}href="{{ url_for(section.endpoint) }}"{% endif %}>
       {{ render_lang_object(section.title) }}
     </a>
     <div class="header-button-underline"></div>

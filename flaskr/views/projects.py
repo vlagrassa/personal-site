@@ -1,8 +1,7 @@
 from flask import (
-  Blueprint, flash, g, redirect, render_template, request, session, url_for
+  Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app,
 )
 
-from ..constants import *
 from ..database import Project, ProjectTag, ProjectTagMap, ProjectLocation
 
 projects_bp = Blueprint('projects', __name__, url_prefix='/projects')
@@ -24,7 +23,7 @@ def parse_project_object(project):
 @projects_bp.route('')
 def projects():
   return render_template('projects.html', **{
-    'title': PAGE_TITLES[1]['title'],
+    'title': current_app.config['PAGES']['projects']['title'],
     'projects': [
       parse_project_object(p) for p in Project.query.all()
     ],

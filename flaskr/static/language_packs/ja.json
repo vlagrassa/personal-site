@@ -3,6 +3,12 @@
     "name": "日本語",
     "code": "ja"
   },
+  "page_titles": {
+    "home":                "ホーム",
+    "projects":            "プロジェクト",
+    "blog":                "ブログ",
+    "about":               "私の事"
+  },
   "days": {
     "0":                   "日",
     "1":                   "月",

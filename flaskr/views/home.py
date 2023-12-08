@@ -1,8 +1,7 @@
 from flask import (
-  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify,
+  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
-from ..constants    import *
 from ..database     import Project, Post, TimelineSection
 from ..utils.image  import HeaderImage
 from ..utils.parse  import TextDocument
@@ -46,7 +45,7 @@ def home():
       'ja': 'ヴィンセント ' + nb('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
-    'tab_title': PAGE_TITLES[0]['title'],
+    'tab_title': current_app.config['PAGES']['home']['title'],
     'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
 
     # Main content

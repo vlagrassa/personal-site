@@ -1,10 +1,10 @@
+from collections import OrderedDict
 import json
 import os
 
 from flask import Flask, url_for, request
 from flaskext.markdown import Markdown
 
-from .constants import *
 from .database import db, TABLES, DB_ENUMS, ExternalProfile
 from .utils.map import ConfigMap
 
@@ -12,6 +12,12 @@ from .views.home     import home_bp
 from .views.projects import projects_bp
 from .views.blog     import blog_bp
 from .views.about    import about_bp
+
+
+PAGE_IDS = [
+  'home', 'projects', 'blog', 'about',
+]
+
 
 
 def create_app(test_config=None):
@@ -91,13 +97,6 @@ def create_app(test_config=None):
   def inject_navbar():
     return {
       'nav_links': NAV_LINKS,
-      'nav_sections': [
-        {
-          'title': section['title'],
-          'link': url_for(f'{section["name"]}.{section["name"]}'),
-        }
-          for section in PAGE_TITLES
-      ],
     }
 
   @app.context_processor
@@ -145,3 +144,10 @@ def load_lang_configs(app):
     )
     for lang, config in language_packs.items():
       app.config['TEXT'].read(lang, config)
+
+    app.config['PAGES'] = OrderedDict()
+    for page_id in PAGE_IDS:
+      app.config['PAGES'][page_id] = {
+        'title': app.config['TEXT']['page_titles', page_id],
+        'endpoint': f'{page_id}.{page_id}',
+      }

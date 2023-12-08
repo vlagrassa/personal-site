@@ -3,6 +3,12 @@
     "name": "English",
     "code": "en"
   },
+  "page_titles": {
+    "home":                "Home",
+    "projects":            "Projects",
+    "blog":                "Blog",
+    "about":               "About Me"
+  },
   "days": {
     "0":                   "Sun",
     "1":                   "Mon",
