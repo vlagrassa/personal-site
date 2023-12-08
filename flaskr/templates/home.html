@@ -84,18 +84,16 @@
 {% block right_panel_top %}
   <div class="d-flex flex-column gap-3 py-3">
     <h6 class="pb-0 mb-0">
-      <span {{set_lang('en')}}>Quick Links</span>
-      <span {{set_lang('ja')}}>リンク</span>
-      <span {{set_lang('tj')}}>Quick Links</span>
+      {{ render_lang_object(config.TEXT['sidebar.quick_links']) }}
     </h6>
     <div class="panel p-2">
-      Résumé
+      {{ render_lang_object(config.TEXT['sidebar.resume']) }}
     </div>
     <div class="panel p-2">
-      Experience
+      {{ render_lang_object(config.TEXT['sidebar.experience']) }}
     </div>
     <div class="panel p-2">
-      Contact
+      {{ render_lang_object(config.TEXT['sidebar.contact']) }}
     </div>
   </div>
 {% endblock %}

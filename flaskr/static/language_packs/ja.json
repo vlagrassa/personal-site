@@ -44,5 +44,12 @@
     },
     "zoom_level":          "ズーム",
     "settings":            "設定"
+  },
+  "sidebar": {
+    "quick_links":         "リンク",
+    "recent_activity":     "最近の活動",
+    "resume":              "履歴書",
+    "experience":          "職歴",
+    "contact":             "連絡"
   }
 }

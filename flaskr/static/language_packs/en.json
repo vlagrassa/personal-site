@@ -44,5 +44,12 @@
     },
     "zoom_level":          "Zoom",
     "settings":            "Settings"
+  },
+  "sidebar": {
+    "quick_links":         "Quick Links",
+    "recent_activity":     "Recent Activity",
+    "resume":              "Résumé",
+    "experience":          "Experience",
+    "contact":             "Contact"
   }
 }
