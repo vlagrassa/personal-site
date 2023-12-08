@@ -35,23 +35,6 @@ PAGE_TITLES = [
 
 
 
-LANGUAGES = [
-  {
-    'name': 'English',
-    'code': 'en',
-  },
-  {
-    'name': '日本語',
-    'code': 'ja',
-  },
-  {
-    'name': 'Tʒeramɔt',
-    'code': 'tj',
-  },
-]
-
-
-
 DAYS = [
   {'en': 'Sun', 'tj': 'Sun', 'ja': '日'},
   {'en': 'Mon', 'tj': 'Mon', 'ja': '月'},

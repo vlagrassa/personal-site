@@ -78,7 +78,7 @@
     <!-- Language Selector -->
     {% call render_footer_button_menu('language', 'language', { 'en': "Language", 'ja': '言語', 'tj': 'Tʒoga' }) %}
       <div class="offcanvas-body px-0 pt-0">
-        {%- for l in langs %}
+        {%- for l in config.LANGUAGES %}
         {{ render_lang_select_button(l) }}
         {%- endfor %}
       </div>
@@ -119,7 +119,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
 <script>
-  const LANGS = [{% for l in langs %}'{{l.code}}', {% endfor %}];
+  const LANGS = [{% for l in config.LANGUAGES %}'{{l.code}}', {% endfor %}];
 
   function title_hover(e, el, change_state) {
     if (change_state === false) {

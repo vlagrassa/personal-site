@@ -1,9 +1,10 @@
 import enum
 
+from flask import current_app
+
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
 
-from ..constants import LANGUAGES
 from ..utils.image import get_post_image, get_project_image
 
 db = SQLAlchemy()
@@ -83,7 +84,8 @@ class Post(db.Model):
 
   @property
   def name(self):
-    return { l['code']: self.title for l in LANGUAGES }
+    with current_app.app_context():
+      return { l['code']: self.title for l in current_app.config['LANGUAGES'] }
 
   # Connect to PostTag table through PostTagMap backref
   @property
@@ -112,7 +114,8 @@ class PostGroup(db.Model):
 
   @property
   def name(self):
-    return { l['code']: self.title for l in LANGUAGES }
+    with current_app.app_context():
+      return { l['code']: self.title for l in current_app.config['LANGUAGES'] }
 
 
 class PostTag(db.Model):
@@ -125,7 +128,11 @@ class PostTag(db.Model):
   # Convert individual name fields into a single dict
   @property
   def name(self):
-    return { l['code']: getattr(self, 'name_' + l['code']) for l in LANGUAGES }
+    with current_app.app_context():
+      return {
+        l['code']: getattr(self, 'name_' + l['code'])
+          for l in current_app.config['LANGUAGES']
+      }
 
   # Connect to PostTag table through PostTagMap backref
   @property

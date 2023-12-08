@@ -59,6 +59,7 @@ def create_app(test_config=None):
   app.register_blueprint(about_bp)
 
   add_template_filters(app)
+  load_lang_configs(app)
 
 
   #
@@ -67,6 +68,10 @@ def create_app(test_config=None):
 
   @app.context_processor
   def inject_language():
+
+    # Read language objects from app config
+    with app.app_context():
+      LANGUAGES = app.config['LANGUAGES']
 
     # Read current site settings from session cookie
     settings = json.loads(request.cookies.get('site_settings', {}))
@@ -77,8 +82,7 @@ def create_app(test_config=None):
       l = 'en'
 
     return {
-      'lang':  l,
-      'langs': LANGUAGES,
+      'lang': l,
       'MONTHS': MONTHS,
       'DAYS': DAYS,
     }
@@ -114,3 +118,19 @@ def add_template_filters(app):
   app.template_filter('nb')(nb)
   app.template_filter('capsfirst')(capsfirst)
   app.template_filter('dateformat')(dateformat)
+
+
+
+def load_lang_configs(app):
+
+  def _read_lang_file(*fname):
+    with open(os.path.join(*fname), 'r', encoding='utf-8') as f:
+      return json.load(f)
+
+  with app.app_context():
+    dir = os.path.join(app.static_folder, f'language_packs')
+    language_packs = {
+      f[:2]: _read_lang_file(dir, f) for f in os.listdir(dir) if f.endswith('.json')
+    }
+
+    app.config['LANGUAGES'] = [ config['config'] for config in language_packs.values() ]
