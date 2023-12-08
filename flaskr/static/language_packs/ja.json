@@ -51,5 +51,16 @@
     "resume":              "履歴書",
     "experience":          "職歴",
     "contact":             "連絡"
+  },
+  "blog": {
+    "posts":               "エントリー",
+    "categories":          "カテゴリー",
+    "search": {
+      "title":             "題名",
+      "category":          "カテゴリー",
+      "tags":              "タグ",
+      "start_date":        "開始日",
+      "end_date":          "終了日"
+    }
   }
 }

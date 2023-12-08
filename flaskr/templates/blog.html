@@ -18,40 +18,33 @@
 
 <div class="d-flex justify-content-around mt-2 mb-3">
   <button id="toggle-posts" class="toggle-button selected" onclick="show_section(this.id)">
-    <div>{{ render_lang_object({'en': 'Posts', 'tj': 'Posts', 'ja': 'エントリー'}) }}</div>
+    <div>{{ render_lang_object( config.TEXT['blog.posts'] ) }}</div>
   </button>
   <button id="toggle-categories" class="toggle-button" onclick="show_section(this.id)">
-    <div>{{ render_lang_object({'en': 'Categories', 'tj': 'Categories', 'ja': 'カテゴリー'}) }}</div>
+    <div>{{ render_lang_object( config.TEXT['blog.categories'] ) }}</div>
   </button>
 </div>
 
 <form id="post-search-form" novalidate onsubmit="event.preventDefault();">
   {{ render_searchbar(
-    id='search-text', oninput='search_text',
-    label={'en': 'Title', 'ja': '題名', 'tj': 'Title'},
+    id='search-text', oninput='search_text', label=config.TEXT['blog.search.title'],
   ) }}
   {{ render_searchbar_select(
-    id='search-category', oninput='select_category',
-    label={'en': 'Category', 'ja': 'カテゴリー', 'tj': 'Category'},
-    options=groups,
+    id='search-category', oninput='select_category', label=config.TEXT['blog.search.category'], options=groups,
   ) }}
   {{ render_searchbar_tags(
-    id='search-tags', oninput='apply_tag_filter',
-    label={'en': 'Tags', 'ja': 'タグ', 'tj': 'Tags'},
-    tags=tags,
+    id='search-tags', oninput='apply_tag_filter', label=config.TEXT['blog.search.tags'], tags=tags,
   ) }}
   <div class="d-flex justify-content-between" style="margin-top: -10px; margin-bottom: -10px;">
     <div style="flex: 1">
       {{ render_searchbar(
-        id='search-date-1',
-        label={'en': 'Start Date', 'ja': '開始日', 'tj': 'Start Date'},
+        id='search-date-1', label=config.TEXT['blog.search.start_date'],
       ) }}
     </div>
     <div style="width: 8px"></div>
     <div style="flex: 1">
       {{ render_searchbar(
-        id='search-date-2',
-        label={'en': 'End Date', 'ja': '終了日', 'tj': 'End Date'},
+        id='search-date-2', label=config.TEXT['blog.search.end_date'],
       ) }}
     </div>
   </div>

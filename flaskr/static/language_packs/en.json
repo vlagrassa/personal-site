@@ -51,5 +51,16 @@
     "resume":              "Résumé",
     "experience":          "Experience",
     "contact":             "Contact"
+  },
+  "blog": {
+    "posts":               "Posts",
+    "categories":          "Categories",
+    "search": {
+      "title":             "Title",
+      "category":          "Category",
+      "tags":              "Tags",
+      "start_date":        "Start Date",
+      "end_date":          "End Date"
+    }
   }
 }
