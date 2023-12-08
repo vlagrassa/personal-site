@@ -93,7 +93,7 @@
   <script type="module">
     const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ id }}') // Returns a Bootstrap tooltip instance
     document.addEventListener('change-settings', (({detail}) => {
-      const titles = {{ name }};
+      const titles = {{ dict(name) }};
       if (detail.language) {
         tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` });
       }

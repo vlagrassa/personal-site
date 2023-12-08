@@ -6,6 +6,7 @@ from flaskext.markdown import Markdown
 
 from .constants import *
 from .database import db, TABLES, DB_ENUMS, ExternalProfile
+from .utils.map import ConfigMap
 
 from .views.home     import home_bp
 from .views.projects import projects_bp
@@ -81,10 +82,9 @@ def create_app(test_config=None):
     if l not in { l['code'] for l in LANGUAGES }:
       l = 'en'
 
+    # Add the initial language to the context
     return {
       'lang': l,
-      'MONTHS': MONTHS,
-      'DAYS': DAYS,
     }
 
   @app.context_processor
@@ -128,9 +128,20 @@ def load_lang_configs(app):
       return json.load(f)
 
   with app.app_context():
+
+    # Read in all the language pack files
     dir = os.path.join(app.static_folder, f'language_packs')
     language_packs = {
       f[:2]: _read_lang_file(dir, f) for f in os.listdir(dir) if f.endswith('.json')
     }
 
+    # Store the individual language config objects
     app.config['LANGUAGES'] = [ config['config'] for config in language_packs.values() ]
+
+    # Store language pack objects in a ConfigMap object
+    app.config['TEXT'] = ConfigMap(
+      initial_keyset = set(language_packs.keys()),
+      fallback_key   = 'en',
+    )
+    for lang, config in language_packs.items():
+      app.config['TEXT'].read(lang, config)

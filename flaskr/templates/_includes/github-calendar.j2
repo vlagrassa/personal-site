@@ -8,12 +8,12 @@
 
 <script type="module">
   const day_els = [
-    {%- for d in DAYS %}
+    {%- for d in config.TEXT['days'].values() %}
     '{{render_lang_object(d)}}',
     {%- endfor %}
   ];
   const month_els = [
-    {%- for m in MONTHS %}
+    {%- for m in config.TEXT['months'].values() %}
     '{{render_lang_object(m)}}',
     {%- endfor %}
   ];

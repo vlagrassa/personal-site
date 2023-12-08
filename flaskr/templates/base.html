@@ -76,7 +76,7 @@
   <div id="footer" class="footer-h">
 
     <!-- Language Selector -->
-    {% call render_footer_button_menu('language', 'language', { 'en': "Language", 'ja': '言語', 'tj': 'Tʒoga' }) %}
+    {% call render_footer_button_menu('language', 'language', config.TEXT['footer.language']) %}
       <div class="offcanvas-body px-0 pt-0">
         {%- for l in config.LANGUAGES %}
         {{ render_lang_select_button(l) }}
@@ -88,21 +88,21 @@
     <!-- Light & Dark Mode Selector -->
     {{ render_footer_button_toggle(
       'theme',
-      ('dark',  'dark_mode',  { 'en': "Dark Mode",  'ja': '夜', 'tj': 'Dark Mode'  }, 'hover-rotate-90-m'),
-      ('light', 'light_mode', { 'en': "Light Mode", 'ja': '日', 'tj': 'Light Mode' }, 'hover-rotate-45'),
+      ('dark',  'dark_mode',  config.TEXT['footer.mode.dark'],  'hover-rotate-90-m'),
+      ('light', 'light_mode', config.TEXT['footer.mode.light'], 'hover-rotate-45'),
     ) }}
     <!-- /Light & Dark Mode Selector -->
 
     <!-- Layout Selector -->
     {{ render_footer_button_toggle(
       'layout',
-      ('simple',  ('grid_view',  'dashboard'),  { 'en': "Simple Layout",  'ja': '簡単な形式', 'tj': 'Simple Layout'  }),
-      ('complex', ('view_quilt', 'view_comfy'), { 'en': "Complex Layout", 'ja': '複雑な形式', 'tj': 'Complex Layout' }),
+      ('simple',  ('grid_view',  'dashboard'),  config.TEXT['footer.layout.simple'] ),
+      ('complex', ('view_quilt', 'view_comfy'), config.TEXT['footer.layout.complex']),
     ) }}
     <!-- /Layout Selector -->
 
     <!-- Zoom Selector -->
-    {% call render_footer_button_menu('zoom-level', ('zoom_in', 'add_circle'), { 'en': "Zoom", 'ja': 'ズーム', 'tj': 'Zoom' }) %}
+    {% call render_footer_button_menu('zoom-level', ('zoom_in', 'add_circle'), config.TEXT['footer.zoom_level']) %}
       <div class="offcanvas-body pt-0">
         <div class="slidecontainer">
           <input type="range" min="1" max="5" value="3" class="slider">
@@ -111,7 +111,7 @@
     {% endcall %}
     <!-- /Zoom Selector -->
 
-    {{ render_footer_button('settings', 'settings', { 'en': "Settings", 'ja': '設定', 'tj': 'Settings' }, 'hover-rotate-60') }}
+    {{ render_footer_button('settings', 'settings', config.TEXT['footer.settings'], 'hover-rotate-60') }}
   </div>
 
 </body>
