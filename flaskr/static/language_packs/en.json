@@ -62,5 +62,9 @@
       "start_date":        "Start Date",
       "end_date":          "End Date"
     }
+  },
+  "github_calendar": {
+    "less":                "Less",
+    "more":                "More"
   }
 }

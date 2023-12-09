@@ -38,8 +38,8 @@
     legend.style.alignItems = 'center';
     legend.style.gap = '3px';
     legend.style.marginTop = '3px';
-    legend.innerHTML = legend.innerHTML.replace('Less', '<small style="padding-right: 3px;">{{render_lang_object({"en": "Less", "tj": "Less", "ja": "小"})}}</small>');
-    legend.innerHTML = legend.innerHTML.replace('More', '<small style="padding-left:  3px;">{{render_lang_object({"en": "More", "tj": "More", "ja": "大"})}}</small>');
+    legend.innerHTML = legend.innerHTML.replace('Less', '<small style="padding-right: 3px;">{{ render_lang_object(config.TEXT["github_calendar.less"]) }}</small>');
+    legend.innerHTML = legend.innerHTML.replace('More', '<small style="padding-left:  3px;">{{ render_lang_object(config.TEXT["github_calendar.more"]) }}</small>');
   });
 
   function get_day_label(i) {

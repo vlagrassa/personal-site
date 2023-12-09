@@ -62,5 +62,9 @@
       "start_date":        "開始日",
       "end_date":          "終了日"
     }
+  },
+  "github_calendar": {
+    "less":                "小",
+    "more":                "大"
   }
 }
