@@ -92,7 +92,7 @@ table.js-calendar-graph-table {
 
 .ContributionCalendar-day[data-level='1']:hover {
   background-color: var(--color-secondary-1);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .ContributionCalendar-day[data-level='2'] {
@@ -101,7 +101,7 @@ table.js-calendar-graph-table {
 
 .ContributionCalendar-day[data-level='2']:hover {
   background-color: var(--color-secondary-2);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .ContributionCalendar-day[data-level='3'] {
@@ -110,7 +110,7 @@ table.js-calendar-graph-table {
 
 .ContributionCalendar-day[data-level='3']:hover {
   background-color: var(--color-secondary);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .ContributionCalendar-day[data-level='4'] {
@@ -119,7 +119,7 @@ table.js-calendar-graph-table {
 
 .ContributionCalendar-day[data-level='4']:hover {
   background-color: var(--color-secondary-3);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* #user-activity-overview {
