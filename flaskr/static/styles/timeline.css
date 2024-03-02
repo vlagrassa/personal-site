@@ -14,6 +14,8 @@
   --timeline-border-label-width: 2px;
   --timeline-border-label: var(--timeline-border-label-width) solid var(--timeline-border-color);
 
+  --timeline-entry-color: #444140;
+
   --icon-size-sm: 16px;
   --icon-size-lg: 42px;
 
@@ -107,6 +109,10 @@
   --bg-url: none;
   --bg-color: white;
   --size: var(--icon-size-sm);
+
+  border-color: var(--timeline-entry-color);
+  outline: 0.5px solid var(--timeline-entry-color);
+  outline-offset: var(--timeline-border-gap);
 }
 
 .timeline-entry::before {
