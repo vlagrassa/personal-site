@@ -12,25 +12,19 @@
 >
   <div class="card-body">
 
-    {# Header Row #}
-    <div class="d-flex">
+    {# Header #}
+    <div class="d-flex w-100 align-items-center">
       <div class="flex-fill">
-
-        {# Header #}
-        <div class="row align-items-baseline">
-          <h5 class="card-title text-truncate col-auto d-inline-block mb-0">{{ entry.title }}</h5>
-          <p class="card-text col-auto d-inline-block">
-            <small class="text-body-secondary">{{ entry.role }}</small>
-          </p>
-        </div>
-        {# /Header #}
-
+        <h5 class="card-title mb-0 w-100">{{ entry.title }}</h5>
+        <p class="card-text me-2">
+          <small class="text-body-secondary">{{ entry.role }}</small>
+        </p>
       </div>
       <div class="me-1">
         {{ render_open_close_button('#timeline-' + entry.id + '-body', 'collapse') }}
       </div>
     </div>
-    {# /Header Row #}
+    {# /Header #}
 
     {# Body #}
     <div class="card-text collapse" id="timeline-{{entry.id}}-body">
