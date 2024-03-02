@@ -1,3 +1,6 @@
+{% from '_macros/utils.j2' import render_open_close_button %}
+
+
 {#
   Render a single entry in the timeline.
 #}
@@ -23,8 +26,8 @@
         {# /Header #}
 
       </div>
-      <div>
-        <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#timeline-{{entry.id}}-body" aria-expanded="false" aria-controls="collapseExample">+</button>
+      <div class="me-1">
+        {{ render_open_close_button('#timeline-' + entry.id + '-body', 'collapse') }}
       </div>
     </div>
     {# /Header Row #}

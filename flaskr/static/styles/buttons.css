@@ -188,3 +188,16 @@
 .desc-button-bg-overlay:hover {
   fill: rgba(0, 0, 0, 0.55);
 }
+
+
+
+/* Open/Close Buttons */
+
+.open-close-btn {
+  transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
+}
+
+.open-close-btn.active {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
