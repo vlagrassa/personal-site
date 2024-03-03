@@ -71,6 +71,6 @@
 [en]
   If you've got questions, comments, or just want to say hi,
   feel free to reach out at
-  <a class="link" href="mailto:contact@vlagrassa.dev">contact@vlagrassa.dev</a>.
+  <a class="link" href="mailto:connect@vlagrassa.dev">connect@vlagrassa.dev</a>.
 
 [en] I'd love to hear from you!
