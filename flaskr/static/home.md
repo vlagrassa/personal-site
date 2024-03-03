@@ -5,21 +5,29 @@
 
 
 
-!section activity
-# [en] Recent Activity
-# [ja] 活動
-# [tj] Recent Activity
 
-!section-notitle activity-spotlight
-## [en] Spotlight
-## [ja] 総集編
-## [tj] Spotlight
+
+
+!section spotlight
+# [en] Spotlight
+# [ja] 総集編
+# [tj] Spotlight
+
+!section-notitle spotlight-projects
+## [en] Projects
+## [ja] プロジェクト
+## [tj] Projects
 
 [en]
   Here are a few of my ongoing <a class="link" href="{{ url_for('projects.projects') }}">projects</a> that I'd like to highlight:
 
 !insert projects-preview
 
+
+!section-notitle spotlight-blog
+## [en] Blog
+## [ja] ブログ
+## [tj] Blog
 
 [en]
   You might also like one of my latest <a class="link" href="{{ url_for('blog.blog') }}">blog posts</a>:
