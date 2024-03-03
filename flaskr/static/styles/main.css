@@ -807,3 +807,16 @@ a.link:hover::after, a.link:focus::after {
     left: 18px;
 }
 
+
+/* Activity Feed */
+
+.feed-item {
+    --color-feed-item-border: #444140;
+    border-color: var(--color-feed-item-border);
+    outline: 0.5px solid var(--color-feed-item-border);
+    outline-offset: 1.5px;
+}
+
+.very-small {
+    font-size: 0.75em;
+}

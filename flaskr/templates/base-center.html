@@ -73,14 +73,10 @@
             <h6 class="pb-0 mb-0">
               {{ render_lang_object(config.TEXT['sidebar.recent_activity']) }}
             </h6>
-            <div class="panel p-2">
-              Blog post
-            </div>
-            <div class="panel p-2">
-              Blog post
-            </div>
-            <div class="panel p-2">
-              Blog post
+            <div class="w-100 px-2 text-end">
+              <small class="very-small text-body-secondary">
+                <span>See More</span>
+              </small>
             </div>
           </div>
         </div>
@@ -90,5 +86,34 @@
     </div>
   </div>
 </div>
+
+<script type="module">
+  fetch("{{url_for('query.get_recent_activity')}}").then((resp) => resp.json()).then(async (data) => {
+    const parent = document.getElementById('recent-activity');
+    data.forEach(element => {
+      parent.insertBefore(render_feed_item(element), parent.lastElementChild);
+    });
+  })
+
+  function render_feed_item(item) {
+    const el = document.createElement('div');
+    el.classList.add('card');
+    el.classList.add('feed-item');
+    el.innerHTML = `
+      <div class="card-body text-start">
+        <a href="${ item.name_link }">${ item.name }</a>
+        <br/>
+        <small class="text-body-secondary">
+          <a href="${ item.kind_link }"><i>${ item.kind }</i></a>
+        </small>
+        <br/>
+        <small class="very-small text-body-secondary">
+          ${ item.change_type } 2h ago
+        </small>
+      </div>
+    `;
+    return el;
+  }
+</script>
 
 {% endblock %}

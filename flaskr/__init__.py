@@ -12,6 +12,7 @@ from .views.home     import home_bp
 from .views.projects import projects_bp
 from .views.blog     import blog_bp
 from .views.about    import about_bp
+from .views.api      import query_bp
 
 
 PAGE_IDS = [
@@ -64,6 +65,7 @@ def create_app(test_config=None):
   app.register_blueprint(projects_bp)
   app.register_blueprint(blog_bp)
   app.register_blueprint(about_bp)
+  app.register_blueprint(query_bp)
 
   add_template_filters(app)
   load_lang_configs(app)
