@@ -47,14 +47,15 @@
     --color-tertiary-3:  #867D0E;
     --color-tertiary-4:  #464000;
 
+    /* Link Colors */
+    --color-link-plain: var(--color-secondary-2);
+    --color-link-hover: var(--color-primary-2);
 
     /* Misc Colors */
-    --color-link-plain: var(--color-secondary-2);
-    --color-link-hover: var(--color-tertiary-3);
 
     --color-header-border: var(--color-secondary-4);
 
-    --color-select-bg: var(--color-tertiary-2);
+    --color-select-bg: var(--color-primary-1);
     --color-select-txt: white;
 
     --color-bg-head-light: white;
