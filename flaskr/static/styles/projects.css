@@ -86,6 +86,12 @@
   --m1: calc(-1 * (var(--m) - (var(--s) * 0.2885)));
   --m2: calc(1 * (var(--m) + (var(--panel-outline-space) * 2)));
   margin-top: calc(var(--m1) + var(--m2));
+
+  -webkit-line-clamp: 6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: fit-content;
 }
 
 
