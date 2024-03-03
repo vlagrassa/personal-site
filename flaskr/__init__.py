@@ -83,7 +83,7 @@ def create_app(test_config=None):
       LANGUAGES = app.config['LANGUAGES']
 
     # Read current site settings from session cookie
-    settings = json.loads(request.cookies.get('site_settings', {}))
+    settings = json.loads(request.cookies.get('site_settings', '{}'))
 
     # Get target language from URL args or site settings
     l = request.args.get('l', settings.get('language', 'en'))
