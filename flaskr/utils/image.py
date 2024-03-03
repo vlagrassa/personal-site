@@ -16,6 +16,13 @@ class HeaderImage():
 
     self.alt_text = 'Alt text'
 
+  def serialize(self):
+    return {
+      'url':      self.url,
+      'alt_text': self.alt_text,
+      'x_align':  self.x_align,
+      'y_align':  self.y_align,
+    }
 
 
 def get_post_image(post_id):

@@ -51,6 +51,16 @@ class Project(db.Model):
   def image(self):
     return get_project_image(self.id)
 
+  def serialize(self):
+    return {
+      'id':            self.id,
+      'name':          self.title,
+      'created_date':  self.created_date  or None,
+      'modified_date': self.modified_date or None,
+      'role':          self.role.value,
+      'location':      self.location.value,
+    }
+
 class TagType(enum.Enum):
   LANGUAGE = 'Language'
   SKILL    = 'Skill'
@@ -106,6 +116,18 @@ class Post(db.Model):
   def image(self):
     return get_post_image(self.id)
 
+  def serialize(self):
+    return {
+      'id':            self.id,
+      'title':         self.title,
+      'date':          self.date or None,
+      'description':   self.description,
+      'visible':       self.visible,
+      'category':      self.category.serialize(),
+      'image':         self.image.serialize(),
+      'tags':          [ t.serialize() for t in self.tags ],
+    }
+
 
 class PostGroup(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
@@ -116,6 +138,13 @@ class PostGroup(db.Model):
   def name(self):
     with current_app.app_context():
       return { l['code']: self.title for l in current_app.config['LANGUAGES'] }
+
+  def serialize(self):
+    return {
+      'id':    self.id,
+      'slug':  self.slug,
+      'title': self.title,
+    }
 
 
 class PostTag(db.Model):
@@ -149,6 +178,14 @@ class PostTag(db.Model):
 
   def is_ancestor_of(self, other):
     return other.is_descendant_of(self)
+
+  def serialize(self):
+    return {
+      'id':      self.id,
+      'name_en': self.name_en,
+      'name_ja': self.name_ja,
+      'name_tj': self.name_tj,
+    }
 
 
 class PostTagMap(db.Model):
