@@ -205,7 +205,7 @@ h1 {
 .footer-icon {
     cursor: pointer;
     user-select: none;
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
 }
 
 .footer-h .footer-icon {
@@ -266,7 +266,7 @@ h1 {
 }
 
 .hover-rotate-45 {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
     --color-gradient-direction: -45deg;
 }
 .hover-rotate-45:hover {
@@ -274,7 +274,7 @@ h1 {
 }
 
 .hover-rotate-60 {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
     --color-gradient-direction: -60deg;
 }
 .hover-rotate-60:hover {
@@ -282,7 +282,7 @@ h1 {
 }
 
 .hover-rotate-90-m {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
     --color-gradient-direction: 90deg;
 }
 .hover-rotate-90-m:hover {
@@ -635,7 +635,7 @@ a.link:hover::after, a.link:focus::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: width 0.4s, clip-path 0.4s;
+    transition: width 0.2s, clip-path 0.2s;
 
     filter: saturate(25%);
     user-select: none;
