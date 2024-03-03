@@ -515,14 +515,6 @@ a.link:hover::after, a.link:focus::after {
     transform: translateX(0%) translateY(-1.5px) scaleX(1);
 }
 
-
-.header-separator {
-    margin: 0px 25px;
-    cursor: default;
-    color: var(--color-secondary-4);
-    user-select: none;
-}
-
 #header {
     z-index: 10;
     flex: 0 1 auto;
@@ -567,6 +559,10 @@ a.link:hover::after, a.link:focus::after {
     justify-content: center;
     flex-direction: row;
     flex-wrap: nowrap;
+}
+
+.header-middle .separator {
+    margin: 0px 25px;
 }
 
 .header-right {

@@ -25,7 +25,7 @@
 {% macro render_sections(sections, sep="&#x2B26;") %}
   {% for section in sections.values() %}
   {% if loop.index0 > 0 %}
-    <div class="header-separator">{{sep}}</div>
+    <div class="separator"><small>{{sep}}</small></div>
   {% endif %}
   <div class="header-button">
     <a class="underline-hover-text" {% if section.endpoint %}href="{{ url_for(section.endpoint) }}"{% endif %}>
