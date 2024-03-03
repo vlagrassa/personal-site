@@ -51,7 +51,7 @@
 
           {# Date #}
           <small class="col-3 col-lg-2 text-end ps-0">
-            {%- for l in langs %}
+            {%- for l in config['LANGUAGES'] %}
             <span {{set_lang(l.code)}}>{{ post.date|dateformat(l.code)|capsfirst }}</span>
             {%- endfor %}
           </small>
