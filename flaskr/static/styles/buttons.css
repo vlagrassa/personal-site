@@ -195,6 +195,7 @@
 
 .open-close-btn {
   transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
+  user-select: none;
 }
 
 .open-close-btn.active {
