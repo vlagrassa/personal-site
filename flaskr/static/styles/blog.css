@@ -51,3 +51,11 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+
+.post-description {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
