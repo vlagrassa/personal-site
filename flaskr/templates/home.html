@@ -86,15 +86,19 @@
     <h6 class="pb-0 mb-0">
       {{ render_lang_object(config.TEXT['sidebar.quick_links']) }}
     </h6>
-    <div class="panel p-2">
-      {{ render_lang_object(config.TEXT['sidebar.resume']) }}
-    </div>
-    <div class="panel p-2">
-      {{ render_lang_object(config.TEXT['sidebar.experience']) }}
-    </div>
-    <div class="panel p-2">
-      {{ render_lang_object(config.TEXT['sidebar.contact']) }}
-    </div>
+    <span class="ps-2 d-flex flex-wrap justify-content-center gap-3">
+      <a title="Download résumé" class="underline-hover-text" href="#">
+        {{ render_lang_object(config.TEXT['sidebar.resume']) }}
+        <span class="material-symbols-outlined material-symbols-inline">download</span>
+        <div class="underline-hover" style="--underline-offset: -1px;"></div>
+      </a>
+      <small class="separator">⬦</small>
+      <a title="Send email to connect@vlagrassa.dev" class="underline-hover-text" href="mailto:connect@vlagrassa.dev">
+        {{ render_lang_object(config.TEXT['sidebar.contact']) }}
+        <span class="material-symbols-outlined material-symbols-inline" style="line-height: 0.9em;">outgoing_mail</span>
+        <div class="underline-hover" style="--underline-offset: -1px;"></div>
+      </a>
+    </span>
   </div>
 {% endblock %}
 

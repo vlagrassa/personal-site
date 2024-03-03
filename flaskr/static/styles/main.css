@@ -60,6 +60,8 @@
     --color-bg-head-light: white;
     --color-bg-body-light: #F8F8F8;
 
+    --color-gray: #5F5B59;
+
     --logo-line-thickness: 0.08em;
 
     --color-gradient-direction: 0deg;
@@ -184,6 +186,12 @@ h1 {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-size: 2.75em;
+}
+
+.separator {
+    cursor: default;
+    color: var(--color-gray);
+    user-select: none;
 }
 
 
