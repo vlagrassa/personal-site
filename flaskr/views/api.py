@@ -61,6 +61,12 @@ class ActivityFeedItem():
 #
 
 
+# @query_bp.route('/timeline', methods=['GET'])
+# @jsonify_response
+# def get_timeline():
+#   return TimelineSection.query.order_by(TimelineSection.order.desc()).all(),
+
+
 @query_bp.route('/recent-activity', methods=['GET'])
 @jsonify_response
 def get_recent_activity():
