@@ -178,3 +178,8 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+
+# Custom
+
+*/static/data-standin/

@@ -24,7 +24,7 @@ def get_sections(filename, lang='en'):
   }
 
   # Loop through each line in the file
-  with current_app.open_resource(f'static/blog_posts/{filename}/main-{lang}.md') as mkd:
+  with current_app.open_resource(f'static/data-standin/blog-posts/{filename}/main-{lang}.md') as mkd:
     for line in mkd.readlines():
       line = line.decode('utf-8')
 
@@ -90,7 +90,7 @@ def group(slug):
 @blog_bp.route('/post/<string:name>')
 def post(name):
   post = Post.query.get_or_404(name)
-  src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/blog_posts/{name}/main-en.md')) else 'hello-world'
+  src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/data-standin/blog-posts/{name}/main-en.md')) else 'hello-world'
   return render_template('blog-post.html', **{
     'title': post.name,
     'subtitle': post.description,

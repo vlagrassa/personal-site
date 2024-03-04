@@ -10,14 +10,14 @@ class HeaderImage():
   @classmethod
   def from_project(cls, project):
     return cls(
-      f'/static/data_standin/projects/{project.id}/thumbnail.jpg',
+      f'/static/data-standin/projects/{project.id}/thumbnail.jpg',
       x_align = 'right',
     )
 
   @classmethod
   def from_blog_post(cls, post):
     return cls(
-      f'/static/data_standin/blog-posts/{post.id}.png',
+      f'/static/data-standin/images/blog-posts/{post.id}.png',
       x_align = post.image_x_align,
       y_align = post.image_y_align,
     )
