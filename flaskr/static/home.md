@@ -4,6 +4,40 @@
 # [tj] Welcome!
 
 
+[en] My name is <strong style="color: var(--color-primary);">Vince</strong>, and I'm a software developer based in the Chicago area.
+[ja] 私は<strong style="color: var(--color-primary);">ビンス</strong>と申して、シカゴの辺りに住んでるソフトウェアデベロッパーです。
+
+
+[en]
+  This is my personal website &ndash;
+  I'd like to think it lies somewhere between a formal portfolio and an informal pile of ideas.
+  I wrote the whole thing <a class="link" href="{{ url_for('projects.summary', name='personal-site') }}">myself</a>,
+  so please forgive me if anything looks out of place.
+  As with many things in my life, it's a work in progress!
+
+[ja]
+
+
+
+!section who-am-i
+## [en] Who am I?
+## [ja] 誰ですか？
+
+[en]
+  In short: a language nerd!
+  I love human languages, programming languages, and even literary language.
+  To me, the study of language is the study of <em>patterns and ideas</em> &ndash; how we capture them, understand them, and convey them to others.
+
+[ja]
+
+
+[en]
+  In my free time, I'm an avid <a class="link" href="{{ url_for('projects.summary', name='tjeramot') }}">conlanger</a>,
+  a frequent target of <a class="link" href="{{ url_for('blog.group', slug='problem-solving') }}">nerd-sniping</a><sup>[<a href="https://xkcd.com/356/" target="_blank">1</a>]</sup>,
+  a top-tier Pokémon identifier,
+  and of course, a hobbyist programmer.
+
+
 
 
 
@@ -77,8 +111,14 @@
 # [tj] Let's Connect!
 
 [en]
-  If you've got questions, comments, or just want to say hi,
-  feel free to reach out at
+  If something here resonates with you,
+  if you have any questions for me,
+  or even if you'd just like to say hi &ndash;
+  please reach out!
+  I'm available through
   <a class="link" href="mailto:connect@vlagrassa.dev">connect@vlagrassa.dev</a>.
 
+[ja]
+
 [en] I'd love to hear from you!
+
