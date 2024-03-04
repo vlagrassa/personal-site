@@ -26,9 +26,10 @@
         <img
           title="{{ post.title }}"
           src="{{ post.image.url }}"
-          class="img-fluid object-fit-cover"
+          class="img-fluid object-fit-cover blog-card-thumbnail"
           alt="Thumbnail"
           style="{{ parse_header_image_styles(post.image) }}"
+          onclick="location.href = '{{ url_for('blog.post', name=post.id) }}';"
         >
       </div>
     </div>

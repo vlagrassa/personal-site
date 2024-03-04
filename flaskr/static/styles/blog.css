@@ -26,6 +26,10 @@
   outline-offset: var(--card-outline-space);
 }
 
+.blog-card-thumbnail {
+  cursor: pointer;
+}
+
 
 /* Card Title */
 
