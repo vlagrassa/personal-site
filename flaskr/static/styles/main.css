@@ -346,7 +346,7 @@ a.link {
     color: var(--color-link-plain);
     text-decoration: underline;
     text-decoration-thickness: 1.5px;
-    text-underline-offset: 2.5px;
+    text-underline-offset: 1px;
 }
 
 a.link::after {
@@ -355,8 +355,7 @@ a.link::after {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
-    padding-bottom: 1px;
+    height: calc(100% - 0.1em);
     border-bottom: 1px solid var(--color-link-plain);
     box-sizing: initial;
 }
@@ -613,6 +612,14 @@ a.link:hover::after, a.link:focus::after {
     left: 0;
     bottom: 0;
     z-index: 10;
+}
+
+.header-image-overlay a {
+    color: var(--color-primary-3);
+}
+
+.header-image-overlay a:hover {
+    color: var(--color-primary-2);
 }
 
 
