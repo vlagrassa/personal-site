@@ -29,7 +29,7 @@ def home():
       'tj': 'Vincent LɒGrɒssɒ',
     },
     'tab_title': current_app.config['PAGES']['home']['title'],
-    'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
+    'header_image': HeaderImage('/static/images/home-bg.jpg', x_align='right'),
 
     # Main content
     'content': TextDocument.parse_file('home'),

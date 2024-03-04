@@ -49,7 +49,7 @@ class Project(db.Model):
 
   @property
   def image(self):
-    return get_project_image(self.id)
+    return get_project_image(self)
 
   def serialize(self):
     return {
@@ -91,6 +91,9 @@ class Post(db.Model):
   visible = sa.Column(sa.Boolean, default=False, nullable=False)
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
   category = db.relationship('PostGroup', backref='posts')
+  image_x_align = sa.Column(sa.String(16))
+  image_y_align = sa.Column(sa.String(16))
+
 
   @property
   def name(self):
@@ -114,7 +117,7 @@ class Post(db.Model):
 
   @property
   def image(self):
-    return get_post_image(self.id)
+    return get_post_image(self)
 
   def serialize(self):
     return {
