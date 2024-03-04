@@ -55,3 +55,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+
+/* Post */
+
+.blog-post-body code {
+  /* color: lightgreen; */
+}
