@@ -20,24 +20,6 @@ highlight_projects = [
 ]
 
 
-@home_bp.route('/descriptors', methods=['GET'])
-def get_descriptors():
-  return jsonify([
-    'as dynamic content...',
-    'as three-dimensional...',
-    'as tongue-in-cheek...',
-    'as indecisive...?',
-    'as liking Haskell a bit too much...',
-    'self-referentially...',
-    'as {{witty_description[i]}}...',
-    'as pseudo-randomly generated...',
-    'in the third person...',
-    'out of context...',
-    'as 訳しにくい... \n(TL Note: \"untranslateable\")',
-    'as out of ideas :(',
-  ])
-
-
 @home_bp.route('/')
 def home():
   return render_template('home.html', **{

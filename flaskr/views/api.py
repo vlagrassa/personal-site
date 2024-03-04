@@ -1,5 +1,5 @@
 from flask import (
-  Blueprint, g, redirect, request, session, url_for,
+  Blueprint, current_app, g, redirect, request, session, url_for,
 )
 
 from ..database        import Project, Post, TimelineSection
@@ -59,6 +59,15 @@ class ActivityFeedItem():
 #
 # Endpoints
 #
+
+
+@query_bp.route('/descriptors', methods=['GET'])
+@jsonify_response
+def get_descriptors():
+  with current_app.open_resource(f'static/homepage-descriptors.txt') as file:
+    return [
+      line.decode('utf-8').replace('\\n', '\n').rstrip() for line in file
+    ]
 
 
 # @query_bp.route('/timeline', methods=['GET'])

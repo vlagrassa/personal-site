@@ -119,7 +119,7 @@
 
   var play = true;
 
-  fetch("{{url_for('home.get_descriptors')}}").then((foo) => foo.json()).then(async (descriptors) => {
+  fetch("{{url_for('query.get_descriptors')}}").then((foo) => foo.json()).then(async (descriptors) => {
     phraseManager.init(
       target,
       descriptors,
