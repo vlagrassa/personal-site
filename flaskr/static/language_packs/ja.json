@@ -49,7 +49,10 @@
     "quick_links":         "リンク",
     "recent_activity":     "最近の活動",
     "resume":              "履歴書",
-    "contact":             "連絡"
+    "contact":             "連絡",
+    "hide":                "非表示する",
+    "show":                "表示する",
+    "see_more":            "続きを見る"
   },
   "blog": {
     "posts":               "エントリー",

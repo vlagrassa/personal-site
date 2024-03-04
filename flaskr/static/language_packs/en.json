@@ -49,7 +49,10 @@
     "quick_links":         "Quick Links",
     "recent_activity":     "Recent Activity",
     "resume":              "Résumé",
-    "contact":             "Contact"
+    "contact":             "Contact",
+    "hide":                "Hide",
+    "show":                "Show",
+    "see_more":            "See More"
   },
   "blog": {
     "posts":               "Posts",
