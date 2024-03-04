@@ -828,3 +828,18 @@ a.link:hover::after, a.link:focus::after {
 .very-small {
     font-size: 0.75em;
 }
+
+
+
+/* Icons */
+
+.material-symbols-inline {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 100,
+        'GRAD' 200,
+        'opsz' 24;
+    vertical-align: bottom;
+    font-size: 1.2em !important;
+    line-height: 1em;
+}
