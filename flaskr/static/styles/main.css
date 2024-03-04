@@ -848,3 +848,28 @@ a.link:hover::after, a.link:focus::after {
     font-size: 1.2em !important;
     line-height: 1em;
 }
+
+
+
+/* Truncating Text */
+
+.text-truncate-2 {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-3 {
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-6 {
+    -webkit-line-clamp: 6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

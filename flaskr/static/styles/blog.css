@@ -41,20 +41,7 @@
 
 /* Category Card */
 
-.blog-category-card-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-
-.post-description {
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+.blog-category-card-description {}
 
 
 /* Post */

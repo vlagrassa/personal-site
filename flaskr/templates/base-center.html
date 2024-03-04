@@ -101,12 +101,10 @@
     el.classList.add('feed-item');
     el.innerHTML = `
       <div class="card-body text-start">
-        <a href="${ item.name_link }">${ item.name }</a>
-        <br/>
-        <small class="text-body-secondary">
+        <a class="text-truncate-3 mb-1" href="${ item.name_link }">${ item.name }</a>
+        <small class="text-body-secondary text-truncate-2 mb-1">
           <a href="${ item.kind_link }"><i>${ item.kind }</i></a>
         </small>
-        <br/>
         <small class="very-small text-body-secondary">
           ${ item.change_type } 2h ago
         </small>
