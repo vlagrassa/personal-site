@@ -103,9 +103,12 @@
     el.classList.add('feed-item');
     el.innerHTML = `
       <div class="card-body text-start">
-        <a class="text-truncate-3 mb-1" href="${ item.name_link }">${ item.name }</a>
+        <a class="text-truncate-3 pb-1 underline-hover-text" href="${ item.name_link }">
+          <span>${ item.name }</span>
+          <div class="underline-hover" style="--underline-offset: -2px;"></div>
+        </a>
         <small class="text-body-secondary text-truncate-2 mb-1">
-          <a href="${ item.kind_link }"><i>${ item.kind }</i></a>
+          <a class="link-hover" href="${ item.kind_link }"><i>${ item.kind }</i></a>
         </small>
         <small class="very-small text-body-secondary">
           {{ render_lang_object_from_var('item.date_string') }}

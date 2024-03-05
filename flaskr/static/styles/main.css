@@ -374,6 +374,10 @@ a.link:hover::after, a.link:focus::after {
     border-bottom-color: var(--color-link-hover);
 }
 
+.link-hover:hover {
+    color: var(--color-link-hover);
+}
+
 
 
 /* Logo */
