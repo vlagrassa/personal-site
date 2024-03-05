@@ -1,6 +1,17 @@
 {% extends 'base-center.html' %}
 
 
+{% block head %}
+<script src="https://unpkg.com/github-calendar@2.3.2/dist/github-calendar.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/github-calendar@2.3.2/dist/github-calendar-responsive.css"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/github-calendar.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/projects.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/buttons.css') }}">
+{% endblock %}
+
+
 {% block style %}
 <style>
   @keyframes blink {
@@ -61,63 +72,41 @@
 {% endblock %}
 
 
+{# Render table-of-contents entries for each section #}
 {% block sections %}
   {% from '_macros/utils.j2' import render_contents_entry %}
-  {{ render_contents_entry('welcome',  { 'en': "Welcome!",              'tj': "Welcome!",        'ja': 'ようこそ！' }) }}
-  {{ render_contents_entry('timeline', { 'en': "Timeline",              'tj': "Timeline",        'ja': 'タイムライン' }) }}
-  {{ render_contents_entry('another',  { 'en': "Another Section",       'tj': "Another Section", 'ja': '別の部分' }) }}
-  {{ render_contents_entry('contact',  { 'en': "Let's Connect!",        'tj': "Let's Connect!",  'ja': '連絡しよう' }) }}
+  {% for section in content %}
+  {{ render_contents_entry(section.id, section.head, sub=section.level) }}
+  {% endfor %}
 {% endblock %}
 
 
-{% block content %}
-<div id="welcome">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Welcome!</span>
-    <span {{set_lang('ja')}}>ようこそ！</span>
-    <span {{set_lang('tj')}}>Welcome!</span>
-  </h3>
-  <p class="text-body-secondary fst-italic">
-    Hello there
-  </p>
-  {% include '_includes/lorem-ipsum.html' %}
-</div>
-
-<div id="timeline">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Timeline</span>
-    <span {{set_lang('ja')}}>タイムライン</span>
-    <span {{set_lang('tj')}}>Timeline</span>
-  </h3>
-  {% include '_includes/lorem-ipsum.html' %}
-</div>
-
-<div id="another">
-  <h3 class="pt-3">
-    <span {{set_lang('en')}}>Another Section</span>
-    <span {{set_lang('ja')}}>別の部分</span>
-    <span {{set_lang('tj')}}>Another Section</span>
-  </h3>
-  {% include '_includes/lorem-ipsum.html' %}
-  <div class="panel px-4 py-4 mt-2 mb-3">
-    Hello!
+{% block right_panel_top %}
+  <div class="d-flex flex-column gap-3 py-3 text-center">
+    <h6 class="pb-0 mb-0">
+      {{ render_lang_object(config.TEXT['sidebar.quick_links']) }}
+    </h6>
+    <span class="ps-2 d-flex flex-wrap justify-content-center gap-3">
+      <a title="Download résumé" class="underline-hover-text" href="#">
+        {{ render_lang_object(config.TEXT['sidebar.resume']) }}
+        <span class="material-symbols-outlined material-symbols-inline">download</span>
+        <div class="underline-hover" style="--underline-offset: -1px;"></div>
+      </a>
+      <small class="separator">⬦</small>
+      <a title="Send email to connect@vlagrassa.dev" class="underline-hover-text" href="mailto:connect@vlagrassa.dev">
+        {{ render_lang_object(config.TEXT['sidebar.contact']) }}
+        <span class="material-symbols-outlined material-symbols-inline" style="line-height: 0.9em;">outgoing_mail</span>
+        <div class="underline-hover" style="--underline-offset: -1px;"></div>
+      </a>
+    </span>
   </div>
-  {% include '_includes/lorem-ipsum.html' %}
-  {% include '_includes/lorem-ipsum.html' %}
-</div>
+{% endblock %}
 
 
-<h3 id="contact" class="pt-3">
-  <span {{set_lang('en')}}>Let's Connect!</span>
-  <span {{set_lang('ja')}}>連絡しよう</span>
-  <span {{set_lang('tj')}}>Let's Connect!</span>
-</h3>
-<p>
-  If you've got questions, comments, or just want to say hi, feel free to reach out at <a class="link" href="mailto:contact@vlagrassa.dev">contact@vlagrassa.dev</a>.
-</p>
-<p>
-  I'd love to hear from you!
-</p>
+{# Render main body content for each section #}
+{% block content %}
+  {% from '_macros/utils.j2' import render_content with context %}
+  {{ render_content(content, custom_render=custom_render or none) }}
 {% endblock %}
 
 
@@ -130,7 +119,7 @@
 
   var play = true;
 
-  fetch("{{url_for('home.get_descriptors')}}").then((foo) => foo.json()).then(async (descriptors) => {
+  fetch("{{url_for('query.get_descriptors')}}").then((foo) => foo.json()).then(async (descriptors) => {
     phraseManager.init(
       target,
       descriptors,

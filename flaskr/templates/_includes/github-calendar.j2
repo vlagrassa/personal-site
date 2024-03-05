@@ -1,0 +1,51 @@
+<div id="{{ section_id }}-calendar" class="calendar">
+  <div class="mb-4">
+    <div class="spinner-border" style="width: 2rem; height: 2rem; color: var(--color-primary-4);" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+
+  const day_els = [
+    {%- for d in config.TEXT['days'].values() %}
+    '{{render_lang_object(d)}}',
+    {%- endfor %}
+  ];
+
+  const month_els = {
+    {%- for m in config.TEXT['months'].values() %}
+    "{{ m['en'] }}": '{{render_lang_object(m)}}',
+    {%- endfor %}
+  };
+
+  GitHubCalendar("#{{ section_id }}-calendar", "vlagrassa").then(() => {
+
+    // Make calendar day labels change with language selection
+    get_day_label(1).children[1].innerHTML = day_els[1];
+    get_day_label(3).children[1].innerHTML = day_els[3];
+    get_day_label(5).children[1].innerHTML = day_els[5];
+
+    // Make calendar month labels change with language selection
+    // Month labels might wrap around (i.e. can't ensure bijection index <=> month),
+    // so instead we loop through each column header and replace the text
+    const arr = Array.from(document.getElementById('{{ section_id }}-calendar').querySelector('thead').children[0].children).slice(1);
+    for (let i = 0; i < arr.length; i++) {
+      arr[i].children[1].innerHTML = month_els[arr[i].children[1].innerText]
+    }
+
+    // Update the legend styling & text
+    const legend = document.getElementById('{{ section_id }}-calendar').querySelector('.js-calendar-graph').children[1].children[1];
+    legend.style.display = 'flex';
+    legend.style.alignItems = 'center';
+    legend.style.gap = '3px';
+    legend.style.marginTop = '3px';
+    legend.innerHTML = legend.innerHTML.replace('Less', '<small style="padding-right: 3px;">{{ render_lang_object(config.TEXT["github_calendar.less"]) }}</small>');
+    legend.innerHTML = legend.innerHTML.replace('More', '<small style="padding-left:  3px;">{{ render_lang_object(config.TEXT["github_calendar.more"]) }}</small>');
+  });
+
+  function get_day_label(i) {
+    return document.getElementById('{{ section_id }}-calendar').querySelector('tbody').children[i].children[0];
+  }
+</script>

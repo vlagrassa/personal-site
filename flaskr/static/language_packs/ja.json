@@ -1,0 +1,76 @@
+{
+  "config": {
+    "name": "日本語",
+    "code": "ja"
+  },
+  "page_titles": {
+    "home":                "ホーム",
+    "projects":            "プロジェクト",
+    "blog":                "ブログ",
+    "about":               "私の事"
+  },
+  "days": {
+    "0":                   "日",
+    "1":                   "月",
+    "2":                   "火",
+    "3":                   "水",
+    "4":                   "木",
+    "5":                   "金",
+    "6":                   "土"
+  },
+  "months": {
+    "1":                   "一月",
+    "2":                   "二月",
+    "3":                   "三月",
+    "4":                   "四月",
+    "5":                   "五月",
+    "6":                   "六月",
+    "7":                   "七月",
+    "8":                   "八月",
+    "9":                   "九月",
+    "10":                  "十月",
+    "11":                  "十一月",
+    "12":                  "十二月"
+  },
+  "footer": {
+    "language":            "言語",
+    "mode": {
+      "dark":              "夜",
+      "light":             "日"
+    },
+    "layout": {
+      "simple":            "簡単な形式",
+      "complex":           "複雑な形式"
+    },
+    "zoom_level":          "ズーム",
+    "settings":            "設定"
+  },
+  "sidebar": {
+    "quick_links":         "リンク",
+    "recent_activity":     "最近の活動",
+    "resume":              "履歴書",
+    "contact":             "連絡",
+    "hide":                "非表示する",
+    "show":                "表示する",
+    "see_more":            "続きを見る"
+  },
+  "activity": {
+    "created":             "_に作成されました",
+    "updated":             "_に更新されました"
+  },
+  "blog": {
+    "posts":               "エントリー",
+    "categories":          "カテゴリー",
+    "search": {
+      "title":             "題名",
+      "category":          "カテゴリー",
+      "tags":              "タグ",
+      "start_date":        "開始日",
+      "end_date":          "終了日"
+    }
+  },
+  "github_calendar": {
+    "less":                "小",
+    "more":                "大"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "config": {
+    "name": "Tʒeramɔt",
+    "code": "tj"
+  },
+  "page_titles": {
+    "home":                "Haya",
+    "projects":            "Švayako",
+    "blog":                "Bzíko",
+    "about":               "Nʒɛn"
+  }
+}

@@ -1,5 +1,11 @@
 {% from '_macros/lang.j2' import set_lang, render_lang_object with context %}
 
+
+{%- macro get_page_title(lang, html=false) %}
+{%- if tab_title %}{{ tab_title[lang] }}{% elif title %}{{ title[lang] }}{% endif %} {% if html %}&#x2B26;{% else %}⬦{% endif %} vlagrassa.dev
+{%- endmacro %}
+
+
 {#
   Render the site logo, with optional extra class(es) and hover function.
 #}
@@ -7,7 +13,7 @@
 <h1
     class="my-logo{% if class %} {{class}}{% endif %}"
     {% if hover %}
-    onmouseenter="{{hover}}(this, true)" onmouseleave="{{hover}}(this, false)"
+    onmouseenter="{{hover}}(event, this, true)" onmouseleave="{{hover}}(event, this, false)" onmousemove ="{{hover}}(event, this, null)"
     {% endif %}
 >vlɒgrɒssɒ</h1>
 {%- endmacro %}
@@ -17,12 +23,12 @@
   Render a list of section pages as header buttons, separated by the given character.
 #}
 {% macro render_sections(sections, sep="&#x2B26;") %}
-  {% for section in sections %}
+  {% for section in sections.values() %}
   {% if loop.index0 > 0 %}
-    <div class="header-separator">{{sep}}</div>
+    <div class="separator"><small>{{sep}}</small></div>
   {% endif %}
   <div class="header-button">
-    <a class="underline-hover-text" {% if section.link %}href="{{section.link}}"{% endif %}>
+    <a class="underline-hover-text" {% if section.endpoint %}href="{{ url_for(section.endpoint) }}"{% endif %}>
       {{ render_lang_object(section.title) }}
     </a>
     <div class="header-button-underline"></div>
@@ -36,8 +42,8 @@
 #}
 {% macro render_links(links, closed_width, open_width) %}
   {% for link in links %}
-    <a href="{{ link.url }}" class="slice" style="background-color: {{link.color}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
-      <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.path + '/logo-dark.png') }}">
+    <a href="{{ link.link_external }}" class="slice" style="background-color: #{{link.bg_color_hex}};" onmouseenter="openicon(this)" onmouseleave="closeicon(this)" onfocus="openicon(this)" onblur="closeicon(this)">
+      <img title="{{link.title}}" height="32px" width="40px" style="object-fit: contain;" src="{{ url_for('static', filename='logos/' + link.id + '/logo-dark.png') }}">
     </a>
   {% endfor %}
   <script>
@@ -87,7 +93,7 @@
   <script type="module">
     const tooltip = bootstrap.Tooltip.getInstance('#footer-{{ id }}') // Returns a Bootstrap tooltip instance
     document.addEventListener('change-settings', (({detail}) => {
-      const titles = {{ name }};
+      const titles = {{ dict(name) }};
       if (detail.language) {
         tooltip.setContent({ '.tooltip-inner': `<span class="font-${detail.language}">${titles[detail.language]}</span>` });
       }

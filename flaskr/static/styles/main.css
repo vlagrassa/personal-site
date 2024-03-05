@@ -47,28 +47,43 @@
     --color-tertiary-3:  #867D0E;
     --color-tertiary-4:  #464000;
 
+    /* Monochromes */
+    --color-off-white: #FBF8F4;
+    --color-off-black: #1E1E24;
+    /* --color-gray: #444140; */
+    --color-gray: #5F5B59;
+
+    /* Link Colors */
+    --color-link-plain: var(--color-secondary-2);
+    --color-link-hover: var(--color-primary-2);
 
     /* Misc Colors */
-    --color-link-plain: var(--color-secondary-2);
-    --color-link-hover: var(--color-tertiary-3);
 
     --color-header-border: var(--color-secondary-4);
 
-    --color-select-bg: var(--color-tertiary-2);
+    --color-select-bg: var(--color-primary-1);
     --color-select-txt: white;
 
     --color-bg-head-light: white;
-    --color-bg-body-light: #F8F8F8;
+    --color-bg-body-light: var(--color-off-white);
+
+    /* TODO: Better overwriting of BS colors */
+    --bs-dark:       var(--color-off-black);
+    --bs-body-color: var(--color-off-black);
+    /* --bs-heading-color: var(--color-off-black); */
 
     --logo-line-thickness: 0.08em;
 
-    --color-gradient: linear-gradient(
-        0deg,
+    --color-gradient-direction: 0deg;
+    --color-gradient-values:
         var(--color-secondary) 0%,
         var(--color-secondary) 20%,
         /* black 40%, */
         var(--color-primary) 60%,
-        var(--color-primary) 100%
+        var(--color-primary) 100%;
+    --color-gradient: linear-gradient(
+        var(--color-gradient-direction),
+        var(--color-gradient-values),
     );
 
     /* Define header font to fall back on Japanese font */
@@ -85,12 +100,12 @@
     --header-outline-outer: 1px solid var(--header-outline-color);
     --header-outline-space: 4.5px;
 
-    --panel-outline-color: black;
+    --panel-outline-color: var(--color-off-black);
     --panel-outline-inner: 1.75px solid var(--panel-outline-color);
     --panel-outline-outer: 1.25px solid var(--panel-outline-color);
     --panel-outline-space: 1.25px;
 
-    --card-outline-color: black;
+    --card-outline-color: var(--color-off-black);
     --card-outline-inner: 1.5px solid var(--card-outline-color);
     --card-outline-outer: 1.0px solid var(--card-outline-color);
     --card-outline-space: 1px;
@@ -183,6 +198,17 @@ h1 {
     font-size: 2.75em;
 }
 
+.body-content-container h3, .body-content-container h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.separator {
+    cursor: default;
+    color: var(--color-gray);
+    user-select: none;
+}
+
 
 
 /* Footer */
@@ -202,7 +228,7 @@ h1 {
 .footer-icon {
     cursor: pointer;
     user-select: none;
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
 }
 
 .footer-h .footer-icon {
@@ -226,7 +252,10 @@ h1 {
 }
 
 .footer-icon:hover {
-    background: var(--color-gradient);
+    background: linear-gradient(
+        var(--color-gradient-direction),
+        var(--color-gradient-values)
+    );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -252,37 +281,40 @@ h1 {
     left: 10px !important;
 
     --bs-offcanvas-border-width: 2px;
-    --bs-offcanvas-border-color: black;
-    border: 2px solid black;
+    --bs-offcanvas-border-color: var(--color-off-black);
+    border: 2px solid var(--color-off-black);
     border-bottom: none;
-    outline: 1px solid black;
+    outline: 1px solid var(--color-off-black);
     outline-offset: 1.5px;
 }
 
 .hover-rotate-45 {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    --color-gradient-direction: -45deg;
 }
 .hover-rotate-45:hover {
     transform: rotate(45deg);
 }
 
 .hover-rotate-60 {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    --color-gradient-direction: -60deg;
 }
 .hover-rotate-60:hover {
     transform: rotate(60deg);
 }
 
 .hover-rotate-90-m {
-    transition: transform 0.1s;
+    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    --color-gradient-direction: 90deg;
 }
 .hover-rotate-90-m:hover {
     transform: rotate(-90deg);
 }
 
 .modal-content {
-    border: 2px solid black;
-    outline: 1px solid black;
+    border: 2px solid var(--color-off-black);
+    outline: 1px solid var(--color-off-black);
     outline-offset: 1.5px;
 }
 
@@ -328,7 +360,7 @@ a.link {
     color: var(--color-link-plain);
     text-decoration: underline;
     text-decoration-thickness: 1.5px;
-    text-underline-offset: 2.5px;
+    text-underline-offset: 1px;
 }
 
 a.link::after {
@@ -337,8 +369,7 @@ a.link::after {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
-    padding-bottom: 1px;
+    height: calc(100% - 0.1em);
     border-bottom: 1px solid var(--color-link-plain);
     box-sizing: initial;
 }
@@ -352,6 +383,10 @@ a.link:hover::after, a.link:focus::after {
     border-bottom-color: var(--color-link-hover);
 }
 
+.link-hover:hover {
+    color: var(--color-link-hover);
+}
+
 
 
 /* Logo */
@@ -361,6 +396,8 @@ a.link:hover::after, a.link:focus::after {
     z-index: 10;
     font-family: var(--font-head);
 
+    --gradient-middle: 42%;
+
     margin-block-start: 0;
     margin-block-end:   0;
 
@@ -368,9 +405,10 @@ a.link:hover::after, a.link:focus::after {
     background: linear-gradient(
         0deg,
         var(--color-secondary-1) 0%,
-        var(--color-secondary-3) 30%,
-        black 40%,
-        var(--color-primary-3) 50%,
+        var(--color-secondary) calc(var(--gradient-middle) - 10%),
+        var(--color-off-black) calc(var(--gradient-middle) - 3%),
+        var(--color-off-black) calc(var(--gradient-middle) + 3%),
+        var(--color-primary) calc(var(--gradient-middle) + 10%),
         var(--color-primary-1) 100%
     );
     background-clip: text;
@@ -380,9 +418,11 @@ a.link:hover::after, a.link:focus::after {
     text-decoration: underline;
     text-decoration-thickness: var(--logo-line-thickness);
     text-underline-offset: 0.1em;
-    text-decoration-color: var(--color-secondary);
+    text-decoration-color: var(--color-secondary-2);
 
     transform: translateY(-0.08em);
+
+    user-select: none;
 }
 
 .my-logo::before {
@@ -390,7 +430,7 @@ a.link:hover::after, a.link:focus::after {
     position: absolute;
     z-index: -1;
     top: 0.4em;
-    border-top: var(--logo-line-thickness) solid var(--color-primary);
+    border-top: var(--logo-line-thickness) solid var(--color-primary-2);
 }
 
 .my-logo::after {
@@ -399,7 +439,7 @@ a.link:hover::after, a.link:focus::after {
     z-index: -1;
     top: 0.4em;
     right: 0;
-    border-top: var(--logo-line-thickness) solid var(--color-primary);
+    border-top: var(--logo-line-thickness) solid var(--color-primary-2);
 }
 
 
@@ -494,14 +534,6 @@ a.link:hover::after, a.link:focus::after {
     transform: translateX(0%) translateY(-1.5px) scaleX(1);
 }
 
-
-.header-separator {
-    margin: 0px 25px;
-    cursor: default;
-    color: var(--color-secondary-4);
-    user-select: none;
-}
-
 #header {
     z-index: 10;
     flex: 0 1 auto;
@@ -546,6 +578,10 @@ a.link:hover::after, a.link:focus::after {
     justify-content: center;
     flex-direction: row;
     flex-wrap: nowrap;
+}
+
+.header-middle .separator {
+    margin: 0px 25px;
 }
 
 .header-right {
@@ -597,6 +633,14 @@ a.link:hover::after, a.link:focus::after {
     z-index: 10;
 }
 
+.header-image-overlay a {
+    color: var(--color-primary-3);
+}
+
+.header-image-overlay a:hover {
+    color: var(--color-primary-2);
+}
+
 
 
 /* Panel Layout */
@@ -622,7 +666,7 @@ a.link:hover::after, a.link:focus::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: width 0.4s, clip-path 0.4s;
+    transition: width 0.2s, clip-path 0.2s;
 
     filter: saturate(25%);
     user-select: none;
@@ -716,8 +760,8 @@ a.link:hover::after, a.link:focus::after {
     content: "";
     width: 30px;
     height: 0px;
-    border-top: 1px solid black;
-    border-image: linear-gradient(90deg, transparent, black 30%, black) 1;
+    border-top: 1px solid var(--color-off-black);
+    border-image: linear-gradient(90deg, transparent, var(--color-off-black) 30%, var(--color-off-black)) 1;
     transform: translateY(1px);
 }
 
@@ -725,8 +769,8 @@ a.link:hover::after, a.link:focus::after {
     content: "";
     width: 30px;
     height: 0px;
-    border-top: 1px solid black;
-    border-image: linear-gradient(-90deg, transparent, black 30%, black) 1;
+    border-top: 1px solid var(--color-off-black);
+    border-image: linear-gradient(-90deg, transparent, var(--color-off-black) 30%, var(--color-off-black)) 1;
     transform: translateY(1px);
 }
 
@@ -790,3 +834,56 @@ a.link:hover::after, a.link:focus::after {
     left: 18px;
 }
 
+
+/* Activity Feed */
+
+.feed-item {
+    --color-feed-item-border: #444140;
+    border-color: var(--color-feed-item-border);
+    outline: 0.5px solid var(--color-feed-item-border);
+    outline-offset: 1.5px;
+}
+
+.very-small {
+    font-size: 0.75em;
+}
+
+
+
+/* Icons */
+
+.material-symbols-inline {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 100,
+        'GRAD' 200,
+        'opsz' 24;
+    vertical-align: bottom;
+    font-size: 1.2em !important;
+    line-height: 1em;
+}
+
+
+
+/* Truncating Text */
+
+.text-truncate-2 {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-3 {
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-6 {
+    -webkit-line-clamp: 6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

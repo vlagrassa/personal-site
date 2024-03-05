@@ -1,0 +1,18 @@
+{% from '_macros/timeline.j2' import render_timeline_block, render_timeline_entry %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/timeline.css') }}">
+
+
+<div class="px-3 pt-3">
+
+  {%- for section in timeline %}
+  {%- call render_timeline_block(section.label_en, is_final=loop.last) %}
+
+    {%- for entry in section.entries %}
+    {{ render_timeline_entry(entry) }}
+    {%- endfor %}
+
+  {%- endcall %}
+  {%- endfor %}
+
+</div>

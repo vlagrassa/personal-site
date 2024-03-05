@@ -1,26 +1,43 @@
-from flask import url_for
-
-
 class HeaderImage():
-  def __init__(self, url, location='external', x_align='center', y_align='center'):
-
-    if location == 'external':
-      self.url = url
-    elif location == 'static':
-      self.url = url_for('static', filename=url)
-    else:
-      raise ValueError(f'Unknown location "{location}"')
-
+  def __init__(self, url, x_align='center', y_align='center'):
+    self.url     = url
     self.x_align = x_align
     self.y_align = y_align
 
-    self.alt_text = 'Alt text'
+
+  # Factory Methods
+
+  @classmethod
+  def from_project(cls, project):
+    return cls(
+      f'/static/data-standin/projects/{project.id}/thumbnail.jpg',
+      x_align = 'right',
+    )
+
+  @classmethod
+  def from_blog_post(cls, post):
+    return cls(
+      f'/static/data-standin/images/blog-posts/{post.id}.png',
+      x_align = post.image_x_align,
+      y_align = post.image_y_align,
+    )
+
+
+  # Serialization
+
+  def serialize(self):
+    return {
+      'url':      self.url,
+      'alt_text': self.alt_text,
+      'x_align':  self.x_align,
+      'y_align':  self.y_align,
+    }
 
 
 
-def get_post_image(post_id):
-  return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')
+def get_post_image(post):
+  return HeaderImage.from_blog_post(post)
 
 
-def get_project_image(project_id):
-  return HeaderImage('images/home-bg.jpg', location='static', x_align='left', y_align='top')
+def get_project_image(project):
+  return HeaderImage.from_project(project)

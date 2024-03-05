@@ -29,3 +29,39 @@
 {% macro offset_to_pct(offset) %}
 {%- if offset == 'top' %}0%{% elif offset == 'center' %}50%{% elif offset == 'bottom' %}100%{% else %}{{offset}}{% endif -%}
 {% endmacro %}
+
+
+{%- macro render_header(text, level) %}
+<h{{ level }}>{{ render_lang_object(text) }}</h{{ level }}>
+{%- endmacro %}
+
+
+{%- macro render_content(content, custom_render=none) %}
+{%- for section in content %}
+  {%- with section_id = section.id %}
+  <div id="{{ section_id }}">
+    {%- if section.show %}
+    {{ render_header(section.head, section.level + 3) }}
+    {%- endif %}
+
+    {%- for line in section %}
+    {%- if line.is_text %}
+      <p> {{ render_lang_object(line, custom_render=custom_render) }} </p>
+    {%- else %}
+      {% include '_includes/' + line.name + '.j2' ignore missing with context %}
+    {%- endif %}
+    {%- endfor %}
+  </div>
+  {%- endwith %}
+{%- endfor %}
+{%- endmacro %}
+
+
+{% macro render_open_close_button(target, toggle) %}
+  <a
+    class="open-close-btn fs-4" type="button" data-bs-toggle="button"
+    aria-expanded="false" aria-controls="{{ target }}"
+  >
+    <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">+</span>
+  </a>
+{% endmacro %}

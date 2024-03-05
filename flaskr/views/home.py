@@ -1,29 +1,23 @@
 from flask import (
-  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify,
+  Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
-from ..constants import *
-from ..utils.image import HeaderImage
-from ..utils.utils import nb
+from ..database     import Project, Post, TimelineSection
+from ..utils.image  import HeaderImage
+from ..utils.parse  import TextDocument
+from ..utils.render import custom_render_urls
+from ..utils.utils  import nb
+
+from .projects      import parse_project_object
+
+
 
 home_bp = Blueprint('home', __name__, url_prefix='')
 
 
-@home_bp.route('/descriptors', methods=['GET'])
-def get_descriptors():
-  return jsonify([
-    'as dynamic content...',
-    'as three-dimensional...',
-    'as tongue-in-cheek...',
-    'as indecisive?',
-    'as liking Haskell a bit too much...',
-    'self-referentially...',
-    'as {{witty_description[i]}}...',
-    'as pseudo-randomly generated...',
-    'out of context...',
-    'as 訳しにくい... \n(TL Note: \"untranslateable\")',
-    'as out of ideas :(',
-  ])
+highlight_projects = [
+  'personal-site', 'project-rainbow', 'monte-carlo-pi'
+]
 
 
 @home_bp.route('/')
@@ -34,5 +28,22 @@ def home():
       'ja': 'ヴィンセント ' + nb('ラグラッサ'),
       'tj': 'Vincent LɒGrɒssɒ',
     },
-    'header_image': HeaderImage('images/home-bg.jpg', location='static', x_align='right'),
+    'tab_title': current_app.config['PAGES']['home']['title'],
+    'header_image': HeaderImage('/static/images/home-bg.jpg', x_align='right'),
+
+    # Main content
+    'content': TextDocument.parse_file('home'),
+    'custom_render': custom_render_urls,
+
+    # Recent activity highlights
+    'preview_projects': [
+      parse_project_object(Project.query.get(p)) for p in highlight_projects
+    ],
+    'preview_posts': [
+      Post.query.filter_by(category_id=c).order_by(Post.date.desc()).first()
+        for c in range(2, 4)
+    ],
+
+    # Timeline entries
+    'timeline': TimelineSection.query.order_by(TimelineSection.order.desc()).all(),
   })

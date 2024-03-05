@@ -1,12 +1,27 @@
 import enum
 
+from flask import current_app
+
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
 
-from ..constants import LANGUAGES
 from ..utils.image import get_post_image, get_project_image
 
 db = SQLAlchemy()
+
+
+
+#
+# External Profile Links
+#
+
+class ExternalProfile(db.Model):
+  id            = sa.Column(sa.String(16),  primary_key=True)
+  title         = sa.Column(sa.String(64),  nullable=False)
+  order         = sa.Column(sa.Integer(),   nullable=False, unique=True)
+  link_external = sa.Column(sa.String(256), nullable=False)
+  bg_color_hex  = sa.Column(sa.String(8))
+
 
 
 #
@@ -34,7 +49,17 @@ class Project(db.Model):
 
   @property
   def image(self):
-    return get_project_image(self.id)
+    return get_project_image(self)
+
+  def serialize(self):
+    return {
+      'id':            self.id,
+      'name':          self.title,
+      'created_date':  self.created_date  or None,
+      'modified_date': self.modified_date or None,
+      'role':          self.role.value,
+      'location':      self.location.value,
+    }
 
 class TagType(enum.Enum):
   LANGUAGE = 'Language'
@@ -52,9 +77,11 @@ class ProjectTagMap(db.Model):
   tag_id     = sa.Column(sa.Integer, sa.ForeignKey('project_tag.id'), nullable=False)
 
 
+
 #
 # Blog Posts
 #
+
 
 class Post(db.Model):
   id = sa.Column(sa.String(50), primary_key=True)
@@ -64,10 +91,14 @@ class Post(db.Model):
   visible = sa.Column(sa.Boolean, default=False, nullable=False)
   category_id = sa.Column(sa.Integer, sa.ForeignKey('post_group.id'), nullable=False)
   category = db.relationship('PostGroup', backref='posts')
+  image_x_align = sa.Column(sa.String(16))
+  image_y_align = sa.Column(sa.String(16))
+
 
   @property
   def name(self):
-    return { l['code']: self.title for l in LANGUAGES }
+    with current_app.app_context():
+      return { l['code']: self.title for l in current_app.config['LANGUAGES'] }
 
   # Connect to PostTag table through PostTagMap backref
   @property
@@ -86,7 +117,19 @@ class Post(db.Model):
 
   @property
   def image(self):
-    return get_post_image(self.id)
+    return get_post_image(self)
+
+  def serialize(self):
+    return {
+      'id':            self.id,
+      'title':         self.title,
+      'date':          self.date or None,
+      'description':   self.description,
+      'visible':       self.visible,
+      'category':      self.category.serialize(),
+      'image':         self.image.serialize(),
+      'tags':          [ t.serialize() for t in self.tags ],
+    }
 
 
 class PostGroup(db.Model):
@@ -96,7 +139,15 @@ class PostGroup(db.Model):
 
   @property
   def name(self):
-    return { l['code']: self.title for l in LANGUAGES }
+    with current_app.app_context():
+      return { l['code']: self.title for l in current_app.config['LANGUAGES'] }
+
+  def serialize(self):
+    return {
+      'id':    self.id,
+      'slug':  self.slug,
+      'title': self.title,
+    }
 
 
 class PostTag(db.Model):
@@ -109,7 +160,11 @@ class PostTag(db.Model):
   # Convert individual name fields into a single dict
   @property
   def name(self):
-    return { l['code']: getattr(self, 'name_' + l['code']) for l in LANGUAGES }
+    with current_app.app_context():
+      return {
+        l['code']: getattr(self, 'name_' + l['code'])
+          for l in current_app.config['LANGUAGES']
+      }
 
   # Connect to PostTag table through PostTagMap backref
   @property
@@ -127,6 +182,14 @@ class PostTag(db.Model):
   def is_ancestor_of(self, other):
     return other.is_descendant_of(self)
 
+  def serialize(self):
+    return {
+      'id':      self.id,
+      'name_en': self.name_en,
+      'name_ja': self.name_ja,
+      'name_tj': self.name_tj,
+    }
+
 
 class PostTagMap(db.Model):
   id = sa.Column(sa.Integer, primary_key=True)
@@ -136,3 +199,36 @@ class PostTagMap(db.Model):
   # Connect Post and PostTag tables to this mapping table
   post = db.relationship('Post',    backref='tag_map')
   tag  = db.relationship('PostTag', backref='post_map')
+
+
+
+#
+# Timeline
+#
+
+
+class TimelineSection(db.Model):
+  id       = sa.Column(sa.Integer(), primary_key=True, autoincrement=True)
+  label_en = sa.Column(sa.String(32))
+  label_ja = sa.Column(sa.String(32))
+  label_tj = sa.Column(sa.String(32))
+  order    = sa.Column(sa.Integer())
+
+  # Connect timeline section to all its entries, in order
+  entries  = db.relationship('TimelineEntry', order_by='TimelineEntry.order')
+
+
+class TimelineEntry(db.Model):
+  id            = sa.Column(sa.String(16), primary_key=True)
+  section_id    = sa.Column(sa.Integer, sa.ForeignKey('timeline_section.id'), nullable=False)
+  order         = sa.Column(sa.Integer(), nullable=False)
+  title         = sa.Column(sa.String(64), nullable=False)
+  role          = sa.Column(sa.String(256), nullable=False)
+  description   = sa.Column(sa.String(2048))
+  link_internal = sa.Column(sa.String(256))
+  link_external = sa.Column(sa.String(256))
+  has_logo      = sa.Column(sa.Boolean(), nullable=False)
+  bg_color_hex  = sa.Column(sa.String(8))
+
+  # The order values should be unique within each section
+  __table_args__ = (sa.UniqueConstraint('section_id', 'order', name='_section_order_uc'),)

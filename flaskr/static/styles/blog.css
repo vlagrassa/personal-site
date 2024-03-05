@@ -26,6 +26,10 @@
   outline-offset: var(--card-outline-space);
 }
 
+.blog-card-thumbnail {
+  cursor: pointer;
+}
+
 
 /* Card Title */
 
@@ -34,20 +38,18 @@
   z-index: 2;
 }
 
-.blog-subtitle {
-  color: var(--color-secondary-4);
-}
-
 .blog-subtitle:hover {
-  color: var(--color-secondary-1);
+  color: var(--color-link-hover);
 }
 
 
 /* Category Card */
 
-.blog-category-card-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.blog-category-card-description {}
+
+
+/* Post */
+
+.blog-post-body code {
+  /* color: lightgreen; */
 }

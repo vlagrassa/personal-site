@@ -4,7 +4,6 @@ from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
-from ..constants import *
 from ..database import Post, PostGroup, PostTag, PostTagMap
 
 blog_bp = Blueprint('blog', __name__, url_prefix='/blog')
@@ -25,7 +24,7 @@ def get_sections(filename, lang='en'):
   }
 
   # Loop through each line in the file
-  with current_app.open_resource(f'static/blog_posts/{filename}/main-{lang}.md') as mkd:
+  with current_app.open_resource(f'static/data-standin/blog-posts/{filename}/main-{lang}.md') as mkd:
     for line in mkd.readlines():
       line = line.decode('utf-8')
 
@@ -68,7 +67,7 @@ def blog():
   initial_tags = [ t for t in initial_tags if t is not None ]
 
   return render_template('blog.html', **{
-    'title': PAGE_TITLES[2]['title'],
+    'title': current_app.config['PAGES']['blog']['title'],
     'posts': posts,
     'groups': PostGroup.query.all(),
     'tags': PostTag.query.all(),
@@ -82,7 +81,7 @@ def group(slug):
   return render_template('blog-category.html', **{
     'title': category.name,
     'breadcrumb': [
-      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
+      ( current_app.config['PAGES']['blog']['title'], url_for('blog.blog') ),
     ],
     'posts': category.posts,
   })
@@ -91,13 +90,13 @@ def group(slug):
 @blog_bp.route('/post/<string:name>')
 def post(name):
   post = Post.query.get_or_404(name)
-  src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/blog_posts/{name}/main-en.md')) else 'hello-world'
+  src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/data-standin/blog-posts/{name}/main-en.md')) else 'hello-world'
   return render_template('blog-post.html', **{
     'title': post.name,
     'subtitle': post.description,
     'breadcrumb': [
-      ( PAGE_TITLES[2]['title'], url_for('blog.blog') ),
-      ( post.category.name,      url_for('blog.group', slug=post.category.slug) ),
+      ( current_app.config['PAGES']['blog']['title'], url_for('blog.blog') ),
+      ( post.category.name,                           url_for('blog.group', slug=post.category.slug) ),
     ],
 
     'sections': list(get_sections(src_file_temp)),

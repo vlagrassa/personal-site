@@ -1,0 +1,76 @@
+{
+  "config": {
+    "name": "English",
+    "code": "en"
+  },
+  "page_titles": {
+    "home":                "Home",
+    "projects":            "Projects",
+    "blog":                "Blog",
+    "about":               "About Me"
+  },
+  "days": {
+    "0":                   "Sun",
+    "1":                   "Mon",
+    "2":                   "Tue",
+    "3":                   "Wed",
+    "4":                   "Thu",
+    "5":                   "Fri",
+    "6":                   "Sat"
+  },
+  "months": {
+    "1":                   "Jan",
+    "2":                   "Feb",
+    "3":                   "Mar",
+    "4":                   "Apr",
+    "5":                   "May",
+    "6":                   "Jun",
+    "7":                   "Jul",
+    "8":                   "Aug",
+    "9":                   "Sep",
+    "10":                  "Oct",
+    "11":                  "Nov",
+    "12":                  "Dec"
+  },
+  "footer": {
+    "language":            "Language",
+    "mode": {
+      "dark":              "Dark Mode",
+      "light":             "Light Mode"
+    },
+    "layout": {
+      "simple":            "Simple Layout",
+      "complex":           "Complex Layout"
+    },
+    "zoom_level":          "Zoom",
+    "settings":            "Settings"
+  },
+  "sidebar": {
+    "quick_links":         "Quick Links",
+    "recent_activity":     "Recent Activity",
+    "resume":              "Résumé",
+    "contact":             "Contact",
+    "hide":                "Hide",
+    "show":                "Show",
+    "see_more":            "See More"
+  },
+  "activity": {
+    "created":             "created _",
+    "updated":             "updated _"
+  },
+  "blog": {
+    "posts":               "Posts",
+    "categories":          "Categories",
+    "search": {
+      "title":             "Title",
+      "category":          "Category",
+      "tags":              "Tags",
+      "start_date":        "Start Date",
+      "end_date":          "End Date"
+    }
+  },
+  "github_calendar": {
+    "less":                "Less",
+    "more":                "More"
+  }
+}

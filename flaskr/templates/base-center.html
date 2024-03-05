@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_macros/lang.j2' import render_lang_object with context %}
+{% from '_macros/lang.j2' import set_lang, render_lang_object, render_lang_object_from_var with context %}
 {% from '_macros/utils.j2' import render_breadcrumb_item %}
 
 
@@ -38,7 +38,7 @@
       </div>
       <!-- /Left Panel -->
 
-      <div class="col-12 col-sm-10 col-lg-8">
+      <div class="col-12 col-sm-10 col-lg-7">
 
         <!-- Page Title -->
         {% if title and not hide_title and not header_image %}
@@ -56,7 +56,7 @@
         <!-- /Page Title -->
 
         <!-- Page Body (Center Panel) -->
-        <div class="col-12">
+        <div class="col-12 body-content-container">
           <div class="px-4 {% if header_image %}py-4{% else %}pb-4{% endif %}">
             {% block content %}{% endblock %}
           </div>
@@ -65,17 +65,21 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="d-none d-lg-block col-lg-2 p-4">
-        <div id="recent-activity" class="d-flex flex-column gap-3 pt-3" style="position: sticky; top: 1em;">
-          <h6 class="pb-0">Recent Activity</h6>
-          <div class="panel p-2">
-            Blog post
-          </div>
-          <div class="panel p-2">
-            Blog post
-          </div>
-          <div class="panel p-2">
-            Blog post
+      <div class="d-none d-lg-block col-lg-3 p-4">
+        <div style="position: sticky; top: 1.5em;">
+          {% block right_panel_top %}
+          {% endblock %}
+          <div id="recent-activity" class="d-flex flex-column gap-3 py-3 px-2 text-center">
+            <h6 class="pb-0 mb-0">
+              {{ render_lang_object(config.TEXT['sidebar.recent_activity']) }}
+            </h6>
+            <div class="w-100 px-2 text-end">
+              <small class="very-small text-body-secondary">
+                <span>{{ render_lang_object(config.TEXT['sidebar.hide']) }}</span>
+                <span class="separator px-1">⬦</span>
+                <span>{{ render_lang_object(config.TEXT['sidebar.see_more']) }}</span>
+              </small>
+            </div>
           </div>
         </div>
       </div>
@@ -84,5 +88,35 @@
     </div>
   </div>
 </div>
+
+<script type="module">
+  fetch("{{url_for('query.get_recent_activity')}}").then((resp) => resp.json()).then(async (data) => {
+    const parent = document.getElementById('recent-activity');
+    data.forEach(element => {
+      parent.insertBefore(render_feed_item(element), parent.lastElementChild);
+    });
+  })
+
+  function render_feed_item(item) {
+    const el = document.createElement('div');
+    el.classList.add('card');
+    el.classList.add('feed-item');
+    el.innerHTML = `
+      <div class="card-body text-start">
+        <a class="text-truncate-3 pb-1 underline-hover-text" href="${ item.name_link }">
+          <span>${ item.name }</span>
+          <div class="underline-hover" style="--underline-offset: -2px;"></div>
+        </a>
+        <small class="text-body-secondary text-truncate-2 mb-1">
+          <a class="link-hover" href="${ item.kind_link }"><i>${ item.kind }</i></a>
+        </small>
+        <small class="very-small text-body-secondary">
+          {{ render_lang_object_from_var('item.date_string') }}
+        </small>
+      </div>
+    `;
+    return el;
+  }
+</script>
 
 {% endblock %}
