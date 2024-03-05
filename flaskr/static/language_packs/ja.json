@@ -54,6 +54,10 @@
     "show":                "表示する",
     "see_more":            "続きを見る"
   },
+  "activity": {
+    "created":             "_に作成されました",
+    "updated":             "_に更新されました"
+  },
   "blog": {
     "posts":               "エントリー",
     "categories":          "カテゴリー",

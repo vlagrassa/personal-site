@@ -16,3 +16,9 @@ lang="{{l}}" data-lang="{{l}}"{% if lang and lang != l %} class="hide"{% endif %
 {%- endfor -%}
 {% endmacro %}
 
+
+{% macro render_lang_object_from_var(variable) %}
+{%- for l in config['LANGUAGES'] -%}
+<span {{set_lang(l.code)}}>${ {{ variable }}.{{ l.code }} }</span>
+{%- endfor -%}
+{% endmacro %}

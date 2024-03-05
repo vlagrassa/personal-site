@@ -54,6 +54,10 @@
     "show":                "Show",
     "see_more":            "See More"
   },
+  "activity": {
+    "created":             "created _",
+    "updated":             "updated _"
+  },
   "blog": {
     "posts":               "Posts",
     "categories":          "Categories",

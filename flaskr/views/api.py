@@ -1,9 +1,12 @@
+import enum
+
 from flask import (
   Blueprint, current_app, g, redirect, request, session, url_for,
 )
 
 from ..database        import Project, Post, TimelineSection
 from ..utils.endpoints import jsonify_response
+from ..utils.utils     import capsfirst, dateformat
 
 
 
@@ -16,13 +19,18 @@ query_bp = Blueprint('query', __name__, url_prefix='/query')
 #
 
 
+class ActivityChangeType(enum.Enum):
+  CREATED = 'created'
+  UPDATED = 'updated'
+
+
 class ActivityFeedItem():
   '''
     Unified class to represent an item in the Activity Feed.
     Includes constructor methods for classes that can be made into feed items.
   '''
 
-  def __init__(self, name, name_link, kind, kind_link, date, change_type):
+  def __init__(self, name, name_link, kind, kind_link, date, change_type: ActivityChangeType):
     self.name = name
     self.name_link = name_link
     self.kind = kind
@@ -35,7 +43,8 @@ class ActivityFeedItem():
     return cls(
       project.title, url_for('projects.summary', name=project.id),
       'Projects', url_for('projects.projects'),
-      project.modified_date, 'Updated'
+      project.modified_date,
+      ActivityChangeType.UPDATED if project.modified_date != project.created_date else ActivityChangeType.CREATED,
     )
   
   @classmethod
@@ -43,15 +52,23 @@ class ActivityFeedItem():
     return cls(
       post.title, url_for('blog.post', name=post.id),
       post.category.title, url_for('blog.group', slug=post.category_id),
-      post.date, 'Created'
+      post.date, ActivityChangeType.CREATED
     )
 
-  def get_relative_time(self):
-    return self.date
+  @property
+  def date_string(self) -> int:
+    '''
+      Get number of days between item date and current date
+    '''
+    lookup = current_app.config['TEXT'].get('activity.' + self.change_type.value, {})
+    return {
+      l['code']: capsfirst( lookup.get(l['code'], '_').replace('_', dateformat(self.date, lang=l['code'], limit = 130)) )
+        for l in current_app.config['LANGUAGES']
+    }
   
   def serialize(self):
     return {
-      field: getattr(self, field) for field in ['name', 'name_link', 'kind', 'kind_link', 'date', 'change_type']
+      field: getattr(self, field) for field in ['name', 'name_link', 'kind', 'kind_link', 'date', 'date_string']
     }
 
 
