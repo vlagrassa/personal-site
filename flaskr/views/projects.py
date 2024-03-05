@@ -22,7 +22,7 @@ def parse_project_object(project):
 
 @projects_bp.route('')
 def projects():
-  return render_template('projects.html', **{
+  return render_template('projects/main.html', **{
     'title': current_app.config['PAGES']['projects']['title'],
     'projects': [
       parse_project_object(p) for p in Project.query.all()

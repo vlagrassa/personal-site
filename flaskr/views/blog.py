@@ -66,7 +66,7 @@ def blog():
   initial_tags = [ PostTag.query.get(t) for t in request.args.get('tags', '').split(',') ]
   initial_tags = [ t for t in initial_tags if t is not None ]
 
-  return render_template('blog.html', **{
+  return render_template('blog/main.html', **{
     'title': current_app.config['PAGES']['blog']['title'],
     'posts': posts,
     'groups': PostGroup.query.all(),
@@ -78,7 +78,7 @@ def blog():
 @blog_bp.route('/<string:slug>')
 def group(slug):
   category = PostGroup.query.filter_by(slug=slug).first_or_404()
-  return render_template('blog-category.html', **{
+  return render_template('blog/category.html', **{
     'title': category.name,
     'breadcrumb': [
       ( current_app.config['PAGES']['blog']['title'], url_for('blog.blog') ),
@@ -91,7 +91,7 @@ def group(slug):
 def post(name):
   post = Post.query.get_or_404(name)
   src_file_temp = name if os.path.exists(os.path.join(current_app.static_folder, f'../static/data-standin/blog-posts/{name}/main-en.md')) else 'hello-world'
-  return render_template('blog-post.html', **{
+  return render_template('blog/post.html', **{
     'title': post.name,
     'subtitle': post.description,
     'breadcrumb': [
