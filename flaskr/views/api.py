@@ -108,7 +108,7 @@ def get_recent_activity():
   # Merge lists and limit to n elements total
   return [
     x.serialize()
-    for x in sorted([*last_projects[:n], *last_posts[:n]], key = lambda x: x.date)[:n]
+    for x in sorted([*last_projects[:n], *last_posts[:n]], key = lambda x: x.date, reverse=True)[:n]
   ]
 
 
