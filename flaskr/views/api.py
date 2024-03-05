@@ -62,7 +62,7 @@ class ActivityFeedItem():
     '''
     lookup = current_app.config['TEXT'].get('activity.' + self.change_type.value, {})
     return {
-      l['code']: capsfirst( lookup.get(l['code'], '_').replace('_', dateformat(self.date, lang=l['code'], limit = 130)) )
+      l['code']: capsfirst( lookup.get(l['code'], '_').replace('_', dateformat(self.date, lang=l['code'], limit = 30)) )
         for l in current_app.config['LANGUAGES']
     }
   
