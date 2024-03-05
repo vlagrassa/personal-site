@@ -47,6 +47,12 @@
     --color-tertiary-3:  #867D0E;
     --color-tertiary-4:  #464000;
 
+    /* Monochromes */
+    --color-off-white: #FBF8F4;
+    --color-off-black: #1E1E24;
+    /* --color-gray: #444140; */
+    --color-gray: #5F5B59;
+
     /* Link Colors */
     --color-link-plain: var(--color-secondary-2);
     --color-link-hover: var(--color-primary-2);
@@ -59,9 +65,12 @@
     --color-select-txt: white;
 
     --color-bg-head-light: white;
-    --color-bg-body-light: #F8F8F8;
+    --color-bg-body-light: var(--color-off-white);
 
-    --color-gray: #5F5B59;
+    /* TODO: Better overwriting of BS colors */
+    --bs-dark:       var(--color-off-black);
+    --bs-body-color: var(--color-off-black);
+    /* --bs-heading-color: var(--color-off-black); */
 
     --logo-line-thickness: 0.08em;
 
@@ -91,12 +100,12 @@
     --header-outline-outer: 1px solid var(--header-outline-color);
     --header-outline-space: 4.5px;
 
-    --panel-outline-color: black;
+    --panel-outline-color: var(--color-off-black);
     --panel-outline-inner: 1.75px solid var(--panel-outline-color);
     --panel-outline-outer: 1.25px solid var(--panel-outline-color);
     --panel-outline-space: 1.25px;
 
-    --card-outline-color: black;
+    --card-outline-color: var(--color-off-black);
     --card-outline-inner: 1.5px solid var(--card-outline-color);
     --card-outline-outer: 1.0px solid var(--card-outline-color);
     --card-outline-space: 1px;
@@ -272,10 +281,10 @@ h1 {
     left: 10px !important;
 
     --bs-offcanvas-border-width: 2px;
-    --bs-offcanvas-border-color: black;
-    border: 2px solid black;
+    --bs-offcanvas-border-color: var(--color-off-black);
+    border: 2px solid var(--color-off-black);
     border-bottom: none;
-    outline: 1px solid black;
+    outline: 1px solid var(--color-off-black);
     outline-offset: 1.5px;
 }
 
@@ -304,8 +313,8 @@ h1 {
 }
 
 .modal-content {
-    border: 2px solid black;
-    outline: 1px solid black;
+    border: 2px solid var(--color-off-black);
+    outline: 1px solid var(--color-off-black);
     outline-offset: 1.5px;
 }
 
@@ -397,7 +406,8 @@ a.link:hover::after, a.link:focus::after {
         0deg,
         var(--color-secondary-1) 0%,
         var(--color-secondary) calc(var(--gradient-middle) - 10%),
-        black var(--gradient-middle),
+        var(--color-off-black) calc(var(--gradient-middle) - 3%),
+        var(--color-off-black) calc(var(--gradient-middle) + 3%),
         var(--color-primary) calc(var(--gradient-middle) + 10%),
         var(--color-primary-1) 100%
     );
@@ -750,8 +760,8 @@ a.link:hover::after, a.link:focus::after {
     content: "";
     width: 30px;
     height: 0px;
-    border-top: 1px solid black;
-    border-image: linear-gradient(90deg, transparent, black 30%, black) 1;
+    border-top: 1px solid var(--color-off-black);
+    border-image: linear-gradient(90deg, transparent, var(--color-off-black) 30%, var(--color-off-black)) 1;
     transform: translateY(1px);
 }
 
@@ -759,8 +769,8 @@ a.link:hover::after, a.link:focus::after {
     content: "";
     width: 30px;
     height: 0px;
-    border-top: 1px solid black;
-    border-image: linear-gradient(-90deg, transparent, black 30%, black) 1;
+    border-top: 1px solid var(--color-off-black);
+    border-image: linear-gradient(-90deg, transparent, var(--color-off-black) 30%, var(--color-off-black)) 1;
     transform: translateY(1px);
 }
 

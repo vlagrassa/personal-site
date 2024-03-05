@@ -109,7 +109,7 @@
   height: calc(var(--s) * 1.1547);
   margin-bottom: var(--margin-offset);
 
-  background: black;
+  background: var(--color-off-black);
   cursor: pointer;
 }
 
@@ -133,7 +133,7 @@
   left: 4px;
   top:  4px;
   z-index: -1;
-  background: black;
+  background: var(--color-off-black);
   clip-path: var(--hex-path);
 }
 
