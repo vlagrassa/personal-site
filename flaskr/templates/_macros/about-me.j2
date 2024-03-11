@@ -1,3 +1,13 @@
 {%- macro render_basic_info(key, value) %}
 <dt class="text-end">{{ key }}</dt><dd class="mb-0">{{ value }}</dd>
 {%- endmacro %}
+
+
+{%- macro render_language_entry(label, value) %}
+<tr>
+  <th>{{ label }}</th>
+  <td>
+    <span style="color: var(--color-secondary)">{{ '⬢' * value }}</span><span style="color: var(--color-secondary)">{{ '⬡' * (5 - value) }}</span>
+  </td>
+</tr>
+{%- endmacro %}
