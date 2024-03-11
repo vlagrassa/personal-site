@@ -4,6 +4,8 @@ from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
 )
 
+from ..utils.utils import nb
+
 
 about_bp = Blueprint('about', __name__, url_prefix='/about')
 
@@ -20,5 +22,10 @@ def about():
 
   return render_template('about-me.html', **{
     'title': current_app.config['PAGES']['about']['title'],
+    'my_name': {
+      'en': 'Vince LɒGrɒssɒ',
+      'ja': 'ヴィンス ' + nb('ラグラッサ'),
+      'tj': 'Vince LɒGrɒssɒ',
+    },
     'data_languages':  data_languages
   })

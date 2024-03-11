@@ -1,3 +1,23 @@
+#about-me-title-section, #about-me-title-section .hex-container-column {
+  --s: 125px;
+}
+
+#about-me-title-section h1 {
+  font-size: 1rem;
+}
+
+#about-me-title-section h2 {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+#about-me-title-container {
+  flex-basis: calc(100% - var(--s) - var(--bs-gutter-x));
+  min-width: 120px;
+}
+
+
+
 dl {
   display: grid;
   grid-template-columns: repeat(3, fit-content(100%) auto);

@@ -210,6 +210,23 @@ h1 {
 }
 
 
+.phonetic {
+    font-family: math, monospace;
+}
+
+.phonetic::before {
+    content: "/";
+    color: gray;
+    margin-right: 0.25em;
+}
+
+.phonetic::after {
+    content: "/";
+    color: gray;
+    margin-left: 0.25em;
+}
+
+
 
 /* Footer */
 
@@ -912,4 +929,3 @@ a.link:hover::after, a.link:focus::after {
     margin-top: var(--bs-card-title-spacer-y);
     font-size: 1rem;
 }
-

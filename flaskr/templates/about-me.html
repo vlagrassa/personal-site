@@ -4,6 +4,7 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/projects.css') }}">
 {% endblock %}
 
 
@@ -13,6 +14,42 @@
 
     <!-- Left Column -->
     <div class="col-3 p-4 pt-2">
+      <div class="row">
+
+        <!-- Title -->
+        <div id="about-me-title-section" class="d-flex flex-wrap align-items-top my-3">
+
+          <!-- Hex Icon -->
+          <div class="hex-container-column flex-grow-1 align-items-center">
+            <div class="hex hexicon-border">
+              <div
+                class="hex hexicon"
+                style="background-image: url(/static/images/self-pic.jpg); background-size: cover; object-position: center center; background-position: center center;"
+              >
+              </div>
+            </div>
+          </div>
+          <!-- Hex Icon -->
+
+          <!-- Name -->
+          <div id="about-me-title-container" class="flex-grow-1 text-center pt-2">
+            <div>
+              <h1 class="pb-2">{{ render_lang_object(title) }}</h1>
+              <div class="header-underbar mb-2">&#x2B26;</div>
+            </div>
+            <div class="flex-grow-1">
+              <h2>{{ render_lang_object(my_name) }}</h2>
+              <div class="phonetic">ˈvɪns ləˈgɹɑsə</div>
+            </div>
+          </div>
+          <!-- /Name -->
+
+        </div>
+        <!-- /Title -->
+
+        {% include '_includes/quick-links.j2' %}
+
+      </div>
     </div>
     <!-- /Left Column -->
 
