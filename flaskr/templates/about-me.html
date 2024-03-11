@@ -1,5 +1,10 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
+{% from '_macros/about-me.j2' import render_basic_info %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
+{% endblock %}
 
 
 {% block body %}
@@ -13,6 +18,26 @@
 
     <!-- Center Column -->
     <div class="col-6 p-4 pt-2 d-flex flex-column">
+      <div class="row">
+
+        <!-- Basic Info -->
+        <div class="mt-3 col-12">
+          <div class="card double-outline title-bottom px-3 py-2">
+            <div class="card-body p-0">
+              <dl class="mb-0 text-start p-1">
+                {{ render_basic_info('Class',      'Software Dev / Linguist') }}
+                {{ render_basic_info('Background', 'M.S. Comp Sci') }}
+                {{ render_basic_info('Pronouns',   'he / him') }}
+                {{ render_basic_info('Level',      'Full-Stack') }}
+                {{ render_basic_info('Experience', '5+ years') }}
+                {{ render_basic_info('Alignment',  'Vim') }}
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Basic Info -->
+
     </div>
     <!-- /Center Column -->
 
