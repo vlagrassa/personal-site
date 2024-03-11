@@ -404,6 +404,14 @@ a.link:hover::after, a.link:focus::after {
     color: var(--color-link-hover);
 }
 
+a.color-only {
+    color: var(--color-link-plain);
+}
+
+a.color-only:hover, a.color-only:focus {
+    color: var(--color-link-hover);
+}
+
 
 
 /* Logo */

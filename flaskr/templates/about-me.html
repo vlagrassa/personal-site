@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
+{% from '_macros/utils.j2'    import render_open_arrow_button %}
 {% from '_macros/about-me.j2' import render_basic_info, render_language_entry %}
 
 {% block head %}
@@ -107,6 +108,22 @@
       </div>
       <!-- /Languages -->
 
+      <!-- Activity -->
+      <!-- NOTE: Have to overwrite "height" CSS value for body overflow to work -->
+      <div class="card double-outline title-bottom px-3 py-2 mt-3 flex-grow-1" style="height: 10px">
+        <h5 class="card-title">Activity Log</h5>
+        <div class="card-body p-0 row overflow-y-scroll mx-1 mt-2">
+          <table>
+            <tbody id="recent-activity">
+              <tr>
+                <td colspan="3" class="p-2">Load More</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /Activity -->
+
     </div>
     <!-- /Right Column -->
 
@@ -114,3 +131,44 @@
 </div>
 {% endblock %}
 
+
+{% block script %}
+
+<!-- Recent Activity -->
+<script type="module">
+  fetch("{{url_for('query.get_recent_activity', n=20)}}").then((resp) => resp.json()).then(async (data) => {
+    const parent = document.getElementById('recent-activity');
+    data.forEach((item, idx) => {
+      render_feed_item(item, idx).forEach((element) => { parent.insertBefore(element, parent.lastElementChild); })
+    });
+  });
+
+  function render_feed_item(item, idx) {
+    const date = new Date(item.date);
+
+    const row_1 = document.createElement('tr');
+    row_1.innerHTML = `
+      <td class="py-1 px-1">{{render_open_arrow_button('#activity-row-${idx}', 'collapse')}}</td>
+      <td class="py-1 pe-2 text-start date-column"><small class="very-small">${ format_date(date) }</small></td>
+      <td class="py-1 text-start"><a class="color-only" href="${ item.name_link }">${ item.name }</a></td>
+    `;
+
+    const row_2 = document.createElement('tr');
+    row_2.innerHTML = `
+      <td colspan="3">
+        <div id="activity-row-${idx}" class="collapse">
+          <div class="p-2">Posted in ${item.kind}</div>
+        </div>
+      </td>
+    `;
+
+    return [row_1, row_2];
+  }
+
+  function format_date(date) {
+    return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  }
+</script>
+<!-- /Recent Activity -->
+
+{% endblock %}

@@ -56,7 +56,19 @@ class ActivityFeedItem():
     )
 
   @property
-  def date_string(self) -> int:
+  def date_string(self) -> str:
+    return {
+      l['code']: dateformat(self.date, lang=l['code']) for l in current_app.config['LANGUAGES']
+    }
+
+  @property
+  def edit_type(self) -> str:
+    return {
+      l['code']: self.change_type.value for l in current_app.config['LANGUAGES']
+    }
+
+  @property
+  def edit_string(self) -> int:
     '''
       Get number of days between item date and current date
     '''
@@ -68,7 +80,9 @@ class ActivityFeedItem():
   
   def serialize(self):
     return {
-      field: getattr(self, field) for field in ['name', 'name_link', 'kind', 'kind_link', 'date', 'date_string']
+      field: getattr(self, field) for field in [
+        'name', 'name_link', 'kind', 'kind_link', 'date', 'date_string', 'edit_type', 'edit_string',
+      ]
     }
 
 
@@ -99,11 +113,11 @@ def get_recent_activity():
 
   # Compute the number of elements to get, capping at 5
   # TODO: Does the cap make sense?
-  n = min(request.args.get('n', 3), 5)
+  n = min(int(request.args.get('n', 3)), 50)
 
   # Get the most recent n items from projects & blog posts
-  last_projects = [ ActivityFeedItem.from_project(x)   for x in Project.query.order_by(Project.modified_date.desc()).limit(n).all() ]
-  last_posts    = [ ActivityFeedItem.from_blog_post(x) for x in Post.query.order_by(Post.date.desc()).limit(n).all() ]
+  last_projects = [ ActivityFeedItem.from_project(x)   for x in Project.query.filter(Project.modified_date != None).order_by(Project.modified_date.desc()).limit(n).all() ]
+  last_posts    = [ ActivityFeedItem.from_blog_post(x) for x in Post.query.filter(Post.date != None).order_by(Post.date.desc()).limit(n).all() ]
 
   # Merge lists and limit to n elements total
   return [

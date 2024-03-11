@@ -202,3 +202,19 @@
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
+
+
+
+/* Open/Close Arrow Buttons */
+
+.open-arrow-btn {
+  transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+  user-select: none;
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+}
+
+.open-arrow-btn.active {
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+}

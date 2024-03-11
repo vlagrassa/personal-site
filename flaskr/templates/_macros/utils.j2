@@ -65,3 +65,13 @@
     <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">+</span>
   </a>
 {% endmacro %}
+
+
+{% macro render_open_arrow_button(target, toggle) %}
+  <a
+    class="open-arrow-btn" type="button" data-bs-toggle="button"
+    aria-expanded="false" aria-controls="{{ target }}"
+  >
+    <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">▼</span>
+  </a>
+{% endmacro %}
