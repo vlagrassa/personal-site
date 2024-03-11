@@ -22,10 +22,5 @@ def about():
 
   return render_template('about-me.html', **{
     'title': current_app.config['PAGES']['about']['title'],
-    'my_name': {
-      'en': 'Vince LɒGrɒssɒ',
-      'ja': 'ヴィンス ' + nb('ラグラッサ'),
-      'tj': 'Vince LɒGrɒssɒ',
-    },
     'data_languages':  data_languages
   })

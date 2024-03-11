@@ -23,11 +23,7 @@ highlight_projects = [
 @home_bp.route('/')
 def home():
   return render_template('home.html', **{
-    'title': {
-      'en': 'Vincent LɒGrɒssɒ',
-      'ja': 'ヴィンセント ' + nb('ラグラッサ'),
-      'tj': 'Vincent LɒGrɒssɒ',
-    },
+    'title': current_app.config['TEXT']['my_name.full'],
     'tab_title': current_app.config['PAGES']['home']['title'],
     'header_image': HeaderImage('/static/images/home-bg.jpg', x_align='right'),
 
