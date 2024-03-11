@@ -887,3 +887,29 @@ a.link:hover::after, a.link:focus::after {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+
+
+/* Cards */
+
+
+.card.double-outline {
+    --outline-gap:   1.5px;
+    --outline-color: #444140;
+
+    border-color: var(--outline-color);
+    outline: 0.5px solid var(--outline-color);
+    outline-offset: var(--outline-gap);
+}
+
+.title-bottom {
+    flex-direction: column-reverse;
+    text-align: center;
+}
+
+.title-bottom h5 {
+    margin-bottom: 0px;
+    margin-top: var(--bs-card-title-spacer-y);
+    font-size: 1rem;
+}
+
