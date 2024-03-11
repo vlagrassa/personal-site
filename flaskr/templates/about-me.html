@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
 {% from '_macros/utils.j2'    import render_open_arrow_button %}
-{% from '_macros/about-me.j2' import render_basic_info, render_language_entry %}
+{% from '_macros/about-me.j2' import render_basic_info, render_dropdown_panel, render_language_entry %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
@@ -49,6 +49,16 @@
         <!-- /Title -->
 
         {% include '_includes/quick-links.j2' %}
+
+
+        {%- call render_dropdown_panel('Qualifications') %}
+        {%- endcall %}
+
+        {%- call render_dropdown_panel('Proficiencies') %}
+        {%- endcall %}
+
+        {%- call render_dropdown_panel('High Scores') %}
+        {%- endcall %}
 
       </div>
     </div>

@@ -1,5 +1,29 @@
+{% from '_macros/utils.j2' import render_open_close_button %}
+
+
+
 {%- macro render_basic_info(key, value) %}
 <dt class="text-end">{{ key }}</dt><dd class="mb-0">{{ value }}</dd>
+{%- endmacro %}
+
+
+{%- macro render_dropdown_panel(title) %}
+{%- set dropdown_id = 'dropdown-panel-' + title.replace(' ', '-') %}
+<div class="col-12">
+  <div class="card double-outline title-bottom px-3 py-2 mt-3">
+    <div class="position-relative">
+      <h5 class="card-title mt-0">{{ title }}</h5>
+      <div class="me-1" style="position: absolute; right: 0; bottom: -0.2em;">
+        {{ render_open_close_button('#' + dropdown_id, 'collapse') }}
+      </div>
+    </div>
+    <div id="{{ dropdown_id }}" class="card-body p-0 row collapse">
+      <div class="pt-1 pb-2">
+        {{ caller() }}
+      </div>
+    </div>
+  </div>
+</div>
 {%- endmacro %}
 
 
