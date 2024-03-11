@@ -189,6 +189,7 @@
   top: 30px;
   padding: 5px;
   border-radius: 4px;
+  font-family: var(--font-mono);
 }
 
 .hexicon-overlay-bottom {

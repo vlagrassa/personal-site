@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@700&family=Kanit&family=Montserrat:wght@400&family=Zen+Kaku+Gothic+New:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 
 
@@ -94,6 +95,8 @@
     --font-body-ltn: 'Montserrat Tj', 'Montserrat', sans-serif;
     --font-body-jpn: 'Zen Kaku Gothic New', sans-serif;
 
+    --font-mono: 'Cousine', monospace;
+
 
     --header-outline-color: var(--color-secondary-4);
     --header-outline-inner: 3px solid var(--header-outline-color);
@@ -185,6 +188,10 @@ h1 [lang="ja"], h2 [lang="ja"], h3 [lang="ja"], h4 [lang="ja"], h5 [lang="ja"], 
     font-family: var(--font-body-ltn);
 }
 
+.font-mono {
+    font-family: var(--font-mono);
+}
+
 .hide {
     visibility: hidden !important;
     display: none !important;
@@ -210,8 +217,8 @@ h1 {
 }
 
 
-.phonetic {
-    font-family: math, monospace;
+.phonetic, .phonetic span {
+    font-family: var(--font-mono);
 }
 
 .phonetic::before {
