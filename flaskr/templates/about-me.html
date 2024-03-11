@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
-{% from '_macros/about-me.j2' import render_basic_info %}
+{% from '_macros/about-me.j2' import render_basic_info, render_language_entry %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
@@ -43,6 +43,33 @@
 
     <!-- Right Column -->
     <div class="col-3 p-4 d-flex flex-column h-100">
+
+      <!-- Languages -->
+      <div class="card double-outline title-bottom px-3 py-2">
+        <h5 class="card-title">Languages</h5>
+        <div class="card-body p-0 row">
+          <div class="col-6 d-flex justify-content-center">
+            <table id="langs-table-0" class="bar-chart-table">
+              <tbody>
+                {%- for entry in data_languages[:(data_languages | length) // 2] %}
+                {{ render_language_entry(entry['label'], entry['value']) }}
+                {%- endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-6 d-flex justify-content-center">
+            <table id="langs-table-1" class="bar-chart-table">
+              <tbody>
+                {%- for entry in data_languages[(data_languages | length) // 2:] %}
+                {{ render_language_entry(entry['label'], entry['value']) }}
+                {%- endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /Languages -->
+
     </div>
     <!-- /Right Column -->
 
