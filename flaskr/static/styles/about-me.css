@@ -51,6 +51,6 @@ dt {
 
 #recent-activity .date-column {
   white-space: nowrap;
-  width: 1%;
+  max-width: 100%;
   font-family: var(--font-mono);
 }
