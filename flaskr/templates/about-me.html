@@ -176,6 +176,8 @@
 <!-- Visualizations -->
 <script type="module">
 
+  import { JSONResponseCache } from "{{ url_for('static', filename='scripts/cache.js') }}";
+
   import { graph_svg_skills    } from "{{ url_for('static', filename='scripts/graphs/skills.js')    }}";
   import { graph_svg_interests } from "{{ url_for('static', filename='scripts/graphs/interests.js') }}";
   import { graph_svg_genres    } from "{{ url_for('static', filename='scripts/graphs/genres.js')    }}";
@@ -189,6 +191,13 @@
     "vowels":    graph_svg_vowels,
   };
 
+  const data_cache = new JSONResponseCache({
+    "skills":    "{{ url_for('query.get_data_skills')    }}",
+    "interests": "{{ url_for('query.get_data_interests') }}",
+    "genres":    "{{ url_for('query.get_data_genres')    }}",
+    "vowels":    "{{ url_for('query.get_data_vowels')    }}",
+  });
+
 
   async function render_graph(name) {
 
@@ -196,7 +205,10 @@
     const f = vis_map[name];
     if (!f) return;
 
-    f({});
+    // Retrieve the data for this graph
+    const data = await data_cache.get(name);
+
+    f(data);
   };
 
 
