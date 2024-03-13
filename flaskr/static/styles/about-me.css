@@ -54,3 +54,16 @@ dt {
   max-width: 100%;
   font-family: var(--font-mono);
 }
+
+
+
+svg text.vowel {
+  transition: font-size 100ms cubic-bezier(.36,.68,.46,1.45);
+  font-family: var(--font-mono);
+  fill: var(--color-secondary-2);
+}
+
+svg text.vowel.active {
+  fill: var(--color-primary-2);
+  font-size: 1.25em;
+}

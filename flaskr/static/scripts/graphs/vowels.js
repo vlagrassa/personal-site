@@ -44,14 +44,59 @@ export function graph_svg_vowels(data) {
   append_path(defs.append('clipPath').attr('id', 'trap-boundary'), TRAP_OUTLINE, true);
 
 
+  function mouseover(event, p) {
+    const target = symbols.nodes()[event.target.dataset.index];
+    target.classList.add('active');
+    target.textContent = p.word;
+  }
+
+  function mouseout(event, p) {
+    const target = symbols.nodes()[event.target.dataset.index];
+    target.classList.remove('active');
+    target.textContent = p.symbol;
+  }
+
+  // Compute voronoi diagram for the vowels
+  const delaunay = d3.Delaunay.from(data.map(d => [map_pt_x(d), map_pt_y(d)]));
+  const voronoi  = delaunay.voronoi([margin, margin, width - margin, width - margin]);
+
+  // Draw voronoi regions inside trapezoid
+  const regions = svg.append("g")
+      .attr('id', 'voronoi')
+      .attr('clip-path', "url(#trap-boundary)")
+    .selectAll("path")
+    .data(data)
+    .join("path")
+      .attr("fill", "transparent")
+      .attr("d", (d, i) => voronoi.renderCell(i))
+      .attr("data-index", (d, i) => i)
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout)
+
   // Draw trapezoid
   append_path(svg, TRAP_OUTLINE, true).attr("pointer-events", "none");
   TRAP_LINES.forEach(line => append_path(svg, line).attr("pointer-events", "none"));
 
+  // Draw background labels
   add_labels(svg)
       .attr("x", d => map_pt_x(d) - (d.side == 'l' ? 20 : 0))
       .attr("y", d => map_pt_y(d) - (d.side == 't' ? 20 : 0))
 
+  // Draw IPA symbols
+  const symbols = svg.append("g")
+      .attr("font-size", "2.5em")
+    .selectAll("text")
+    .data(data)
+    .join("text")
+      .text(d => d.symbol)
+      .attr('class', 'vowel')
+      .attr("x", d => map_pt_x(d))
+      .attr("y", d => map_pt_y(d))
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('pointer-events', 'none')
+
+  // Return the SVG element
   return svg;
 }
 
