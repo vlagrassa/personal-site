@@ -12,6 +12,7 @@ export function graph_svg_vowels(data) {
       .attr("height", '100%')
       .attr("viewBox", `0 0 ${width} ${width}`)
       .style("font-size", "10px")
+      .attr("class", "graph-vowels")
 
   // Create container for definitions
   const defs = svg.append('defs');
