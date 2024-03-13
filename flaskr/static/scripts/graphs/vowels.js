@@ -74,6 +74,17 @@ export function graph_svg_vowels(data) {
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
 
+  // // Create display boundaries for voronoi regions, clipped exactly at the edges
+  // svg.append("g")
+  //     .attr('clip-path', "url(#trap-boundary)")
+  //   .selectAll("path")
+  //   .data(data)
+  //   .join("path")
+  //     .attr("fill", "transparent")
+  //     .attr('stroke', 'lightgray')
+  //     .attr("d", (d, i) => voronoi.renderCell(i))
+  //     .attr("pointer-events", "none")
+
   // Draw trapezoid
   append_path(svg, TRAP_OUTLINE, true).attr("pointer-events", "none");
   TRAP_LINES.forEach(line => append_path(svg, line).attr("pointer-events", "none"));
