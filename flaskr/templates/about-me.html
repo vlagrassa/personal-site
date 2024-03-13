@@ -213,7 +213,18 @@
     // Retrieve the data for this graph
     const data = await data_cache.get(name);
 
-    f(data);
+    // Get container element(s) from page
+    const parent = document.getElementById('vis-container');
+
+    // Create the graph element
+    const svg = f(data)
+
+    // Add the graph
+    parent.innerHTML = '';
+    parent.append(svg.node());
+
+    // Return the data and the graph, to make them available elsewhere
+    return {data, svg};
   };
 
 
