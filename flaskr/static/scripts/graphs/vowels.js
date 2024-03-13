@@ -36,10 +36,9 @@ export function graph_svg_vowels(data) {
   }
 
 
-  draw_path([ { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 } ], true)
-  draw_path([ { x: 0.5, y: 0 }, { x: 0.5, y: 1 } ])
-  draw_path([ { x: 0, y: 0.33 }, { x: 1, y: 0.33 } ])
-  draw_path([ { x: 0, y: 0.66 }, { x: 1, y: 0.66 } ])
+  // Draw trapezoid
+  draw_path(TRAP_OUTLINE, true).attr("pointer-events", "none");
+  TRAP_LINES.forEach(line => draw_path(line).attr("pointer-events", "none"));
 
   add_labels(svg)
       .attr("x", d => map_pt_x(d) - (d.side == 'l' ? 20 : 0))
@@ -51,6 +50,14 @@ export function graph_svg_vowels(data) {
 
 
 /* Helpers */
+
+const TRAP_OUTLINE = [ { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 } ];
+const TRAP_LINES = [
+  [ { x: 0.5, y: 0    }, { x: 0.5, y: 1    } ],
+  [ { x: 0,   y: 0.33 }, { x: 1,   y: 0.33 } ],
+  [ { x: 0,   y: 0.66 }, { x: 1,   y: 0.66 } ],
+];
+
 
 const labels = [
   { label: 'Close',     x: 0,   y: 1,    side: 'l' },
