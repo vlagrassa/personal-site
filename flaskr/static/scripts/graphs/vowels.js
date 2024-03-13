@@ -13,6 +13,9 @@ export function graph_svg_vowels(data) {
       .attr("viewBox", `0 0 ${width} ${width}`)
       .style("font-size", "10px")
 
+  // Create container for definitions
+  const defs = svg.append('defs');
+
   const scale_y = d3.scaleLinear().domain([0, 1]).range([width - margin, margin])
   const x_offset = d3.scaleLinear().domain([0, 1]).range([corner, 0])
 
@@ -28,17 +31,22 @@ export function graph_svg_vowels(data) {
       .x( (d) => map_pt_x(d) )
       .y( (d) => map_pt_y(d) )
 
-  function draw_path(points, closed=false, pathtype='path') {
-    return svg.append(pathtype)
+  function append_path(target, points, closed=false) {
+    return target
+      .append('path')
         .attr("d", draw_line(points) + (closed ? 'Z' : ''))
         .style("fill", "none")
         .style("stroke", outline_color);
   }
 
 
+  // Create a clip path for the trapezoid boundary
+  append_path(defs.append('clipPath').attr('id', 'trap-boundary'), TRAP_OUTLINE, true);
+
+
   // Draw trapezoid
-  draw_path(TRAP_OUTLINE, true).attr("pointer-events", "none");
-  TRAP_LINES.forEach(line => draw_path(line).attr("pointer-events", "none"));
+  append_path(svg, TRAP_OUTLINE, true).attr("pointer-events", "none");
+  TRAP_LINES.forEach(line => append_path(svg, line).attr("pointer-events", "none"));
 
   add_labels(svg)
       .attr("x", d => map_pt_x(d) - (d.side == 'l' ? 20 : 0))
