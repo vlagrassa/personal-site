@@ -126,3 +126,32 @@ def get_recent_activity():
   ]
 
 
+
+
+#
+# About Me Graph Data
+#
+
+
+@query_bp.route('/about-data/skills', methods=['GET'])
+@jsonify_response
+def get_data_skills():
+  return {}
+
+
+@query_bp.route('/about-data/interests', methods=['GET'])
+@jsonify_response
+def get_data_interests():
+  return {}
+
+
+@query_bp.route('/about-data/genres', methods=['GET'])
+@jsonify_response
+def get_data_genres():
+  return {}
+
+
+@query_bp.route('/about-data/vowels', methods=['GET'])
+@jsonify_response
+def get_data_vowels():
+  return {}

@@ -101,10 +101,10 @@
 
       <!-- Visualization Selectors -->
       <div class="row">
-        {{ render_vis_choice('Skills') }}
-        {{ render_vis_choice('Interests') }}
-        {{ render_vis_choice('Music') }}
-        {{ render_vis_choice('Vowels') }}
+        {{ render_vis_choice('Skills',       'skills'   ) }}
+        {{ render_vis_choice('Interests',    'interests') }}
+        {{ render_vis_choice('Music Genres', 'genres'   ) }}
+        {{ render_vis_choice('Vowel Space',  'vowels'   ) }}
       </div>
       <!-- Visualization Selectors -->
 
@@ -165,6 +165,47 @@
 
 
 {% block script %}
+
+<script>
+  function render_graph(name) {
+    window.dispatchEvent(new CustomEvent('render-graph', { 'detail': { name } }));
+  }
+</script>
+
+
+<!-- Visualizations -->
+<script type="module">
+
+  import { graph_svg_skills    } from "{{ url_for('static', filename='scripts/graphs/skills.js')    }}";
+  import { graph_svg_interests } from "{{ url_for('static', filename='scripts/graphs/interests.js') }}";
+  import { graph_svg_genres    } from "{{ url_for('static', filename='scripts/graphs/genres.js')    }}";
+  import { graph_svg_vowels    } from "{{ url_for('static', filename='scripts/graphs/vowels.js')    }}";
+
+
+  const vis_map = {
+    "skills":    graph_svg_skills,
+    "interests": graph_svg_interests,
+    "genres":    graph_svg_genres,
+    "vowels":    graph_svg_vowels,
+  };
+
+
+  async function render_graph(name) {
+
+    // Look up the rendering function, aborting if name is invalid
+    const f = vis_map[name];
+    if (!f) return;
+
+    f({});
+  };
+
+
+  window.addEventListener('render-graph', async ({detail}) => {
+    render_graph(detail.name);
+  });
+</script>
+<!-- /Visualizations -->
+
 
 <!-- Recent Activity -->
 <script type="module">
