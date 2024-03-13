@@ -170,6 +170,11 @@
   function render_graph(name) {
     window.dispatchEvent(new CustomEvent('render-graph', { 'detail': { name } }));
   }
+
+  {%- if initial_graph %}
+  // Render the initial graph
+  render_graph('{{ initial_graph }}');
+  {%- endif %}
 </script>
 
 

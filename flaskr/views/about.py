@@ -20,4 +20,5 @@ def about():
   return render_template('about-me.html', **{
     'title': current_app.config['PAGES']['about']['title'],
     'data_languages': data_languages,
+    'initial_graph':  request.args.get('g'),
   })
