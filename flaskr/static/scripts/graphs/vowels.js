@@ -41,7 +41,8 @@ export function graph_svg_vowels(data) {
 
 
   // Create a clip path for the trapezoid boundary
-  append_path(defs.append('clipPath').attr('id', 'trap-boundary'), TRAP_OUTLINE, true);
+  append_path(defs.append('clipPath').attr('id', 'trap-boundary'),     TRAP_OUTLINE,          true);
+  append_path(defs.append('clipPath').attr('id', 'trap-boundary-ext'), TRAP_OUTLINE_EXTENDED, true);
 
 
   function mouseover(event, p) {
@@ -58,12 +59,12 @@ export function graph_svg_vowels(data) {
 
   // Compute voronoi diagram for the vowels
   const delaunay = d3.Delaunay.from(data.map(d => [map_pt_x(d), map_pt_y(d)]));
-  const voronoi  = delaunay.voronoi([margin, margin, width - margin, width - margin]);
+  const voronoi  = delaunay.voronoi([0, 0, width, width]);
 
-  // Draw voronoi regions inside trapezoid
+  // Create interactive voronoi regions inside trapezoid, extending over the edges a bit
   const regions = svg.append("g")
       .attr('id', 'voronoi')
-      .attr('clip-path', "url(#trap-boundary)")
+      .attr('clip-path', "url(#trap-boundary-ext)")
     .selectAll("path")
     .data(data)
     .join("path")
@@ -106,6 +107,8 @@ export function graph_svg_vowels(data) {
 
 
 /* Helpers */
+
+const TRAP_OUTLINE_EXTENDED = [ { x: -0.1, y: 1.1 }, { x: 1.1, y: 1.1 }, { x: 1.1, y: -0.1 }, { x: -0.1, y: -0.1 } ];
 
 const TRAP_OUTLINE = [ { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 } ];
 const TRAP_LINES = [
