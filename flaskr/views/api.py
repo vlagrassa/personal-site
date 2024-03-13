@@ -5,7 +5,7 @@ from flask import (
 )
 
 from ..database        import Project, Post, TimelineSection
-from ..utils.endpoints import jsonify_response
+from ..utils.endpoints import jsonify_response, raise_on_error
 from ..utils.utils     import capsfirst, dateformat
 
 
@@ -135,23 +135,27 @@ def get_recent_activity():
 
 @query_bp.route('/about-data/skills', methods=['GET'])
 @jsonify_response
+@raise_on_error(500)
 def get_data_skills():
   return {}
 
 
 @query_bp.route('/about-data/interests', methods=['GET'])
 @jsonify_response
+@raise_on_error(500)
 def get_data_interests():
   return {}
 
 
 @query_bp.route('/about-data/genres', methods=['GET'])
 @jsonify_response
+@raise_on_error(500)
 def get_data_genres():
   return {}
 
 
 @query_bp.route('/about-data/vowels', methods=['GET'])
 @jsonify_response
+@raise_on_error(500)
 def get_data_vowels():
   return {}
