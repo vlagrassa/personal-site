@@ -175,11 +175,6 @@
   function render_graph(name) {
     window.dispatchEvent(new CustomEvent('render-graph', { 'detail': { name } }));
   }
-
-  {%- if initial_graph %}
-  // Render the initial graph
-  render_graph('{{ initial_graph }}');
-  {%- endif %}
 </script>
 
 
@@ -225,6 +220,11 @@
   window.addEventListener('render-graph', async ({detail}) => {
     render_graph(detail.name);
   });
+
+
+  {%- if initial_graph %}
+  render_graph('{{ initial_graph }}');
+  {%- endif %}
 </script>
 <!-- /Visualizations -->
 
