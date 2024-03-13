@@ -1,3 +1,4 @@
+from csv import DictReader
 from collections.abc import Mapping, MutableMapping
 
 
@@ -169,3 +170,20 @@ class ConfigMap(Mapping):
       self._keyset.add(key)
       for _, val in self:
         val.add_keys(key)
+
+
+
+
+class MapDictReader(DictReader):
+  '''
+    Read a CSV file into a dict, with optional mapping functions for each column.
+  '''
+
+  def __init__(self, *args, field_maps={}, **kwds):
+    self._field_maps = field_maps
+    super().__init__(*args, **kwds)
+
+  def __next__(self):
+    return {
+      key: self._field_maps.get(key, lambda x: x)(val) for key, val in super().__next__().items()
+    }
