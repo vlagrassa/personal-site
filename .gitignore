@@ -183,3 +183,6 @@ build/
 # Custom
 
 */static/data-standin/
+
+analysis/*/data/*
+analysis/output/*
