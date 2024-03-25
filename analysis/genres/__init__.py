@@ -22,6 +22,13 @@ def run_analysis(schema_file, value_files, *, output_file=None, audit=False):
         for v in val:
           print(f'  - {v}')
 
+  if audit:
+    print('\n')
+    print('Leftover genres:')
+    leftovers = genre_schema._leftovers - { node['name'] for node in genre_schema.traverse() }
+    for genre in genre_schema._leftovers:
+      print(f'  - {genre}')
+
   # Dump the schema to a JSON file, if desired
   if output_file:
     parsed = genre_schema.to_json_string()
