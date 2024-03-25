@@ -1,6 +1,7 @@
 /*
   Inspiration:
     - Zoomable Sunburst  [https://observablehq.com/@d3/zoomable-sunburst]
+    - Sequences Sunburst [https://observablehq.com/@kerryrodden/sequences-sunburst]
 */
 
 export function graph_svg_genres(data) {
@@ -34,6 +35,7 @@ export function graph_svg_genres(data) {
 
   // Create the SVG container
   const svg = d3.create("svg")
+      .attr('class', 'graph-genres')
       .attr("width",  '100%')
       .attr("height", '100%')
       .attr("viewBox", [-width / 2, -height / 2, width, width])
@@ -45,14 +47,18 @@ export function graph_svg_genres(data) {
     .data(root.descendants().slice(1))
     .join("path")
       .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-      .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
       .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
-      .attr("d", d => arc(d.current));
+      .attr("d", d => arc(d.current))
+      .classed('arc', true)
+      .classed('hidden', d => !arcVisible(d.current))
 
   // Make them clickable if they have children
   path.filter(d => d.children)
       .style("cursor", "pointer")
       .on("click", clicked);
+
+  // Highlight arcs on mouseover
+  path.on('mouseenter', highlight_arc)
 
 
   // Add labels
@@ -76,6 +82,20 @@ export function graph_svg_genres(data) {
       .attr("pointer-events", "all")
       .on("click", clicked);
 
+
+  // Deselect outside chart bounds
+  // This prevents deselection when in gaps between wedges
+  svg.on('mouseleave', remove_arc_highlight);
+  parent.on('mouseenter', remove_arc_highlight)
+  svg.append('path')
+    .attr("d", d => arc({x0: 0, x1: 2*Math.PI, y0: 3, y1: 5}))
+    .attr('fill', 'transparent')
+    .on('mouseenter', remove_arc_highlight)
+
+
+
+  /* Handlers */
+
   // Handle zoom on click
   function clicked(event, p) {
     parent.datum(p.parent || root);
@@ -97,12 +117,10 @@ export function graph_svg_genres(data) {
           const i = d3.interpolate(d.current, d.target);
           return t => d.current = i(t);
         })
-        .filter(function(d) {
-          return +this.getAttribute("fill-opacity") || arcVisible(d.target);
-        })
-        .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
         .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
-        .attrTween("d", d => () => arc(d.current));
+        .attrTween("d", d => () => arc(d.current))
+
+    path.classed("hidden", d => !arcVisible(d.target))
 
     label
         .filter(function(d) {
@@ -112,6 +130,27 @@ export function graph_svg_genres(data) {
         .attr("fill-opacity", d => +labelVisible(d.target))
         .attrTween("transform", d => () => labelTransform(d.current, radius));
   }
+
+
+
+  // Highlight an arc on mouseover
+  function highlight_arc(event, d) {
+    if (event.target.classList.contains('hidden')) return;
+
+    // Get the ancestors of the current segment, minus the root
+    const sequence = d.ancestors().reverse().slice(1);
+
+    // Highlight the ancestors
+    path.classed('active',   node => sequence.indexOf(node) >= 0);
+    path.classed('inactive', node => sequence.indexOf(node) <  0);
+  }
+
+  // Remove arc highlight, restoring the chart
+  function remove_arc_highlight(event, d) {
+    path.classed('active', false).classed('inactive', false);
+  }
+
+
 
   return svg;
 }

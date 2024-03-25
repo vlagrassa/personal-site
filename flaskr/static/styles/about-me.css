@@ -57,6 +57,26 @@ dt {
 
 
 
+
+svg.graph-genres .arc {
+  fill-opacity: 0.6;
+}
+
+svg.graph-genres .arc.active {
+  fill-opacity: 0.6;
+}
+
+svg.graph-genres .arc.inactive {
+  fill-opacity: 0.3;
+}
+
+svg.graph-genres .arc.hidden {
+  fill-opacity: 0;
+}
+
+
+
+
 svg.graph-vowels text.vowel {
   transition: font-size 100ms cubic-bezier(.36,.68,.46,1.45);
   font-family: var(--font-mono);
