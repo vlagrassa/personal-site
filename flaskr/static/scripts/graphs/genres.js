@@ -14,9 +14,6 @@ export function graph_svg_genres(data) {
   // Percentage of the radius
   const spacing = 0.02;
 
-  // Create the color scale
-  const color = make_color_scale(data)
-
   // Create the arc generator
   const arc = make_arc_generator(radius, spacing)
 
@@ -160,15 +157,14 @@ export function graph_svg_genres(data) {
 /* Helpers */
 
 
-function make_color_scale(data) {
-
-  const color_scale = d3.scaleLinear()
-    .domain([0, 0.33, 0.66, 1])
-    .range(["#E26692", "#FFF473", "#4E90A6", "#E26692"])
-    .interpolate(d3.interpolateHcl)
-
-  return d3.scaleOrdinal(d3.quantize(color_scale, data.children.length + 1));
+const COLOR_MAP = {
+  "pop":     "#E26692",
+  "rock":    "#4E90A6",
+  "edm":     "rgb(255, 163, 113)",
+  "ambient": "rgb( 92, 205, 161)",
+  "hip-hop": "rgb(144, 131, 202)",
 }
+const COLOR = (x) => COLOR_MAP[x.toLowerCase()];
 
 
 // Create an arc generator function
