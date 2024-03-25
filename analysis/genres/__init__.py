@@ -3,7 +3,7 @@ from .parse  import build_genre_schema, count_schema_values
 
 
 
-def run_analysis(schema_file, value_files, output_file=None):
+def run_analysis(schema_file, value_files, *, output_file=None, audit=False):
   '''
     Primary analysis function.
   '''
@@ -13,7 +13,14 @@ def run_analysis(schema_file, value_files, output_file=None):
 
   # Count the values from the given file(s)
   for value_file in value_files:
-    count_schema_values(value_file, genre_schema)
+    audit_report = count_schema_values(value_file, genre_schema, audit=audit)
+
+    # Print out items belonging to a parent genre but none of its sub-genres
+    if audit:
+      for key, val in audit_report['stranded_parents'].items():
+        print(f'{key} ({genre_schema._counts[key]})')
+        for v in val:
+          print(f'  - {v}')
 
   # Dump the schema to a JSON file, if desired
   if output_file:
