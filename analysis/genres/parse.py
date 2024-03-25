@@ -32,7 +32,6 @@ def build_genre_schema(filename):
           hidden       = line['?'] == '#'
         )
 
-  schema._compute_leaf_nodes()
   return schema
 
 

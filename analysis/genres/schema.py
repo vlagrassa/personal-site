@@ -54,6 +54,7 @@ class Schema():
       The set of items is cleaned up and merged down using the schema, then the `weight` value is distributed evenly across the resulting items.
     '''
 
+    # Clean the keyset - map all keys to canonical versions
     clean_keyset = self.clean_keyset(keys)
 
     # Add all backrefs, so hidden keys still count toward their parents
@@ -170,26 +171,18 @@ class Schema():
     }
 
 
-  def _locate_node(self, name):
-    if name is None:
+  def _locate_node(self, key):
+    if key is None:
       return self._schema
 
-    # Walk up the tree using the backrefs
-    path = [name]
-    temp = name
-    while self._backrefs.get(temp):
-      temp = self._backrefs[temp]
-      path.append(temp)
+    # Compute the full path to the key
+    path = list(self.trace_ancestors( self.clean_key(key), include_self=True ))[::-1]
 
-    # Walk back down the tree, now that we have the full path
+    # Walk back down the tree using the full path
     temp = self._schema
-    for step in path[::-1]:
+    for step in path:
       temp = temp['children'][step]
     return temp
-
-
-  def _compute_leaf_nodes(self):
-    self._leaf_node_names = { node['name'] for node in self.traverse() if not len(node['children']) }
 
 
   def is_parent(self, p, c, loose=False):
