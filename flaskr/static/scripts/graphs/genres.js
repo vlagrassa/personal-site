@@ -6,10 +6,12 @@
 
 export function graph_svg_genres(container, data) {
 
+  const bounding_rect = container.getBoundingClientRect();
+
   // Specify the chart’s dimensions.
-  const width = 500;
-  const height = width;
-  const radius = width / 6;
+  const width  = bounding_rect.width;
+  const height = bounding_rect.height;
+  const radius = Math.min(width, height) / 6;
 
   // Percentage of the radius
   const spacing = 0.02;
@@ -35,7 +37,7 @@ export function graph_svg_genres(container, data) {
       .attr('class', 'graph-genres')
       .attr("width",  '100%')
       .attr("height", '100%')
-      .attr("viewBox", [-width / 2, -height / 2, width, width])
+      .attr("viewBox", [-(width / 2), -(height / 2), width, height])
       .style("font-size", "10px")
 
   // Append the arcs
