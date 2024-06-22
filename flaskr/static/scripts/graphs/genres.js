@@ -93,11 +93,59 @@ export function graph_svg_genres(container, data) {
 
 
 
+  /* Main Genre Label */
+
+  const main_label_1 = svg.append("text")
+    .style("user-select", "none")
+    .attr("pointer-events", "none")
+    .attr("text-anchor", "middle")
+    .attr('dominant-baseline', "middle")
+    .attr("font-size", "2em")
+
+  const main_label_2 = svg.append("text")
+    .style("user-select", "none")
+    .attr("pointer-events", "none")
+    .attr("text-anchor", "middle")
+    .attr('dominant-baseline', "middle")
+    .attr('dy', "-2em")
+    .attr("font-size", "1.25em")
+
+  const main_label_3 = svg.append("text")
+    .style("user-select", "none")
+    .attr("pointer-events", "none")
+    .attr("text-anchor", "middle")
+    .attr('dominant-baseline', "middle")
+    .attr('dy', "2em")
+    .attr("font-size", "1.25em")
+
+  function render_main_label(d) {
+
+    // Get the currently hovered / selected genre and its parent, if available
+    const current_genre = d && d.depth > 0 ? d.data.name : (curr_genre ? curr_genre.data.name : null);
+    const parent_genre  = d && d.depth > 1 ? d.parent.data.name : null;
+
+    // Get the percentage of the current genre relative to the whole graph
+    const percentage_genre = d ?? curr_genre;
+    const percentage = percentage_genre ? ((100 * percentage_genre.value) / root.value).toPrecision(3) + '%' : null;
+
+    // Display the computed values
+    main_label_1.text(current_genre)
+    main_label_2.text(parent_genre)
+    main_label_3.text(percentage)
+  }
+
+
+
   /* Handlers */
+
+  let curr_genre = null;
 
   // Handle zoom on click
   function clicked(event, p) {
     parent.datum(p.parent || root);
+
+    curr_genre = p.depth > 0 ? p : null;
+    render_main_label(curr_genre);
 
     root.each(d => d.target = {
       x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
@@ -142,11 +190,15 @@ export function graph_svg_genres(container, data) {
     // Highlight the ancestors
     path.classed('active',   node => sequence.indexOf(node) >= 0);
     path.classed('inactive', node => sequence.indexOf(node) <  0);
+
+    render_main_label(d);
   }
 
   // Remove arc highlight, restoring the chart
   function remove_arc_highlight(event, d) {
     path.classed('active', false).classed('inactive', false);
+
+    render_main_label(null)
   }
 
 
@@ -190,8 +242,10 @@ function labelVisible(d) {
   return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
 }
 
-function labelTransform(d, radius) {
+function labelTransform(d, radius, offset={}) {
   const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
   const y = (d.y0 + d.y1) / 2 * radius;
-  return `rotate(${x - 90}) translate(${y},0) rotate(${90-x})`;
+  const offset_x = offset['x'] || '0';
+  const offset_y = offset['y'] || '0';
+  return `rotate(${x - 90}) translate(${y},0) rotate(${90-x}) translate(${offset_x},${offset_y})`;
 }
