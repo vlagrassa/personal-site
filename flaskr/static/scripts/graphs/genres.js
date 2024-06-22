@@ -104,28 +104,37 @@ export function graph_svg_genres(container, data) {
 
   /* Main Genre Label */
 
-  const main_label_1 = svg.append("text")
+  const main_label_current = svg.append("text")
     .style("user-select", "none")
     .attr("pointer-events", "none")
     .attr("text-anchor", "middle")
     .attr('dominant-baseline', "middle")
     .attr("font-size", "2em")
+    .attr("paint-order", "stroke")
+    .attr("stroke", "white")
+    .attr("stroke-width", 2)
 
-  const main_label_2 = svg.append("text")
+  const main_label_parent = svg.append("text")
     .style("user-select", "none")
     .attr("pointer-events", "none")
     .attr("text-anchor", "middle")
     .attr('dominant-baseline', "middle")
     .attr('dy', "-2em")
     .attr("font-size", "1.25em")
+    .attr("paint-order", "stroke")
+    .attr("stroke", "white")
+    .attr("stroke-width", 2)
 
-  const main_label_3 = svg.append("text")
+  const main_label_percent = svg.append("text")
     .style("user-select", "none")
     .attr("pointer-events", "none")
     .attr("text-anchor", "middle")
     .attr('dominant-baseline', "middle")
     .attr('dy', "2em")
     .attr("font-size", "1.25em")
+    .attr("paint-order", "stroke")
+    .attr("stroke", "white")
+    .attr("stroke-width", 2)
 
   function render_main_label(d) {
 
@@ -138,9 +147,9 @@ export function graph_svg_genres(container, data) {
     const percentage = percentage_genre ? ((100 * percentage_genre.value) / root.value).toPrecision(3) + '%' : null;
 
     // Display the computed values
-    main_label_1.text(current_genre)
-    main_label_2.text(parent_genre)
-    main_label_3.text(percentage)
+    main_label_current.text(current_genre)
+    main_label_parent.text(parent_genre)
+    main_label_percent.text(percentage)
   }
 
 
