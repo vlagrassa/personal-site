@@ -246,7 +246,7 @@ function arcVisible(d) {
 }
 
 function labelVisible(d) {
-  return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+  return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.1;
 }
 
 function labelTransform(d, radius, offset={}) {
