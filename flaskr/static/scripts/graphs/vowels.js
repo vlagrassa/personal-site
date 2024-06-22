@@ -1,4 +1,4 @@
-export function graph_svg_vowels(data) {
+export function graph_svg_vowels(container, data) {
 
   const width  = 500;
   const margin = 50;

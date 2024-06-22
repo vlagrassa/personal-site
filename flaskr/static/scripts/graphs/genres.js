@@ -4,7 +4,7 @@
     - Sequences Sunburst [https://observablehq.com/@kerryrodden/sequences-sunburst]
 */
 
-export function graph_svg_genres(data) {
+export function graph_svg_genres(container, data) {
 
   // Specify the chart’s dimensions.
   const width = 500;

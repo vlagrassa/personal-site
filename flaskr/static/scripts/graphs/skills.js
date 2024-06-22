@@ -1,3 +1,3 @@
-export function graph_svg_skills(data) {
+export function graph_svg_skills(container, data) {
   console.log('graphing skills!')
 }
