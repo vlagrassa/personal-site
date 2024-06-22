@@ -68,6 +68,14 @@ export function graph_svg_genres(container, data) {
   // Highlight arcs on mouseover
   path.on('mouseenter', highlight_arc)
 
+  // // Add hover
+  // const format = d3.format(",d");
+  // path.append("title")
+  //     .text(d => {
+  //       const a = d.ancestors();
+  //       // return `${a.slice(0, a.length - 1).map(d => d.data.name).reverse().join(" » ")}\n${format(d.value)}`
+  //       // return `${a.slice(0, a.length - 1).map(d => d.data.name).reverse().join(" ⬦ ")}`
+  //     });
 
   // Add labels
   const label = svg.append("g")
