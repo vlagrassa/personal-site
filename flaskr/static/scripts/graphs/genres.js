@@ -45,7 +45,7 @@ export function graph_svg_genres(container, data) {
     .selectAll("path")
     .data(root.descendants().slice(1))
     .join("path")
-      .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+      .attr("fill", d => COLOR(d) )
       .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
       .attr("d", d => arc(d.current))
       .classed('arc', true)
@@ -218,7 +218,11 @@ const COLOR_MAP = {
   "ambient": "rgb( 92, 205, 161)",
   "hip-hop": "rgb(144, 131, 202)",
 }
-const COLOR = (x) => COLOR_MAP[x.toLowerCase()];
+
+const COLOR = (d) => {
+  while (d.depth > 1) d = d.parent;
+  return COLOR_MAP[ d.data.name.toLowerCase() ]
+}
 
 
 // Create an arc generator function
