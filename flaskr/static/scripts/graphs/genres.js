@@ -86,7 +86,7 @@ export function graph_svg_genres(container, data) {
   // This prevents deselection when in gaps between wedges
   svg.on('mouseleave', remove_arc_highlight);
   parent.on('mouseenter', remove_arc_highlight)
-  svg.append('path')
+  const outside = svg.append('path')
     .attr("d", d => arc({x0: 0, x1: 2*Math.PI, y0: 3, y1: 5}))
     .attr('fill', 'transparent')
     .on('mouseenter', remove_arc_highlight)
@@ -144,9 +144,6 @@ export function graph_svg_genres(container, data) {
   function clicked(event, p) {
     parent.datum(p.parent || root);
 
-    curr_genre = p.depth > 0 ? p : null;
-    render_main_label(curr_genre);
-
     root.each(d => d.target = {
       x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
       x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
@@ -179,6 +176,18 @@ export function graph_svg_genres(container, data) {
         .transition(t)
         .attr("fill-opacity", d => +labelVisible(d.target))
         .attrTween("transform", d => () => labelTransform(d.current, radius));
+
+
+    // Adjust the diameter of the outside ring
+    const interpolate_outside = d3.interpolate(
+      (!curr_genre || hasGrandchildren(curr_genre)) ? 3 : 2,
+      hasGrandchildren(p) ? 3 : 2
+    )
+    outside.transition(t).attrTween("d", d => t => arc({x0: 0, x1: 2*Math.PI, y0: interpolate_outside(t), y1: 5}))
+
+    // Update the genre and render the main label with it
+    curr_genre = p.depth > 0 ? p : null;
+    render_main_label(curr_genre);
   }
 
 
@@ -255,4 +264,17 @@ function labelTransform(d, radius, offset={}) {
   const offset_x = offset['x'] || '0';
   const offset_y = offset['y'] || '0';
   return `rotate(${x - 90}) translate(${y},0) rotate(${90-x}) translate(${offset_x},${offset_y})`;
+}
+
+
+function hasGrandchildren(d) {
+  if (!d || !d.children || d.children.length === 0) {
+    return false;
+  }
+  for (let child of d.children) {
+    if (child.children && child.children.length > 0) {
+      return true;
+    }
+  }
+  return false;
 }
