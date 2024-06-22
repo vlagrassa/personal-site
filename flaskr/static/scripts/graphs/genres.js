@@ -154,6 +154,9 @@ export function graph_svg_genres(container, data) {
       y1: Math.max(0, d.y1 - p.depth)
     });
 
+    // Signal that center of graph can be clicked to move up
+    parent.style("cursor", p.depth ? "pointer" : 'auto');
+
     const t = svg.transition().duration(750);
 
     // Transition the data on all arcs, even the ones that aren’t visible,
