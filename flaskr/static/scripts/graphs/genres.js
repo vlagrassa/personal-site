@@ -4,6 +4,15 @@
     - Sequences Sunburst [https://observablehq.com/@kerryrodden/sequences-sunburst]
 */
 
+
+// Opacity values for arcs in different states
+// NOTE: These should match the corresponding CSS classes
+// TODO: Is there a way to pull these from the CSS stylesheet directly
+const active_opacity   = 0.6;
+const inactive_opacity = 0.3;
+const hidden_opacity   = 0.0;
+
+
 export function graph_svg_genres(container, data) {
 
   const bounding_rect = container.getBoundingClientRect();
@@ -166,6 +175,13 @@ export function graph_svg_genres(container, data) {
         })
         .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
         .attrTween("d", d => () => arc(d.current))
+        .styleTween('fill-opacity', d => d3.interpolate(
+          arcVisible(d.current) ? active_opacity : hidden_opacity,
+          arcVisible(d.target)  ? active_opacity : hidden_opacity
+        ))
+        .on('end', (d) => {
+          path.style('fill-opacity', null)
+        })
 
     path.classed("hidden", d => !arcVisible(d.target))
 
