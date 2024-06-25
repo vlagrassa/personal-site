@@ -18,14 +18,14 @@
 
 
 
-dl {
+#basic-info-card dl {
   display: grid;
   grid-template-columns: repeat(3, fit-content(100%) auto);
   grid-template-rows: auto auto;
   gap: 0.5em;
 }
 
-dt {
+#basic-info-card dt {
   font-family: var(--font-head);
 }
 

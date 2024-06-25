@@ -27,6 +27,12 @@
 {%- endmacro %}
 
 
+{%- macro render_qualification(title, source, date) %}
+<dt class="text-start mb-1">{{ title }}</dt>
+<dd class="text-end fst-italic">{{ source }} ({{ date }})</dd>
+{%- endmacro %}
+
+
 {%- macro render_language_entry(label, value) %}
 <tr>
   <th>{{ label }}</th>
