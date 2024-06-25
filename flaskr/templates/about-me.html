@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
 {% from '_macros/utils.j2'    import render_open_arrow_button %}
-{% from '_macros/about-me.j2' import render_basic_info, render_dropdown_panel, render_language_entry, render_vis_choice %}
+{% from '_macros/about-me.j2' import render_basic_info, render_dropdown_panel, render_language_entry, render_vis_choice, render_big_number %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
@@ -145,6 +145,14 @@
       </div>
       <!-- /Languages -->
 
+      <!-- Big Numbers -->
+      <div class="row d-none d-xxl-flex gx-3">
+        {{ render_big_number( 'num-commits', 'Commits' ) }}
+        {{ render_big_number( 'num-repos',   'Repos'   ) }}
+        {{ render_big_number( 'num-???',     '???'     ) }}
+      </div>
+      <!-- /Big Numbers -->
+
       <!-- Activity -->
       <!-- NOTE: Have to overwrite "height" CSS value for body overflow to work -->
       <div class="card double-outline title-bottom px-3 py-2 mt-3 flex-grow-1" style="height: 10px">
@@ -276,5 +284,52 @@
   }
 </script>
 <!-- /Recent Activity -->
+
+
+<!-- Numbers -->
+<script type="module">
+
+  // Adapted from https://jshakespeare.com/simple-count-up-number-animation-javascript-react/
+  function set_big_number(element_id, value, add_plus) {
+
+    const el = document.getElementById(element_id);
+
+    // If value null, clear the display and abort
+    if (value === null) {
+      el.innerText = '----';
+      return;
+    }
+
+    // Initialize element count to 0
+    el.innerText = '0000';
+
+    // Set total animation duration using a logistic function
+    // (Bigger numbers take longer, but with exponential decay)
+    const animationDuration = 4000 * (1 / (1 + Math.exp(-value / 10)) - 0.5);
+
+    // Animation properties
+    const frameDuration = 1000 / 60;
+    const totalFrames = Math.round( animationDuration / frameDuration );
+
+    // Use an exponential easing function
+    // const easeOutQuad = t => t * ( 2 - t );
+    const easeOut = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+    let frame = 0;
+    const counter = setInterval( () => {
+      frame++;
+      const progress = easeOut( frame / totalFrames );
+      const currentCount = Math.round(value * progress);
+      el.innerText = currentCount;
+      if (frame >= totalFrames) {
+        clearInterval(counter);
+        if (add_plus) {
+          el.innerText += '+';
+        }
+      }
+    }, frameDuration);
+  }
+</script>
+<!-- /Numbers -->
 
 {% endblock %}

@@ -75,3 +75,11 @@
     <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">▼</span>
   </a>
 {% endmacro %}
+
+
+{%- macro loader() %}
+  <div class="spinner-grow" style="width: 0.25rem; height: 0.25rem;" role="status"></div>
+  <div class="spinner-grow" style="width: 0.25rem; height: 0.25rem;" role="status"></div>
+  <div class="spinner-grow" style="width: 0.25rem; height: 0.25rem;" role="status"></div>
+  <span class="visually-hidden">Loading...</span>
+{%- endmacro %}
