@@ -332,4 +332,28 @@
 </script>
 <!-- /Numbers -->
 
+
+<!-- Languages -->
+<script>
+  Array.from(document.getElementsByClassName('bar-chart-item')).forEach((el) => {
+
+    // Clear the element
+    el.innerText = '';
+
+    // Animation function
+    let counter = 0;
+    const animate = setInterval(() => {
+
+      // Add the next marker
+      const item = document.createElement('span');
+      item.innerText = '⬢';
+      el.appendChild(item)
+
+      // Stop when enough markers have been added
+      if (++counter >= el.dataset.value) clearInterval(animate);
+    }, 250)
+  })
+</script>
+<!-- /Languages -->
+
 {% endblock %}

@@ -35,12 +35,34 @@ dt {
   font-family: var(--font-head);
   text-align: right;
   padding-right: 0.75em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   border-right: 1px solid gray;
 }
 
 .bar-chart-table td {
   text-align: left;
   padding: 0.25em 0.5em;
+  min-width: 5em;
+  position: relative;
+  color: var(--color-secondary)
+}
+
+
+.bar-chart-item::before {
+  content: '⬡⬡⬡⬡⬡';
+  position: absolute;
+  top: 0.25em;
+  left: 0.5em;
+}
+
+.bar-chart-item span {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 

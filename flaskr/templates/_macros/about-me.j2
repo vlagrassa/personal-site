@@ -31,7 +31,7 @@
 <tr>
   <th>{{ label }}</th>
   <td>
-    <span style="color: var(--color-secondary)">{{ '⬢' * value }}</span><span style="color: var(--color-secondary)">{{ '⬡' * (5 - value) }}</span>
+    <span class="bar-chart-item" data-value="{{ value }}"></span>
   </td>
 </tr>
 {%- endmacro %}
