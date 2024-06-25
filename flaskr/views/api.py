@@ -4,7 +4,7 @@ from flask import (
   Blueprint, current_app, g, redirect, request, session, url_for,
 )
 
-from ..database        import Project, Post, TimelineSection
+from ..database        import CACHE, Project, Post, TimelineSection
 from ..utils.endpoints import jsonify_response, raise_on_error
 from ..utils.utils     import capsfirst, dateformat
 
@@ -134,6 +134,7 @@ def get_recent_activity():
 
 
 @query_bp.route('/about-data/skills', methods=['GET'])
+@CACHE.cached()
 @jsonify_response
 @raise_on_error(500)
 def get_data_skills():
@@ -141,6 +142,7 @@ def get_data_skills():
 
 
 @query_bp.route('/about-data/interests', methods=['GET'])
+@CACHE.cached()
 @jsonify_response
 @raise_on_error(500)
 def get_data_interests():
@@ -148,6 +150,7 @@ def get_data_interests():
 
 
 @query_bp.route('/about-data/genres', methods=['GET'])
+@CACHE.cached()
 @jsonify_response
 @raise_on_error(500)
 def get_data_genres():
@@ -155,6 +158,7 @@ def get_data_genres():
 
 
 @query_bp.route('/about-data/vowels', methods=['GET'])
+@CACHE.cached()
 @jsonify_response
 @raise_on_error(500)
 def get_data_vowels():

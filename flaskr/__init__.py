@@ -5,7 +5,7 @@ import os
 from flask import Flask, url_for, request
 from flaskext.markdown import Markdown
 
-from .database import db, TABLES, DB_ENUMS, ExternalProfile
+from .database import db, CACHE, TABLES, DB_ENUMS, ExternalProfile
 from .utils.map import ConfigMap
 
 from .views.home     import home_bp
@@ -36,6 +36,7 @@ def create_app(test_config=None):
 
   # Initialize extension(s)
   Markdown(app, extensions=['sane_lists', 'fenced_code', 'smarty', 'md_in_html', 'markdown_katex'])
+  CACHE.init_app(app)
 
   # Initialization tasks that require app context
   with app.app_context():
