@@ -1,7 +1,15 @@
 {% extends 'base/base.html' %}
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
 {% from '_macros/utils.j2'    import render_open_arrow_button %}
-{% from '_macros/about-me.j2' import render_basic_info, render_dropdown_panel, render_qualification, render_language_entry, render_vis_choice, render_big_number %}
+{% from '_macros/about-me.j2' import
+    render_dropdown_panel,
+    render_qualification,
+    render_language_entry,
+    render_human_language_entry,
+    render_vis_choice,
+    render_big_number,
+    render_basic_info
+%}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/about-me.css') }}">
@@ -158,8 +166,9 @@
               </tbody>
             </table>
           </div>
-          <div class="mt-2">
-            English&nbsp;(Native), Japanese&nbsp;(Beginner)
+          <div class="mt-2 d-flex flex-wrap column-gap-2 justify-content-center w-100">
+            {{ render_human_language_entry( 'English',  'Native'   )}}
+            {{ render_human_language_entry( 'Japanese', 'Beginner' )}}
           </div>
         </div>
       </div>

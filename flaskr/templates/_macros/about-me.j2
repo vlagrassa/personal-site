@@ -42,6 +42,10 @@
 </tr>
 {%- endmacro %}
 
+{%- macro render_human_language_entry(language, level) %}
+<div class="d-inline">{{ language }}&nbsp;<span class="text-body-secondary">({{ level }})</span></div>
+{%- endmacro %}
+
 
 {%- macro render_vis_choice(title, vis_id) %}
 <div class="mt-3 col-3">
