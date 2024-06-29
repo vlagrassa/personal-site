@@ -194,15 +194,34 @@
 /* Open/Close Buttons */
 
 .open-close-btn {
-  transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
   user-select: none;
 }
 
-.open-close-btn.active {
-  transform: rotate(135deg);
+.open-close-btn span {
+  transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
+}
+
+.open-close-btn.active:not(.accordion-button) span {
+  transform:         rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
 
+
+/* Open/Close Buttons (Accordion Variant) */
+
+.open-close-btn.accordion-button {
+  display: inline-flex;
+}
+
+.open-close-btn.accordion-button span {
+  transform:         rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.open-close-btn.accordion-button span.collapsed {
+  transform:         none;
+  -webkit-transform: none;
+}
 
 
 /* Open/Close Arrow Buttons */

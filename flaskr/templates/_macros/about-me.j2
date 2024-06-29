@@ -14,10 +14,13 @@
     <div class="position-relative">
       <h5 class="card-title mt-0">{{ title }}</h5>
       <div class="me-1" style="position: absolute; right: 0; bottom: -0.2em;">
-        {{ render_open_close_button('#' + dropdown_id, 'collapse', start_open) }}
+        {{ render_open_close_button('#' + dropdown_id, 'accordion', start_open) }}
       </div>
     </div>
-    <div id="{{ dropdown_id }}" class="card-body p-0 row collapse {% if start_open %}show{% endif %}">
+    <div id="{{ dropdown_id }}"
+      class="card-body p-0 row accordion-collapse collapse {% if start_open %}show{% endif %}"
+      data-bs-parent="#dropdown-panel-container"
+    >
       <div class="pt-1 pb-2">
         {{ caller() }}
       </div>

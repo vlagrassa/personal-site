@@ -68,27 +68,32 @@
           {% include '_includes/quick-links.j2' %}
         </div>
 
+        <!-- Dropdown Panels -->
+        <div id="dropdown-panel-container">
 
-        {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
-          <div class="w-100 pt-2 px-2">
-            <dl>
-              {{ render_qualification(
-                "Master of Science, Computer Science",
-                "The University of Chicago", "2022"
-              ) }}
-              {{ render_qualification(
-                "Bachelor of Arts, Linguistics",
-                "The University of Chicago", "2022"
-              ) }}
-            </dl>
-          </div>
-        {%- endcall %}
+          {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
+            <div class="w-100 pt-2 px-2">
+              <dl>
+                {{ render_qualification(
+                  "Master of Science, Computer Science",
+                  "The University of Chicago", "2022"
+                ) }}
+                {{ render_qualification(
+                  "Bachelor of Arts, Linguistics",
+                  "The University of Chicago", "2022"
+                ) }}
+              </dl>
+            </div>
+          {%- endcall %}
 
-        {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies')) %}
-        {%- endcall %}
+          {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies')) %}
+          {%- endcall %}
 
-        {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}
-        {%- endcall %}
+          {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}
+          {%- endcall %}
+
+        </div>
+        <!-- /Dropdown Panels -->
 
       </div>
     </div>
