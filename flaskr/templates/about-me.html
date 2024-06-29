@@ -53,7 +53,7 @@
         {% include '_includes/quick-links.j2' %}
 
 
-        {%- call render_dropdown_panel('Qualifications') %}
+        {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
           <div class="w-100 pt-2 px-2">
             <dl>
               {{ render_qualification(
@@ -68,10 +68,10 @@
           </div>
         {%- endcall %}
 
-        {%- call render_dropdown_panel('Proficiencies') %}
+        {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies')) %}
         {%- endcall %}
 
-        {%- call render_dropdown_panel('High Scores') %}
+        {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}
         {%- endcall %}
 
       </div>

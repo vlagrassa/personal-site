@@ -21,4 +21,5 @@ def about():
     'title': current_app.config['PAGES']['about']['title'],
     'data_languages': data_languages,
     'initial_graph':  request.args.get('g'),
+    'initial_tab':    request.args.get('t'),
   })

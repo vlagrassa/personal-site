@@ -57,10 +57,11 @@
 {%- endmacro %}
 
 
-{% macro render_open_close_button(target, toggle) %}
+{% macro render_open_close_button(target, toggle, start_open=false) %}
   <a
-    class="open-close-btn fs-4" type="button" data-bs-toggle="button"
-    aria-expanded="false" aria-controls="{{ target }}"
+    class="open-close-btn {% if start_open %}active{% endif %} fs-4"
+    type="button" data-bs-toggle="button"
+    aria-expanded="{{ 'true' if start_open else 'false' }}" aria-controls="{{ target }}"
   >
     <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">+</span>
   </a>
