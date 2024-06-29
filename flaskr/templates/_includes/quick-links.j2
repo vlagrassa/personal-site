@@ -1,4 +1,8 @@
-<span class="ps-2 d-flex flex-wrap justify-content-center gap-3">
+{%- if not quick_links_gap %}
+{%- set quick_links_gap = "3" %}
+{%- endif %}
+
+<span class="d-flex flex-wrap justify-content-center gap-{{ quick_links_gap }}">
   <a title="Download résumé" class="underline-hover-text" href="#">
     {{ render_lang_object(config.TEXT['sidebar.resume']) }}
     <span class="material-symbols-outlined material-symbols-inline">download</span>

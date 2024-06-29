@@ -20,7 +20,7 @@
       <div class="row">
 
         <!-- Title -->
-        <div id="about-me-title-section" class="d-flex flex-wrap align-items-top mb-3">
+        <div id="about-me-title-section" class="d-flex flex-wrap align-items-top">
 
           <!-- Hex Icon -->
           <div class="hex-container-column flex-grow-1 align-items-center">
@@ -44,13 +44,21 @@
               <h2>{{ render_lang_object(config.TEXT['my_name.nickname']) }}</h2>
               <div class="phonetic">{{ render_lang_object(config.TEXT['my_name.ipa']) }}</div>
             </div>
+
+            <div class="d-none d-xxl-block mt-4">
+              {%- with quick_links_gap = "2" %}
+              {% include '_includes/quick-links.j2' %}
+              {%- endwith %}
+            </div>
           </div>
           <!-- /Name -->
 
         </div>
         <!-- /Title -->
 
-        {% include '_includes/quick-links.j2' %}
+        <div class="d-block d-xxl-none mt-3">
+          {% include '_includes/quick-links.j2' %}
+        </div>
 
 
         {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
