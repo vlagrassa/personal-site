@@ -107,3 +107,9 @@ svg.graph-vowels text.vowel.active {
   fill: var(--color-primary-2);
   font-size: 1.25em;
 }
+
+
+
+#help-button-list a:not(.collapsed) {
+  color: var(--color-primary);
+}

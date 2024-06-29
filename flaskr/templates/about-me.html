@@ -8,6 +8,8 @@
     render_human_language_entry,
     render_vis_choice,
     render_big_number,
+    render_help_button,
+    render_help_section,
     render_basic_info
 %}
 
@@ -131,6 +133,12 @@
             </div>
           </div>
         </div>
+        <div style="position: absolute; top: 8px; right: 8px;">
+          <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" data-bs-toggle="modal" data-bs-target="#help">
+            {% include '_includes/svg.html' %}
+            <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+          </svg>
+        </div>
       </div>
       <!-- /Visualization -->
 
@@ -206,6 +214,58 @@
     </div>
     <!-- /Right Column -->
 
+  </div>
+</div>
+
+
+<div class="modal fade" id="help" tabindex="-1" aria-labelledby="helpLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="helpLabel">
+          {% block help_modal_header %}Help{% endblock %}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Use the four buttons at the bottom of the page to select one of the four visualizations:
+        </p>
+        <ol id="help-button-list" class="d-flex justify-content-around ps-0">
+          {{ render_help_button( 'skills',    'Skills'       ) }}
+          {{ render_help_button( 'interests', 'Interests'    ) }}
+          {{ render_help_button( 'genres',    'Music Genres' ) }}
+          {{ render_help_button( 'vowels',    'Vowels'       ) }}
+        </ol>
+        <p>
+          Click on any of the buttons above for more information on that graph.
+        </p>
+
+        <div id="help-accordion" class="accordion">
+
+          {%- call render_help_section('skills', 'Skills') %}
+            <h4 class="fs-6">Instructions</h4>
+            <h4 class="fs-6">Data</h4>
+          {%- endcall %}
+
+          {%- call render_help_section('interests', 'Interests') %}
+            <h4 class="fs-6">Instructions</h4>
+            <h4 class="fs-6">Data</h4>
+            {%- endcall %}
+
+          {%- call render_help_section('genres', 'Music Genres') %}
+            <h4 class="fs-6">Instructions</h4>
+            <h4 class="fs-6">Data</h4>
+            {%- endcall %}
+
+          {%- call render_help_section('vowels', 'Vowel Space') %}
+            <h4 class="fs-6">Instructions</h4>
+            <h4 class="fs-6">Data</h4>
+            {%- endcall %}
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

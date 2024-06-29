@@ -75,3 +75,21 @@
   </div>
 </div>
 {%- endmacro %}
+
+
+
+{%- macro render_help_button(section_id, title) %}
+<li class="d-inline-block">
+  <a id="help-button-{{ section_id }}" href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#help-section-{{ section_id }}">{{ title }}</a>
+</li>
+{%- endmacro %}
+
+{%- macro render_help_section(section_id, title) %}
+<div id="help-section-{{ section_id }}" class="accordion-collapse collapse" data-bs-parent="#help-accordion">
+  <div style="height: 1em"></div>
+  <hr />
+  <h3 class="fs-5 text-center">{{ title }}</h3>
+  {{ caller () }}
+  <hr />
+</div>
+{%- endmacro %}
