@@ -325,8 +325,29 @@
     parent.innerHTML = '';
     parent.append(svg.node());
 
+    // Try opening the corresponding section in the help modal,
+    // ignoring errors (since it's not *that* important)
+    try {
+      set_graph_help_modal(name)
+    } catch {}
+
     // Return the data and the graph, to make them available elsewhere
     return {data, svg};
+  };
+
+  function set_graph_help_modal(name) {
+    Array.from(document.getElementsByClassName('help-section-button')).forEach(el => {
+      el.classList.add('collapsed');
+      el.classList.remove('open');
+    });
+    Array.from(document.getElementsByClassName('help-section')).forEach(el => {
+      el.classList.remove('show');
+    });
+    if (name) {
+      document.getElementById(`help-button-${name}`).classList.remove('collapsed');
+      document.getElementById(`help-button-${name}`).classList.add('open');
+      document.getElementById(`help-section-${name}`).classList.add('show');
+    }
   };
 
 

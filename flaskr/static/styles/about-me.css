@@ -110,6 +110,18 @@ svg.graph-vowels text.vowel.active {
 
 
 
-#help-button-list a:not(.collapsed) {
+.help-section-button {
+  text-align: center;
+}
+
+.help-section-button:not(.collapsed) {
   color: var(--color-primary);
+  font-weight: bold;
+}
+
+.help-section-button.open::after {
+  content: "(Open)";
+  display: block;
+  font-size: 0.75em;
+  margin-top: 0.2em;
 }
