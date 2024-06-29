@@ -45,7 +45,8 @@
   padding: 0.25em 0.5em;
   min-width: 5em;
   position: relative;
-  color: var(--color-secondary)
+  color: var(--color-secondary);
+  user-select: none;
 }
 
 
@@ -54,6 +55,7 @@
   position: absolute;
   top: 0.25em;
   left: 0.5em;
+  user-select: none;
 }
 
 .bar-chart-item span {
