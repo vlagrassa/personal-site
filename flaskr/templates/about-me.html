@@ -305,6 +305,12 @@
       })
     } catch {}
 
+    // Try opening the corresponding section in the help modal,
+    // ignoring errors (since it's not *that* important)
+    try {
+      set_graph_help_modal(name)
+    } catch {}
+
 
     // Look up the rendering function, aborting if name is invalid
     const f = vis_map[name];
@@ -328,12 +334,6 @@
     if (header && show_graph_header_inline) {
       header.innerText = name;
     }
-
-    // Try opening the corresponding section in the help modal,
-    // ignoring errors (since it's not *that* important)
-    try {
-      set_graph_help_modal(name)
-    } catch {}
 
     // Return the data and the graph, to make them available elsewhere
     return {data, svg};
