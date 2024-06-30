@@ -73,6 +73,7 @@
     data-bs-toggle="{{ 'collapse' if is_accordion else toggle }}"
     data-bs-target="{{ target }}"
     aria-expanded="{{ 'true' if start_open else 'false' }}" aria-controls="{{ target }}"
+    href="#" tabindex="0"
   >
     <span
       class="{% if is_accordion and not start_open %}collapsed{% endif %}"
