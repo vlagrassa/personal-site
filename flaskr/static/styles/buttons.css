@@ -195,7 +195,8 @@
 
 .toggle-btn {
   user-select: none;
-  transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
+  --transition-duration: 200ms;
+  transition: transform var(--transition-duration) cubic-bezier(.36,.68,.46,1.45);
   transform:         rotate(var(--rotation-active));
   -webkit-transform: rotate(var(--rotation-active));
 }
@@ -218,11 +219,13 @@
 /* Toggle Btn Variants */
 
 .toggle-btn.toggle-btn-plus {
-  --rotation-inactive: 0deg;
-  --rotation-active:   135deg;
+  --rotation-inactive:   0deg;
+  --rotation-active:     135deg;
+  --transition-duration: 200ms;
 }
 
 .toggle-btn.toggle-btn-arrow {
-  --rotation-inactive: -90deg;
-  --rotation-active:   0deg;
+  --rotation-inactive:   -90deg;
+  --rotation-active:     0deg;
+  --transition-duration: 150ms;
 }
