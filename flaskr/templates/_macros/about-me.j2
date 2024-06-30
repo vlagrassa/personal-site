@@ -8,6 +8,68 @@
 {%- endmacro %}
 
 
+
+{%- macro render_dropdown_panel_container() %}
+<div id="dropdown-panel-container" class="pb-3">
+{{ caller() }}
+</div>
+<script type="module">
+
+  // Logs values to console if `true`
+  const DEBUG = false;
+
+  // Directly set the height value for all the dropdown panels
+  function set_panel_heights(value) {
+    Array.from(document.getElementsByClassName('dropdown-panel')).forEach(panel => {
+      panel.children[0].style.height = value;
+    })
+  }
+
+  function compute_panel_heights() {
+
+    // Set all panel heights to 0, so the parent element doesn't extend past its intended height
+    set_panel_heights(0)
+
+    // Get the container element
+    const parent = document.getElementById('dropdown-panel-container').parentElement;
+    const parent_height = parent.getBoundingClientRect().height;
+
+    // Get the combined height of all sibling elements in the column, excluding the dropdown panel container
+    const siblings = Array.from(parent.children).filter(el => el.id !== 'dropdown-panel-container');
+    const sibling_heights = siblings.reduce(((prev, next) => prev + next.getBoundingClientRect().height), 0);
+
+    // Get panel container element and all open panel bodies
+    const open_panels = Array.from(document.getElementsByClassName('dropdown-panel')).filter(el => el.classList.contains('show'));
+    const open_panel_heights = open_panels.reduce(((acc, el) => acc + el.getBoundingClientRect().height), 0);
+
+    // Get the height of the dropdown container, excluding the bodies of any currently open panel(s)
+    const container = document.getElementById('dropdown-panel-container');
+    const container_height = container.getBoundingClientRect().height - open_panel_heights;
+
+    // Compute the target height
+    const target_height = parent_height - sibling_heights - container_height;
+
+    // Optionally print out the computed values
+    if (DEBUG) {
+      console.log('parent: ', parent, parent_height)
+      console.log('siblings: ', siblings, sibling_heights)
+      console.log('container: ', container, container.getBoundingClientRect().height, container_height)
+      console.log('open panels: ', open_panels, open_panel_heights)
+    }
+
+    // Set all the panel heights to the target value
+    set_panel_heights(`${target_height}px`);
+  }
+
+  // Set the panel heights and recompute any time the window size changes
+  compute_panel_heights();
+  window.addEventListener('resize', e => {
+    compute_panel_heights();
+  });
+</script>
+{%- endmacro %}
+
+
 {%- macro render_dropdown_panel(title, start_open=false) %}
 {%- set dropdown_id = 'dropdown-panel-' + title.replace(' ', '-') %}
 <div class="col-12">
@@ -19,10 +81,10 @@
       </div>
     </div>
     <div id="{{ dropdown_id }}"
-      class="card-body p-0 row accordion-collapse collapse {% if start_open %}show{% endif %}"
+      class="card-body p-0 row dropdown-panel accordion-collapse collapse {% if start_open %}show{% endif %}"
       data-bs-parent="#dropdown-panel-container"
     >
-      <div class="pt-1 pb-2">
+      <div class="pt-1 pb-2" style="height: 0; overflow-y: scroll;">
         {{ caller() }}
       </div>
     </div>

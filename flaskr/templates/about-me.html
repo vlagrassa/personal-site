@@ -2,6 +2,7 @@
 {% from '_macros/lang.j2'     import set_lang, render_lang_object with context %}
 {% from '_macros/utils.j2'    import render_toggle_button_arrow %}
 {% from '_macros/about-me.j2' import
+    render_dropdown_panel_container,
     render_dropdown_panel,
     render_qualification,
     render_language_entry,
@@ -28,7 +29,7 @@
 
     <!-- Left Column -->
     <div class="col-3">
-      <div class="row">
+      <div id="left-column-container" class="row d-flex flex-column h-100">
 
         <!-- Title -->
         <div id="about-me-title-section" class="d-flex flex-wrap align-items-top">
@@ -67,12 +68,12 @@
         </div>
         <!-- /Title -->
 
-        <div class="d-block d-xxl-none mt-3">
+        <div class="d-block d-xxl-none pt-3">
           {% include '_includes/quick-links.j2' %}
         </div>
 
         <!-- Dropdown Panels -->
-        <div id="dropdown-panel-container">
+        {%- call render_dropdown_panel_container() %}
 
           {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
             <div class="w-100 pt-2 px-2">
@@ -95,7 +96,7 @@
           {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}
           {%- endcall %}
 
-        </div>
+        {%- endcall %}
         <!-- /Dropdown Panels -->
 
       </div>
