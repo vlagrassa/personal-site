@@ -195,35 +195,18 @@
 
 .toggle-btn {
   user-select: none;
-}
-
-.toggle-btn span {
   transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
-  display: inline-block;
-  transform:         rotate(var(--rotation-inactive));
-  -webkit-transform: rotate(var(--rotation-inactive));
-}
-
-.toggle-btn.active:not(.accordion-button) span {
   transform:         rotate(var(--rotation-active));
   -webkit-transform: rotate(var(--rotation-active));
 }
 
-
-/* Open/Close Buttons (Accordion Variant) */
+.toggle-btn.collapsed {
+  transform:         rotate(var(--rotation-inactive));
+  -webkit-transform: rotate(var(--rotation-inactive));
+}
 
 .toggle-btn.accordion-button {
   display: inline-flex;
-}
-
-.toggle-btn.accordion-button span {
-  transform:         rotate(var(--rotation-active));
-  -webkit-transform: rotate(var(--rotation-active));
-}
-
-.toggle-btn.accordion-button span.collapsed {
-  transform:         rotate(var(--rotation-inactive));
-  -webkit-transform: rotate(var(--rotation-inactive));
 }
 
 
