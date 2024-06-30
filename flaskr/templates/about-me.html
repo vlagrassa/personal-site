@@ -11,6 +11,7 @@
     render_help_button,
     render_help_section,
     render_basic_info
+    with context
 %}
 
 {% block head %}
@@ -144,10 +145,9 @@
 
       <!-- Visualization Selectors -->
       <div class="row">
-        {{ render_vis_choice('Skills',       'skills'   ) }}
-        {{ render_vis_choice('Interests',    'interests') }}
-        {{ render_vis_choice('Music Genres', 'genres'   ) }}
-        {{ render_vis_choice('Vowel Space',  'vowels'   ) }}
+        {%- for graph in graphs_doc.sections %}
+        {{ render_vis_choice( graph.head, graph.id ) }}
+        {%- endfor %}
       </div>
       <!-- Visualization Selectors -->
 
@@ -232,10 +232,9 @@
           Use the four buttons at the bottom of the page to select one of the four visualizations:
         </p>
         <ol id="help-button-list" class="d-flex justify-content-around ps-0">
-          {{ render_help_button( 'skills',    'Skills'       ) }}
-          {{ render_help_button( 'interests', 'Interests'    ) }}
-          {{ render_help_button( 'genres',    'Music Genres' ) }}
-          {{ render_help_button( 'vowels',    'Vowels'       ) }}
+          {%- for graph in graphs_doc.sections %}
+          {{ render_help_button( graph.id, graph.head ) }}
+          {%- endfor %}
         </ol>
         <p>
           Click on any of the buttons above for more information on that graph.
@@ -243,25 +242,12 @@
 
         <div id="help-accordion" class="accordion">
 
-          {%- call render_help_section('skills', 'Skills') %}
-            <h4 class="fs-6">Instructions</h4>
-            <h4 class="fs-6">Data</h4>
+          {%- for section in graphs_doc %}
+          {% from '_macros/utils.j2' import render_section with context %}
+          {%- call render_help_section( section.id, section.head ) %}
+            {{ render_section(section, custom_render=custom_render or none, header_level=5) }}
           {%- endcall %}
-
-          {%- call render_help_section('interests', 'Interests') %}
-            <h4 class="fs-6">Instructions</h4>
-            <h4 class="fs-6">Data</h4>
-            {%- endcall %}
-
-          {%- call render_help_section('genres', 'Music Genres') %}
-            <h4 class="fs-6">Instructions</h4>
-            <h4 class="fs-6">Data</h4>
-            {%- endcall %}
-
-          {%- call render_help_section('vowels', 'Vowel Space') %}
-            <h4 class="fs-6">Instructions</h4>
-            <h4 class="fs-6">Data</h4>
-            {%- endcall %}
+          {%- endfor %}
 
         </div>
       </div>

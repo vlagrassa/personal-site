@@ -36,24 +36,31 @@
 {%- endmacro %}
 
 
-{%- macro render_content(content, custom_render=none) %}
+{%- macro render_content(content, custom_render=none, header_level=3) %}
 {%- for section in content %}
+  {{ render_section(section, custom_render=custom_render) }}
+{%- endfor %}
+{%- endmacro %}
+
+
+{%- macro render_section(section, custom_render=none, header_level=3) %}
   {%- with section_id = section.id %}
   <div id="{{ section_id }}">
     {%- if section.show %}
-    {{ render_header(section.head, section.level + 3) }}
+    {{ render_header(section.head, section.level + header_level) }}
     {%- endif %}
 
     {%- for line in section %}
-    {%- if line.is_text %}
+    {%- if line.lineType == 'DocumentLineText' %}
       <p> {{ render_lang_object(line, custom_render=custom_render) }} </p>
-    {%- else %}
+    {%- elif line.lineType == 'DocumentSection' %}
+      {{ render_section(line, custom_render=custom_render, header_level=header_level) }}
+    {%- elif line.lineType == 'DocumentLineInsert' %}
       {% include '_includes/' + line.name + '.j2' ignore missing with context %}
     {%- endif %}
     {%- endfor %}
   </div>
   {%- endwith %}
-{%- endfor %}
 {%- endmacro %}
 
 

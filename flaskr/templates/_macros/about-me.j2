@@ -1,4 +1,5 @@
 {% from '_macros/utils.j2' import render_open_close_button, loader %}
+{% from '_macros/lang.j2'  import render_lang_object with context %}
 
 
 
@@ -52,10 +53,10 @@
 
 {%- macro render_vis_choice(title, vis_id) %}
 <div class="mt-3 col-3">
-  <a href="javascript:render_graph('{{ vis_id }}')" title='Graph my {{ title | lower }}'>
+  <a href="javascript:render_graph('{{ vis_id }}')" title='Graph my {{ title["en"] | lower }}'>
   <div class="card double-outline title-bottom px-3 py-2">
     <h5 class="card-title mt-0">
-      {{ title }}
+      {{ render_lang_object(title) }}
     </h5>
   </div>
   </a>
@@ -80,7 +81,11 @@
 
 {%- macro render_help_button(section_id, title) %}
 <li class="d-inline-block">
-  <a id="help-button-{{ section_id }}" href="#" class="help-section-button collapsed" data-bs-toggle="collapse" data-bs-target="#help-section-{{ section_id }}">{{ title }}</a>
+  <a id="help-button-{{ section_id }}"
+    href="#"
+    class="help-section-button collapsed"
+    data-bs-toggle="collapse" data-bs-target="#help-section-{{ section_id }}"
+  >{{ render_lang_object( title ) }}</a>
 </li>
 {%- endmacro %}
 
@@ -88,7 +93,7 @@
 <div id="help-section-{{ section_id }}" class="help-section accordion-collapse collapse" data-bs-parent="#help-accordion">
   <div style="height: 1em"></div>
   <hr />
-  <h3 class="fs-5 text-center">{{ title }}</h3>
+  <h3 class="fs-5 text-center">{{ render_lang_object(title) }}</h3>
   {{ caller () }}
   <hr />
 </div>

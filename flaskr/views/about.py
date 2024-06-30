@@ -4,6 +4,8 @@ from flask import (
 
 from ..utils.files import open_app_file
 from ..utils.map   import MapDictReader
+from ..utils.parse  import TextDocument
+from ..utils.render import custom_render_urls
 
 
 about_bp = Blueprint('about', __name__, url_prefix='/about')
@@ -22,4 +24,7 @@ def about():
     'data_languages': data_languages,
     'initial_graph':  request.args.get('g'),
     'initial_tab':    request.args.get('t'),
+
+    'graphs_doc': TextDocument.parse_file('data-standin/graphs-help'),
+    'custom_render': custom_render_urls,
   })

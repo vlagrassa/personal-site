@@ -14,6 +14,10 @@ class DocumentLine(ABC):
   @abstractmethod
   def is_empty(self): pass
 
+  @property
+  def lineType(self):
+    return self.__class__.__name__
+
 
 class DocumentLineInsert(DocumentLine):
   def __init__(self, name):
@@ -67,7 +71,7 @@ class DocumentLineText(DocumentLine):
 
 
 
-class DocumentSection():
+class DocumentSection(DocumentLine):
 
   @classmethod
   def make_empty(cls):
@@ -80,38 +84,57 @@ class DocumentSection():
     self.head                       = {}
     self.body  : List[DocumentLine] = []
 
+    self.current_section: DocumentSection = self
+
   def __iter__(self):
     return (b for b in self.body)
 
   def add_title(self, text, lang=None, level=None):
-    self.level        = level
-    self.head[ lang ] = text
+    self.current_section.level        = level
+    self.current_section.head[ lang ] = text
 
 
   def get_line(self, class_, *args, **kwargs):
-    if not len(self.body) or not isinstance(self.body[-1], class_):
-      self.body.append( class_(*args, **kwargs) )
-    return self.body[-1]
+    if not len(self.current_section.body) or not isinstance(self.current_section.body[-1], class_):
+      self.current_section.body.append( class_(*args, **kwargs) )
+    return self.current_section.body[-1]
 
   def add_line(self, v):
-    if len(self.body) and self.body[-1].is_empty:
-      self.body = self.body[:-1]
-    self.body.append(v)
+    if len(self.current_section.body) and self.current_section.body[-1].is_empty:
+      self.current_section.body = self.current_section.body[:-1]
+    self.current_section.body.append(v)
 
 
   def add_text(self, text, lang=None):
 
-    current_line = self.get_line(DocumentLineText)
+    current_line = self.current_section.get_line(DocumentLineText)
 
     if current_line.finished_lang(lang):
       current_line = DocumentLineText()
-      self.add_line( current_line )
+      self.current_section.add_line( current_line )
 
     current_line.add_line(text, lang=lang)
 
 
   def add_insert(self, name):
     self.add_line( DocumentLineInsert(name) )
+
+
+  def add_subsection(self, section):
+    self.current_section = section
+    self.body.append(self.current_section)
+
+
+  def parsing_subsection(self):
+    return self != self.current_section
+
+
+  def is_empty(self):
+    return all( item.is_empty() for item in self.body )
+
+
+  def is_text(self):
+    return True
 
 
 
@@ -157,6 +180,9 @@ class TextDocument():
     if line.startswith('!section'):
       self.parse_section(line)
 
+    elif line.startswith('!subsection'):
+      self.parse_subsection(line)
+
     elif line.startswith('#'):
       self.parse_title(line)
 
@@ -176,6 +202,14 @@ class TextDocument():
       line = line[len('!section '):]
     self.latest_section = DocumentSection(line.strip(), show=show)
 
+  def parse_subsection(self, line):
+    if line.startswith('!subsection-notitle'):
+      show = False
+      line = line[len('!subsection-notitle'):]
+    else:
+      show = True
+      line = line[len('!subsection '):]
+    self.latest_section.add_subsection( DocumentSection(line.strip(), show=show) )
 
   def parse_title(self, line):
     r = re.match(r'^(#+) +\[([a-z]+)\] +(.*)$', line)
