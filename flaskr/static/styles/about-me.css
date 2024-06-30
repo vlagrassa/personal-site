@@ -78,6 +78,29 @@
 
 
 
+.vis-choice-button .card {
+  transition: transform 100ms cubic-bezier(.36,.68,.46,1.45);
+}
+
+.vis-choice-button.inactive .card {
+  transform:         scale(0.8);
+  -webkit-transform: scale(0.8);
+}
+
+.vis-choice-button.inactive:hover .card {
+  transform:         scale(0.9);
+  -webkit-transform: scale(0.9);
+}
+
+.vis-choice-button.inactive span {
+  color: var(--color-gray);
+}
+
+.vis-choice-button:hover span {
+  color: var(--color-primary);
+}
+
+
 svg.graph-genres .arc {
   fill-opacity: 0.6;
 }

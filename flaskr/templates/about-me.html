@@ -292,7 +292,19 @@
   });
 
 
+  const show_graph_header_inline = false;
+
+
   async function render_graph(name) {
+
+    // Update the buttons to show the new selected graph, ignoring errors
+    try {
+      Array.from(document.getElementsByClassName(`vis-choice-button`)).forEach((el) => {
+        el.classList.toggle('active',   el.dataset.visId === name);
+        el.classList.toggle('inactive', el.dataset.visId !== name);
+      })
+    } catch {}
+
 
     // Look up the rendering function, aborting if name is invalid
     const f = vis_map[name];
@@ -303,6 +315,7 @@
 
     // Get container element(s) from page
     const parent = document.getElementById('vis-container');
+    const header = document.getElementById('vis-header');
 
     // Create the graph element
     const svg = f(parent, data)
@@ -310,6 +323,11 @@
     // Add the graph
     parent.innerHTML = '';
     parent.append(svg.node());
+
+    // Set the header, if applicable
+    if (header && show_graph_header_inline) {
+      header.innerText = name;
+    }
 
     // Try opening the corresponding section in the help modal,
     // ignoring errors (since it's not *that* important)

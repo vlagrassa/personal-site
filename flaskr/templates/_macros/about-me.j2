@@ -53,9 +53,9 @@
 
 {%- macro render_vis_choice(title, vis_id) %}
 <div class="mt-3 col-3">
-  <a href="javascript:render_graph('{{ vis_id }}')" title='Graph my {{ title["en"] | lower }}'>
-  <div class="card double-outline title-bottom px-3 py-2">
-    <h5 class="card-title mt-0">
+  <a class="vis-choice-button" data-vis-id="{{ vis_id }}" href="javascript:render_graph('{{ vis_id }}')" title='Graph my {{ title["en"] | lower }}'>
+  <div class="card double-outline title-bottom px-1 py-2">
+    <h5 class="card-title mt-0" style="font-size: 0.8rem;">
       {{ render_lang_object(title) }}
     </h5>
   </div>
