@@ -64,10 +64,10 @@
 {%- endmacro %}
 
 
-{% macro render_open_close_button(target, toggle, start_open=false) %}
+{%- macro render_open_close_button(target, toggle, class_name, symbol, start_open=false, size=1) %}
 {%- with is_accordion = (toggle == 'accordion') %}
   <a
-    class="open-close-btn {% if is_accordion %}accordion-button{% elif start_open %}active{% endif %} fs-4"
+    class="toggle-btn toggle-btn-{{ class_name }} {% if is_accordion %}accordion-button{% elif start_open %}active{% endif %} fs-{{ size }}"
     type="button" data-bs-toggle="button"
     aria-expanded="{{ 'true' if start_open else 'false' }}" aria-controls="{{ target }}"
   >
@@ -75,20 +75,20 @@
       class="{% if is_accordion and not start_open %}collapsed{% endif %}"
       data-bs-toggle="{{ 'collapse' if is_accordion else toggle }}"
       data-bs-target="{{ target }}"
-    >+</span>
+    >{{ symbol }}</span>
   </a>
   {%- endwith %}
-{% endmacro %}
+{%- endmacro %}
 
 
-{% macro render_open_arrow_button(target, toggle) %}
-  <a
-    class="open-arrow-btn" type="button" data-bs-toggle="button"
-    aria-expanded="false" aria-controls="{{ target }}"
-  >
-    <span data-bs-toggle="{{ toggle }}" data-bs-target="{{ target }}">▼</span>
-  </a>
-{% endmacro %}
+{%- macro render_toggle_button_plus(target, toggle, start_open=false, size=4) %}
+{{ render_open_close_button( target, toggle, 'plus', '+', start_open=start_open, size=size ) }}
+{%- endmacro %}
+
+
+{%- macro render_toggle_button_arrow(target, toggle, start_open=false, size=6) %}
+{{ render_open_close_button( target, toggle, 'arrow', '▼', start_open=start_open, size=size ) }}
+{%- endmacro %}
 
 
 {%- macro loader() %}

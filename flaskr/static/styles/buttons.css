@@ -193,47 +193,48 @@
 
 /* Open/Close Buttons */
 
-.open-close-btn {
+.toggle-btn {
   user-select: none;
 }
 
-.open-close-btn span {
+.toggle-btn span {
   transition: transform 200ms cubic-bezier(.36,.68,.46,1.45);
+  display: inline-block;
+  transform:         rotate(var(--rotation-inactive));
+  -webkit-transform: rotate(var(--rotation-inactive));
 }
 
-.open-close-btn.active:not(.accordion-button) span {
-  transform:         rotate(135deg);
-  -webkit-transform: rotate(135deg);
+.toggle-btn.active:not(.accordion-button) span {
+  transform:         rotate(var(--rotation-active));
+  -webkit-transform: rotate(var(--rotation-active));
 }
 
 
 /* Open/Close Buttons (Accordion Variant) */
 
-.open-close-btn.accordion-button {
+.toggle-btn.accordion-button {
   display: inline-flex;
 }
 
-.open-close-btn.accordion-button span {
-  transform:         rotate(135deg);
-  -webkit-transform: rotate(135deg);
+.toggle-btn.accordion-button span {
+  transform:         rotate(var(--rotation-active));
+  -webkit-transform: rotate(var(--rotation-active));
 }
 
-.open-close-btn.accordion-button span.collapsed {
-  transform:         none;
-  -webkit-transform: none;
+.toggle-btn.accordion-button span.collapsed {
+  transform:         rotate(var(--rotation-inactive));
+  -webkit-transform: rotate(var(--rotation-inactive));
 }
 
 
-/* Open/Close Arrow Buttons */
+/* Toggle Btn Variants */
 
-.open-arrow-btn {
-  transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
-  user-select: none;
-  transform: rotate(-90deg);
-  -webkit-transform: rotate(-90deg);
+.toggle-btn.toggle-btn-plus {
+  --rotation-inactive: 0deg;
+  --rotation-active:   135deg;
 }
 
-.open-arrow-btn.active {
-  transform: rotate(0deg);
-  -webkit-transform: rotate(0deg);
+.toggle-btn.toggle-btn-arrow {
+  --rotation-inactive: -90deg;
+  --rotation-active:   0deg;
 }
