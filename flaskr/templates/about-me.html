@@ -92,7 +92,7 @@
           {%- endcall %}
 
           {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies')) %}
-            {{ render_proficiency_chart('proficiencies-svg', {}) }}
+            {{ render_proficiency_chart('proficiencies-svg', {}, proficiencies) }}
           {%- endcall %}
 
           {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}

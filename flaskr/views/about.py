@@ -25,6 +25,7 @@ def about():
     'initial_graph':  request.args.get('g'),
     'initial_tab':    request.args.get('t'),
 
-    'graphs_doc': TextDocument.parse_file('data-standin/graphs-help'),
+    'graphs_doc':    TextDocument.parse_file('data-standin/graphs-help'),
+    'proficiencies': TextDocument.parse_file('data-standin/proficiencies'),
     'custom_render': custom_render_urls,
   })

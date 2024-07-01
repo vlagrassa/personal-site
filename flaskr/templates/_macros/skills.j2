@@ -1,4 +1,4 @@
-{%- macro render_proficiency_chart(elementId, scores) %}
+{%- macro render_proficiency_chart(elementId, scores, config) %}
 <div id="{{elementId}}" class="h-100"></div>
 
 <script type="module">
@@ -7,6 +7,11 @@
   const parent = document.getElementById('{{ elementId }}')
 
   const config = {
+    'labels': [
+      {%- for section in config %}
+      { 'id': '{{ section.id }}', 'title': {{ section.head }} },
+      {%- endfor %}
+    ],
     'palette': {
       'border':     'black',
       'grid':       'lightgray',

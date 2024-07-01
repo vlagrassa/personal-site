@@ -1,5 +1,8 @@
 export function graph_proficiencies(container, data, config) {
 
+  if (!config.labels) {
+    throw Error('Config object must contain a field "labels".');
+  }
   if (!config.palette) {
     throw Error('Config object must contain a field "palette".');
   }
@@ -18,6 +21,9 @@ export function graph_proficiencies(container, data, config) {
 
   // Add the background (border & gridlines)
   addBackground(svg, config.palette)
+
+  // Add the labels
+  const labels = config.labels.map((label, idx) => addLabel(svg, label.title['en'], idx))
 
   // Plot the data
   svg.append('polygon')
@@ -86,6 +92,36 @@ function addBackground(parent, color_palette) {
 
   // Return the group element
   return g;
+}
+
+
+/**
+ * Add a text label for one of the sections.
+ * On side labels, breaks text into lines at <wbr> tags; on top & bottom labels, replaces <wbr> tags with spaces.
+ *
+ * Returns the D3 object, so further attributes / styles / etc can be set.
+ */
+function addLabel(parent, text, column) {
+  const [x, y] = hexCoordinates(column, 5.75);
+
+  const text_anchor = [
+    'middle', 'start', 'start', 'middle', 'end', 'end',
+  ][column];
+
+  if ( !(column % 3) ) {
+    text = text.replace('<wbr>', ' ')
+  }
+
+  const components = text.split('<wbr>')
+  return components.map((t, idx) => {
+    return parent.append('text')
+      .attr('text-anchor', text_anchor)
+      .attr('dominant-baseline', 'middle')
+      .attr('font-family', 'var(--font-head)')
+      .attr('dx', x)
+      .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
+      .text(t)
+  })
 }
 
 
