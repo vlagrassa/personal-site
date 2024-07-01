@@ -20,8 +20,10 @@
     },
   }
 
+  const data = {{ scores }};
+
   // Create the graph element
-  const svg = graph_proficiencies(parent, {}, config)
+  const svg = graph_proficiencies(parent, data, config)
 
   // Add the graph
   parent.innerHTML = '';

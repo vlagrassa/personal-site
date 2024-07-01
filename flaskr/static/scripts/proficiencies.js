@@ -25,16 +25,14 @@ export function graph_proficiencies(container, data, config) {
   // Add the labels
   const labels = config.labels.map((label, idx) => addLabel(svg, label.title['en'], idx))
 
+  // Map the graph data to hex coordinates
+  const plotData = config.labels.map(
+    (label, idx) => hexCoordinates(idx, data[label.id] || 0)
+  )
+
   // Plot the data
   svg.append('polygon')
-    .attr('points', pointsToPath([
-      hexCoordinates(0, 5),
-      hexCoordinates(1, 1),
-      hexCoordinates(2, 2),
-      hexCoordinates(3, 5),
-      hexCoordinates(4, 3),
-      hexCoordinates(5, 4),
-    ]))
+    .attr('points',        pointsToPath(plotData))
     .style('stroke-width', '0.5px')
     .style('stroke',       config.palette.dataStroke)
     .style('fill',         config.palette.dataFill)
