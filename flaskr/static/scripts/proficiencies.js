@@ -8,7 +8,7 @@ export function graph_proficiencies(container, data, config) {
   }
 
   // Specify the chart’s dimensions
-  const width  = '140';
+  const width  = '175';
   const height = '125';
 
   // Create the SVG container
