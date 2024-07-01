@@ -1,0 +1,16 @@
+{%- macro render_proficiency_chart(elementId, scores) %}
+<div id="{{elementId}}" class="h-100"></div>
+
+<script type="module">
+  import { graph_proficiencies } from "{{ url_for('static', filename='scripts/proficiencies.js') }}";
+
+  const parent = document.getElementById('{{ elementId }}')
+
+  // Create the graph element
+  const svg = graph_proficiencies(parent, {})
+
+  // Add the graph
+  parent.innerHTML = '';
+  parent.append(svg.node());
+</script>
+{%- endmacro %}
