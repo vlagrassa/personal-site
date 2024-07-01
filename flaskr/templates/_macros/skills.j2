@@ -6,8 +6,17 @@
 
   const parent = document.getElementById('{{ elementId }}')
 
+  const config = {
+    'palette': {
+      'border':     'black',
+      'grid':       'lightgray',
+      'dataStroke': 'var(--color-primary)',
+      'dataFill':   'var(--color-primary-1)',
+    },
+  }
+
   // Create the graph element
-  const svg = graph_proficiencies(parent, {})
+  const svg = graph_proficiencies(parent, {}, config)
 
   // Add the graph
   parent.innerHTML = '';

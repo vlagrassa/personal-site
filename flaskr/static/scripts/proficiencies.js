@@ -1,12 +1,8 @@
-export function graph_proficiencies(container, data) {
+export function graph_proficiencies(container, data, config) {
 
-  // TODO: Pass this into the function
-  const color_palette = {
-    'border':     'black',
-    'grid':       'lightgray',
-    'dataStroke': 'var(--color-primary)',
-    'dataFill':   'var(--color-primary-1)',
-  };
+  if (!config.palette) {
+    throw Error('Config object must contain a field "palette".');
+  }
 
   // Specify the chart’s dimensions
   const width  = '140';
@@ -21,7 +17,7 @@ export function graph_proficiencies(container, data) {
     .style("font-size", "6px")
 
   // Add the background (border & gridlines)
-  addBackground(svg, color_palette)
+  addBackground(svg, config.palette)
 
   // Plot the data
   svg.append('polygon')
@@ -34,8 +30,8 @@ export function graph_proficiencies(container, data) {
       hexCoordinates(5, 4),
     ]))
     .style('stroke-width', '0.5px')
-    .style('stroke', color_palette.dataStroke)
-    .style('fill',   color_palette.dataFill)
+    .style('stroke',       config.palette.dataStroke)
+    .style('fill',         config.palette.dataFill)
     .style('fill-opacity', '0.25')
 
   return svg;
