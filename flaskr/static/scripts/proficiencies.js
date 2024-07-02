@@ -21,7 +21,7 @@ export function graph_proficiencies(container, data, config) {
 
   // Add the labels
   const labels = config.labels.map(
-    (label, idx) => addLabel(svg, label.title['en'], idx)
+    (label, idx) => addLabel(svg, label, idx, config)
   )
 
   // Map the graph data to hex coordinates
@@ -90,30 +90,40 @@ function addBackground(parent) {
  *
  * Returns the D3 object, so further attributes / styles / etc can be set.
  */
-function addLabel(parent, text, column) {
+function addLabel(parent, label, column, config) {
   const [x, y] = hexCoordinates(column, 5.75);
 
   const text_anchor = [
     'middle', 'start', 'start', 'middle', 'end', 'end',
   ][column];
 
-  if ( !(column % 3) ) {
-    text = text.replace('<wbr>', ' ')
-  }
-  const components = text.split('<wbr>')
-
   const g = parent.append('g')
     .attr("class", "label-text");
 
-  components.forEach((t, idx) => {
-    g
+  Object.keys(label.title).forEach((lang) => {
+
+    // Get the title text, breaking or splitting on <wbr> tags based on position
+    let text = label.title[lang]
+    if ( !(column % 3) ) {
+      text = text.replace('<wbr>', ' ')
+    }
+    const components = text.split('<wbr>')
+
+    // Map each line of text to am element and add to the group
+    components.forEach((t, idx) => {
+      g
       .append('text')
+        .attr('lang',      lang)
+        .attr('data-lang', lang)
+        .attr('class', config.initialLang == lang ? '' : 'hide')
         .attr('text-anchor', text_anchor)
         .attr('dominant-baseline', 'middle')
         .attr('dx', x)
         .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
         .text(t)
-  })
+    })
+  });
+
   return g;
 }
 

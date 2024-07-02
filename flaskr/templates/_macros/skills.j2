@@ -13,6 +13,7 @@
       { 'id': '{{ section.id }}', 'title': {{ section.head }} },
       {%- endfor %}
     ],
+    'initialLang': '{{ lang }}',
   }
 
   const data = {{ scores }};
