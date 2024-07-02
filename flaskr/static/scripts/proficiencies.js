@@ -105,7 +105,7 @@ function addLabel(parent, label, column, config) {
     // Get the title text, breaking or splitting on <wbr> tags based on position
     let text = label.title[lang]
     if ( !(column % 3) ) {
-      text = text.replace('<wbr>', ' ')
+      text = text.replace('<wbr>', '')
     }
     const components = text.split('<wbr>')
 
@@ -120,7 +120,8 @@ function addLabel(parent, label, column, config) {
           .attr('dominant-baseline', 'middle')
           .attr('dx', x)
           .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
-          .text(t)
+          .text(t.trim())
+          .on('click', () => { config.onClick( label.id ) })
     })
   });
 

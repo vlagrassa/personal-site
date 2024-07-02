@@ -1,11 +1,41 @@
+{% from '_macros/utils.j2'    import render_content %}
+
+
+
 {%- macro render_proficiency_chart(elementId, scores, config) %}
-<div id="{{elementId}}" class="h-100"></div>
+<div id="{{ elemendId }}-tab-container" class="h-100 w-100" style="position: relative;">
+
+  <div id="{{ elementId }}" class="h-100 w-100"></div>
+
+  <div id="{{ elementId }}-overlay" class="proficiency-chart-overlay py-2 text-start">
+    <div id="{{ elementId }}-overlay-content">
+    {{ render_content(config, header_level=6) }}
+    </div>
+  </div>
+
+</div>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/proficiencies.css') }}">
 <script type="module">
   import { graph_proficiencies } from "{{ url_for('static', filename='scripts/proficiencies.js') }}";
 
-  const parent = document.getElementById('{{ elementId }}')
+  // Get relevant elements
+  const parent  = document.getElementById('{{ elementId }}')
+  const overlay = document.getElementById('{{ elementId }}-overlay')
+  const content = document.getElementById('{{ elementId }}-overlay-content')
+
+  // Show the overlay element
+  const showOverlay = (selected) => {
+    Array.from(content.children).forEach((el) => {
+      el.classList.toggle('hide', el.dataset.section !== selected);
+    })
+    overlay.classList.add('active');
+  }
+
+  // Hide the overlay element
+  const hideOverlay = () => {
+    overlay.classList.remove('active');
+  }
 
   const config = {
     'labels': [
@@ -13,6 +43,7 @@
       { 'id': '{{ section.id }}', 'title': {{ section.head }} },
       {%- endfor %}
     ],
+    'onClick': showOverlay,
     'initialLang': '{{ lang }}',
   }
 
