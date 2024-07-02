@@ -33,12 +33,14 @@
     })
     currentlySelected = selected;
     overlay.classList.add('active');
+    parent.querySelectorAll(`.label-text`).forEach(el => el.tabIndex = -1)
   }
 
   // Hide the overlay element
   const hideOverlay = () => {
     overlay.classList.remove('active');
-    document.getElementById('{{ elementId }}').querySelector(`.label-text[data-label-id=${currentlySelected}]`).focus()
+    parent.querySelectorAll(`.label-text`).forEach(el => el.tabIndex = 0)
+    parent.querySelector(`.label-text[data-label-id=${currentlySelected}]`).focus()
   }
 
   const config = {
