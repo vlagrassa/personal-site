@@ -1,11 +1,11 @@
-svg.proficiencies .border-outer {
-  stroke:       black;
+svg.proficiencies .border-inner {
+  stroke:       var(--color-off-black);
   stroke-width: 1px;
   fill:         none;
 }
 
-svg.proficiencies .border-inner {
-  stroke:       black;
+svg.proficiencies .border-outer {
+  stroke:       var(--color-off-black);
   stroke-width: 0.5px;
   fill:         none;
 }

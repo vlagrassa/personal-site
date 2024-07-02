@@ -5,7 +5,7 @@ export function graph_proficiencies(container, data, config) {
   }
 
   // Specify the chart’s dimensions
-  const width  = '175';
+  const width  = '190';
   const height = '125';
 
   // Create the SVG container
@@ -49,12 +49,12 @@ function addBackground(parent) {
   const g = parent.append('g')
 
   // Compute corners
-  const [x0, y0] = hexCoordinates(0, 5);
-  const [x1, y1] = hexCoordinates(1, 5);
-  const [x2, y2] = hexCoordinates(2, 5);
-  const [x3, y3] = hexCoordinates(3, 5);
-  const [x4, y4] = hexCoordinates(4, 5);
-  const [x5, y5] = hexCoordinates(5, 5);
+  const [x0, y0] = hexCoordinates(0, 5.1);
+  const [x1, y1] = hexCoordinates(1, 5.1);
+  const [x2, y2] = hexCoordinates(2, 5.1);
+  const [x3, y3] = hexCoordinates(3, 5.1);
+  const [x4, y4] = hexCoordinates(4, 5.1);
+  const [x5, y5] = hexCoordinates(5, 5.1);
 
   // Add the straight lines across the hexagon
   g.append('line')
@@ -75,8 +75,8 @@ function addBackground(parent) {
   addHexagon(g, 20, 'grid');
   addHexagon(g, 30, 'grid');
   addHexagon(g, 40, 'grid');
-  addHexagon(g, 51, 'border-outer');
-  addHexagon(g, 53, 'border-inner');
+  addHexagon(g, 51, 'border-inner');
+  addHexagon(g, 53, 'border-outer');
   addHexagon(g,  1, 'grid').style('fill', 'white');
 
   // Return the group element
