@@ -112,15 +112,15 @@ function addLabel(parent, label, column, config) {
     // Map each line of text to am element and add to the group
     components.forEach((t, idx) => {
       g
-      .append('text')
-        .attr('lang',      lang)
-        .attr('data-lang', lang)
-        .attr('class', config.initialLang == lang ? '' : 'hide')
-        .attr('text-anchor', text_anchor)
-        .attr('dominant-baseline', 'middle')
-        .attr('dx', x)
-        .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
-        .text(t)
+        .append('text')
+          .attr('lang',      lang)
+          .attr('data-lang', lang)
+          .attr('class', config.initialLang == lang ? '' : 'hide')
+          .attr('text-anchor', text_anchor)
+          .attr('dominant-baseline', 'middle')
+          .attr('dx', x)
+          .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
+          .text(t)
     })
   });
 
