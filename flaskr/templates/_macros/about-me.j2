@@ -70,7 +70,7 @@
 {%- endmacro %}
 
 
-{%- macro render_dropdown_panel(title, start_open=false) %}
+{%- macro render_dropdown_panel(title, start_open=false, overflow=true) %}
 {%- set dropdown_id = 'dropdown-panel-' + title.replace(' ', '-') %}
 <div class="col-12">
   <div class="card double-outline title-bottom px-3 py-2 mt-3">
@@ -84,7 +84,7 @@
       class="card-body p-0 row dropdown-panel accordion-collapse collapse {% if start_open %}show{% endif %}"
       data-bs-parent="#dropdown-panel-container"
     >
-      <div class="pt-1 pb-2" style="height: 0; overflow-y: scroll;">
+      <div class="pt-1 pb-2" style="height: 0; {% if overflow %}overflow-y: scroll;{% endif %}">
         {{ caller() }}
       </div>
     </div>

@@ -91,7 +91,7 @@
             </div>
           {%- endcall %}
 
-          {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies')) %}
+          {%- call render_dropdown_panel('Proficiencies', start_open=(initial_tab=='proficiencies'), overflow=false) %}
             {{ render_proficiency_chart('proficiencies-svg', {}, proficiencies) }}
           {%- endcall %}
 
