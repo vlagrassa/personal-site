@@ -110,7 +110,6 @@ function addLabel(parent, text, column) {
       .append('text')
         .attr('text-anchor', text_anchor)
         .attr('dominant-baseline', 'middle')
-        .attr('font-family', 'var(--font-head)')
         .attr('dx', x)
         .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
         .text(t)

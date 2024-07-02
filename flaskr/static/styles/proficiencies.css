@@ -25,7 +25,8 @@ svg.proficiencies .plot {
 
 svg.proficiencies .label-text text {
   fill: var(--color-off-black);
-  transition: all 100ms ease;
+  transition: all 75ms ease;
+  font-family: var(--font-head);
 }
 
 svg.proficiencies .label-text:hover text {
