@@ -98,7 +98,16 @@ function addLabel(parent, label, column, config) {
   ][column];
 
   const g = parent.append('g')
-    .attr("class", "label-text");
+    .attr('tabindex', 0)
+    .attr("class", "label-text")
+    .attr('data-label-id', label.id)
+
+  // Enable keyboard navigation (enter and space keys)
+  g.on("keypress", (event) => {
+    if (event.keyCode === 13 || event.key === ' ') {
+      config.onClick( label.id );
+    }
+  });
 
   Object.keys(label.title).forEach((lang) => {
 

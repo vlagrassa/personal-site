@@ -24,17 +24,21 @@
   const overlay = document.getElementById('{{ elementId }}-overlay')
   const content = document.getElementById('{{ elementId }}-overlay-content')
 
+  let currentlySelected = null;
+
   // Show the overlay element
   const showOverlay = (selected) => {
     Array.from(content.children).forEach((el) => {
       el.classList.toggle('hide', el.dataset.section !== selected);
     })
+    currentlySelected = selected;
     overlay.classList.add('active');
   }
 
   // Hide the overlay element
   const hideOverlay = () => {
     overlay.classList.remove('active');
+    document.getElementById('{{ elementId }}').querySelector(`.label-text[data-label-id=${currentlySelected}]`).focus()
   }
 
   const config = {

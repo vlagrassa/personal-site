@@ -31,10 +31,16 @@ svg.proficiencies .label-text text {
   user-select: none;
 }
 
-svg.proficiencies .label-text:hover text {
+svg.proficiencies .label-text:hover text,
+svg.proficiencies .label-text:focus-visible text {
   fill: var(--color-primary);
   font-size: 1.2em;
   font-weight: bold;
+}
+
+svg.proficiencies .label-text:focus-visible {
+  outline: 2px solid black;
+  border-radius: 1px;
 }
 
 
@@ -62,4 +68,12 @@ svg.proficiencies .label-text:hover text {
 
 .proficiency-chart-overlay h6 {
   font-size: 1em;
+}
+
+.proficiency-chart-overlay button {
+  display: none;
+}
+
+.proficiency-chart-overlay.active button {
+  display: unset;
 }
