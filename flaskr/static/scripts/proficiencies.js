@@ -3,9 +3,6 @@ export function graph_proficiencies(container, data, config) {
   if (!config.labels) {
     throw Error('Config object must contain a field "labels".');
   }
-  if (!config.palette) {
-    throw Error('Config object must contain a field "palette".');
-  }
 
   // Specify the chart’s dimensions
   const width  = '175';
@@ -13,18 +10,18 @@ export function graph_proficiencies(container, data, config) {
 
   // Create the SVG container
   const svg = d3.create("svg")
-    .attr('class', 'proficiencies-svg')
+    .attr('class', 'proficiencies')
     .attr("width",  '100%')
     .attr("height", '100%')
     .attr("viewBox", [-(width / 2), -(height / 2), width, height])
     .style("font-size", "6px")
 
   // Add the background (border & gridlines)
-  addBackground(svg, config.palette)
+  addBackground(svg)
 
   // Add the labels
   const labels = config.labels.map(
-    (label, idx) => addLabel(svg, label.title['en'], idx, config.palette)
+    (label, idx) => addLabel(svg, label.title['en'], idx)
   )
 
   // Map the graph data to hex coordinates
@@ -33,12 +30,7 @@ export function graph_proficiencies(container, data, config) {
   )
 
   // Plot the data
-  svg.append('polygon')
-    .attr('points',        pointsToPath(plotData))
-    .style('stroke-width', '0.5px')
-    .style('stroke',       config.palette.dataStroke)
-    .style('fill',         config.palette.dataFill)
-    .style('fill-opacity', '0.25')
+  svg.append('polygon').attr('points', pointsToPath(plotData)).attr('class', 'plot')
 
   return svg;
 }
@@ -51,7 +43,7 @@ export function graph_proficiencies(container, data, config) {
 /**
  * Add the background hexagon and gridlines.
  */
-function addBackground(parent, color_palette) {
+function addBackground(parent) {
 
   // Create a new group for the background
   const g = parent.append('g')
@@ -68,27 +60,24 @@ function addBackground(parent, color_palette) {
   g.append('line')
     .attr('x1', x0).attr('y1', y0)
     .attr('x2', x3).attr('y2', y3)
-    .style('stroke', color_palette.grid)
-    .style('stroke-width', '0.5px')
+    .attr('class', 'grid')
   g.append('line')
     .attr('x1', x1).attr('y1', y1)
     .attr('x2', x4).attr('y2', y4)
-    .style('stroke', color_palette.grid)
-    .style('stroke-width', '0.5px')
+    .attr('class', 'grid')
   g.append('line')
     .attr('x1', x2).attr('y1', y2)
     .attr('x2', x5).attr('y2', y5)
-    .style('stroke', color_palette.grid)
-    .style('stroke-width', '0.5px')
+    .attr('class', 'grid')
 
   // Add the hexagons themselves
-  addHexagon(g, 10, color_palette.grid);
-  addHexagon(g, 20, color_palette.grid);
-  addHexagon(g, 30, color_palette.grid);
-  addHexagon(g, 40, color_palette.grid);
-  addHexagon(g, 51, color_palette.border).style('stroke-width', '1px');
-  addHexagon(g, 53, color_palette.border);
-  addHexagon(g,  1, color_palette.grid).style('fill', 'white');
+  addHexagon(g, 10, 'grid');
+  addHexagon(g, 20, 'grid');
+  addHexagon(g, 30, 'grid');
+  addHexagon(g, 40, 'grid');
+  addHexagon(g, 51, 'border-outer');
+  addHexagon(g, 53, 'border-inner');
+  addHexagon(g,  1, 'grid').style('fill', 'white');
 
   // Return the group element
   return g;
@@ -101,7 +90,7 @@ function addBackground(parent, color_palette) {
  *
  * Returns the D3 object, so further attributes / styles / etc can be set.
  */
-function addLabel(parent, text, column, palette) {
+function addLabel(parent, text, column) {
   const [x, y] = hexCoordinates(column, 5.75);
 
   const text_anchor = [
@@ -114,7 +103,7 @@ function addLabel(parent, text, column, palette) {
   const components = text.split('<wbr>')
 
   const g = parent.append('g')
-    .classed("label-text", true);
+    .attr("class", "label-text");
 
   components.forEach((t, idx) => {
     g
@@ -134,12 +123,10 @@ function addLabel(parent, text, column, palette) {
  * Add a hexagon with a given radius and color.
  * Returns the D3 object, so further attributes / styles / etc can be set.
  */
-function addHexagon(svg, radius, color) {
+function addHexagon(svg, radius, _class="") {
   return svg.append('polygon')
     .attr('points', hexagonPointsPath(0, 0, radius))
-    .style('stroke', color)
-    .style('stroke-width', '0.5px')
-    .style('fill', 'none')
+    .attr('class', _class)
 }
 
 

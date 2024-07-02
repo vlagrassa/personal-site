@@ -13,20 +13,12 @@
       { 'id': '{{ section.id }}', 'title': {{ section.head }} },
       {%- endfor %}
     ],
-    'palette': {
-      'border':     'black',
-      'grid':       'lightgray',
-      'dataStroke': 'var(--color-primary)',
-      'dataFill':   'var(--color-primary-1)',
-      'textFill':      'var(--color-off-black)',
-      'textHighlight': 'var(--color-primary)',
-    },
   }
 
   const data = {{ scores }};
 
   // Create the graph element
-  const svg = graph_proficiencies(parent, data, config)
+  const svg = graph_proficiencies(parent, data, config);
 
   // Add the graph
   parent.innerHTML = '';
