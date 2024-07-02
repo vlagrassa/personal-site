@@ -1,6 +1,7 @@
 {%- macro render_proficiency_chart(elementId, scores, config) %}
 <div id="{{elementId}}" class="h-100"></div>
 
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/proficiencies.css') }}">
 <script type="module">
   import { graph_proficiencies } from "{{ url_for('static', filename='scripts/proficiencies.js') }}";
 
@@ -17,6 +18,8 @@
       'grid':       'lightgray',
       'dataStroke': 'var(--color-primary)',
       'dataFill':   'var(--color-primary-1)',
+      'textFill':      'var(--color-off-black)',
+      'textHighlight': 'var(--color-primary)',
     },
   }
 

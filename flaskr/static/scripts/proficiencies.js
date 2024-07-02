@@ -23,7 +23,9 @@ export function graph_proficiencies(container, data, config) {
   addBackground(svg, config.palette)
 
   // Add the labels
-  const labels = config.labels.map((label, idx) => addLabel(svg, label.title['en'], idx))
+  const labels = config.labels.map(
+    (label, idx) => addLabel(svg, label.title['en'], idx, config.palette)
+  )
 
   // Map the graph data to hex coordinates
   const plotData = config.labels.map(
@@ -99,7 +101,7 @@ function addBackground(parent, color_palette) {
  *
  * Returns the D3 object, so further attributes / styles / etc can be set.
  */
-function addLabel(parent, text, column) {
+function addLabel(parent, text, column, palette) {
   const [x, y] = hexCoordinates(column, 5.75);
 
   const text_anchor = [
@@ -109,17 +111,22 @@ function addLabel(parent, text, column) {
   if ( !(column % 3) ) {
     text = text.replace('<wbr>', ' ')
   }
-
   const components = text.split('<wbr>')
-  return components.map((t, idx) => {
-    return parent.append('text')
-      .attr('text-anchor', text_anchor)
-      .attr('dominant-baseline', 'middle')
-      .attr('font-family', 'var(--font-head)')
-      .attr('dx', x)
-      .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
-      .text(t)
+
+  const g = parent.append('g')
+    .classed("label-text", true);
+
+  components.forEach((t, idx) => {
+    g
+      .append('text')
+        .attr('text-anchor', text_anchor)
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', 'var(--font-head)')
+        .attr('dx', x)
+        .attr('dy', y + ((idx - ((components.length - 1) / 2)) * 8))
+        .text(t)
   })
+  return g;
 }
 
 

@@ -1,0 +1,5 @@
+.label-text:hover text {
+  fill: var(--color-primary);
+  font-size: 1.2em;
+  font-weight: bold;
+}
