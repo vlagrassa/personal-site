@@ -27,6 +27,8 @@ svg.proficiencies .label-text text {
   fill: var(--color-off-black);
   transition: all 75ms ease;
   font-family: var(--font-head);
+  cursor: pointer; /* help? */
+  user-select: none;
 }
 
 svg.proficiencies .label-text:hover text {
@@ -58,8 +60,6 @@ svg.proficiencies .label-text:hover text {
   pointer-events: auto;
 }
 
-
 .proficiency-chart-overlay h6 {
   font-size: 1em;
 }
-
