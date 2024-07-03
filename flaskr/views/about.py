@@ -1,4 +1,5 @@
 import json
+from   jsoncomment import JsonComment
 
 from flask import (
   Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify, current_app,
@@ -23,7 +24,7 @@ def about():
 
   try:
     with open_app_file('static/data-standin/high-scores.json') as file:
-      scores = json.load(file)
+      scores = JsonComment(json).load(file)
   except Exception as e:
     scores = {}
 
