@@ -38,7 +38,7 @@
 
 {%- macro render_content(content, custom_render=none, header_level=3) %}
 {%- for section in content %}
-  {{ render_section(section, custom_render=custom_render) }}
+  {{ render_section(section, custom_render=custom_render, header_level=header_level) }}
 {%- endfor %}
 {%- endmacro %}
 
