@@ -38,9 +38,8 @@ svg.proficiencies .label-text:focus-visible text {
   font-weight: bold;
 }
 
-svg.proficiencies .label-text:focus-visible {
-  outline: 2px solid black;
-  border-radius: 1px;
+svg.proficiencies .label-text:focus {
+  outline: none;
 }
 
 
