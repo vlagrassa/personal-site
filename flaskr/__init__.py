@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import json
+from jsoncomment import JsonComment
 import os
 
 from flask import Flask, url_for, request
@@ -126,7 +127,7 @@ def load_lang_configs(app):
 
   def _read_lang_file(*fname):
     with open(os.path.join(*fname), 'r', encoding='utf-8') as f:
-      return json.load(f)
+      return JsonComment(json).load(f)
 
   with app.app_context():
 

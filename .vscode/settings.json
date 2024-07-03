@@ -1,0 +1,8 @@
+{
+  "json.schemas": [{
+    "fileMatch": ["*.json"],
+    "schema": {
+      "allowTrailingCommas": true
+    }
+  }]
+}
