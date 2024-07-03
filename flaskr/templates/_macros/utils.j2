@@ -36,16 +36,16 @@
 {%- endmacro %}
 
 
-{%- macro render_content(content, custom_render=none, header_level=3) %}
+{%- macro render_content(content, custom_render=none, header_level=3, id_prefix="") %}
 {%- for section in content %}
-  {{ render_section(section, custom_render=custom_render, header_level=header_level) }}
+  {{ render_section(section, custom_render=custom_render, header_level=header_level, id_prefix=id_prefix) }}
 {%- endfor %}
 {%- endmacro %}
 
 
-{%- macro render_section(section, custom_render=none, header_level=3) %}
+{%- macro render_section(section, custom_render=none, header_level=3, id_prefix="") %}
   {%- with section_id = section.id %}
-  <div id="{{ section_id }}" data-section="{{ section_id }}">
+  <div id="{{ id_prefix }}{{ section_id }}" data-section="{{ section_id }}">
     {%- if section.show %}
     {{ render_header(section.head, section.level + header_level) }}
     {%- endif %}
