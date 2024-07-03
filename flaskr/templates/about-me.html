@@ -79,7 +79,7 @@
 
           {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
             <div class="w-100 pt-2 px-2">
-              <dl>
+              <dl class="qualifications-container">
                 {{ render_qualification(
                   "Master of Science, Computer Science",
                   "The University of Chicago", "2022"

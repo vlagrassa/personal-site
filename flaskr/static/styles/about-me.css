@@ -64,6 +64,14 @@
 }
 
 
+.qualifications-container dd::before {
+  content: "⬦";
+  user-select: none;
+  font-style: normal;
+  padding-right: 0.2em;
+}
+
+
 .score-group-container h6 {
   font-size: 1em;
 }
