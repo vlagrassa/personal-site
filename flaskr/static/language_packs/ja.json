@@ -1,7 +1,7 @@
 {
   "config": {
     "name": "日本語",
-    "code": "ja"
+    "code": "ja",
   },
   "my_name": {
     "full":                "ヴィンセント ラ\u2060グ\u2060ラ\u2060ッ\u2060サ",
@@ -12,7 +12,7 @@
     "home":                "ホーム",
     "projects":            "プロジェクト",
     "blog":                "ブログ",
-    "about":               "私の事"
+    "about":               "私の事",
   },
   "days": {
     "0":                   "日",
@@ -21,7 +21,7 @@
     "3":                   "水",
     "4":                   "木",
     "5":                   "金",
-    "6":                   "土"
+    "6":                   "土",
   },
   "months": {
     "1":                   "一月",
@@ -35,20 +35,20 @@
     "9":                   "九月",
     "10":                  "十月",
     "11":                  "十一月",
-    "12":                  "十二月"
+    "12":                  "十二月",
   },
   "footer": {
     "language":            "言語",
     "mode": {
       "dark":              "夜",
-      "light":             "日"
+      "light":             "日",
     },
     "layout": {
       "simple":            "簡単な形式",
-      "complex":           "複雑な形式"
+      "complex":           "複雑な形式",
     },
     "zoom_level":          "ズーム",
-    "settings":            "設定"
+    "settings":            "設定",
   },
   "sidebar": {
     "quick_links":         "リンク",
@@ -57,11 +57,11 @@
     "contact":             "連絡",
     "hide":                "非表示する",
     "show":                "表示する",
-    "see_more":            "続きを見る"
+    "see_more":            "続きを見る",
   },
   "activity": {
     "created":             "_に作成されました",
-    "updated":             "_に更新されました"
+    "updated":             "_に更新されました",
   },
   "blog": {
     "posts":               "エントリー",
@@ -71,11 +71,11 @@
       "category":          "カテゴリー",
       "tags":              "タグ",
       "start_date":        "開始日",
-      "end_date":          "終了日"
-    }
+      "end_date":          "終了日",
+    },
   },
   "github_calendar": {
     "less":                "小",
-    "more":                "大"
-  }
+    "more":                "大",
+  },
 }

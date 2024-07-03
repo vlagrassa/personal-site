@@ -1,7 +1,7 @@
 {
   "config": {
     "name": "English",
-    "code": "en"
+    "code": "en",
   },
   "my_name": {
     "full":                "Vincent LɒGrɒssɒ",
@@ -12,7 +12,7 @@
     "home":                "Home",
     "projects":            "Projects",
     "blog":                "Blog",
-    "about":               "About Me"
+    "about":               "About Me",
   },
   "days": {
     "0":                   "Sun",
@@ -21,7 +21,7 @@
     "3":                   "Wed",
     "4":                   "Thu",
     "5":                   "Fri",
-    "6":                   "Sat"
+    "6":                   "Sat",
   },
   "months": {
     "1":                   "Jan",
@@ -35,20 +35,20 @@
     "9":                   "Sep",
     "10":                  "Oct",
     "11":                  "Nov",
-    "12":                  "Dec"
+    "12":                  "Dec",
   },
   "footer": {
     "language":            "Language",
     "mode": {
       "dark":              "Dark Mode",
-      "light":             "Light Mode"
+      "light":             "Light Mode",
     },
     "layout": {
       "simple":            "Simple Layout",
-      "complex":           "Complex Layout"
+      "complex":           "Complex Layout",
     },
     "zoom_level":          "Zoom",
-    "settings":            "Settings"
+    "settings":            "Settings",
   },
   "sidebar": {
     "quick_links":         "Quick Links",
@@ -57,11 +57,11 @@
     "contact":             "Contact",
     "hide":                "Hide",
     "show":                "Show",
-    "see_more":            "See More"
+    "see_more":            "See More",
   },
   "activity": {
     "created":             "created _",
-    "updated":             "updated _"
+    "updated":             "updated _",
   },
   "blog": {
     "posts":               "Posts",
@@ -71,11 +71,11 @@
       "category":          "Category",
       "tags":              "Tags",
       "start_date":        "Start Date",
-      "end_date":          "End Date"
-    }
+      "end_date":          "End Date",
+    },
   },
   "github_calendar": {
     "less":                "Less",
-    "more":                "More"
-  }
+    "more":                "More",
+  },
 }
