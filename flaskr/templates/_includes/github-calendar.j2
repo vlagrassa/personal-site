@@ -5,6 +5,23 @@
     </div>
   </div>
 </div>
+<div id="{{ section_id }}-calendar-below">
+  <div {{ set_lang("en") }}>
+    I've made <span class="calendar-number" data-value="commits"></span> commits
+    across <span class="calendar-number" data-value="repos"></span> repositories
+    over the past <span class="calendar-number" data-value="years"></span> years.
+  </div>
+  <div {{ set_lang("ja") }}>
+    I've made <span class="calendar-number" data-value="commits"></span> commits
+    across <span class="calendar-number" data-value="repos"></span> repositories
+    over the past <span class="calendar-number" data-value="years"></span> years.
+  </div>
+  <div {{ set_lang("tj") }}>
+    I've made <span class="calendar-number" data-value="commits"></span> commits
+    across <span class="calendar-number" data-value="repos"></span> repositories
+    over the past <span class="calendar-number" data-value="years"></span> years.
+  </div>
+</div>
 
 <script type="module">
 
@@ -53,5 +70,29 @@
 
   function get_day_label(i) {
     return document.getElementById('{{ section_id }}-calendar').querySelector('tbody').children[i].children[0];
+  }
+</script>
+
+
+<script type="module">
+  fetch("{{url_for('query.get_github_stats')}}").then((resp) => resp.json())
+    .then(async (data) => {
+      set_big_number('commits', data['num_commits'], true)
+      set_big_number('repos',   data['num_repos'],   true)
+      set_big_number('years',   data['num_years'],   true)
+    })
+    .catch(async (error) => {
+      set_big_number('commits', null)
+      set_big_number('repos',   null)
+      set_big_number('years',   null)
+    })
+
+
+  const parent = document.getElementById("{{ section_id }}-calendar-below");
+
+  function set_big_number(key, value, approx) {
+    Array.from(parent.querySelectorAll(`[data-value=${key}]`)).forEach(el => {
+      el.innerText = value + (approx ? '+' : '');
+    })
   }
 </script>

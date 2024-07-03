@@ -16,6 +16,7 @@ Markdown==3.4.3
 markdown-katex==202112.1034
 MarkupSafe==2.1.2
 pathlib2==2.3.7.post1
+requests==2.32.3
 six==1.16.0
 SQLAlchemy==2.0.15
 typing_extensions==4.6.2

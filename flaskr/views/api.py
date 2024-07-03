@@ -1,4 +1,8 @@
 import enum
+import json
+from   jsoncomment import JsonComment
+import re
+import requests
 
 from flask import (
   Blueprint, current_app, g, redirect, request, session, url_for,
@@ -6,6 +10,7 @@ from flask import (
 
 from ..database        import CACHE, Project, Post, TimelineSection
 from ..utils.endpoints import jsonify_response, raise_on_error
+from ..utils.files     import open_app_file
 from ..utils.utils     import capsfirst, dateformat
 
 
@@ -125,6 +130,43 @@ def get_recent_activity():
     for x in sorted([*last_projects[:n], *last_posts[:n]], key = lambda x: x.date, reverse=True)[:n]
   ]
 
+
+@query_bp.route('/github/stats', methods=['GET'])
+@CACHE.cached(60 * 60 * 24 * 7)
+@jsonify_response
+@raise_on_error(500)
+def get_github_stats():
+
+  with open_app_file('static/data-standin/github-info.json') as file:
+    github_info = JsonComment(json).load(file)
+
+  if github_info.get('cached_values'):
+    return github_info['cached_values']
+
+  username = github_info['username']
+
+  # Loop through each repo under my account
+  repos = json.loads( requests.get(f'https://api.github.com/users/{username}/repos').content )
+  repos = [
+    *[ (username,    repo['name']) for repo in repos ],
+    *[ (repo['org'], repo['name']) for repo in github_info['other_repos'] ],
+  ]
+
+  num_commits = 0
+  num_repos   = len(repos)
+
+  # Adapted from https://gist.github.com/codsane/25f0fd100b565b3fce03d4bbd7e7bf33
+  # adding an author filter
+  for repo in repos:
+    links = requests.get(f'https://api.github.com/repos/{repo[0]}/{repo[1]}/commits?per_page=1&author={username}').links
+    if links.get('last'):
+      num_commits += int( re.search('\d+$', links['last']['url']).group() )
+
+  return {
+    'num_commits': num_commits,
+    'num_repos':   num_repos,
+    'num_years':   10,
+  }
 
 
 

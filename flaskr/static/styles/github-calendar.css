@@ -149,3 +149,11 @@ table.js-calendar-graph-table {
 .graph-before-activity-overview {
   border: none !important;
 }
+
+
+
+.calendar-number {
+  color: var(--color-primary);
+  font-weight: bolder;
+  font-family: var(--font-mono);
+}

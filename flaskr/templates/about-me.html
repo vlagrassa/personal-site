@@ -417,6 +417,19 @@
 <!-- Numbers -->
 <script type="module">
 
+  // Fetch values from API and display
+  fetch("{{url_for('query.get_github_stats')}}").then((resp) => resp.json())
+    .then(async (data) => {
+      set_big_number('num-commits', data['num_commits'], true)
+      set_big_number('num-repos',   data['num_repos'],   true)
+      set_big_number('num-years',   data['num_years'],   true)
+    })
+    .catch(async (error) => {
+      set_big_number('num-commits', null)
+      set_big_number('num-repos',   null)
+      set_big_number('num-years',   null)
+    })
+
   // Adapted from https://jshakespeare.com/simple-count-up-number-animation-javascript-react/
   function set_big_number(element_id, value, add_plus) {
 
