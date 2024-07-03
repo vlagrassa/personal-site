@@ -43,6 +43,12 @@
     legend.style.marginTop = '3px';
     legend.innerHTML = legend.innerHTML.replace('Less', '<small style="padding-right: 3px;">{{ render_lang_object(config.TEXT["github_calendar.less"]) }}</small>');
     legend.innerHTML = legend.innerHTML.replace('More', '<small style="padding-left:  3px;">{{ render_lang_object(config.TEXT["github_calendar.more"]) }}</small>');
+
+    // Hide cells from keyboard navigation, so users don't get stuck
+    // All they do is change color on hover, so there's no lost functionality
+    Array.from(document.getElementById('{{ section_id }}-calendar').querySelectorAll('td')).forEach(el => {
+      el.tabIndex = -1;
+    })
   });
 
   function get_day_label(i) {
