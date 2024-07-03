@@ -64,6 +64,35 @@
 }
 
 
+.score-group-container h6 {
+  font-size: 1em;
+}
+
+.score-group-container .material-symbols-inline {
+  line-height: 0.9em;
+  color: var(--color-secondary);
+  user-select: none;
+  transition: color 100ms ease;
+}
+
+.score-group-container .material-symbols-inline:hover {
+  color: var(--color-primary);
+}
+
+.score-row dt {
+  font-weight: unset;
+}
+
+.score-row dd {
+  font-weight: 500;
+  font-family: var(--font-mono);
+}
+
+.score-row:hover dd, .score-row:hover dt {
+  color: var(--color-primary);
+}
+
+
 
 #recent-activity tr:nth-of-type(2n+1) {
   border-top: 1px solid lightgray;

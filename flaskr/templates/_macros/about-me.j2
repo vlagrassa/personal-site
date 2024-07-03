@@ -99,6 +99,36 @@
 {%- endmacro %}
 
 
+{%- macro render_score_group(score_group) %}
+<div class="score-group-container text-start mb-2">
+
+  {# Header #}
+  <div class="d-flex w-100 justify-content-between">
+    <h6 class="mb-1">{{ render_lang_object(score_group.title) }}</h6>
+    {%- if score_group.link %}
+    <a href="{{ score_group.link }}" target="_blank">
+      <span class="material-symbols-outlined material-symbols-inline">open_in_new</span>
+    </a>
+    {%- endif %}
+  </div>
+
+  {# Values #}
+  <div style="border-left: 1px solid var(--color-off-black);" class="text-start mx-2 ps-2">
+    <dl>
+    {%- for score in score_group.scores %}
+    <div class="row score-row py-1">
+      <dt class="col-9 mb-0">{{ render_lang_object(score.title) }}</dt>
+      <dd class="col-3 mb-0 text-end">{{ score.score }}</dd>
+    </div>
+    {%- endfor %}
+    </dl>
+  </div>
+
+</div>
+{%- endmacro %}
+
+
+
 {%- macro render_language_entry(label, value) %}
 <tr>
   <th>{{ label }}</th>

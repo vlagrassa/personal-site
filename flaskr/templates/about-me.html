@@ -6,6 +6,7 @@
     render_dropdown_panel_container,
     render_dropdown_panel,
     render_qualification,
+    render_score_group,
     render_language_entry,
     render_human_language_entry,
     render_vis_choice,
@@ -96,6 +97,11 @@
           {%- endcall %}
 
           {%- call render_dropdown_panel('High Scores', start_open=(initial_tab=='scores')) %}
+            <div class="pt-2 pt-xxl-3 px-0 px-xxl-1">
+              {%- for score_group in scores %}
+              {{ render_score_group(score_group) }}
+              {%- endfor %}
+            </div>
           {%- endcall %}
 
         {%- endcall %}
