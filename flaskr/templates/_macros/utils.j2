@@ -64,11 +64,11 @@
 {%- endmacro %}
 
 
-{%- macro render_open_close_button(target, toggle, class_name, symbol, start_open=false, size=1) %}
+{%- macro render_open_close_button(target, toggle, class_name, symbol, start_open=false, size=none) %}
 {%- with is_accordion = (toggle == 'accordion') %}
   <a
     id="{{target}}-toggle-btn-link"
-    class="toggle-btn toggle-btn-{{ class_name }} {% if is_accordion %}accordion-button{% endif %} {% if not start_open %}collapsed{% endif %} fs-{{ size }}"
+    class="toggle-btn toggle-btn-{{ class_name }} {% if is_accordion %}accordion-button{% endif %} {% if not start_open %}collapsed{% endif %} {% if size %}fs-{{ size }}{% endif %} w-100 h-100"
     type="button"
     data-bs-toggle="{{ 'collapse' if is_accordion else toggle }}"
     data-bs-target="{{ target }}"
@@ -84,12 +84,12 @@
 {%- endmacro %}
 
 
-{%- macro render_toggle_button_plus(target, toggle, start_open=false, size=4) %}
+{%- macro render_toggle_button_plus(target, toggle, start_open=false, size=none) %}
 {{ render_open_close_button( target, toggle, 'plus', '+', start_open=start_open, size=size ) }}
 {%- endmacro %}
 
 
-{%- macro render_toggle_button_arrow(target, toggle, start_open=false, size=6) %}
+{%- macro render_toggle_button_arrow(target, toggle, start_open=false, size=none) %}
 {{ render_open_close_button( target, toggle, 'arrow', '▼', start_open=start_open, size=size ) }}
 {%- endmacro %}
 

@@ -390,7 +390,7 @@
 
     const row_1 = document.createElement('tr');
     row_1.innerHTML = `
-      <td class="py-1 px-1">{{render_toggle_button_arrow('#activity-row-${idx}', 'collapse')}}</td>
+      <td class="py-1 px-1 position-relative">{{render_toggle_button_arrow('#activity-row-${idx}', 'collapse')}}</td>
       <td class="py-1 pe-2 text-start date-column"><small class="very-small">${ format_date(date) }</small></td>
       <td class="py-1 text-start"><a class="color-only" href="${ item.name_link }">${ item.name }</a></td>
     `;

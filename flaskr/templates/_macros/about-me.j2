@@ -77,7 +77,7 @@
     <div class="position-relative">
       <h5 class="card-title mt-0">{{ title }}</h5>
       <div class="me-1" style="position: absolute; right: 0; bottom: -0.2em;">
-        {{ render_toggle_button_plus('#' + dropdown_id, 'accordion', start_open) }}
+        {{ render_toggle_button_plus('#' + dropdown_id, 'accordion', start_open=start_open, size=4) }}
       </div>
     </div>
     <div id="{{ dropdown_id }}"
