@@ -45,7 +45,7 @@
 
 {%- macro render_section(section, custom_render=none, header_level=3) %}
   {%- with section_id = section.id %}
-  <div id="{{ section_id }}">
+  <div id="{{ section_id }}" data-section="{{ section_id }}">
     {%- if section.show %}
     {{ render_header(section.head, section.level + header_level) }}
     {%- endif %}
