@@ -86,6 +86,25 @@ export function graph_svg_interests(container, {schema, data}) {
       .attr("text-anchor", "middle")
       .attr("y", -8)
 
+
+  // Add vertical line that follows mouse
+  const verticalLineContainer = svg.append('g')
+
+  const verticalLine = verticalLineContainer
+    .append('line')
+      .attr('stroke', 'black')
+      .attr('y1', marginTop)
+      .attr('y2', height - marginBottom)
+
+  const verticalLineLabel = verticalLineContainer
+    .append('text')
+      .attr('dy', marginTop)
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'black')
+      .text('Date')
+
+
+  // Add event handlers
   svg
       .on("pointerenter", pointerentered)
       .on("pointermove",  pointermoved)
@@ -102,6 +121,13 @@ export function graph_svg_interests(container, {schema, data}) {
   */
 
   function pointermoved(event) {
+    const [xm, ym] = d3.pointer(event);
+    if (marginLeft < xm && xm < (width - marginRight)) {
+      drawVerticalLine(event);
+    }
+    else {
+      hideVerticalLine(event);
+    }
     highlightClosestPoint(event);
   }
 
@@ -110,6 +136,7 @@ export function graph_svg_interests(container, {schema, data}) {
   }
 
   function pointerleft(event) {
+    hideVerticalLine(event);
     reselctAllPaths(event);
   }
 
@@ -117,6 +144,20 @@ export function graph_svg_interests(container, {schema, data}) {
   /*
     Event Functions
   */
+
+  function drawVerticalLine(event) {
+    const [xm, ym] = d3.pointer(event);
+
+    verticalLineContainer
+      .style('display', 'unset')
+      .style('transform', `translateX(${xm}px)`)
+  }
+
+  function hideVerticalLine(event) {
+    verticalLineContainer
+      .style('display', 'none')
+  }
+
 
 
   // When the pointer moves, find the closest point, update the interactive tip, and highlight
