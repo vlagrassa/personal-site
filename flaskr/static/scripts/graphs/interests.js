@@ -137,7 +137,7 @@ export function graph_svg_interests(container, {schema, data}) {
 
   function pointerleft(event) {
     hideVerticalLine(event);
-    reselctAllPaths(event);
+    reselectAllPaths(event);
   }
 
 
@@ -178,7 +178,7 @@ export function graph_svg_interests(container, {schema, data}) {
     dot.attr("display", null);
   }
 
-  function reselctAllPaths() {
+  function reselectAllPaths() {
     path.style("mix-blend-mode", "multiply").style("stroke", null);
     dot.attr("display", "none");
     svg.node().value = null;
