@@ -88,7 +88,7 @@ export function graph_svg_interests(container, {schema, data}) {
 
   svg
       .on("pointerenter", pointerentered)
-      .on("pointermove", pointermoved)
+      .on("pointermove",  pointermoved)
       .on("pointerleave", pointerleft)
       .on("touchstart", event => event.preventDefault())
 
@@ -96,11 +96,33 @@ export function graph_svg_interests(container, {schema, data}) {
   return svg;
 
 
+  /*
+    Event Handlers
+    Coordinate which event functions to call when an event is fired.
+  */
+
+  function pointermoved(event) {
+    highlightClosestPoint(event);
+  }
+
+  function pointerentered(event) {
+    deselectAllPaths(event);
+  }
+
+  function pointerleft(event) {
+    reselctAllPaths(event);
+  }
+
+
+  /*
+    Event Functions
+  */
+
 
   // When the pointer moves, find the closest point, update the interactive tip, and highlight
   // the corresponding line. Note: we don't actually use Voronoi here, since an exhaustive search
   // is fast enough.
-  function pointermoved(event) {
+  function highlightClosestPoint(event) {
     const [xm, ym] = d3.pointer(event);
     const i = d3.leastIndex(points, ([x, y]) => Math.hypot(x - xm, y - ym));
     const [x, y, k] = points[i];
@@ -110,12 +132,12 @@ export function graph_svg_interests(container, {schema, data}) {
     svg.property("value", data[i]).dispatch("input", {bubbles: true});
   }
 
-  function pointerentered() {
+  function deselectAllPaths() {
     path.style("mix-blend-mode", null).style("stroke", "#ddd");
     dot.attr("display", null);
   }
 
-  function pointerleft() {
+  function reselctAllPaths() {
     path.style("mix-blend-mode", "multiply").style("stroke", null);
     dot.attr("display", "none");
     svg.node().value = null;
