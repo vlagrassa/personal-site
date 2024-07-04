@@ -123,10 +123,11 @@ export function graph_svg_interests(container, {schema, data}) {
   function pointermoved(event) {
     const [xm, ym] = d3.pointer(event);
     if (marginLeft < xm && xm < (width - marginRight)) {
-      drawVerticalLine(event);
+      showChartInteraction(event);
     }
     else {
-      hideVerticalLine(event);
+      hideVerticalLine();
+      reselectAllPaths();
     }
     highlightClosestPoint(event);
   }
@@ -136,24 +137,31 @@ export function graph_svg_interests(container, {schema, data}) {
   }
 
   function pointerleft(event) {
-    hideVerticalLine(event);
-    reselectAllPaths(event);
+    hideVerticalLine();
+    reselectAllPaths();
   }
+
+  function showChartInteraction(event) {
+    const [xm, ym] = d3.pointer(event);
+
+    drawVerticalLine(xm, heights)
+  }
+
 
 
   /*
     Event Functions
   */
 
-  function drawVerticalLine(event) {
-    const [xm, ym] = d3.pointer(event);
+  function drawVerticalLine(x) {
 
+    // Position the line on the given x-coordinate
     verticalLineContainer
       .style('display', 'unset')
-      .style('transform', `translateX(${xm}px)`)
+      .style('transform', `translateX(${x}px)`)
   }
 
-  function hideVerticalLine(event) {
+  function hideVerticalLine() {
     verticalLineContainer
       .style('display', 'none')
   }
