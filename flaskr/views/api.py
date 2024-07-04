@@ -11,6 +11,7 @@ from flask import (
 from ..database        import CACHE, Project, Post, TimelineSection
 from ..utils.endpoints import jsonify_response, raise_on_error
 from ..utils.files     import open_app_file
+from ..utils.map       import MapDictReader
 from ..utils.utils     import capsfirst, dateformat
 
 
@@ -188,7 +189,17 @@ def get_data_skills():
 @jsonify_response
 @raise_on_error(500)
 def get_data_interests():
-  return {}
+  with open_app_file('static/data-standin/graph-data/data-interests.csv') as data_file:
+    with open_app_file('static/data-standin/graph-data/data-interests.json') as schema_file:
+      return {
+        'schema': JsonComment(json).load(schema_file),
+        'data': list(MapDictReader(
+          data_file,
+          fieldnames=[ 'id', 'date', 'value' ],
+          field_maps={ 'value': int },
+          skipinitialspace=True,
+        ))
+      }
 
 
 @query_bp.route('/about-data/genres', methods=['GET'])
@@ -196,7 +207,8 @@ def get_data_interests():
 @jsonify_response
 @raise_on_error(500)
 def get_data_genres():
-  return {}
+  with open_app_file('static/data-standin/graph-data/data-genres.json') as file:
+    return json.load(file)
 
 
 @query_bp.route('/about-data/vowels', methods=['GET'])
@@ -204,4 +216,9 @@ def get_data_genres():
 @jsonify_response
 @raise_on_error(500)
 def get_data_vowels():
-  return {}
+  with open_app_file('static/data-standin/graph-data/data-vowels.csv') as file:
+    return list(MapDictReader(
+      file,
+      fieldnames=[ 'symbol', 'x', 'y', 'word' ],
+      field_maps={ 'x': float, 'y': float, 'word': lambda x: x.strip() },
+    ))
