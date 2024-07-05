@@ -66,15 +66,14 @@ export function graph_svg_interests(container, {schema, data}) {
   const line = d3.line()
   const path = svg.append("g")
       .attr("fill", "none")
-      .attr("stroke", "var(--color-secondary-1)")
-      .attr("stroke-width", 1.5)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
     .selectAll("path")
     .data(groups.values())
     .join("path")
-      .style("mix-blend-mode", "multiply")
       .attr("d", line)
+
+  path.classed('data-path', true)
 
   // Add an invisible layer for the interactive tip.
   const dot = svg.append("g")
@@ -175,19 +174,25 @@ export function graph_svg_interests(container, {schema, data}) {
     const [xm, ym] = d3.pointer(event);
     const i = d3.leastIndex(points, ([x, y]) => Math.hypot(x - xm, y - ym));
     const [x, y, k] = points[i];
-    path.style("stroke", ({z}) => z === k ? null : "#ddd").filter(({z}) => z === k).raise();
+
+    // Set active & inactive classes on paths
+    path.classed('active',   ({z}) => z === k);
+    path.classed('inactive', ({z}) => z !== k);
+
+    // Set the overlay
     dot.attr("transform", `translate(${x},${y})`);
     dot.select("text").text(k);
     svg.property("value", data[i]).dispatch("input", {bubbles: true});
   }
 
   function deselectAllPaths() {
-    path.style("mix-blend-mode", null).style("stroke", "#ddd");
+    path.classed('inactive', true);
     dot.attr("display", null);
   }
 
   function reselectAllPaths() {
-    path.style("mix-blend-mode", "multiply").style("stroke", null);
+    path.classed('active',   false);
+    path.classed('inactive', false);
     dot.attr("display", "none");
     svg.node().value = null;
     svg.dispatch("input", {bubbles: true});

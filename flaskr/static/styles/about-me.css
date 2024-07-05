@@ -138,6 +138,28 @@
 }
 
 
+
+
+svg.graph-interests .data-path {
+  stroke: var(--color-secondary-1);
+  stroke-width: 1.5;
+  fill: none;
+  mix-blend-mode: multiply;
+}
+
+svg.graph-interests .data-path.active {
+  stroke: var(--color-primary);
+  z-index: 9;
+}
+
+svg.graph-interests .data-path.inactive {
+  stroke: #ddd;
+  mix-blend-mode: none;
+}
+
+
+
+
 svg.graph-genres .arc {
   fill-opacity: 0.6;
 }
