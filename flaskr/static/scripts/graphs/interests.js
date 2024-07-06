@@ -39,22 +39,63 @@ export function graph_svg_interests(container, {schema, data}) {
 
 
 
-  // Add the horizontal axis.
-  svg.append("g")
+  /* Horizontal Axis */
+
+  function formatDateTick(d) {
+    return d.getUTCMonth() ? d.toLocaleString('en-us', { month: 'long' }) : d.getUTCFullYear();
+  }
+
+  // Create the axis object
+  const xAxis = svg.append("g")
       .attr("transform", `translate(0, ${height - marginBottom})`)
-      .call(d3.axisBottom(x).ticks(width / 80).tickSize(0))
+      .call(
+        d3.axisBottom(x)
+          .ticks(width / 80)
+          .tickFormat(formatDateTick)
+          .tickSize(0)
+      )
+      .call(g => g.select(".domain").attr("stroke-width", 2))
+
+  // Add a smaller secondary line, to match site styling
+  svg.append("line")
+    .attr('x1', marginLeft + 2)
+    .attr('x2', width - (marginLeft + 2))
+    .attr('y1', height - (marginBottom - 3))
+    .attr('y2', height - (marginBottom - 3))
+    .attr('stroke', 'black')
+    .attr('fill', 'none')
+
+  // Move labels down
+  xAxis.selectAll(".tick text").attr("y", 16);
 
 
-  // Add the vertical axis.
-  svg.append("g")
+
+  /* Vertical Axis */
+
+  const yAxisLabels = {
+    0.5: 'Dormant',
+    2.0: 'Normal',
+    3.5: 'Moderate',
+    5.0: 'Obsessive',
+  }
+
+  // Create the axis object
+  const yAxis = svg.append("g")
       .attr("transform", `translate(${marginLeft},0)`)
-      .call(d3.axisLeft(y, 5).ticks(5))
-      .call(g => g.append("text")
-          .attr("x", -marginLeft)
-          .attr("y", 10)
-          .attr("fill", "currentColor")
-          .attr("text-anchor", "start")
-          .text("↑ Interest (%)"))
+      .call(
+        d3.axisLeft(y, 5)
+          .ticks(10)
+          .tickFormat((d) => yAxisLabels[d])
+          .tickSize(0)
+      )
+      .call(g => g.select(".domain").remove())
+
+  // Set axis label styling
+  yAxis.selectAll(".tick text")
+    .attr("x", -marginLeft + 5)
+    .attr("text-anchor", "start")
+    .style("color", "var(--color-gray)")
+
 
 
   const points = data.map((d) => [ x( d.date ), y( d.value ), d.id ])
