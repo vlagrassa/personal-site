@@ -27,29 +27,29 @@ export class ContinuousFunctionCache {
   /**
    * f:      The function we want to cache. From input value to comparable output value.
    *         Should be bijective(?), otherwise binary search doesn't really work.
-   * domain: The max value to cache up to. Implicitly starts from 0.
+   * start:  The min value to cache from. Start of the input domain.
+   * end:    The max value to cache up to. End of the input domain.
    * depth:  How many steps of the binary search to cache.
    *         The domain will be split into buckets of length `domain / (2^depth)`.
    */
-  constructor(f, domain, depth=8) {
+  constructor(f, start, end, depth=8) {
 
     // Store the configuration
-    this.depth  = depth;
-    this.domain = domain;
+    this.depth = depth;
+    this.start = start;
+    this.end   = end;
 
     // Compute the number of values to cache
-    this.length    = Math.pow(2, this.depth) + 1
+    this.length = Math.pow(2, this.depth) + 1
 
     // Compute the distance in the domain between cached values
-    this.step_size = this.domain / (this.length - 1);
+    this.step_size = (this.end - this.start) / (this.length - 1);
 
     // Use the given function to cache the desired values
     this.values = [];
     for (let i = 0; i < this.length; i++) {
-      this.values[i] = {
-        "input":  this.step_size * i,
-        "output": f(this.step_size * i),
-      }
+      let input = this.start + this.step_size * i;
+      this.values[i] = { "input":  input, "output": f(input) }
     }
   }
 

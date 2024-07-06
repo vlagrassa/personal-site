@@ -130,7 +130,7 @@ export function graph_svg_interests(container, {schema, data}) {
     // Cache the first n levels of the binary search
     // I don't think this actually improves performance, but it became a point of pride to make it work
     'cache':  new ContinuousFunctionCache(
-      (dist) => node.getPointAtLength(dist).x, node.getTotalLength(), 8
+      (dist) => node.getPointAtLength(dist).x, 0, node.getTotalLength(), 8
     ),
   }))
 
