@@ -157,6 +157,18 @@ svg.graph-interests .data-path.inactive {
   mix-blend-mode: none;
 }
 
+svg.graph-interests .vertical-marker {
+  fill: black;
+}
+
+svg.graph-interests .vertical-marker.active {
+  fill: var(--color-primary);
+}
+
+svg.graph-interests .vertical-marker.inactive {
+  fill: black;
+}
+
 
 
 

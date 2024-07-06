@@ -64,7 +64,9 @@ export function graph_svg_interests(container, {schema, data}) {
 
   // Draw the lines.
   const line = d3.line()
-  const path = svg.append("g")
+    .curve(d3.curveBundle.beta(1))
+
+  const paths = svg.append("g")
       .attr("fill", "none")
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
@@ -73,7 +75,15 @@ export function graph_svg_interests(container, {schema, data}) {
     .join("path")
       .attr("d", line)
 
-  path.classed('data-path', true)
+  paths.classed('data-path', true)
+
+  // Compute the path nodes
+  const pathNodes = paths.nodes().map((node, i) => ({
+    'node':   node,
+    'length': node.getTotalLength(),
+    'id':     Array.from(groups.values())[i].z,
+  }))
+
 
   // Add an invisible layer for the interactive tip.
   const dot = svg.append("g")
@@ -102,6 +112,13 @@ export function graph_svg_interests(container, {schema, data}) {
       .attr('fill', 'black')
       .text('Date')
 
+  const markers = verticalLineContainer.append('g')
+    .selectAll('circle')
+    .data(pathNodes)
+    .join('circle')
+      .style('r', 2.5)
+  markers.classed('vertical-marker', true);
+
 
   // Add event handlers
   svg
@@ -128,7 +145,6 @@ export function graph_svg_interests(container, {schema, data}) {
       hideVerticalLine();
       reselectAllPaths();
     }
-    highlightClosestPoint(event);
   }
 
   function pointerentered(event) {
@@ -143,7 +159,20 @@ export function graph_svg_interests(container, {schema, data}) {
   function showChartInteraction(event) {
     const [xm, ym] = d3.pointer(event);
 
+    // Compute the height of each graph line at the current mouse x-coordinate
+    const heights = pathNodes.map(
+      ({ node, length, id }) => ({
+        id, 'height': iterateComputePathY(node, length, xm),
+      })
+    )
+
+    // Compute the ID of the graph line closest to the mouse
+    // at the current x-coordinate (i.e. closest along the vertical line)
+    const nearestId = d3.least(heights, (h) => Math.abs(h.height - ym)).id
+
+    // Render the relevant components
     drawVerticalLine(xm, heights)
+    highlightPath(nearestId);
   }
 
 
@@ -152,12 +181,16 @@ export function graph_svg_interests(container, {schema, data}) {
     Event Functions
   */
 
-  function drawVerticalLine(x) {
+  function drawVerticalLine(x, heights) {
 
     // Position the line on the given x-coordinate
     verticalLineContainer
       .style('display', 'unset')
       .style('transform', `translateX(${x}px)`)
+
+    // Position the markers on the given y-coordinates
+    markers
+        .attr('cy', (d, i) => heights[i].height)
   }
 
   function hideVerticalLine() {
@@ -165,36 +198,78 @@ export function graph_svg_interests(container, {schema, data}) {
       .style('display', 'none')
   }
 
+  /**
+   * Highlight the path & marker with the given ID,
+   * and desaturate all the other paths
+   */
+  function highlightPath(pathIdx) {
 
+    // Highlight the marker on the vertical line
+    markers.classed('active',   ({id}) => id === pathIdx);
+    markers.classed('inactive', ({id}) => id !== pathIdx);
 
-  // When the pointer moves, find the closest point, update the interactive tip, and highlight
-  // the corresponding line. Note: we don't actually use Voronoi here, since an exhaustive search
-  // is fast enough.
-  function highlightClosestPoint(event) {
-    const [xm, ym] = d3.pointer(event);
-    const i = d3.leastIndex(points, ([x, y]) => Math.hypot(x - xm, y - ym));
-    const [x, y, k] = points[i];
-
-    // Set active & inactive classes on paths
-    path.classed('active',   ({z}) => z === k);
-    path.classed('inactive', ({z}) => z !== k);
-
-    // Set the overlay
-    dot.attr("transform", `translate(${x},${y})`);
-    dot.select("text").text(k);
-    svg.property("value", data[i]).dispatch("input", {bubbles: true});
+    // Highlight the given path & desaturate all the other paths w/ active & inactive classes
+    paths.classed('active',   ({z}) => z === pathIdx);
+    paths.classed('inactive', ({z}) => z !== pathIdx);
   }
 
   function deselectAllPaths() {
-    path.classed('inactive', true);
+    paths.classed('inactive', true);
     dot.attr("display", null);
   }
 
   function reselectAllPaths() {
-    path.classed('active',   false);
-    path.classed('inactive', false);
+    paths.classed('active',   false);
+    paths.classed('inactive', false);
     dot.attr("display", "none");
     svg.node().value = null;
     svg.dispatch("input", {bubbles: true});
   }
+}
+
+
+
+/*
+  Helper Functions
+*/
+
+
+function iterateComputePathPt(pathNode, pathNodeLength, x) {
+
+  let length = pathNodeLength / 2;
+  let dist   = length;
+
+  const targetPrecision = 0.5;
+
+  let iter = 100;
+  let newPt = null;
+  let precision = null
+
+  while (iter > 0) {
+    newPt = pathNode.getPointAtLength(dist);
+    precision = x - newPt.x
+    if (Math.abs(precision) < targetPrecision) {
+      return [newPt, dist]
+    }
+    else if (precision > 0) {
+      length /= 2
+      dist += length;
+    }
+    else {
+      length /= 2
+      dist -= length;
+    }
+    iter--;
+  }
+
+  console.error('Timed out :(');
+  return [newPt, dist];
+}
+
+function iterateComputePathY(pathNode, pathNodeLength, x) {
+  return iterateComputePathPt(pathNode, pathNodeLength, x)[0].y;
+}
+
+function iterateComputePathDistance(pathNode, pathNodeLength, x) {
+  return iterateComputePathPt(pathNode, pathNodeLength, x)[1];
 }
