@@ -276,50 +276,36 @@ export function graph_svg_interests(container, {schema, data}) {
 */
 
 
-function iterateComputePathPt(pathNode, x, binarySearchCache = null) {
+function iterateComputePathPt(pathNode, x, cache = null) {
 
-  let length, dist;
-  if (binarySearchCache == null) {
-    length = pathNode.getTotalLength() / 2;
-    dist   = length;
+  const recurse = (currDistance, targetX) => {
+    const newPt = pathNode.getPointAtLength(currDistance);
+    return {
+      value: {
+        point: newPt,
+        dist:  currDistance,
+      },
+      precision: targetX - newPt.x,
+    }
+  };
+
+  if (cache != null) {
+    return cache.iterate(recurse, x, {
+      'targetPrecision': 0.001,
+    })
   }
   else {
-    length = binarySearchCache.step_size / 2;
-    dist   = binarySearchCache.computeRange(x)[0] + (binarySearchCache.step_size / 2);
+    const domain = pathNode.getTotalLength();
+    return ContinuousFunctionCache.iterate(recurse, x, domain, null, {
+      'targetPrecision': 0.001,
+    })
   }
-
-
-  const targetPrecision = 0.5;
-
-  let iter = 100;
-  let newPt = null;
-  let precision = null
-
-  while (iter > 0) {
-    newPt = pathNode.getPointAtLength(dist);
-    precision = x - newPt.x
-    if (Math.abs(precision) < targetPrecision) {
-      return [newPt, dist]
-    }
-    else if (precision > 0) {
-      length /= 2
-      dist += length;
-    }
-    else {
-      length /= 2
-      dist -= length;
-    }
-    iter--;
-  }
-
-  console.error('Timed out :(');
-  return [newPt, dist];
 }
 
-function iterateComputePathY(pathNode, x, binarySearchCache = null) {
-  return iterateComputePathPt(pathNode, x, binarySearchCache)[0].y;
+function iterateComputePathY(pathNode, x, cache = null) {
+  return iterateComputePathPt(pathNode, x, cache).point.y
 }
 
-function iterateComputePathDistance(pathNode, x, binarySearchCache = null) {
-  return iterateComputePathPt(pathNode, x, binarySearchCache)[1];
+function iterateComputePathDistance(pathNode, x, cache = null) {
+  return iterateComputePathPt(pathNode, x, cache).dist
 }

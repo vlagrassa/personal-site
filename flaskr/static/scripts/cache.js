@@ -89,4 +89,58 @@ export class ContinuousFunctionCache {
     return [this.values[start].input, this.values[end].input]
   }
 
+
+  /**
+   * Find the input value to f that produces the given targetValue, within a certain precision.
+   */
+  static iterate(f, targetValue, domain = null, cache = null, config = {}) {
+
+    if (domain === null && cache == null) {
+      throw new Error('One of `domain` and `cache` must be provided.')
+    }
+
+    let step, currInput;
+    if (cache == null) {
+      step      = domain / 2;
+      currInput = step;
+    }
+    else {
+      step      = cache.step_size / 2;
+      currInput = cache.computeRange(targetValue)[0] + step;
+    }
+
+    // Config values
+    let iter = config['maxIterations'] ?? 100;
+    const targetPrecision = config['targetPrecision'] ?? 0.01;
+
+    let value, precision;
+    while (iter > 0) {
+      ({value, precision} = f( currInput, targetValue ));
+
+      // If within precision, return the value
+      if (Math.abs(precision) < targetPrecision) {
+        return value
+      }
+      else if (precision > 0) {
+        step      /= 2;
+        currInput += step;
+      }
+      else {
+        step      /= 2
+        currInput -= step;
+      }
+      iter--;
+    }
+
+    return value;
+  }
+
+  /**
+   * Find the input value to f that produces the given targetValue, within a certain precision.
+   * Equivalent to calling the static method `iterate` with the current object as the cache.
+   */
+  iterate(f, targetValue, config = {}) {
+    return ContinuousFunctionCache.iterate(f, targetValue, null, this, config);
+  }
+
 }
