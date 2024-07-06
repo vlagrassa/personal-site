@@ -93,21 +93,11 @@ export class ContinuousFunctionCache {
   /**
    * Find the input value to f that produces the given targetValue, within a certain precision.
    */
-  static iterate(f, targetValue, domain = null, cache = null, config = {}) {
+  static iterate(f, targetValue, start, end, config = {}) {
 
-    if (domain === null && cache == null) {
-      throw new Error('One of `domain` and `cache` must be provided.')
-    }
-
-    let step, currInput;
-    if (cache == null) {
-      step      = domain / 2;
-      currInput = step;
-    }
-    else {
-      step      = cache.step_size / 2;
-      currInput = cache.computeRange(targetValue)[0] + step;
-    }
+    // Search iteration values
+    let step = (end - start) / 2;
+    let currInput = start + step;
 
     // Config values
     let iter = config['maxIterations'] ?? 100;
@@ -140,7 +130,8 @@ export class ContinuousFunctionCache {
    * Equivalent to calling the static method `iterate` with the current object as the cache.
    */
   iterate(f, targetValue, config = {}) {
-    return ContinuousFunctionCache.iterate(f, targetValue, null, this, config);
+    const [start, end] = this.computeRange(targetValue);
+    return ContinuousFunctionCache.iterate(f, targetValue, start, end, config);
   }
 
 }

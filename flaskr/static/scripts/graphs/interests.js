@@ -278,28 +278,36 @@ export function graph_svg_interests(container, {schema, data}) {
 
 function iterateComputePathPt(pathNode, x, cache = null) {
 
+  // The function to iterate
   const recurse = (currDistance, targetX) => {
+
+    // Compute the point at the current best-guess path distance value
     const newPt = pathNode.getPointAtLength(currDistance);
+
+    // Return the output value and precision for the iteration
     return {
+
+      // The current point and its distance along the path
       value: {
         point: newPt,
         dist:  currDistance,
       },
+
+      // How close the x value is to the target
       precision: targetX - newPt.x,
+
     }
   };
 
-  if (cache != null) {
-    return cache.iterate(recurse, x, {
-      'targetPrecision': 0.001,
-    })
+  // Config object for iteration
+  const config = {
+    'targetPrecision': 0.001,
   }
-  else {
-    const domain = pathNode.getTotalLength();
-    return ContinuousFunctionCache.iterate(recurse, x, domain, null, {
-      'targetPrecision': 0.001,
-    })
-  }
+
+  // If cache exists, use it to compute the value, otherwise use static method
+  return (cache != null)
+    ? cache.iterate(recurse, x, config)
+    : ContinuousFunctionCache.iterate(recurse, x, 0, pathNode.getTotalLength(), config)
 }
 
 function iterateComputePathY(pathNode, x, cache = null) {
