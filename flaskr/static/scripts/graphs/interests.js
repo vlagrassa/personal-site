@@ -160,15 +160,18 @@ export function graph_svg_interests(container, {schema, data}) {
     const [xm, ym] = d3.pointer(event);
 
     // Compute the height of each graph line at the current mouse x-coordinate
-    const heights = pathNodes.map(
-      ({ node, length, id }) => ({
-        id, 'height': iterateComputePathY(node, length, xm),
-      })
-    )
+    const heights = Object.fromEntries(pathNodes.map(
+      ({ node, length, id }) => ([
+        id, iterateComputePathY(node, length, xm),
+      ])
+    ))
 
     // Compute the ID of the graph line closest to the mouse
     // at the current x-coordinate (i.e. closest along the vertical line)
-    const nearestId = d3.least(heights, (h) => Math.abs(h.height - ym)).id
+    const nearestId = d3.least(
+      Object.keys(heights),
+      (id) => Math.abs(heights[id] - ym)
+    )
 
     // Render the relevant components
     drawVerticalLine(xm, heights)
@@ -190,7 +193,7 @@ export function graph_svg_interests(container, {schema, data}) {
 
     // Position the markers on the given y-coordinates
     markers
-        .attr('cy', (d, i) => heights[i].height)
+        .attr('cy', (d) => heights[d.id])
   }
 
   function hideVerticalLine() {
