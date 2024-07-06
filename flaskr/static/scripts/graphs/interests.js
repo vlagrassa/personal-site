@@ -124,7 +124,6 @@ export function graph_svg_interests(container, {schema, data}) {
   // Compute the path nodes
   const pathNodes = paths.nodes().map((node, i) => ({
     'node':   node,
-    'length': node.getTotalLength(),
     'id':     Array.from(groups.values())[i].z,
 
     // Cache the first n levels of the binary search
@@ -200,7 +199,7 @@ export function graph_svg_interests(container, {schema, data}) {
 
     // Compute the height of each graph line at the current mouse x-coordinate
     const heights = Object.fromEntries(pathNodes.map(
-      ({ node, length, id, cache }) => ([
+      ({ id, node, cache }) => ([
         id, iterateComputePathY(node, xm, cache)
       ])
     ))
