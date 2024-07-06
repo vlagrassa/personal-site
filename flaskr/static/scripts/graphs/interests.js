@@ -133,15 +133,14 @@ export function graph_svg_interests(container, {schema, data}) {
   const verticalLine = verticalLineContainer
     .append('line')
       .attr('stroke', 'black')
-      .attr('y1', marginTop)
+      .attr('y1', marginTop - 14)
       .attr('y2', height - marginBottom)
 
   const verticalLineLabel = verticalLineContainer
     .append('text')
-      .attr('dy', marginTop)
-      .attr('text-anchor', 'middle')
-      .attr('fill', 'black')
+      .attr('dy', marginTop - 16)
       .text('Date')
+      .attr("class", "vertical-line-label")
 
   const markers = verticalLineContainer.append('g')
     .selectAll('circle')
@@ -215,16 +214,19 @@ export function graph_svg_interests(container, {schema, data}) {
     Event Functions
   */
 
-  function drawVerticalLine(x, heights) {
+  function drawVerticalLine(xm, heights) {
 
     // Position the line on the given x-coordinate
     verticalLineContainer
       .style('display', 'unset')
-      .style('transform', `translateX(${x}px)`)
+      .style('transform', `translateX(${xm}px)`)
 
     // Position the markers on the given y-coordinates
     markers
         .attr('cy', (d) => heights[d.id])
+
+    // Update the line label
+    verticalLineLabel.text( formatDateLabel(x.invert(xm)) );
   }
 
   function hideVerticalLine() {

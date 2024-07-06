@@ -169,6 +169,13 @@ svg.graph-interests .vertical-marker.inactive {
   fill: black;
 }
 
+svg.graph-interests text.vertical-line-label {
+  text-anchor: middle;
+  fill: black;
+  text-decoration: underline;
+  /* text-underline-offset: 10px; */
+}
+
 
 
 
