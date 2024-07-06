@@ -4,6 +4,9 @@
 */
 
 
+import { BinarySearchCache } from "../cache.js";
+
+
 export function graph_svg_interests(container, {schema, data}) {
 
   // Mape dates to date objects
@@ -123,6 +126,12 @@ export function graph_svg_interests(container, {schema, data}) {
     'node':   node,
     'length': node.getTotalLength(),
     'id':     Array.from(groups.values())[i].z,
+
+    // Cache the first n levels of the binary search
+    // I don't think this actually improves performance, but it became a point of pride to make it work
+    'cache':  new BinarySearchCache(
+      8, node.getTotalLength(), (dist) => node.getPointAtLength(dist).x
+    ),
   }))
 
 
@@ -191,8 +200,8 @@ export function graph_svg_interests(container, {schema, data}) {
 
     // Compute the height of each graph line at the current mouse x-coordinate
     const heights = Object.fromEntries(pathNodes.map(
-      ({ node, length, id }) => ([
-        id, iterateComputePathY(node, length, xm),
+      ({ node, length, id, cache }) => ([
+        id, iterateComputePathY(node, xm, cache)
       ])
     ))
 
@@ -268,10 +277,18 @@ export function graph_svg_interests(container, {schema, data}) {
 */
 
 
-function iterateComputePathPt(pathNode, pathNodeLength, x) {
+function iterateComputePathPt(pathNode, x, binarySearchCache = null) {
 
-  let length = pathNodeLength / 2;
-  let dist   = length;
+  let length, dist;
+  if (binarySearchCache == null) {
+    length = pathNode.getTotalLength() / 2;
+    dist   = length;
+  }
+  else {
+    length = binarySearchCache.step_size / 2;
+    dist   = binarySearchCache.computeRange(x)[0] + (binarySearchCache.step_size / 2);
+  }
+
 
   const targetPrecision = 0.5;
 
@@ -300,10 +317,10 @@ function iterateComputePathPt(pathNode, pathNodeLength, x) {
   return [newPt, dist];
 }
 
-function iterateComputePathY(pathNode, pathNodeLength, x) {
-  return iterateComputePathPt(pathNode, pathNodeLength, x)[0].y;
+function iterateComputePathY(pathNode, x, binarySearchCache = null) {
+  return iterateComputePathPt(pathNode, x, binarySearchCache)[0].y;
 }
 
-function iterateComputePathDistance(pathNode, pathNodeLength, x) {
-  return iterateComputePathPt(pathNode, pathNodeLength, x)[1];
+function iterateComputePathDistance(pathNode, x, binarySearchCache = null) {
+  return iterateComputePathPt(pathNode, x, binarySearchCache)[1];
 }
