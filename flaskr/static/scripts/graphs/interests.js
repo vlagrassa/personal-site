@@ -301,7 +301,12 @@ function iterateComputePathPt(pathNode, x, cache = null) {
 
   // Config object for iteration
   const config = {
+
+    // Get within this distance of the target x value
     'targetPrecision': 0.001,
+
+    // Function (distance => x) is monotonic increasing
+    'direction': 1,
   }
 
   // If cache exists, use it to compute the value, otherwise use static method

@@ -103,23 +103,25 @@ export class ContinuousFunctionCache {
     let iter = config['maxIterations'] ?? 100;
     const targetPrecision = config['targetPrecision'] ?? 0.01;
 
+    // If monotonicity direction is specified in config, use it,
+    // otherwise compute it by polling values at the start and end of the domain
+    const direction = config['direction'] ?? (f(start) < f(end) ? 1 : -1);
+
+    // Initialize loop values
     let value, precision;
-    while (iter > 0) {
+
+    // Iterate at most maxIterations times
+    while (iter-- > 0) {
       ({value, precision} = f( currInput, targetValue ));
 
       // If within precision, return the value
       if (Math.abs(precision) < targetPrecision) {
         return value
       }
-      else if (precision > 0) {
-        step      /= 2;
-        currInput += step;
-      }
-      else {
-        step      /= 2
-        currInput -= step;
-      }
-      iter--;
+
+      // Halve the step and move by it
+      step /= 2;
+      currInput += step * direction * (precision > 0 ? 1 : -1);
     }
 
     return value;
