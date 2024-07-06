@@ -126,16 +126,6 @@ export function graph_svg_interests(container, {schema, data}) {
   }))
 
 
-  // Add an invisible layer for the interactive tip.
-  const dot = svg.append("g")
-      .attr("display", "none")
-
-  dot.append("circle")
-      .attr("r", 2.5)
-  dot.append("text")
-      .attr("text-anchor", "middle")
-      .attr("y", -8)
-
 
   // Add vertical line that follows mouse
   const verticalLineContainer = svg.append('g')
@@ -259,13 +249,11 @@ export function graph_svg_interests(container, {schema, data}) {
 
   function deselectAllPaths() {
     paths.classed('inactive', true);
-    dot.attr("display", null);
   }
 
   function reselectAllPaths() {
     paths.classed('active',   false);
     paths.classed('inactive', false);
-    dot.attr("display", "none");
     svg.node().value = null;
     svg.dispatch("input", {bubbles: true});
   }
