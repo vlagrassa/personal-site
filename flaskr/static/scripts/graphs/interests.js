@@ -137,6 +137,7 @@ export function graph_svg_interests(container, {schema, data}) {
 
   // Add vertical line that follows mouse
   const verticalLineContainer = svg.append('g')
+  hideVerticalLine();
 
   const verticalLine = verticalLineContainer
     .append('line')
@@ -158,6 +159,11 @@ export function graph_svg_interests(container, {schema, data}) {
   markers.classed('vertical-marker', true);
 
 
+  // Move the axes and axis markers above the plot lines in the rendering order
+  xAxis.raise();
+  yAxis.raise();
+
+
   // Add event handlers
   svg
       .on("pointerenter", pointerentered)
@@ -176,22 +182,22 @@ export function graph_svg_interests(container, {schema, data}) {
 
   function pointermoved(event) {
     const [xm, ym] = d3.pointer(event);
-    if (marginLeft < xm && xm < (width - marginRight)) {
+    if (marginLeft < xm && xm < (width - marginRight) && ym > (marginTop - 24)) {
       showChartInteraction(event);
     }
     else {
       hideVerticalLine();
-      reselectAllPaths();
+      deselectAllPaths();
     }
   }
 
   function pointerentered(event) {
-    deselectAllPaths(event);
+    deselectAllPaths();
   }
 
   function pointerleft(event) {
     hideVerticalLine();
-    reselectAllPaths();
+    resetAllPaths();
   }
 
   function showChartInteraction(event) {
@@ -255,13 +261,17 @@ export function graph_svg_interests(container, {schema, data}) {
     // Highlight the given path & desaturate all the other paths w/ active & inactive classes
     paths.classed('active',   ({z}) => z === pathIdx);
     paths.classed('inactive', ({z}) => z !== pathIdx);
+
+    // Display the highlighted path over top of the other paths
+    paths.filter(({z}) => z === pathIdx).raise()
   }
 
   function deselectAllPaths() {
+    paths.classed('active',   false);
     paths.classed('inactive', true);
   }
 
-  function reselectAllPaths() {
+  function resetAllPaths() {
     paths.classed('active',   false);
     paths.classed('inactive', false);
     svg.node().value = null;

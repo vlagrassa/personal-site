@@ -149,12 +149,11 @@ svg.graph-interests .data-path {
 
 svg.graph-interests .data-path.active {
   stroke: var(--color-primary);
-  z-index: 9;
 }
 
 svg.graph-interests .data-path.inactive {
   stroke: #ddd;
-  mix-blend-mode: none;
+  mix-blend-mode: normal;
 }
 
 svg.graph-interests .vertical-marker {
