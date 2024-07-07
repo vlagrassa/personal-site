@@ -1,6 +1,8 @@
 /*
   Inspiration:
     - https://observablehq.com/@d3/multi-line-chart/2
+    - https://observablehq.com/@d3/pan-zoom-axes
+    - https://observablehq.com/@radames/multi-line-chart-zoom
 */
 
 
@@ -31,14 +33,27 @@ export function graph_svg_interests(container, {schema, data}) {
     .attr("viewBox", [0, 0, width, height])
     .style("font-size", "10px")
 
-  // Create the positional scales.
+  // Create the x-axis scale
   const x = d3.scaleUtc()
     .domain(d3.extent(data, d => d.date))
     .range([marginLeft, width - marginRight])
 
+  // Create the y-axis scale
   const y = d3.scaleLinear()
     .domain([0, 5]).nice()
     .range([height - marginBottom, marginTop])
+
+  // Create the zoom object
+  // Scaling and translating along the x-axis
+  const zoom = svg.call(
+    d3.zoom()
+      .scaleExtent([1, 2])
+      .filter(filter)
+      .on("zoom", zoomed)
+  )
+
+  // Track the current transform provided by the zoom component
+  let currentTransform = d3.zoomIdentity;
 
 
 
@@ -242,7 +257,7 @@ export function graph_svg_interests(container, {schema, data}) {
         .attr('cy', (d) => heights[d.id])
 
     // Update the line label
-    verticalLineLabel.text( formatDateLabel(x.invert(xm)) );
+    verticalLineLabel.text( formatDateLabel( currentTransform.rescaleX(x).invert(xm)) );
   }
 
   function hideVerticalLine() {
@@ -278,6 +293,31 @@ export function graph_svg_interests(container, {schema, data}) {
     paths.classed('inactive', false);
     svg.node().value = null;
     svg.dispatch("input", {bubbles: true});
+  }
+
+
+  function zoomed({ transform }) {
+
+    // Store the transformation for use by events
+    currentTransform = transform;
+
+    // Compute the scaled x-axis
+    const xZoom = transform.rescaleX(x);
+
+    // Update the x-axis labels
+    xAxisContainer.call(xAxis.scale( xZoom ));
+    xAxisContainer.selectAll(".tick text").attr("y", 16);
+
+    // Update the data paths
+    paths.attr("d", (d) => {
+      return line(d.values.map(v => [ xZoom(v.x), v.y ]), xZoom, y)
+    })
+  }
+
+  // prevent scrolling then apply the default filter
+  function filter(event) {
+    event.preventDefault();
+    return (!event.ctrlKey || event.type === 'wheel') && !event.button;
   }
 }
 
