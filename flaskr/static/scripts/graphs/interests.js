@@ -25,6 +25,8 @@ export function graph_svg_interests(container, {schema, data}) {
   const marginTop    = 25;
   const marginBottom = 25;
 
+  const plotWidth = width - marginLeft - marginRight;
+
   // Create the SVG container
   const svg = d3.create("svg")
     .attr('class', 'graph-interests')
@@ -36,7 +38,7 @@ export function graph_svg_interests(container, {schema, data}) {
   // Create the x-axis scale
   const x = d3.scaleUtc()
     .domain(d3.extent(data, d => d.date))
-    .range([marginLeft, width - marginRight])
+    .range([0, plotWidth])
 
   // Create the y-axis scale
   const y = d3.scaleLinear()
@@ -71,15 +73,15 @@ export function graph_svg_interests(container, {schema, data}) {
 
   // Add the axis to the graph
   const xAxisContainer = svg.append("g")
-      .attr("transform", `translate(0, ${height - marginBottom})`)
+      .attr("transform", `translate(${marginLeft}, ${height - marginBottom})`)
       .attr("class", "x-axis")
       .call(xAxis)
 
   // Add a smaller secondary line, to match site styling
   xAxisContainer.append("line")
     .attr("class", "domain-decor")
-    .attr('x1', marginLeft + 2)
-    .attr('x2', width - (marginLeft + 2))
+    .attr('x1', 2)
+    .attr('x2', plotWidth - 2)
     .attr('y1', 3)
     .attr('y2', 3)
 
@@ -135,6 +137,7 @@ export function graph_svg_interests(container, {schema, data}) {
     .data(groups.values())
     .join("path")
       .attr("d", (d) => line( d.values.map(v => [ x(v.x), v.y ]), x, y ))
+      .attr("transform", `translate(${ marginLeft }, 0)`)
 
   paths.classed('data-path', true)
 
@@ -223,7 +226,7 @@ export function graph_svg_interests(container, {schema, data}) {
     // Compute the height of each graph line at the current mouse x-coordinate
     const heights = Object.fromEntries(pathNodes.map(
       ({ id, node, cache }) => ([
-        id, iterateComputePathY(node, xm, cache)
+        id, iterateComputePathY(node, (xm - marginLeft), cache)
       ])
     ))
 
@@ -257,7 +260,7 @@ export function graph_svg_interests(container, {schema, data}) {
         .attr('cy', (d) => heights[d.id])
 
     // Update the line label
-    verticalLineLabel.text( formatDateLabel( currentTransform.rescaleX(x).invert(xm)) );
+    verticalLineLabel.text( formatDateLabel( currentTransform.rescaleX(x).invert(xm - marginLeft)) );
   }
 
   function hideVerticalLine() {
