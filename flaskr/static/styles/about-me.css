@@ -140,6 +140,22 @@
 
 
 
+svg.graph-interests .x-axis .domain {
+  stroke:       var(--color-off-black);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+svg.graph-interests .x-axis .domain-decor {
+  stroke:       var(--color-off-black);
+  stroke-width: 1;
+}
+
+svg.graph-interests .y-axis {
+  color: var(--color-gray);
+  font-style: italic;
+}
+
 svg.graph-interests .data-path {
   stroke: var(--color-secondary-1);
   stroke-width: 1.5;
