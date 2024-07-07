@@ -124,6 +124,12 @@ export class ContinuousFunctionCache {
       currInput += step * direction * (precision > 0 ? 1 : -1);
     }
 
+    // Print an error message if we couldn't get within the desired precision
+    if (config['verbose']) {
+      console.error(`Hit maximum iteration computing value ${targetValue} (precision = ${precision})`);
+    }
+
+    // Return the closest value we could find
     return value;
   }
 
