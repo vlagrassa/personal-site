@@ -100,10 +100,12 @@ export function graph_svg_interests(container, {schema, data}) {
 
 
 
-  const points = data.map((d) => [ x( d.date ), y( d.value ), d.id ])
 
-  // Group the points by series.
-  const groups = d3.rollup(points, v => Object.assign(v, {z: v[0][2]}), d => d[2]);
+  // Map data to a list of point objects
+  const points = data.map((d) => ({ "x": d.date, "y": y( d.value ), "id": d.id }))
+
+  // Group the points by series ID
+  const groups = d3.rollup(points, values => ({ values, id: values[0].id}), d => d.id);
 
   // Draw the lines.
   const line = d3.line()
@@ -116,14 +118,14 @@ export function graph_svg_interests(container, {schema, data}) {
     .selectAll("path")
     .data(groups.values())
     .join("path")
-      .attr("d", line)
+      .attr("d", (d) => line( d.values.map(v => [ x(v.x), v.y ]), x, y ))
 
   paths.classed('data-path', true)
 
   // Compute the path nodes
   const pathNodes = paths.nodes().map((node, i) => ({
     'node':   node,
-    'id':     Array.from(groups.values())[i].z,
+    'id':     Array.from(groups.values())[i].id,
 
     // Cache the first n levels of the binary search
     // I don't think this actually improves performance, but it became a point of pride to make it work
@@ -258,11 +260,11 @@ export function graph_svg_interests(container, {schema, data}) {
     markers.classed('inactive', ({id}) => id !== pathIdx);
 
     // Highlight the given path & desaturate all the other paths w/ active & inactive classes
-    paths.classed('active',   ({z}) => z === pathIdx);
-    paths.classed('inactive', ({z}) => z !== pathIdx);
+    paths.classed('active',   ({id}) => id === pathIdx);
+    paths.classed('inactive', ({id}) => id !== pathIdx);
 
     // Display the highlighted path over top of the other paths
-    paths.filter(({z}) => z === pathIdx).raise()
+    paths.filter(({id}) => id === pathIdx).raise()
   }
 
   function deselectAllPaths() {
