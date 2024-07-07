@@ -49,18 +49,19 @@ export function graph_svg_interests(container, {schema, data}) {
   }
 
   // Create the axis object
-  const xAxis = svg.append("g")
+  const xAxis = d3.axisBottom(x)
+    .ticks(width / 80)
+    .tickFormat(formatDateTick)
+    .tickSize(0)
+
+  // Add the axis to the graph
+  const xAxisContainer = svg.append("g")
       .attr("transform", `translate(0, ${height - marginBottom})`)
       .attr("class", "x-axis")
-      .call(
-        d3.axisBottom(x)
-          .ticks(width / 80)
-          .tickFormat(formatDateTick)
-          .tickSize(0)
-      )
+      .call(xAxis)
 
   // Add a smaller secondary line, to match site styling
-  xAxis.append("line")
+  xAxisContainer.append("line")
     .attr("class", "domain-decor")
     .attr('x1', marginLeft + 2)
     .attr('x2', width - (marginLeft + 2))
@@ -68,7 +69,7 @@ export function graph_svg_interests(container, {schema, data}) {
     .attr('y2', 3)
 
   // Move labels down
-  xAxis.selectAll(".tick text").attr("y", 16);
+  xAxisContainer.selectAll(".tick text").attr("y", 16);
 
 
 
@@ -82,7 +83,7 @@ export function graph_svg_interests(container, {schema, data}) {
   }
 
   // Create the axis object
-  const yAxis = svg.append("g")
+  const yAxisContainer = svg.append("g")
       .attr("transform", `translate(${marginLeft},0)`)
       .attr("class", "y-axis")
       .call(
@@ -94,7 +95,7 @@ export function graph_svg_interests(container, {schema, data}) {
       .call(g => g.select(".domain").remove())
 
   // Set axis label styling
-  yAxis.selectAll(".tick text")
+  yAxisContainer.selectAll(".tick text")
     .attr("x", -marginLeft + 5)
     .attr("text-anchor", "start")
 
@@ -161,8 +162,8 @@ export function graph_svg_interests(container, {schema, data}) {
 
 
   // Move the axes and axis markers above the plot lines in the rendering order
-  xAxis.raise();
-  yAxis.raise();
+  xAxisContainer.raise();
+  yAxisContainer.raise();
 
 
   // Add event handlers
