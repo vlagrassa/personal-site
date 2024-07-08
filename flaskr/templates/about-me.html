@@ -303,6 +303,13 @@
 
   const show_graph_header_inline = false;
 
+  // Track the current language
+  let current_language = "{{ lang }}";
+  document.addEventListener('change-settings', function({detail}) {
+    if (detail.language) current_language = detail.language;
+    console.log(current_language)
+  })
+
 
   async function render_graph(name) {
 
@@ -334,7 +341,7 @@
 
     // Create the graph element
     const svg = f(parent, data, {
-      "initialLanguage": "{{ lang }}",
+      "initialLanguage": current_language,
       "languages": [ {% for l in langSet %}"{{ l['code'] }}", {% endfor %}],
     })
 
