@@ -213,6 +213,29 @@ svg.graph-genres .arc.hidden {
 
 
 
+svg.graph-vowels .outline {
+  stroke: var(--color-off-black);
+  stroke-width: 2px;
+  fill: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+svg.graph-vowels .grid {
+  stroke: #ddd;
+  stroke-width: 1px;
+  fill: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+svg.graph-vowels text.label {
+  fill: var(--color-gray);
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+}
+
 svg.graph-vowels text.vowel {
   transition: font-size 100ms cubic-bezier(.36,.68,.46,1.45);
   font-family: var(--font-mono);

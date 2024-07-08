@@ -4,7 +4,6 @@ export function graph_svg_vowels(container, data) {
   const margin = 50;
   const corner = width * 0.3;
 
-  const outline_color = 'gray';
 
   // Create the SVG container
   const svg = d3.create("svg")
@@ -36,8 +35,6 @@ export function graph_svg_vowels(container, data) {
     return target
       .append('path')
         .attr("d", draw_line(points) + (closed ? 'Z' : ''))
-        .style("fill", "none")
-        .style("stroke", outline_color);
   }
 
 
@@ -87,8 +84,8 @@ export function graph_svg_vowels(container, data) {
   //     .attr("pointer-events", "none")
 
   // Draw trapezoid
-  append_path(svg, TRAP_OUTLINE, true).attr("pointer-events", "none");
-  TRAP_LINES.forEach(line => append_path(svg, line).attr("pointer-events", "none"));
+  append_path(svg, TRAP_OUTLINE, true).attr("class", "outline");
+  TRAP_LINES.forEach(line => append_path(svg, line).attr("class", "grid"));
 
   // Draw background labels
   add_labels(svg)
@@ -140,15 +137,13 @@ const labels = [
   { label: 'Back',      x: 1,   y: 1,    side: 't' },
 ]
 
-function add_labels(svg) {
-  return svg.append("g")
-      .attr("fill", "gray")
-      .attr("font-size", "1.5em")
+function add_labels(parent) {
+  return parent.append("g")
     .selectAll("text")
     .data(labels)
     .join("text")
+      .attr("class", "label")
       .attr('text-anchor', d => d.side == 'l' ? 'end' : 'middle')
       .attr('dominant-baseline', 'middle')
       .text(d => d.label)
-      .attr("pointer-events", "none")
 }
