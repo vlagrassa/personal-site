@@ -131,15 +131,11 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
     .data(data)
     .join("text")
       .text(d => d.symbol)
-      .attr('paint-order', 'stroke')
-      .attr('stroke-width', '2px')
-      .attr('stroke', 'white')
       .attr('class', 'vowel')
       .attr("x", d => scaleF2(d.f2))
       .attr("y", d => scaleF1(d.f1))
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
-      .attr('pointer-events', 'none')
 
   // Return the SVG element
   return svg;

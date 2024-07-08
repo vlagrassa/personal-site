@@ -245,6 +245,11 @@ svg.graph-vowels text.vowel {
   transition: font-size 100ms cubic-bezier(.36,.68,.46,1.45);
   font-family: var(--font-mono);
   fill: var(--color-secondary-2);
+  paint-order: stroke;
+  stroke:       white;
+  stroke-width: 2px;
+  user-select: none;
+  pointer-events: none;
 }
 
 svg.graph-vowels text.vowel.active {
