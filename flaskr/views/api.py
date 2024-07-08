@@ -219,6 +219,6 @@ def get_data_vowels():
   with open_app_file('static/data-standin/graph-data/data-vowels.csv') as file:
     return list(MapDictReader(
       file,
-      fieldnames=[ 'symbol', 'x', 'y', 'word' ],
+      fieldnames=[ 'symbol', 'f1', 'f2', 'word' ],
       field_maps={ 'x': float, 'y': float, 'word': lambda x: x.strip() },
     ))

@@ -221,6 +221,11 @@ svg.graph-vowels .outline {
   pointer-events: none;
 }
 
+svg.graph-vowels .outline-outer {
+  stroke-width: 1px;
+  fill: none;
+}
+
 svg.graph-vowels .grid {
   stroke: #ddd;
   stroke-width: 1px;

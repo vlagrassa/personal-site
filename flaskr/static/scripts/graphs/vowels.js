@@ -1,9 +1,28 @@
+/* Constants */
+
+// First formant range
+const F1_MIN = 100;
+const F1_MAX = 900;
+
+// Second formant range
+const F2_MIN = 300;
+const F2_MID = 2100;
+const F2_MAX = 2700;
+
+
+
 export function graph_svg_vowels(container, data) {
 
-  const width  = 500;
-  const margin = 50;
-  const corner = width * 0.3;
+  const width  = 400;
+  const margin = 40;
 
+  // Compute how far in the bottom-left corner goes,
+  // in terms of the graph width
+  const corner = (F2_MAX - F2_MID) / (F2_MAX - F2_MIN) * (width - (2*margin));
+
+  // Map formant values to Cartesian coordinates
+  const scaleF1 = d3.scaleLinear().domain([F1_MIN, F1_MAX]).range([margin, width - margin])
+  const scaleF2 = d3.scaleLinear().domain([F2_MIN, F2_MAX]).range([width - margin, margin])
 
   // Create the SVG container
   const svg = d3.create("svg")
@@ -16,20 +35,34 @@ export function graph_svg_vowels(container, data) {
   // Create container for definitions
   const defs = svg.append('defs');
 
+
+  // Trapezoid coordinates
+
   const scale_y = d3.scaleLinear().domain([0, 1]).range([width - margin, margin])
   const x_offset = d3.scaleLinear().domain([0, 1]).range([corner, 0])
 
-  const map_pt_y = function({x, y}) {
+  const scaleTrapY = function({x, y}) {
     return scale_y(y)
   }
 
-  const map_pt_x = function({x, y}) {
+  const scaleTrapX = function({x, y}) {
     return d3.scaleLinear().domain([0, 1]).range([margin + x_offset(y), width - margin])(x)
   }
 
+  // Mapping functions to convert points to our coordinate scheme
+
+  function mapPointsFormants(points) {
+    return points.map(([f1, f2]) => [scaleF2(f2), scaleF1(f1)])
+  }
+
+  function mapPointsTrapezoid(points) {
+    // return points.map(([x, y]) => [scaleTrapX(x), scaleTrapY(y)])
+    return points.map((pt) => [scaleTrapX(pt), scaleTrapY(pt)])
+  }
+
   const draw_line = d3.line()
-      .x( (d) => map_pt_x(d) )
-      .y( (d) => map_pt_y(d) )
+      .x( (d) => scaleTrapX(d) )
+      .y( (d) => scaleTrapY(d) )
 
   function append_path(target, points, closed=false) {
     return target
@@ -56,7 +89,7 @@ export function graph_svg_vowels(container, data) {
   }
 
   // Compute voronoi diagram for the vowels
-  const delaunay = d3.Delaunay.from(data.map(d => [map_pt_x(d), map_pt_y(d)]));
+  const delaunay = d3.Delaunay.from(data.map(d => [scaleF2(d.f2), scaleF1(d.f1)]));
   const voronoi  = delaunay.voronoi([0, 0, width, width]);
 
   // Create interactive voronoi regions inside trapezoid, extending over the edges a bit
@@ -84,13 +117,12 @@ export function graph_svg_vowels(container, data) {
   //     .attr("pointer-events", "none")
 
   // Draw trapezoid
-  append_path(svg, TRAP_OUTLINE, true).attr("class", "outline");
-  TRAP_LINES.forEach(line => append_path(svg, line).attr("class", "grid"));
+  const background = addBackground(svg, mapPointsFormants, mapPointsTrapezoid);
 
   // Draw background labels
   add_labels(svg)
-      .attr("x", d => map_pt_x(d) - (d.side == 'l' ? 20 : 0))
-      .attr("y", d => map_pt_y(d) - (d.side == 't' ? 20 : 0))
+      .attr("x", d => scaleTrapX(d) - (d.side == 'l' ? 20 : 0))
+      .attr("y", d => scaleTrapY(d) - (d.side == 't' ? 20 : 0))
 
   // Draw IPA symbols
   const symbols = svg.append("g")
@@ -103,8 +135,8 @@ export function graph_svg_vowels(container, data) {
       .attr('stroke-width', '2px')
       .attr('stroke', 'white')
       .attr('class', 'vowel')
-      .attr("x", d => map_pt_x(d))
-      .attr("y", d => map_pt_y(d))
+      .attr("x", d => scaleF2(d.f2))
+      .attr("y", d => scaleF1(d.f1))
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('pointer-events', 'none')
@@ -115,7 +147,64 @@ export function graph_svg_vowels(container, data) {
 
 
 
+function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
+
+  const container = parent.append("g")
+    .attr("class", "background")
+
+  const mappedCorners = mapPointsFormants( CORNERS )
+  const outlineGap = 3;
+
+  const bump = (points, gap) => {
+    const centerX = d3.mean(points.map(([x, y]) => x))
+    const centerY = d3.mean(points.map(([x, y]) => y))
+    return points.map(([x, y]) => [
+      x + (x > centerX ? gap : -gap),
+      y + (y > centerY ? gap : -gap),
+    ])
+  }
+
+  const outlineOuter = bump(mappedCorners, outlineGap)
+  outlineOuter[1][0] -= 1
+
+  TRAP_LINES.forEach(line => {
+    container.append("path")
+      .attr("class", "grid")
+      .attr("d", pointsToPath( mapPointsTrapezoid(line), true))
+  });
+
+  // Main (inner) outline
+  container.append("path")
+    .attr("class", "outline")
+    .attr("d", pointsToPath(mappedCorners, true))
+
+  // Decorative (outer) outline
+  container.append("path")
+    .attr("class", "outline outline-outer")
+    .attr("d", pointsToPath(outlineOuter, true))
+
+  return container
+
+}
+
+
+function pointsToPath(points, closed=false) {
+  return "M" + points.map(([x, y]) => `${x},${y}`).join("L") + (closed ? "Z" : "");
+}
+
+
+
 /* Helpers */
+
+
+
+const CORNERS = [
+  [ F1_MIN, F2_MIN ],  // top right
+  [ F1_MIN, F2_MAX ],  // top left
+  [ F1_MAX, F2_MID ],  // bottom left
+  [ F1_MAX, F2_MIN ],  // bottom right
+]
+
 
 const TRAP_OUTLINE_EXTENDED = [ { x: -0.1, y: 1.1 }, { x: 1.1, y: 1.1 }, { x: 1.1, y: -0.1 }, { x: -0.1, y: -0.1 } ];
 
