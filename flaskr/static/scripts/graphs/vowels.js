@@ -246,10 +246,9 @@ function add_labels(parent, labels, config) {
 
       // Render an individual language label
       .filter(d => languages.includes(d.lang))
-      .attr("class", "label")
       .attr("lang",      (d) => d.lang)
       .attr("data-lang", (d) => d.lang)
-      .attr("class",     (d) => d.lang === initialLang ? "" : "hide")
+      .attr("class",     (d) => (d.lang === initialLang ? "" : "hide") + " label")
       .attr("text-anchor", d => d.formant == "f1" ? "end" : "middle")
       .attr('dominant-baseline', 'middle')
       .text((d) => d.text)
