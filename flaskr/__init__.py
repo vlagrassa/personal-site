@@ -95,6 +95,7 @@ def create_app(test_config=None):
     # Add the initial language to the context
     return {
       'lang': l,
+      'langSet': LANGUAGES,
     }
 
   @app.context_processor

@@ -333,7 +333,10 @@
     const header = document.getElementById('vis-header');
 
     // Create the graph element
-    const svg = f(parent, data)
+    const svg = f(parent, data, {
+      "initialLanguage": "{{ lang }}",
+      "languages": [ {% for l in langSet %}"{{ l['code'] }}", {% endfor %}],
+    })
 
     // Add the graph
     parent.innerHTML = '';

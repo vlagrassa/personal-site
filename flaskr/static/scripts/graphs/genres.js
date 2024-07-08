@@ -13,7 +13,7 @@ const inactive_opacity = 0.3;
 const hidden_opacity   = 0.0;
 
 
-export function graph_svg_genres(container, data) {
+export function graph_svg_genres(container, data, config = {}) {
 
   const bounding_rect = container.getBoundingClientRect();
 

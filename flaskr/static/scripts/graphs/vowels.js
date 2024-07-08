@@ -11,7 +11,7 @@ const F2_MAX = 2700;
 
 
 
-export function graph_svg_vowels(container, data) {
+export function graph_svg_vowels(container, data, config = {}) {
 
   const width  = 400;
   const margin = 40;

@@ -9,7 +9,7 @@
 import { ContinuousFunctionCache } from "../cache.js";
 
 
-export function graph_svg_interests(container, {schema, data}) {
+export function graph_svg_interests(container, {schema, data}, config = {}) {
 
   // Mape dates to date objects
   data = data.map((d) => Object.assign(d, {'date': new Date(d['date'])}));
