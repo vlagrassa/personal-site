@@ -216,9 +216,13 @@ def get_data_genres():
 @jsonify_response
 @raise_on_error(500)
 def get_data_vowels():
-  with open_app_file('static/data-standin/graph-data/data-vowels.csv') as file:
-    return list(MapDictReader(
-      file,
-      fieldnames=[ 'symbol', 'f1', 'f2', 'word' ],
-      field_maps={ 'x': float, 'y': float, 'word': lambda x: x.strip() },
-    ))
+  with open_app_file('static/data-standin/graph-data/data-vowels.csv') as data_file:
+    with open_app_file('static/data-standin/graph-data/schema-vowels.json') as schema_file:
+      return {
+        'schema': JsonComment(json).load(schema_file),
+        'data': list(MapDictReader(
+          data_file,
+          fieldnames=[ 'symbol', 'f1', 'f2', 'word' ],
+          field_maps={ 'x': float, 'y': float, 'word': lambda x: x.strip() },
+        )),
+      }

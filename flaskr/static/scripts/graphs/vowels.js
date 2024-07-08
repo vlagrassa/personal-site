@@ -11,7 +11,7 @@ const F2_MAX = 2700;
 
 
 
-export function graph_svg_vowels(container, data, config = {}) {
+export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   const width  = 400;
   const margin = 40;
@@ -120,9 +120,9 @@ export function graph_svg_vowels(container, data, config = {}) {
   const background = addBackground(svg, mapPointsFormants, mapPointsTrapezoid);
 
   // Draw background labels
-  add_labels(svg)
-      .attr("x", d => scaleTrapX(d) - (d.side == 'l' ? 20 : 0))
-      .attr("y", d => scaleTrapY(d) - (d.side == 't' ? 20 : 0))
+  add_labels(svg, schema['labels'], config)
+      .attr("x", d => scaleTrapX(d))
+      .attr("y", d => scaleTrapY(d))
 
   // Draw IPA symbols
   const symbols = svg.append("g")
@@ -216,23 +216,45 @@ const TRAP_LINES = [
 ];
 
 
-const labels = [
-  { label: 'Close',     x: 0,   y: 1,    side: 'l' },
-  { label: 'Close-Mid', x: 0,   y: 0.66, side: 'l' },
-  { label: 'Open-Mid',  x: 0,   y: 0.33, side: 'l' },
-  { label: 'Open',      x: 0,   y: 0,    side: 'l' },
-  { label: 'Front',     x: 0,   y: 1,    side: 't' },
-  { label: 'Central',   x: 0.5, y: 1,    side: 't' },
-  { label: 'Back',      x: 1,   y: 1,    side: 't' },
-]
+function add_labels(parent, labels, config) {
 
-function add_labels(parent) {
+  // Get values from config
+  const languages   = config.languages       ?? [];
+  const initialLang = config.initialLanguage ?? "en";
+
+  // Join the two formant lists into a single list
+  // with a member "formant" that tracks which formant list each item came from
+  const labelsWithFormants = Object.keys(labels).flatMap(
+    (formant) => labels[formant].map( (label) => Object.assign(label, {formant}) )
+  )
+
+  // Add all labels to a new group
   return parent.append("g")
+
+    // Create a group for each label
+    .selectAll("g")
+    .data(labelsWithFormants)
+    .join("g")
+
+    // Create a text object for each language in each label
     .selectAll("text")
-    .data(labels)
+    .data((d) => Object.keys(d.label).map(lang => ({
+        lang,
+        text: d.label[lang],
+        x: d.backness ?? -0.05,
+        y: d.height   ??  1.05,
+        formant: d.formant,
+      }))
+    )
     .join("text")
+
+      // Render an individual language label
+      .filter(d => languages.includes(d.lang))
       .attr("class", "label")
-      .attr('text-anchor', d => d.side == 'l' ? 'end' : 'middle')
+      .attr("lang",      (d) => d.lang)
+      .attr("data-lang", (d) => d.lang)
+      .attr("class",     (d) => d.lang === initialLang ? "" : "hide")
+      .attr("text-anchor", d => d.formant == "f1" ? "end" : "middle")
       .attr('dominant-baseline', 'middle')
-      .text(d => d.label)
+      .text((d) => d.text)
 }
