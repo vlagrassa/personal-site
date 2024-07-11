@@ -116,13 +116,16 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   //     .attr("d", (d, i) => voronoi.renderCell(i))
   //     .attr("pointer-events", "none")
 
-  // Draw trapezoid
+  // Draw background gridlines
   const background = addBackground(svg, mapPointsFormants, mapPointsTrapezoid);
 
   // Draw background labels
   add_labels(svg, schema['labels'], config)
       .attr("x", d => scaleTrapX(d))
       .attr("y", d => scaleTrapY(d))
+
+  // Draw trapezoid
+  const outline = addOutline(svg, mapPointsFormants, mapPointsTrapezoid);
 
   // Draw IPA symbols
   const symbols = svg.append("g")
@@ -143,7 +146,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
 
 
-function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
+function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
 
   const container = parent.append("g")
     .attr("class", "background")
@@ -163,11 +166,6 @@ function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
   const outlineOuter = bump(mappedCorners, outlineGap)
   outlineOuter[1][0] -= 1
 
-  TRAP_LINES.forEach(line => {
-    container.append("path")
-      .attr("class", "grid")
-      .attr("d", pointsToPath( mapPointsTrapezoid(line), true))
-  });
 
   // Main (inner) outline
   container.append("path")
@@ -181,6 +179,20 @@ function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
 
   return container
 
+}
+
+
+function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
+  const container = parent.append("g")
+    .attr("class", "background")
+
+  TRAP_LINES.forEach(line => {
+    container.append("path")
+      .attr("class", "grid")
+      .attr("d", pointsToPath( mapPointsTrapezoid(line), true))
+  });
+
+  return container;
 }
 
 
