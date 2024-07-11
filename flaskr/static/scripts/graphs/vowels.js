@@ -1,3 +1,6 @@
+import { pointsToPath, raiseLine } from "../utils.js"
+
+
 /* Constants */
 
 // First formant range
@@ -154,17 +157,10 @@ function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
   const mappedCorners = mapPointsFormants( CORNERS )
   const outlineGap = 3;
 
-  const bump = (points, gap) => {
-    const centerX = d3.mean(points.map(([x, y]) => x))
-    const centerY = d3.mean(points.map(([x, y]) => y))
-    return points.map(([x, y]) => [
-      x + (x > centerX ? gap : -gap),
-      y + (y > centerY ? gap : -gap),
-    ])
-  }
 
-  const outlineOuter = bump(mappedCorners, outlineGap)
+  const outlineOuter = raiseLine(mappedCorners, outlineGap)
   outlineOuter[1][0] -= 1
+  outlineOuter[2][0] += 1
 
 
   // Main (inner) outline
@@ -195,10 +191,6 @@ function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
   return container;
 }
 
-
-function pointsToPath(points, closed=false) {
-  return "M" + points.map(([x, y]) => `${x},${y}`).join("L") + (closed ? "Z" : "");
-}
 
 
 
