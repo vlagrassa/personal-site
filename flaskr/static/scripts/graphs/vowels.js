@@ -1,4 +1,4 @@
-import { pointsToPath, raiseLine } from "../utils.js"
+import { pointsToPath, raiseLine, makeCurvedLine } from "../utils.js";
 
 
 /* Constants */
@@ -229,16 +229,18 @@ function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
   outlineOuter[1][0] -= 1
   outlineOuter[2][0] += 1
 
+  const line = d3.line()
+    .curve(d3.curveCardinalClosed.tension(0.9))
 
   // Main (inner) outline
   container.append("path")
     .attr("class", "outline")
-    .attr("d", pointsToPath(mappedCorners, true))
+    .attr("d", line(makeCurvedLine(mappedCorners, 4)))
 
   // Decorative (outer) outline
   container.append("path")
     .attr("class", "outline outline-outer")
-    .attr("d", pointsToPath(outlineOuter, true))
+    .attr("d", line(makeCurvedLine(outlineOuter, 5)))
 
   return container
 
@@ -286,6 +288,7 @@ function addSpectrumWindow(parent, x, y, width, height) {
     .attr("class", "formant-line")
 
   container.append("rect")
+    .attr('rx', 5)
     .attr('width', width)
     .attr('height', height)
     .attr('class', 'outline')
@@ -293,6 +296,7 @@ function addSpectrumWindow(parent, x, y, width, height) {
   container.append("rect")
     .attr('x', -outlineGap)
     .attr('y', -outlineGap)
+    .attr('rx', 7)
     .attr('width', width + outlineGap*2)
     .attr('height', height + outlineGap*2)
     .attr('class', 'outline outline-outer')
