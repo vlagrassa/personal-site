@@ -19,6 +19,9 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   const width  = 400;
   const margin = 40;
 
+  const sidebarWidth = 88;
+  const spacing = 25;
+
   // Compute how far in the bottom-left corner goes,
   // in terms of the graph width
   const corner = (F2_MAX - F2_MID) / (F2_MAX - F2_MIN) * (width - (2*margin));
@@ -127,6 +130,13 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr("x", d => scaleTrapX(d))
       .attr("y", d => scaleTrapY(d))
 
+  // Add cursors on trapezoid
+  const cursors = svg.append("g")
+    .attr('clip-path', "url(#trap-boundary)")
+
+  const cursorF1 = addCursor(cursors).attr('stroke-dasharray', '4 3 1 3')
+  const cursorF2 = addCursor(cursors)
+
   // Draw trapezoid
   const outline = addOutline(svg, mapPointsFormants, mapPointsTrapezoid);
 
@@ -143,10 +153,67 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
 
+  // Add the spectrum window sidebar
+  const {container: spectrumWindow, barF1, barF2} =
+    addSpectrumWindow(svg, width + spacing, margin, sidebarWidth, width - 2*margin)
+
+
+  const scaleFormantBar = d3.scaleLinear().domain([0, 3000]).range([width - 2*margin, 0])
+
+  svg
+    .on("pointermove",  (event) => {
+      const [xm, ym] = d3.pointer(event);
+      if (margin < ym && ym < width-margin && margin < xm && xm < width-margin) {
+        showCursors(xm, ym)
+      }
+      else {
+        hideCursors()
+      }
+    })
+
   // Return the SVG element
   return svg;
-}
 
+
+
+  function showCursors(xm, ym) {
+
+    barF1.style('display', 'unset')
+    barF2.style('display', 'unset')
+    cursorF1.style('display', 'unset')
+    cursorF2.style('display', 'unset')
+
+    const f1m = scaleFormantBar(scaleF1.invert(ym))
+    const f2m = scaleFormantBar(scaleF2.invert(xm))
+
+    barF1.attr('y1', f1m).attr('y2', f1m)
+    barF2.attr('y1', f2m).attr('y2', f2m)
+
+    cursorF1
+      .attr('x1', scaleTrapX({x: 1, y: scale_y.invert(ym)}))
+      .attr('x2', scaleTrapX({x: 0, y: scale_y.invert(ym)}))
+      .attr('y1', ym)
+      .attr('y2', ym)
+
+    cursorF2
+      .attr('x1', xm)
+      .attr('x2', xm)
+      .attr('y1', margin)
+      .attr('y2', width - margin)
+
+    barF1.classed('disabled', f1m <= f2m)
+    barF2.classed('disabled', f1m <= f2m)
+    cursorF1.classed('disabled', f1m <= f2m)
+    cursorF2.classed('disabled', f1m <= f2m)
+  }
+
+  function hideCursors() {
+    barF1.style('display', 'none')
+    barF2.style('display', 'none')
+    cursorF1.style('display', 'none')
+    cursorF2.style('display', 'none')
+  }
+}
 
 
 function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
@@ -189,6 +256,48 @@ function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
   });
 
   return container;
+}
+
+
+function addCursor(parent) {
+  return parent.append("line")
+    .attr('class', 'cursor-line')
+    .attr('clip-path', "url(#trap-boundary)")
+}
+
+
+function addSpectrumWindow(parent, x, y, width, height) {
+
+  const outlineGap = 3;
+
+  const container = parent.append("g")
+    .attr("class", "spectrum-window")
+    .attr("transform", `translate(${x}, ${y})`)
+
+  const barF1 = container.append("line")
+    .attr('x1', 0)
+    .attr('x2', width)
+    .attr("class", "formant-line")
+    .attr('stroke-dasharray', '8 5 2 5')
+
+  const barF2 = container.append("line")
+    .attr('x1', 0)
+    .attr('x2', width)
+    .attr("class", "formant-line")
+
+  container.append("rect")
+    .attr('width', width)
+    .attr('height', height)
+    .attr('class', 'outline')
+
+  container.append("rect")
+    .attr('x', -outlineGap)
+    .attr('y', -outlineGap)
+    .attr('width', width + outlineGap*2)
+    .attr('height', height + outlineGap*2)
+    .attr('class', 'outline outline-outer')
+
+  return {container, barF1, barF2};
 }
 
 

@@ -257,6 +257,21 @@ svg.graph-vowels text.vowel.active {
   font-size: 1.25em;
 }
 
+svg.graph-vowels .cursor-line {
+  stroke: var(--color-primary-1);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+svg.graph-vowels .cursor-line.disabled {
+  stroke: gray;
+}
+
+svg.graph-vowels .spectrum-window .formant-line {
+  stroke: var(--color-primary-2);
+  stroke-width: 2;
+}
+
 
 
 .help-section-button {
