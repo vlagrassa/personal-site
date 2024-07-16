@@ -1,4 +1,4 @@
-import { pointsToPath, raiseLine, makeCurvedLine } from "../utils.js";
+import { pointsToPath, raiseLine, makeCurvedLine, hexagonPointsPath } from "../utils.js";
 
 
 /* Constants */
@@ -131,11 +131,8 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr("y", d => scaleTrapY(d))
 
   // Add cursors on trapezoid
-  const cursors = svg.append("g")
-    .attr('clip-path', "url(#trap-boundary)")
-
-  const cursorF1 = addCursor(cursors).attr('stroke-dasharray', '4 3 1 3')
-  const cursorF2 = addCursor(cursors)
+  const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width)
+  cursors.attr('clip-path', "url(#trap-boundary)")
 
   // Draw trapezoid
   const outline = addOutline(svg, mapPointsFormants, mapPointsTrapezoid);
@@ -178,10 +175,10 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   function showCursors(xm, ym) {
 
+    showCrosshairs(xm, ym);
+
     barF1.style('display', 'unset')
     barF2.style('display', 'unset')
-    cursorF1.style('display', 'unset')
-    cursorF2.style('display', 'unset')
 
     const f1m = scaleFormantBar(scaleF1.invert(ym))
     const f2m = scaleFormantBar(scaleF2.invert(xm))
@@ -189,29 +186,16 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
     barF1.attr('y1', f1m).attr('y2', f1m)
     barF2.attr('y1', f2m).attr('y2', f2m)
 
-    cursorF1
-      .attr('x1', scaleTrapX({x: 1, y: scale_y.invert(ym)}))
-      .attr('x2', scaleTrapX({x: 0, y: scale_y.invert(ym)}))
-      .attr('y1', ym)
-      .attr('y2', ym)
-
-    cursorF2
-      .attr('x1', xm)
-      .attr('x2', xm)
-      .attr('y1', margin)
-      .attr('y2', width - margin)
-
     barF1.classed('disabled', f1m <= f2m)
     barF2.classed('disabled', f1m <= f2m)
-    cursorF1.classed('disabled', f1m <= f2m)
-    cursorF2.classed('disabled', f1m <= f2m)
+    // cursorF1.classed('disabled', f1m <= f2m)
+    // cursorF2.classed('disabled', f1m <= f2m)
   }
 
   function hideCursors() {
+    hideCrosshairs();
     barF1.style('display', 'none')
     barF2.style('display', 'none')
-    cursorF1.style('display', 'none')
-    cursorF2.style('display', 'none')
   }
 }
 
@@ -265,6 +249,50 @@ function addCursor(parent) {
   return parent.append("line")
     .attr('class', 'cursor-line')
     .attr('clip-path', "url(#trap-boundary)")
+}
+
+function addCursors(parent, minWidth, minHeight) {
+  const container = parent.append("g")
+  const cursors = container.append("g")
+
+  const hexRadius = 4;
+  const hexMultiplier = Math.sqrt(3) / 2;
+
+  const cursorY1 = cursors.append("line")
+    .attr('class', 'cursor-line')
+    .attr('y1', -hexRadius)
+    .attr('y2', -minHeight)
+
+  const cursorY2 = cursors.append("line")
+    .attr('class', 'cursor-line')
+    .attr('y1', hexRadius)
+    .attr('y2', minHeight)
+
+  const cursorX1 = cursors.append("line")
+    .attr('class', 'cursor-line')
+    .attr('x1', -hexRadius * hexMultiplier)
+    .attr('x2', -minWidth)
+    .attr('stroke-dasharray', '4 3 1 3')
+
+  const cursorX2 = cursors.append("line")
+    .attr('class', 'cursor-line')
+    .attr('x1', hexRadius * hexMultiplier)
+    .attr('x2', minWidth)
+    .attr('stroke-dasharray', '4 3 1 3')
+
+  const crosshair = cursors.append('path')
+    .attr('d', hexagonPointsPath(0, 0, 4))
+    .attr('class', "cursor-line")
+
+  function show(x, y) {
+    cursors.attr('transform', `translate(${x}, ${y})`).style('display', 'unset')
+  }
+
+  function hide() {
+    cursors.style('display', 'none')
+  }
+
+  return {container, show, hide};
 }
 
 

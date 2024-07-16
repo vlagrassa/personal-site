@@ -55,3 +55,21 @@ export function raiseLine(points, gap) {
     y + (y > centerY ? gap : -gap),
   ])
 }
+
+
+
+export function hexagonPoints(x, y, radius) {
+  const halfWidth = radius * Math.sqrt(3) / 2;
+  return [
+      [ x,             y - ( radius     ) ],
+      [ x + halfWidth, y - ( radius / 2 ) ],
+      [ x + halfWidth, y + ( radius / 2 ) ],
+      [ x,             y + ( radius     ) ],
+      [ x - halfWidth, y + ( radius / 2 ) ],
+      [ x - halfWidth, y - ( radius / 2 ) ],
+  ];
+}
+
+export function hexagonPointsPath(x, y, radius) {
+  return pointsToPath(hexagonPoints(x, y, radius), true)
+}
