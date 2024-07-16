@@ -131,7 +131,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr("y", d => scaleTrapY(d))
 
   // Add cursors on trapezoid
-  const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width)
+  const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width, formantsToXY)
   cursors.attr('clip-path', "url(#trap-boundary)")
 
   // Draw trapezoid
@@ -175,13 +175,16 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   function showCursors(xm, ym) {
 
-    showCrosshairs(xm, ym);
-
     barF1.style('display', 'unset')
     barF2.style('display', 'unset')
 
-    const f1m = scaleFormantBar(scaleF1.invert(ym))
-    const f2m = scaleFormantBar(scaleF2.invert(xm))
+    const f1 = scaleF1.invert(ym)
+    const f2 = scaleF2.invert(xm)
+
+    const f1m = scaleFormantBar(f1)
+    const f2m = scaleFormantBar(f2)
+
+    showCrosshairs(f1, f2);
 
     barF1.attr('y1', f1m).attr('y2', f1m)
     barF2.attr('y1', f2m).attr('y2', f2m)
@@ -251,7 +254,7 @@ function addCursor(parent) {
     .attr('clip-path', "url(#trap-boundary)")
 }
 
-function addCursors(parent, minWidth, minHeight) {
+function addCursors(parent, minWidth, minHeight, formantsToXY) {
   const container = parent.append("g")
   const cursors = container.append("g")
 
@@ -284,12 +287,14 @@ function addCursors(parent, minWidth, minHeight) {
     .attr('d', hexagonPointsPath(0, 0, 4))
     .attr('class', "cursor-line")
 
-  function show(x, y) {
-    cursors.attr('transform', `translate(${x}, ${y})`).style('display', 'unset')
+  function show(f1, f2) {
+    const {x, y} = formantsToXY(f1, f2);
+    cursors.attr('transform', `translate(${x}, ${y})`)
+    container.style('display', 'unset')
   }
 
   function hide() {
-    cursors.style('display', 'none')
+    container.style('display', 'none')
   }
 
   return {container, show, hide};
