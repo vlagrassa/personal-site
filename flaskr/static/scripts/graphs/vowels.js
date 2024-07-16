@@ -1,4 +1,4 @@
-import { pointsToPath, raiseLine, makeCurvedLine, hexagonPointsPath } from "../utils.js";
+import { range, pointsToPath, raiseLine, makeCurvedLine, hexagonPointsPath } from "../utils.js";
 
 
 /* Constants */
@@ -56,6 +56,25 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   }
 
   // Mapping functions to convert points to our coordinate scheme
+
+  const x_offset_2 = d3.scaleLinear().domain([width - margin, margin]).range([corner, 0])
+  const f2_offset = d3.scaleLinear().domain([width - margin, margin]).range([F2_MID, F2_MAX])
+
+  function formantsToXY(f1, f2) {
+    const y = scaleF1(f1)
+    const scaleF2 = d3.scaleLinear().domain([f1, f2_offset(y)]).range([width - margin, margin + x_offset_2(y)])
+    return {
+      x: scaleF2(f2), y
+    }
+  }
+
+  function xyToFormants(x, y) {
+    const f1 = scaleF1.invert(y)
+    const scaleX = d3.scaleLinear().range([f1, f2_offset(y)]).domain([width - margin, margin + x_offset_2(y)])
+    return {
+      f1, f2: scaleX(x),
+    }
+  }
 
   function mapPointsFormants(points) {
     return points.map(([f1, f2]) => [scaleF2(f2), scaleF1(f1)])
@@ -141,12 +160,12 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   const symbols = svg.append("g")
       .attr("font-size", "2.5em")
     .selectAll("text")
-    .data(data)
+    .data(data.map(d => Object.assign(d, {position: formantsToXY(d.f1, d.f2)})))
     .join("text")
       .text(d => d.symbol)
       .attr('class', 'vowel')
-      .attr("x", d => scaleF2(d.f2))
-      .attr("y", d => scaleF1(d.f1))
+      .attr("x", d => d.position.x)
+      .attr("y", d => d.position.y)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
 
@@ -173,8 +192,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   function showCursors(xm, ym) {
 
-    const f1 = scaleF1.invert(ym)
-    const f2 = scaleF2.invert(xm)
+    const {f1, f2} = xyToFormants(xm, ym);
 
     showCrosshairs(f1, f2);
     showFormantBars(f1, f2);
@@ -250,36 +268,40 @@ function addCursors(parent, minWidth, minHeight, formantsToXY) {
   const hexRadius = 4;
   const hexMultiplier = Math.sqrt(3) / 2;
 
-  const cursorY1 = cursors.append("line")
-    .attr('class', 'cursor-line')
-    .attr('y1', -hexRadius)
-    .attr('y2', -minHeight)
-
-  const cursorY2 = cursors.append("line")
-    .attr('class', 'cursor-line')
-    .attr('y1', hexRadius)
-    .attr('y2', minHeight)
+  const cursorYPath = container.append("path")
+    .attr("class", "cursor-line")
+  cursors.raise()
 
   const cursorX1 = cursors.append("line")
     .attr('class', 'cursor-line')
-    .attr('x1', -hexRadius * hexMultiplier)
+    .attr('x1', -hexRadius)
     .attr('x2', -minWidth)
     .attr('stroke-dasharray', '4 3 1 3')
 
   const cursorX2 = cursors.append("line")
     .attr('class', 'cursor-line')
-    .attr('x1', hexRadius * hexMultiplier)
+    .attr('x1', hexRadius)
     .attr('x2', minWidth)
     .attr('stroke-dasharray', '4 3 1 3')
 
   const crosshair = cursors.append('path')
     .attr('d', hexagonPointsPath(0, 0, 4))
     .attr('class', "cursor-line")
+    .style('transform', 'rotate(90deg)')
 
   function show(f1, f2) {
     const {x, y} = formantsToXY(f1, f2);
     cursors.attr('transform', `translate(${x}, ${y})`)
     container.style('display', 'unset')
+
+    const mapF1Step = (f1_step) => {
+      const {x: px, y: py} = formantsToXY(f1_step, f2);
+      return [px, py];
+    }
+
+    const pointsAbove = pointsToPath( range(F1_MIN, f1 - 10, 10, true).map(mapF1Step) )
+    const pointsBelow = pointsToPath( range(f1 + 10, F1_MAX, 10, true).map(mapF1Step) )
+    cursorYPath.attr("d", pointsAbove + pointsBelow)
   }
 
   function hide() {

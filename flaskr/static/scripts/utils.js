@@ -1,3 +1,19 @@
+export function range(start, stop=null, step=1, includeFinal=false) {
+  if (stop === null) {
+    stop = start;
+    start = 0;
+  }
+  let numSteps = (stop - start) / step
+  numSteps = Math.ceil(numSteps)
+
+  const arr = Array.from(Array(numSteps).keys()).map(i => start + (step * i))
+  if (includeFinal) {
+    arr.push(stop)
+  }
+  return arr
+}
+
+
 function distance([x1, y1], [x2, y2]) {
   return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
 }
