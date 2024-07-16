@@ -151,11 +151,9 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr('dominant-baseline', 'middle')
 
   // Add the spectrum window sidebar
-  const {container: spectrumWindow, barF1, barF2} =
+  const {container: spectrumWindow, show: showFormantBars, hide: hideFormantBars} =
     addSpectrumWindow(svg, width + spacing, margin, sidebarWidth, width - 2*margin)
 
-
-  const scaleFormantBar = d3.scaleLinear().domain([0, 3000]).range([width - 2*margin, 0])
 
   svg
     .on("pointermove",  (event) => {
@@ -175,30 +173,21 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   function showCursors(xm, ym) {
 
-    barF1.style('display', 'unset')
-    barF2.style('display', 'unset')
-
     const f1 = scaleF1.invert(ym)
     const f2 = scaleF2.invert(xm)
 
-    const f1m = scaleFormantBar(f1)
-    const f2m = scaleFormantBar(f2)
-
     showCrosshairs(f1, f2);
+    showFormantBars(f1, f2);
 
-    barF1.attr('y1', f1m).attr('y2', f1m)
-    barF2.attr('y1', f2m).attr('y2', f2m)
-
-    barF1.classed('disabled', f1m <= f2m)
-    barF2.classed('disabled', f1m <= f2m)
+    // barF1.classed('disabled', f1m <= f2m)
+    // barF2.classed('disabled', f1m <= f2m)
     // cursorF1.classed('disabled', f1m <= f2m)
     // cursorF2.classed('disabled', f1m <= f2m)
   }
 
   function hideCursors() {
     hideCrosshairs();
-    barF1.style('display', 'none')
-    barF2.style('display', 'none')
+    hideFormantBars();
   }
 }
 
@@ -303,6 +292,8 @@ function addCursors(parent, minWidth, minHeight, formantsToXY) {
 
 function addSpectrumWindow(parent, x, y, width, height) {
 
+  const scaleFormantBar = d3.scaleLinear().domain([0, 3000]).range([height, 0])
+
   const outlineGap = 3;
 
   const container = parent.append("g")
@@ -334,7 +325,19 @@ function addSpectrumWindow(parent, x, y, width, height) {
     .attr('height', height + outlineGap*2)
     .attr('class', 'outline outline-outer')
 
-  return {container, barF1, barF2};
+  function show(f1, f2) {
+    const f1m = scaleFormantBar(f1)
+    const f2m = scaleFormantBar(f2)
+    barF1.attr('y1', f1m).attr('y2', f1m).attr('display', 'unset')
+    barF2.attr('y1', f2m).attr('y2', f2m).attr('display', 'unset')
+  }
+
+  function hide() {
+    barF1.attr('display', 'none')
+    barF2.attr('display', 'none')
+  }
+
+  return {container, show, hide};
 }
 
 
