@@ -325,16 +325,71 @@ function addSpectrumWindow(parent, x, y, width, height) {
     .attr('height', height + outlineGap*2)
     .attr('class', 'outline outline-outer')
 
+
+  const labelF1_r = container.append("text")
+    .attr("x", width + 12)
+    .attr('fill', 'var(--color-primary)')
+    .style('display', 'none')
+    .attr("text-anchor", "start")
+    .attr("alignment-baseline", "middle")
+
+  const labelF1_l = container.append("text")
+    .attr("x", -12)
+    .attr('fill', 'var(--color-primary)')
+    .style('display', 'none')
+    .attr("text-anchor", "end")
+    .attr("alignment-baseline", "middle")
+    .text("F1")
+
+  const labelF2_r = container.append("text")
+    .attr("x", width + 12)
+    .attr('fill', 'var(--color-primary)')
+    .style('display', 'none')
+    .attr("text-anchor", "start")
+    .attr("alignment-baseline", "middle")
+
+  const labelF2_l = container.append("text")
+    .attr("x", -12)
+    .attr('fill', 'var(--color-primary)')
+    .style('display', 'none')
+    .attr("text-anchor", "end")
+    .attr("alignment-baseline", "middle")
+    .text("F2")
+
+
   function show(f1, f2) {
     const f1m = scaleFormantBar(f1)
     const f2m = scaleFormantBar(f2)
     barF1.attr('y1', f1m).attr('y2', f1m).attr('display', 'unset')
     barF2.attr('y1', f2m).attr('y2', f2m).attr('display', 'unset')
+
+    // Prevent text from overlapping if bars are too close
+    const textOffset = Math.max(12 - (f1m - f2m), 0) / 2
+
+    labelF1_l
+      .style("display", "unset")
+      .attr("y", f1m + textOffset)
+    labelF1_r
+      .style("display", "unset")
+      .attr("y", f1m + textOffset)
+      .text(`${ Math.round(f1) }hz`)
+
+    labelF2_l
+      .style("display", "unset")
+      .attr("y", f2m - textOffset)
+    labelF2_r
+      .style("display", "unset")
+      .attr("y", f2m - textOffset)
+      .text(`${ Math.round(f2) }hz`)
   }
 
   function hide() {
     barF1.attr('display', 'none')
     barF2.attr('display', 'none')
+    labelF1_l.style('display', 'none')
+    labelF1_r.style('display', 'none')
+    labelF2_l.style('display', 'none')
+    labelF2_r.style('display', 'none')
   }
 
   return {container, show, hide};
