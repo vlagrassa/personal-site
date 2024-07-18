@@ -38,6 +38,16 @@ svg.proficiencies .label-text:focus-visible text {
   font-weight: bold;
 }
 
+svg.proficiencies .label-text:hover         text[data-line-side="top"]:not([data-line-idx="1"]),
+svg.proficiencies .label-text:focus-visible text[data-line-side="top"]:not([data-line-idx="1"]) {
+  transform: translateY(-0.1em);
+}
+
+svg.proficiencies .label-text:hover         text[data-line-side="bottom"]:not([data-line-idx="0"]),
+svg.proficiencies .label-text:focus-visible text[data-line-side="bottom"]:not([data-line-idx="0"]) {
+  transform: translateY(0.1em);
+}
+
 svg.proficiencies .label-text:focus {
   outline: none;
 }

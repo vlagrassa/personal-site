@@ -97,6 +97,10 @@ function addLabel(parent, label, column, config) {
     'middle', 'start', 'start', 'middle', 'end', 'end',
   ][column];
 
+
+  // Top or bottom side
+  const side = (column + 1) % 6 < 3 ? 'top' : 'bottom';
+
   const g = parent.append('g')
     .attr('tabindex', 0)
     .attr("class", "label-text")
@@ -125,6 +129,8 @@ function addLabel(parent, label, column, config) {
           .attr('lang',      lang)
           .attr('data-lang', lang)
           .attr('class', config.initialLang == lang ? '' : 'hide')
+          .attr('data-line-idx', components.length > 1 ? idx : '')
+          .attr('data-line-side', side)
           .attr('text-anchor', text_anchor)
           .attr('dominant-baseline', 'middle')
           .attr('dx', x)
