@@ -30,6 +30,9 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   // Map formant values to Cartesian coordinates, and vice versa
   const FormantMap = makeFormantConverter([width - margin, margin], [margin, width - margin])
 
+  // Map trapezoid coordinates (percentages along axis) to Cartesian coordinates, and vice versa
+  const TrapezoidMap = makeTrapezoidConverter( margin, margin, width - margin, width - margin, corner );
+
 
   // Create the SVG container
   const svg = d3.create("svg")
@@ -43,42 +46,19 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   const defs = svg.append('defs');
 
 
-  // Trapezoid coordinates
-
-  const scale_y = d3.scaleLinear().domain([0, 1]).range([width - margin, margin])
-  const x_offset = d3.scaleLinear().domain([0, 1]).range([corner, 0])
-
-  const scaleTrapY = function({x, y}) {
-    return scale_y(y)
-  }
-
-  const scaleTrapX = function({x, y}) {
-    return d3.scaleLinear().domain([0, 1]).range([margin + x_offset(y), width - margin])(x)
-  }
-
-  // Mapping functions to convert points to our coordinate scheme
-
   const x_offset_2 = d3.scaleLinear().domain([width - margin, margin]).range([corner, 0])
 
-  function mapPointsTrapezoid(points) {
-    // return points.map(([x, y]) => [scaleTrapX(x), scaleTrapY(y)])
-    return points.map((pt) => [scaleTrapX(pt), scaleTrapY(pt)])
-  }
+  // Create a clip path for the trapezoid boundary (rendering)
+  defs.append('clipPath')
+      .attr('id', 'trap-boundary')
+    .append('path')
+      .attr('d', TrapezoidMap.toPath(TRAP_OUTLINE, true))
 
-  const draw_line = d3.line()
-      .x( (d) => scaleTrapX(d) )
-      .y( (d) => scaleTrapY(d) )
-
-  function append_path(target, points, closed=false) {
-    return target
-      .append('path')
-        .attr("d", draw_line(points) + (closed ? 'Z' : ''))
-  }
-
-
-  // Create a clip path for the trapezoid boundary
-  append_path(defs.append('clipPath').attr('id', 'trap-boundary'),     TRAP_OUTLINE,          true);
-  append_path(defs.append('clipPath').attr('id', 'trap-boundary-ext'), TRAP_OUTLINE_EXTENDED, true);
+  // Create a clip path for the extended trapezoid boundary (mouse interaction)
+  defs.append('clipPath')
+      .attr('id', 'trap-boundary-ext')
+    .append('path')
+      .attr('d', TrapezoidMap.toPath(TRAP_OUTLINE_EXTENDED, true))
 
 
   function mouseover(event, p) {
@@ -122,12 +102,10 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   //     .attr("pointer-events", "none")
 
   // Draw background gridlines
-  const background = addBackground(svg, mapPointsTrapezoid);
+  const background = addBackground(svg, TrapezoidMap);
 
   // Draw background labels
-  add_labels(svg, schema['labels'], config)
-      .attr("x", d => scaleTrapX(d))
-      .attr("y", d => scaleTrapY(d))
+  add_labels(svg, schema['labels'], config, TrapezoidMap);
 
   // Add cursors on trapezoid
   const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width, FormantMap)
@@ -221,14 +199,14 @@ function addOutline(parent, FormantMap) {
 }
 
 
-function addBackground(parent, mapPointsTrapezoid) {
+function addBackground(parent, TrapezoidMap) {
   const container = parent.append("g")
     .attr("class", "background")
 
   TRAP_LINES.forEach(line => {
     container.append("path")
       .attr("class", "grid")
-      .attr("d", pointsToPath( mapPointsTrapezoid(line), true))
+      .attr("d", TrapezoidMap.toPath(line))
   });
 
   return container;
@@ -419,7 +397,7 @@ const TRAP_LINES = [
 ];
 
 
-function add_labels(parent, labels, config) {
+function add_labels(parent, labels, config, TrapezoidMap) {
 
   // Get values from config
   const languages   = config.languages       ?? [];
@@ -441,14 +419,16 @@ function add_labels(parent, labels, config) {
 
     // Create a text object for each language in each label
     .selectAll("text")
-    .data((d) => Object.keys(d.label).map(lang => ({
+    .data((d) => Object.keys(d.label).map(lang => {
+      let x = d.backness ?? -0.05;
+      let y = d.height   ??  1.05;
+      return {
         lang,
         text: d.label[lang],
-        x: d.backness ?? -0.05,
-        y: d.height   ??  1.05,
+        position: TrapezoidMap.convert(x, y),
         formant: d.formant,
-      }))
-    )
+      };
+    }))
     .join("text")
 
       // Render an individual language label
@@ -459,6 +439,9 @@ function add_labels(parent, labels, config) {
       .attr("text-anchor", d => d.formant == "f1" ? "end" : "middle")
       .attr('dominant-baseline', 'middle')
       .text((d) => d.text)
+
+      .attr("x", d => d.position.x)
+      .attr("y", d => d.position.y)
 }
 
 
@@ -484,6 +467,24 @@ function makeFormantConverter(xRange, yRange) {
     (x, y) => {
       const f1 = scaleF1.invert(y)
       return { f1, f2: scaleF2(f1, y).invert(x) }
+    },
+  )
+}
+
+
+function makeTrapezoidConverter(xPos, yPos, width, height, corner) {
+
+  const scale_y  = d3.scaleLinear().domain([1, 0]).range([yPos, height])
+  const x_offset = d3.scaleLinear().domain([0, 1]).range([corner, 0])
+
+  return new CoordinateConverter(
+    ['x', 'y'],
+    (x, y) => {
+      const xOffset = xPos + x_offset(y);
+      return {
+        x: xOffset + (width - xOffset) * x,
+        y: scale_y(y),
+      }
     },
   )
 }
