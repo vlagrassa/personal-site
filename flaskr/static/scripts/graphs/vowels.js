@@ -1,3 +1,4 @@
+import { CoordinateConverter } from "../coordinates.js";
 import { range, pointsToPath, raiseLine, makeCurvedLine, hexagonPointsPath } from "../utils.js";
 
 
@@ -26,9 +27,9 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   // in terms of the graph width
   const corner = (F2_MAX - F2_MID) / (F2_MAX - F2_MIN) * (width - (2*margin));
 
-  // Map formant values to Cartesian coordinates
-  const scaleF1 = d3.scaleLinear().domain([F1_MIN, F1_MAX]).range([margin, width - margin])
-  const scaleF2 = d3.scaleLinear().domain([F2_MIN, F2_MAX]).range([width - margin, margin])
+  // Map formant values to Cartesian coordinates, and vice versa
+  const FormantMap = makeFormantConverter([width - margin, margin], [margin, width - margin])
+
 
   // Create the SVG container
   const svg = d3.create("svg")
@@ -58,27 +59,6 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   // Mapping functions to convert points to our coordinate scheme
 
   const x_offset_2 = d3.scaleLinear().domain([width - margin, margin]).range([corner, 0])
-  const f2_offset = d3.scaleLinear().domain([width - margin, margin]).range([F2_MID, F2_MAX])
-
-  function formantsToXY(f1, f2) {
-    const y = scaleF1(f1)
-    const scaleF2 = d3.scaleLinear().domain([f1, f2_offset(y)]).range([width - margin, margin + x_offset_2(y)])
-    return {
-      x: scaleF2(f2), y
-    }
-  }
-
-  function xyToFormants(x, y) {
-    const f1 = scaleF1.invert(y)
-    const scaleX = d3.scaleLinear().range([f1, f2_offset(y)]).domain([width - margin, margin + x_offset_2(y)])
-    return {
-      f1, f2: scaleX(x),
-    }
-  }
-
-  function mapPointsFormants(points) {
-    return points.map(([f1, f2]) => [scaleF2(f2), scaleF1(f1)])
-  }
 
   function mapPointsTrapezoid(points) {
     // return points.map(([x, y]) => [scaleTrapX(x), scaleTrapY(y)])
@@ -114,7 +94,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   }
 
   // Compute voronoi diagram for the vowels
-  const delaunay = d3.Delaunay.from(data.map(d => [scaleF2(d.f2), scaleF1(d.f1)]));
+  const delaunay = d3.Delaunay.from(data.map( d => FormantMap.convertPointToArr(d) ));
   const voronoi  = delaunay.voronoi([0, 0, width, width]);
 
   // Create interactive voronoi regions inside trapezoid, extending over the edges a bit
@@ -142,7 +122,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   //     .attr("pointer-events", "none")
 
   // Draw background gridlines
-  const background = addBackground(svg, mapPointsFormants, mapPointsTrapezoid);
+  const background = addBackground(svg, mapPointsTrapezoid);
 
   // Draw background labels
   add_labels(svg, schema['labels'], config)
@@ -150,22 +130,22 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
       .attr("y", d => scaleTrapY(d))
 
   // Add cursors on trapezoid
-  const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width, formantsToXY)
+  const {container: cursors, show: showCrosshairs, hide: hideCrosshairs} = addCursors(svg, width, width, FormantMap)
   cursors.attr('clip-path', "url(#trap-boundary)")
 
   // Draw trapezoid
-  const outline = addOutline(svg, mapPointsFormants, mapPointsTrapezoid);
+  const outline = addOutline(svg, FormantMap);
 
   // Draw IPA symbols
   const symbols = svg.append("g")
       .attr("font-size", "2.5em")
     .selectAll("text")
-    .data(data.map(d => Object.assign(d, {position: formantsToXY(d.f1, d.f2)})))
+    .data(data.map(d => FormantMap.convertAssign(d)))
     .join("text")
       .text(d => d.symbol)
       .attr('class', 'vowel')
-      .attr("x", d => d.position.x)
-      .attr("y", d => d.position.y)
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
 
@@ -192,7 +172,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   function showCursors(xm, ym) {
 
-    const {f1, f2} = xyToFormants(xm, ym);
+    const {f1, f2} = FormantMap.invert(xm, ym);
 
     showCrosshairs(f1, f2);
     showFormantBars(f1, f2);
@@ -210,12 +190,12 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 }
 
 
-function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
+function addOutline(parent, FormantMap) {
 
   const container = parent.append("g")
     .attr("class", "background")
 
-  const mappedCorners = mapPointsFormants( CORNERS )
+  const mappedCorners = CORNERS.map(pt => FormantMap.convertPointToArr(pt))
   const outlineGap = 3;
 
 
@@ -241,7 +221,7 @@ function addOutline(parent, mapPointsFormants, mapPointsTrapezoid) {
 }
 
 
-function addBackground(parent, mapPointsFormants, mapPointsTrapezoid) {
+function addBackground(parent, mapPointsTrapezoid) {
   const container = parent.append("g")
     .attr("class", "background")
 
@@ -261,7 +241,7 @@ function addCursor(parent) {
     .attr('clip-path', "url(#trap-boundary)")
 }
 
-function addCursors(parent, minWidth, minHeight, formantsToXY) {
+function addCursors(parent, minWidth, minHeight, FormantMap) {
   const container = parent.append("g")
   const cursors = container.append("g")
 
@@ -290,14 +270,11 @@ function addCursors(parent, minWidth, minHeight, formantsToXY) {
     .style('transform', 'rotate(90deg)')
 
   function show(f1, f2) {
-    const {x, y} = formantsToXY(f1, f2);
+    const {x, y} = FormantMap.convert(f1, f2);
     cursors.attr('transform', `translate(${x}, ${y})`)
     container.style('display', 'unset')
 
-    const mapF1Step = (f1_step) => {
-      const {x: px, y: py} = formantsToXY(f1_step, f2);
-      return [px, py];
-    }
+    const mapF1Step = (f1_step) => FormantMap.convertToArr(f1_step, f2);
 
     const pointsAbove = pointsToPath( range(F1_MIN, f1 - 10, 10, true).map(mapF1Step) )
     const pointsBelow = pointsToPath( range(f1 + 10, F1_MAX, 10, true).map(mapF1Step) )
@@ -482,4 +459,31 @@ function add_labels(parent, labels, config) {
       .attr("text-anchor", d => d.formant == "f1" ? "end" : "middle")
       .attr('dominant-baseline', 'middle')
       .text((d) => d.text)
+}
+
+
+
+
+function makeFormantConverter(xRange, yRange) {
+
+  const scaleF1 = d3.scaleLinear().domain([F1_MIN, F1_MAX]).range(yRange)
+
+  const corner = (F2_MAX - F2_MID) / (F2_MAX - F2_MIN) * (xRange[0] - xRange[1]);
+
+  const offsetX  = d3.scaleLinear().domain(xRange).range([corner, 0])
+  const offsetF2 = d3.scaleLinear().domain(xRange).range([F2_MID, F2_MAX])
+
+  const scaleF2 = (f1, y) => d3.scaleLinear().domain([f1, offsetF2(y)]).range([xRange[0], xRange[1] + offsetX(y)])
+
+  return new CoordinateConverter(
+    ['f1', 'f2'],
+    (f1, f2) => {
+      const y = scaleF1(f1)
+      return { x: scaleF2(f1, y)(f2), y }
+    },
+    (x, y) => {
+      const f1 = scaleF1.invert(y)
+      return { f1, f2: scaleF2(f1, y).invert(x) }
+    },
+  )
 }
