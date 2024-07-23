@@ -31,7 +31,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   const FormantMap = makeFormantConverter([width - margin, margin], [margin, width - margin])
 
   // Map trapezoid coordinates (percentages along axis) to Cartesian coordinates, and vice versa
-  const TrapezoidMap = makeTrapezoidConverter( margin, margin, width - margin, width - margin, corner );
+  const TrapezoidMap = makeTrapezoidConverter( margin, margin, width - 2*margin, width - 2*margin, corner );
 
 
   // Create the SVG container
@@ -44,9 +44,6 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 
   // Create container for definitions
   const defs = svg.append('defs');
-
-
-  const x_offset_2 = d3.scaleLinear().domain([width - margin, margin]).range([corner, 0])
 
   // Create a clip path for the trapezoid boundary (rendering)
   defs.append('clipPath')
@@ -112,7 +109,7 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   cursors.attr('clip-path', "url(#trap-boundary)")
 
   // Draw trapezoid
-  const outline = addOutline(svg, FormantMap);
+  const outline = addOutline(svg, TrapezoidMap);
 
   // Draw IPA symbols
   const symbols = svg.append("g")
@@ -135,7 +132,9 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
   svg
     .on("pointermove",  (event) => {
       const [xm, ym] = d3.pointer(event);
-      if (margin < ym && ym < width-margin && margin < xm && xm < width-margin) {
+
+      const {x: tx, y: ty} = TrapezoidMap.invert(xm, ym);
+      if (0 < ty && ty < 1 && 0 < tx && tx < 1) {
         showCursors(xm, ym)
       }
       else {
@@ -168,18 +167,18 @@ export function graph_svg_vowels(container, {data, schema}, config = {}) {
 }
 
 
-function addOutline(parent, FormantMap) {
+function addOutline(parent, TrapezoidMap) {
 
   const container = parent.append("g")
     .attr("class", "background")
 
-  const mappedCorners = CORNERS.map(pt => FormantMap.convertPointToArr(pt))
+  const mappedCorners = TRAP_OUTLINE.map(pt => TrapezoidMap.convertPointToArr(pt))
   const outlineGap = 3;
 
 
   const outlineOuter = raiseLine(mappedCorners, outlineGap)
-  outlineOuter[1][0] -= 1
-  outlineOuter[2][0] += 1
+  outlineOuter[0][0] -= 1
+  outlineOuter[3][0] += 1
 
   const line = d3.line()
     .curve(d3.curveCardinalClosed.tension(0.9))
@@ -474,17 +473,24 @@ function makeFormantConverter(xRange, yRange) {
 
 function makeTrapezoidConverter(xPos, yPos, width, height, corner) {
 
-  const scale_y  = d3.scaleLinear().domain([1, 0]).range([yPos, height])
-  const x_offset = d3.scaleLinear().domain([0, 1]).range([corner, 0])
+  const scale_y  = d3.scaleLinear().domain([1, 0]).range([yPos, yPos + height])
+  const cornerPercentage = d3.scaleLinear().domain([0, 1]).range([corner * width, 0])
 
   return new CoordinateConverter(
     ['x', 'y'],
     (x, y) => {
-      const xOffset = xPos + x_offset(y);
+      const xOffset = cornerPercentage(y);
       return {
-        x: xOffset + (width - xOffset) * x,
+        x: xPos + xOffset + (width - xOffset) * x,
         y: scale_y(y),
       }
     },
+    (x, y) => {
+      const xOffset = cornerPercentage.invert(y);
+      return {
+        x: (x - xPos - xOffset) / (width - xOffset),
+        y: scale_y.invert(y),
+      }
+    }
   )
 }
