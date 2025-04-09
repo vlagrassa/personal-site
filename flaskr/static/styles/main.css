@@ -690,7 +690,7 @@ a.color-only:hover, a.color-only:focus {
 
 
 .slice {
-    height: 50px;
+    height: 42px;
     width: var(--w);
     clip-path: polygon(0% 100%, 10px 0%, 100% 0%, calc(var(--w) - 10px) 100%);
     margin: 0px -3px;
@@ -698,14 +698,17 @@ a.color-only:hover, a.color-only:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: width 0.2s, clip-path 0.2s;
+    transition: width 0.2s, clip-path 0.2s, filter 0.2s;
 
-    filter: saturate(25%);
     user-select: none;
 }
 
 .slice:focus, .slice:hover {
     filter: saturate(1);
+}
+
+.slice.slice-unfocused {
+    filter: saturate(25%);
 }
 
 
