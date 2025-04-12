@@ -172,24 +172,22 @@
  *   Hex Buttons
  *****************************************************************************/
 
-
-.hex-button {
-  cursor: pointer;
+.hex-button-wrapper {
   float: right;
+  margin: 0px;
   margin-left: 4px;
-
   --color-hex-button: var(--color-secondary-4);
 }
 
-.hex-button:hover {
+.hex-button-wrapper:hover {
   --color-hex-button: var(--color-secondary-2);
 }
 
-.hex-button-overlay {
+.hex-button-wrapper.hex-button-overlay {
   --color-hex-button: rgba(0, 0, 0, 0.3);
 }
 
-.hex-button-overlay:hover {
+.hex-button-wrapper.hex-button-overlay:hover {
   --color-hex-button: rgba(0, 0, 0, 0.55);
 }
 

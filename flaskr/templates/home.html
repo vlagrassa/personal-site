@@ -114,17 +114,33 @@
   })
 
   function toggle_play( newVal = null ) {
+
+    // If no argument, toggle current value, otherwise set to given value
     if (newVal === null) {
       play = !play;
     } else {
-      play = newVal;
+      play = Boolean(newVal);
     }
 
-    // TODO: Solution where we switch the mask on a single button?
-    // I think this would make keyboard navigation easier...
+    // Get the two buttons
+    const playButton  = document.getElementById('hex-button-play-wrapper');
+    const pauseButton = document.getElementById('hex-button-pause-wrapper');
+
+    // Show the appropriate button icon
+    // NOTE: Would it make sense to switch the mask on a single button? Does this affect keyboard nav?
     // document.getElementById('play-btn').setAttribute('mask', `url(#svg-mask-${play ? 'pause' : 'play'})`);
-    document.getElementById('hex-button-play').classList.toggle('hide', play);
-    document.getElementById('hex-button-pause').classList.toggle('hide', !play);
+    playButton.classList.toggle('hide', play);
+    pauseButton.classList.toggle('hide', !play);
+
+    // Swap focus to the other button if relevant, simulating play/pause being a single button
+    if (play && document.activeElement === playButton) {
+      pauseButton.focus();
+    }
+    else if (!play && document.activeElement === pauseButton) {
+      playButton.focus();
+    }
+
+    // Broadcast a play event
     target.dispatchEvent(new CustomEvent('play', {
       detail: {play}
     }));

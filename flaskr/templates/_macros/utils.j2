@@ -109,13 +109,17 @@
 - catch keypress as onclick
  #}
 {%- macro render_hex_button(id, target_modal=null, onclick=null, icon="info", class="") %}
+  {# {% if onclick %}onclick="{{ onclick }}" onkeydown="(e) => console.log(e)"{% endif %} #}
+<button
+  id="{{ id }}-wrapper"
+  class="bg-transparent border-0 p-0 hex-button-wrapper {{ class }}"
+  {% if onclick %}onclick="{{ onclick }}"{% endif %}
+  {% if target_modal %}data-bs-toggle="modal" data-bs-target="#{{ target_modal }}"{% endif %}
+>
 <svg
-  id="{{ id }}" class="hex-button {{ class }}"
-  tabindex="0"
+  id="{{ id }}" class="hex-button"
   viewBox="-12 -12 24 24"
   width="20px" height="20px"
-  {% if onclick %}onclick="{{ onclick }}" onkeydown="(e) => console.log(e)"{% endif %}
-  {% if target_modal %}data-bs-toggle="modal" data-bs-target="#{{ target_modal }}"{% endif %}
 >
   <defs>
     <mask id="{{ id }}-mask-info">
@@ -142,4 +146,5 @@
     d="M8.941,-6.838C9.984,-6.04,10.223,-5.627,10.392,-4.324C10.562,-3.022,10.562,3.022,10.392,4.324C10.223,5.627,9.984,6.04,8.941,6.838C7.898,7.635,2.663,10.658,1.451,11.162C0.239,11.667,-0.239,11.667,-1.451,11.162C-2.663,10.658,-7.898,7.635,-8.941,6.838C-9.984,6.04,-10.223,5.627,-10.392,4.324C-10.562,3.022,-10.562,-3.022,-10.392,-4.324C-10.223,-5.627,-9.984,-6.04,-8.941,-6.838C-7.898,-7.635,-2.663,-10.658,-1.451,-11.162C-0.239,-11.667,0.239,-11.667,1.451,-11.162C2.663,-10.658,7.898,-7.635,8.941,-6.838Z"
   ></path>
 </svg>
+</button>
 {%- endmacro %}
