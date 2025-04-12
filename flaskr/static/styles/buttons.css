@@ -167,36 +167,42 @@
 }
 
 
-.desc-button {
+
+/******************************************************************************
+ *   Hex Buttons
+ *****************************************************************************/
+
+
+.hex-button {
   cursor: pointer;
   float: right;
   margin-left: 4px;
 
-  --color-desc-button: var(--color-secondary-4);
+  --color-hex-button: var(--color-secondary-4);
 }
 
-.desc-button:hover {
-  --color-desc-button: var(--color-secondary-2);
+.hex-button:hover {
+  --color-hex-button: var(--color-secondary-2);
 }
 
-.desc-button-overlay {
-  --color-desc-button: rgba(0, 0, 0, 0.3);
+.hex-button-overlay {
+  --color-hex-button: rgba(0, 0, 0, 0.3);
 }
 
-.desc-button-overlay:hover {
-  --color-desc-button: rgba(0, 0, 0, 0.55);
+.hex-button-overlay:hover {
+  --color-hex-button: rgba(0, 0, 0, 0.55);
 }
 
-.desc-button-bg {
-  fill: var(--color-desc-button);
+.hex-button-bg {
+  fill: var(--color-hex-button);
 }
 
-.desc-button-outline {
-  stroke: var(--color-desc-button);
+.hex-button-outline {
+  stroke: var(--color-hex-button);
   fill: none;
 }
 
-.desc-button-info {
+.hex-button-info {
   cursor: help;
 }
 

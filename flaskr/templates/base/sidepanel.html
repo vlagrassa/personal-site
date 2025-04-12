@@ -29,9 +29,9 @@
       {# Help Modal Button -- only renders if child defines help_modal_body block #}
       {% if self.help_modal_body() %}
       <div class="mt-3 float-end">
-        <svg class="desc-button float-end" tabindex="0" viewBox="0 0 10 10" width="16px" height="16px" data-bs-toggle="modal" data-bs-target="#help">
+        <svg class="hex-button float-end" tabindex="0" viewBox="0 0 10 10" width="16px" height="16px" data-bs-toggle="modal" data-bs-target="#help">
           {% include '_includes/svg.html' %}
-          <circle cx="5" cy="5" r="5" class="desc-button-bg" mask="url(#svg-mask-info)" />
+          <circle cx="5" cy="5" r="5" class="hex-button-bg" mask="url(#svg-mask-info)" />
         </svg>
       </div>
       {% endif %}

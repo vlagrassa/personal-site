@@ -57,9 +57,9 @@
         </div>
 
         <div style="width: 92%">
-          {{ render_desc_button('desc-button-info',  icon="info",  class="desc-button-overlay desc-button-info") }}
-          {{ render_desc_button('desc-button-play',  icon="play",  onclick="toggle_play(true)",  class="desc-button-overlay hide") }}
-          {{ render_desc_button('desc-button-pause', icon="pause", onclick="toggle_play(false)", class="desc-button-overlay") }}
+          {{ render_hex_button('hex-button-info',  icon="info",  class="hex-button-overlay hex-button-info") }}
+          {{ render_hex_button('hex-button-play',  icon="play",  class="hex-button-overlay hide" onclick="toggle_play(true)"  ) }}
+          {{ render_hex_button('hex-button-pause', icon="pause", class="hex-button-overlay"      onclick="toggle_play(false)" ) }}
         </div>
       </div>
     </div>
@@ -122,8 +122,8 @@
     // TODO: Solution where we switch the mask on a single button?
     // I think this would make keyboard navigation easier...
     // document.getElementById('play-btn').setAttribute('mask', `url(#svg-mask-${play ? 'pause' : 'play'})`);
-    document.getElementById('desc-button-play').classList.toggle('hide', play);
-    document.getElementById('desc-button-pause').classList.toggle('hide', !play);
+    document.getElementById('hex-button-play').classList.toggle('hide', play);
+    document.getElementById('hex-button-pause').classList.toggle('hide', !play);
     target.dispatchEvent(new CustomEvent('play', {
       detail: {play}
     }));
