@@ -212,7 +212,7 @@
   transition: transform 100ms var(--transition-snappy);
 }
 
-.hex-button-labeled:hover, .hex-button-labeled:focus {
+.hex-button-labeled:hover, .hex-button-labeled:focus-visible {
   --color-hex-button: var(--color-primary-2);
   transform: scale(1.05);
 }
