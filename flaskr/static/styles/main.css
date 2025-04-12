@@ -123,6 +123,8 @@
     --underline-space: 0.75px;
 
     --scrollbar-width: 12px;
+
+    --transition-snappy: cubic-bezier(.36,.68,.46,1.45);
 }
 
 
@@ -252,7 +254,7 @@ h1 {
 .footer-icon {
     cursor: pointer;
     user-select: none;
-    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    transition: transform 150ms var(--transition-snappy);
 }
 
 .footer-h .footer-icon {
@@ -313,7 +315,7 @@ h1 {
 }
 
 .hover-rotate-45 {
-    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    transition: transform 150ms var(--transition-snappy);
     --color-gradient-direction: -45deg;
 }
 .hover-rotate-45:hover {
@@ -321,7 +323,7 @@ h1 {
 }
 
 .hover-rotate-60 {
-    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    transition: transform 150ms var(--transition-snappy);
     --color-gradient-direction: -60deg;
 }
 .hover-rotate-60:hover {
@@ -329,7 +331,7 @@ h1 {
 }
 
 .hover-rotate-90-m {
-    transition: transform 150ms cubic-bezier(.36,.68,.46,1.45);
+    transition: transform 150ms var(--transition-snappy);
     --color-gradient-direction: 90deg;
 }
 .hover-rotate-90-m:hover {
@@ -515,7 +517,7 @@ a.color-only:hover, a.color-only:focus {
     border-bottom: var(--underline-outer);
     height:        var(--underline-space);
     width: 100%;
-    transition: transform 0.1s;
+    transition: transform 0.1s var(--transition-snappy);
     transform: translate(0%, var(--underline-offset)) scaleX(0);
     z-index: -10;
     position: absolute;
@@ -535,7 +537,7 @@ a.color-only:hover, a.color-only:focus {
 /* Header */
 
 .header-button {
-    transition: color 0.1s, transform 0.1s;
+    transition: color 0.1s, transform 0.1s var(--transition-snappy);
     cursor: pointer;
     transform: translateY(2px);
     font-family: var(--font-body-ltn);
@@ -557,7 +559,7 @@ a.color-only:hover, a.color-only:focus {
     border-bottom: 0.75px solid var(--color-text-highlight);
     height: 2.75px;
     width: 100%;
-    transition: transform 0.1s;
+    transition: transform 0.1s var(--transition-snappy);
     transform: translateX(0%) translateY(-1.5px) scaleX(0);
 }
 

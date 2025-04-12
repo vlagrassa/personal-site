@@ -116,7 +116,7 @@
 
 
 .vis-choice-button .card {
-  transition: transform 100ms cubic-bezier(.36,.68,.46,1.45);
+  transition: transform 100ms var(--transition-snappy);
 }
 
 .vis-choice-button.inactive .card {
@@ -242,7 +242,7 @@ svg.graph-vowels text.label {
 }
 
 svg.graph-vowels text.vowel {
-  transition: font-size 100ms cubic-bezier(.36,.68,.46,1.45);
+  transition: font-size 100ms var(--transition-snappy);
   font-family: var(--font-mono);
   fill: var(--color-secondary-2);
   paint-order: stroke;

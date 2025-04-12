@@ -213,7 +213,8 @@
 .toggle-btn {
   user-select: none;
   --transition-duration: 200ms;
-  transition: transform var(--transition-duration) cubic-bezier(.36,.68,.46,1.45);
+  transition-timing-function: var(--transition-snappy);
+  transition: transform var(--transition-duration) var(--transition-snappy);
   transform:         rotate(var(--rotation-active));
   -webkit-transform: rotate(var(--rotation-active));
 }
