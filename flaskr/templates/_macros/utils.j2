@@ -100,3 +100,46 @@
   <div class="spinner-grow" style="width: 0.25rem; height: 0.25rem;" role="status"></div>
   <span class="visually-hidden">Loading...</span>
 {%- endmacro %}
+
+
+
+{# TODO:
+- Split into "render button w icon" and "render info button"
+- generalize toggle type / target so it can handle URLs too
+- catch keypress as onclick
+ #}
+{%- macro render_desc_button(id, target_modal=null, onclick=null, icon="info", class="") %}
+<svg
+  id="{{ id }}" class="desc-button {{ class }}"
+  tabindex="0"
+  viewBox="-12 -12 24 24"
+  width="20px" height="20px"
+  {% if onclick %}onclick="{{ onclick }}" onkeydown="(e) => console.log(e)"{% endif %}
+  {% if target_modal %}data-bs-toggle="modal" data-bs-target="#{{ target_modal }}"{% endif %}
+>
+  <defs>
+    <mask id="{{ id }}-mask-info">
+      <rect x="-12" y="-12" width="100%" height="100%" fill="white"></rect>
+      <text x="0" y="1" fill="black" alignment-baseline="middle" text-anchor="middle" font-size="14px" font-weight="bold" style="font-family: monospace;">i</text>
+    </mask>
+    <mask id="{{ id }}-mask-play">
+      <rect x="-12" y="-12" width="100%" height="100%" fill="white"></rect>
+      <polygon points="-3.08,-4.32 -3.08,4.32 5.4,0" fill="black"/>
+    </mask>
+    <mask id="{{ id }}-mask-pause">
+      <rect x="-12" y="-12" width="100%" height="100%" fill="white"></rect>
+      <rect width="2.25" height="9" x="-3.75" y="-4.5"></rect>
+      <rect width="2.25" height="9" x="1.5"   y="-4.5"></rect>
+    </mask>
+  </defs>
+
+  <path
+    class="desc-button-bg" mask="url(#{{ id }}-mask-{{ icon }})"
+    d="M7.391,-5.733C8.253,-5.064,8.512,-4.615,8.66,-3.534C8.808,-2.453,8.808,2.453,8.66,3.534C8.512,4.615,8.253,5.064,7.391,5.733C6.528,6.402,2.28,8.855,1.27,9.267C0.259,9.679,-0.259,9.679,-1.27,9.267C-2.28,8.855,-6.528,6.402,-7.391,5.733C-8.253,5.064,-8.512,4.615,-8.66,3.534C-8.808,2.453,-8.808,-2.453,-8.66,-3.534C-8.512,-4.615,-8.253,-5.064,-7.391,-5.733C-6.528,-6.402,-2.28,-8.855,-1.27,-9.267C-0.259,-9.679,0.259,-9.679,1.27,-9.267C2.28,-8.855,6.528,-6.402,7.391,-5.733Z"
+  ></path>
+  <path
+    class="desc-button-outline" mask="url(#{{ id }}-mask-{{ icon }})"
+    d="M8.941,-6.838C9.984,-6.04,10.223,-5.627,10.392,-4.324C10.562,-3.022,10.562,3.022,10.392,4.324C10.223,5.627,9.984,6.04,8.941,6.838C7.898,7.635,2.663,10.658,1.451,11.162C0.239,11.667,-0.239,11.667,-1.451,11.162C-2.663,10.658,-7.898,7.635,-8.941,6.838C-9.984,6.04,-10.223,5.627,-10.392,4.324C-10.562,3.022,-10.562,-3.022,-10.392,-4.324C-10.223,-5.627,-9.984,-6.04,-8.941,-6.838C-7.898,-7.635,-2.663,-10.658,-1.451,-11.162C-0.239,-11.667,0.239,-11.667,1.451,-11.162C2.663,-10.658,7.898,-7.635,8.941,-6.838Z"
+  ></path>
+</svg>
+{%- endmacro %}

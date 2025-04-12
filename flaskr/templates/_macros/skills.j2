@@ -1,9 +1,13 @@
-{% from '_macros/utils.j2'    import render_content %}
+{% from '_macros/utils.j2'    import render_content, render_desc_button %}
 
 
 
 {%- macro render_proficiency_chart(elementId, scores, config) %}
 <div id="{{ elemendId }}-tab-container" class="h-100 w-100" style="position: relative;">
+
+  <div style="position: absolute; top: -4px; right: -8px; z-index: 20">
+    {{ render_desc_button('proficiency-info-button', target_modal='help') }}
+  </div>
 
   <div id="{{ elementId }}" class="h-100 w-100"></div>
 

@@ -57,13 +57,9 @@
         </div>
 
         <div style="width: 92%">
-          <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px">
-            {% include '_includes/svg.html' %}
-            <circle cx="5" cy="5" r="5" class="desc-button-bg-overlay" mask="url(#svg-mask-info)" />
-          </svg>
-          <svg class="desc-button" tabindex="0" viewBox="0 0 10 10" width="18px" height="18px" onclick="toggle_play()">
-            <circle id="play-btn" cx="5" cy="5" r="5" class="desc-button-bg-overlay" mask="url(#svg-mask-pause)" />
-          </svg>
+          {{ render_desc_button('desc-button-info',  icon="info",  class="desc-button-overlay desc-button-info") }}
+          {{ render_desc_button('desc-button-play',  icon="play",  onclick="toggle_play(true)",  class="desc-button-overlay hide") }}
+          {{ render_desc_button('desc-button-pause', icon="pause", onclick="toggle_play(false)", class="desc-button-overlay") }}
         </div>
       </div>
     </div>
@@ -116,9 +112,18 @@
     );
   })
 
-  function toggle_play() {
-    play = !play;
-    document.getElementById('play-btn').setAttribute('mask', `url(#svg-mask-${play ? 'pause' : 'play'})`);
+  function toggle_play( newVal = null ) {
+    if (newVal === null) {
+      play = !play;
+    } else {
+      play = newVal;
+    }
+
+    // TODO: Solution where we switch the mask on a single button?
+    // I think this would make keyboard navigation easier...
+    // document.getElementById('play-btn').setAttribute('mask', `url(#svg-mask-${play ? 'pause' : 'play'})`);
+    document.getElementById('desc-button-play').classList.toggle('hide', play);
+    document.getElementById('desc-button-pause').classList.toggle('hide', !play);
     target.dispatchEvent(new CustomEvent('play', {
       detail: {play}
     }));
