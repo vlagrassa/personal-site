@@ -2,16 +2,60 @@
 {%- set quick_links_gap = "3" %}
 {%- endif %}
 
-<span class="d-flex flex-wrap justify-content-center gap-{{ quick_links_gap }}">
-  <a title="Download résumé" class="underline-hover-text" href="#">
-    {{ render_lang_object(config.TEXT['sidebar.resume']) }}
-    <span class="material-symbols-outlined material-symbols-inline">download</span>
-    <div class="underline-hover" style="--underline-offset: -1px;"></div>
-  </a>
-  <small class="separator">⬦</small>
-  <a title="Send email to connect@vlagrassa.dev" class="underline-hover-text" href="mailto:connect@vlagrassa.dev">
-    {{ render_lang_object(config.TEXT['sidebar.contact']) }}
-    <span class="material-symbols-outlined material-symbols-inline" style="line-height: 0.9em;">outgoing_mail</span>
-    <div class="underline-hover" style="--underline-offset: -1px;"></div>
+<span class="d-flex flex-wrap justify-content-center gap-{{ quick_links_gap }} row-gap-2">
+  <button title="Download résumé" class="bg-transparent border-0 p-0 hex-button-labeled">
+    <div style="position: relative;">
+      <svg id="quick-links-resume" class="hex-button" viewBox="-12 -12 24 24" width="28px" height="28px" >
+        <path
+          class="hex-button-bg"
+          d="M7.391,-5.733C8.253,-5.064,8.512,-4.615,8.66,-3.534C8.808,-2.453,8.808,2.453,8.66,3.534C8.512,4.615,8.253,5.064,7.391,5.733C6.528,6.402,2.28,8.855,1.27,9.267C0.259,9.679,-0.259,9.679,-1.27,9.267C-2.28,8.855,-6.528,6.402,-7.391,5.733C-8.253,5.064,-8.512,4.615,-8.66,3.534C-8.808,2.453,-8.808,-2.453,-8.66,-3.534C-8.512,-4.615,-8.253,-5.064,-7.391,-5.733C-6.528,-6.402,-2.28,-8.855,-1.27,-9.267C-0.259,-9.679,0.259,-9.679,1.27,-9.267C2.28,-8.855,6.528,-6.402,7.391,-5.733Z"
+          stroke="var(--color-hex-button)"
+          stroke-width="0.72"
+        ></path>
+        <path
+          class="hex-button-outline"
+          d="M8.941,-6.838C9.984,-6.04,10.223,-5.627,10.392,-4.324C10.562,-3.022,10.562,3.022,10.392,4.324C10.223,5.627,9.984,6.04,8.941,6.838C7.898,7.635,2.663,10.658,1.451,11.162C0.239,11.667,-0.239,11.667,-1.451,11.162C-2.663,10.658,-7.898,7.635,-8.941,6.838C-9.984,6.04,-10.223,5.627,-10.392,4.324C-10.562,3.022,-10.562,-3.022,-10.392,-4.324C-10.223,-5.627,-9.984,-6.04,-8.941,-6.838C-7.898,-7.635,-2.663,-10.658,-1.451,-11.162C-0.239,-11.667,0.239,-11.667,1.451,-11.162C2.663,-10.658,7.898,-7.635,8.941,-6.838Z"
+          stroke-width="0.72"
+        ></path>
+      </svg>
+      <span
+        class="material-symbols-outlined material-symbols-inline"
+        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;"
+      >file_save</span>
+    </div>
+    <div class="px-2 d-flex flex-column justify-content-around">
+      <div>
+        {{ render_lang_object(config.TEXT['sidebar.resume']) }}
+      </div>
+    </div>
+    <div style="width: 6px"></div>
+  </button>
+
+  <a title="Send email to connect@vlagrassa.dev" class="bg-transparent border-0 p-0 hex-button-labeled flex-row-reverse" href="mailto:connect@vlagrassa.dev">
+    <div style="position: relative;">
+      <svg id="quick-links-contact" class="hex-button" viewBox="-12 -12 24 24" width="28px" height="28px" >
+        <path
+          class="hex-button-bg"
+          d="M7.391,-5.733C8.253,-5.064,8.512,-4.615,8.66,-3.534C8.808,-2.453,8.808,2.453,8.66,3.534C8.512,4.615,8.253,5.064,7.391,5.733C6.528,6.402,2.28,8.855,1.27,9.267C0.259,9.679,-0.259,9.679,-1.27,9.267C-2.28,8.855,-6.528,6.402,-7.391,5.733C-8.253,5.064,-8.512,4.615,-8.66,3.534C-8.808,2.453,-8.808,-2.453,-8.66,-3.534C-8.512,-4.615,-8.253,-5.064,-7.391,-5.733C-6.528,-6.402,-2.28,-8.855,-1.27,-9.267C-0.259,-9.679,0.259,-9.679,1.27,-9.267C2.28,-8.855,6.528,-6.402,7.391,-5.733Z"
+          stroke="var(--color-hex-button)"
+          stroke-width="0.72"
+        ></path>
+        <path
+          class="hex-button-outline"
+          d="M8.941,-6.838C9.984,-6.04,10.223,-5.627,10.392,-4.324C10.562,-3.022,10.562,3.022,10.392,4.324C10.223,5.627,9.984,6.04,8.941,6.838C7.898,7.635,2.663,10.658,1.451,11.162C0.239,11.667,-0.239,11.667,-1.451,11.162C-2.663,10.658,-7.898,7.635,-8.941,6.838C-9.984,6.04,-10.223,5.627,-10.392,4.324C-10.562,3.022,-10.562,-3.022,-10.392,-4.324C-10.223,-5.627,-9.984,-6.04,-8.941,-6.838C-7.898,-7.635,-2.663,-10.658,-1.451,-11.162C-0.239,-11.667,0.239,-11.667,1.451,-11.162C2.663,-10.658,7.898,-7.635,8.941,-6.838Z"
+          stroke-width="0.72"
+        ></path>
+      </svg>
+      <span
+        class="material-symbols-outlined material-symbols-inline"
+        style="position: absolute; top: 50%; left: 50%; transform: translate(calc(-50% + 1px), calc(-50% + 1px)); color: white; line-height: 0.9em;"
+      >outgoing_mail</span>
+    </div>
+    <div class="px-2 d-flex flex-column justify-content-around">
+      <div>
+        {{ render_lang_object(config.TEXT['sidebar.contact']) }}
+      </div>
+    </div>
+    <div style="width: 6px"></div>
   </a>
 </span>

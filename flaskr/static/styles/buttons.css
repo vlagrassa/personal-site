@@ -204,6 +204,19 @@
   cursor: help;
 }
 
+.hex-button-labeled {
+  --color-hex-button: var(--color-secondary-4);
+  display: flex;
+  color: var(--color-hex-button);
+  font-weight: bold;
+  transition: transform 100ms var(--transition-snappy);
+}
+
+.hex-button-labeled:hover, .hex-button-labeled:focus {
+  --color-hex-button: var(--color-primary-2);
+  transform: scale(1.05);
+}
+
 
 
 /* Open/Close Buttons */
