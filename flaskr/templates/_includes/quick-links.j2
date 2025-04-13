@@ -3,7 +3,7 @@
 {%- endif %}
 
 
-{%- macro render_quick_link_content(id, size=28, icon="", content="", adjust_icon_x="0px", adjust_icon_y="0px") %}
+{%- macro render_quick_link_content(id, size=28, content="", adjust_icon_x="0px", adjust_icon_y="0px") %}
 <div style="position: relative;">
   <svg id="{{ id }}" class="hex-button" viewBox="-12 -12 24 24" width="{{ size }}px" height="{{ size }}px" >
     <path
@@ -21,7 +21,7 @@
   <span
     class="material-symbols-outlined material-symbols-inline"
     style="position: absolute; top: 50%; left: 50%; transform: translate(calc(-50% + {{ adjust_icon_x }}), calc(-50% + {{ adjust_icon_y }})); color: white;"
-  >{{ icon }}</span>
+  >{{ caller() }}</span>
 </div>
 <div class="px-2 d-flex flex-column justify-content-around">
   <div>
@@ -33,13 +33,17 @@
 
 {%- macro render_quick_link_button(id, size=28, title="", icon="", content="", class="", adjust_icon_x="0px", adjust_icon_y="0px", onclick="") -%}
 <button title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" onclick="{{ onclick }}">
-  {{ render_quick_link_content(id, size=size, icon=icon, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) }}
+  {% call render_quick_link_content(id, size=size, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
+    {{ icon }}
+  {% endcall %}
 </button>
 {%- endmacro -%}
 
 {%- macro render_quick_link_anchor(id, size=28, title="", icon="", content="", class="", adjust_icon_x="0px", adjust_icon_y="0px", href="") -%}
 <a title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" href="{{ href }}">
-  {{ render_quick_link_content(id, size=size, icon=icon, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) }}
+  {% call render_quick_link_content(id, size=size, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
+    {{ icon }}
+  {% endcall %}
 </a>
 {%- endmacro -%}
 
