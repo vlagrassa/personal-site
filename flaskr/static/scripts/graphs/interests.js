@@ -77,10 +77,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
   // Create the zoom object
   // Scaling and translating along the x-axis
+  const maxZoom = 2;
   const zoom = svg.call(
     d3.zoom()
-      .scaleExtent([1, 2])
-      .filter(filter)
+      .scaleExtent([1, maxZoom])
+      .translateExtent([[0, 0], [width, 0]])
       .on("zoom", zoomed)
   )
 
@@ -137,8 +138,10 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   const setRange = createHorizontalDragComponent( dragBarParent, dragWidth, 10 )
 
   // Create a callback to update the drag bar element from a D3 zoom transform
+  // transform.x: Where the scaled object would need to start to appear in the correct position with the given scaling factor.
+  // transform.k: The current scaling factor.
   function setRangeFromTransform(transform) {
-    const dragPos = (-transform.x / plotWidth) * dragWidth / transform.k;
+    const dragPos = (-transform.x / transform.k) / width * dragWidth;
     setRange(dragPos, dragPos + (dragWidth / transform.k))
   }
   setRangeFromTransform(currentTransform);
@@ -368,6 +371,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
   /**
    * Update to a new zoom transform.
+   * The transform object contains the following (relevant) fields:
+   *   - x: The x coordinate where the view should start.
+   *        This is usually negative, since the object would have to start offscreen
+   *        to still be visible when blown up.
+   *   - k: The scaling factor
    */
   function zoomed({ transform }) {
 
