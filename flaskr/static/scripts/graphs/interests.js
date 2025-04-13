@@ -30,18 +30,22 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   //   Size Config
   // --------------------------------------------------------------------------
 
+  // Get size of parent element
   const bounding_rect = container.getBoundingClientRect();
 
-  // Specify the chart’s dimensions.
+  // Specify the chart's dimensions
   const width  = bounding_rect.width;
   const height = bounding_rect.height;
 
+  // Set the space around the chart body
   const marginLeft   = 25;
   const marginRight  = 25;
   const marginTop    = 25;
   const marginBottom = 50;
 
-  const plotWidth = width - marginLeft - marginRight;
+  // Compute dimensions of plot itself, excluding margins
+  const plotWidth  = width  - marginLeft - marginRight;
+  const plotHeight = height - marginTop  - marginBottom;
 
 
   // --------------------------------------------------------------------------
