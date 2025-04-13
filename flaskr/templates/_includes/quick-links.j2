@@ -3,7 +3,7 @@
 {%- endif %}
 
 
-{%- macro render_quick_link_content(id, size=28, content="", adjust_icon_x="0px", adjust_icon_y="0px") %}
+{%- macro render_quick_link_content(id, size=28, label="", adjust_icon_x="0px", adjust_icon_y="0px") %}
 <div style="position: relative;">
   <svg id="{{ id }}" class="hex-button" viewBox="-12 -12 24 24" width="{{ size }}px" height="{{ size }}px" >
     <path
@@ -25,23 +25,23 @@
 </div>
 <div class="px-2 d-flex flex-column justify-content-around">
   <div>
-    {{ render_lang_object( content ) }}
+    {{ render_lang_object( label ) }}
   </div>
 </div>
 <div style="width: 6px"></div>
 {%- endmacro -%}
 
-{%- macro render_quick_link_button(id, size=28, title="", icon="", content="", class="", adjust_icon_x="0px", adjust_icon_y="0px", onclick="") -%}
+{%- macro render_quick_link_button(id, size=28, title="", icon="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", onclick="") -%}
 <button title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" onclick="{{ onclick }}">
-  {% call render_quick_link_content(id, size=size, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
+  {% call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
     {{ icon }}
   {% endcall %}
 </button>
 {%- endmacro -%}
 
-{%- macro render_quick_link_anchor(id, size=28, title="", icon="", content="", class="", adjust_icon_x="0px", adjust_icon_y="0px", href="") -%}
+{%- macro render_quick_link_anchor(id, size=28, title="", icon="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", href="") -%}
 <a title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" href="{{ href }}">
-  {% call render_quick_link_content(id, size=size, content=content, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
+  {% call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
     {{ icon }}
   {% endcall %}
 </a>
@@ -54,14 +54,14 @@
     "quick-links-resume",
     title   = "Download résumé",
     icon    = "file_save",
-    content = config.TEXT['sidebar.resume']
+    label   = config.TEXT['sidebar.resume']
   )}}
 
   {{ render_quick_link_anchor(
     "quick-links-contact",
     title   = "Send email to connect@vlagrassa.dev",
     icon    = "outgoing_mail",
-    content = config.TEXT['sidebar.contact'],
+    label   = config.TEXT['sidebar.contact'],
     href    = "mailto:connect@vlagrassa.dev",
     class   = "flex-row-reverse",
     adjust_icon_x = "1px",
