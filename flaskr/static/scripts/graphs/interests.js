@@ -203,6 +203,14 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     .join("path")
       .attr("d", (d) => line( d.values.map(v => [ x(v.x), v.y ]), x, y ))
 
+  // Clone the paths, so we can use their original lengths / positions to compute points
+  const pathClonesContainer = pathsContainer.clone(true)
+  pathClonesContainer.attr("visibility", "hidden")
+  pathClonesContainer.selectAll("path").attr('stroke', 'none')
+  const pathCloneNodes = pathClonesContainer.selectAll("path").nodes();
+
+  // Add the custom data-path class to all of the paths
+  // Do this after cloning so the clones aren't marked as data-paths too
   paths.classed('data-path', true)
 
   // Compute the path nodes
@@ -210,10 +218,15 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     'node':   node,
     'id':     Array.from(groups.values())[i].id,
 
+    // Store a reference to the cloned node storing the original size/position/etc
+    'nodeOriginal': pathCloneNodes[i],
+
     // Cache the first n levels of the binary search
     // I don't think this actually improves performance, but it became a point of pride to make it work
+    // NOTE: For the stored function, we have to compute relative to the cloned versions
+    //       of the paths that aren't stretched / transformed by zooming or panning
     'cache':  new ContinuousFunctionCache(
-      (dist) => node.getPointAtLength(dist).x, 0, node.getTotalLength(), 8
+      (dist) => pathCloneNodes[i].getPointAtLength(dist).x, 0, node.getTotalLength(), 8
     ),
   }))
 
