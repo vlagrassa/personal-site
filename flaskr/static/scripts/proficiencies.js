@@ -57,6 +57,33 @@ export function graph_proficiencies(container, data, config) {
 
 
 
+function plotDataAttempts(config) {
+  // Some alternate attempts to plot the data.
+  // Ideas:
+  //  - Curve line. Problem: Hard to make sure the furthest point of the line reaches the actual target distance.
+  //  - Add outline. Problem: Different angles of the lines make it hard to keep space between lines consistent.
+
+  // Attempted helper functions: map to curved lines
+  // const plotDataOutline = config.labels.map(
+  //   (label, idx) => hexToCartesian(idx, (data[label.id] || 0) + 0.1)
+  // )
+  // const line = d3.line()
+  //   .curve(d3.curveCardinalClosed.tension(0.8))
+
+  // Attempt: Plot curved with outline
+  // svg.append('path').attr('d', line( makeCurvedLine(plotData, 1) )).attr('class', 'plot')
+  // svg.append('path').attr('d', line( makeCurvedLine(plotDataOutline, 1) )).attr('class', 'plot-outline')
+  // svg.append('path').attr('d', line( raiseLine(makeCurvedLine(plotData, 1), 1) )).attr('class', 'plot-outline')
+
+  // Attempt: Plot curved with polygon object
+  // svg.append('polygon').attr('points', line( makeCurvedLine(plotData, 2) )).attr('class', 'plot')
+
+  // Attempt: Plot linear (non-curved) outline
+  // svg.append('polygon').attr('points', pointsToPathData(plotDataOutline)).attr('class', 'plot-outline')
+}
+
+
+
 // ----------------------------------------------------------------------------
 //   Graph Components
 // ----------------------------------------------------------------------------
