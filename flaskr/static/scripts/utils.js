@@ -19,8 +19,20 @@ function distance([x1, y1], [x2, y2]) {
 }
 
 
+/**
+ * Convert an array of point objects to an SVG path string,
+ * with commands.  Use for `d` attribute?
+ */
 export function pointsToPath(points, closed=false) {
   return "M" + points.map(([x, y]) => `${x},${y}`).join("L") + (closed ? "Z" : "");
+}
+
+/**
+ * Convert an array of point objects to an SVG path data string,
+ * with just the point values.  Use for `d` attribute.
+ */
+export function pointsToPathData(points) {
+  return points.map(([x, y]) => `${x},${y}`).join(' ')
 }
 
 

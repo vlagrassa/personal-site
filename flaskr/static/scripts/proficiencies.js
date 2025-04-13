@@ -2,7 +2,7 @@
 //   Imports
 // ----------------------------------------------------------------------------
 
-import { raiseLine, makeCurvedLine } from "./utils.js";
+import { pointsToPathData, raiseLine, makeCurvedLine } from "./utils.js";
 
 
 
@@ -43,7 +43,7 @@ export function graph_proficiencies(container, data, config) {
   )
 
   // Plot the data
-  svg.append('polygon').attr('points', pointsToPath(plotData)).attr('class', 'plot')
+  svg.append('polygon').attr('points', pointsToPathData(plotData)).attr('class', 'plot')
 
   return svg;
 }
@@ -219,11 +219,6 @@ function hexCoordinates(column, radius) {
 // ----------------------------------------------------------------------------
 
 
-function pointsToPath(arr) {
-  return arr.map(([x, y]) => `${x},${y}`).join(' ')
-}
-
-
 // Adapted from https://stackoverflow.com/a/67667511
 function hexagonPoints(x, y, radius) {
   const halfWidth = radius * Math.sqrt(3) / 2;
@@ -239,5 +234,5 @@ function hexagonPoints(x, y, radius) {
 
 
 function hexagonPointsPath(x, y, radius) {
-  return pointsToPath(hexagonPoints(x, y, radius))
+  return pointsToPathData(hexagonPoints(x, y, radius))
 }
