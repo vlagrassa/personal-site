@@ -1,3 +1,19 @@
+// ----------------------------------------------------------------------------
+//   Math
+// ----------------------------------------------------------------------------
+
+
+function distance([x1, y1], [x2, y2]) {
+  return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+}
+
+
+
+// ----------------------------------------------------------------------------
+//   Generic Array Operations
+// ----------------------------------------------------------------------------
+
+
 export function range(start, stop=null, step=1, includeFinal=false) {
   if (stop === null) {
     stop = start;
@@ -14,9 +30,18 @@ export function range(start, stop=null, step=1, includeFinal=false) {
 }
 
 
-function distance([x1, y1], [x2, y2]) {
-  return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+function makeSubsequences(arr, n) {
+  const arr2 = arr.concat(arr); // TODO: Not very robust
+  return arr.map((v, i) => {
+    return arr2.slice(i, i+ n);
+  })
 }
+
+
+
+// ----------------------------------------------------------------------------
+//   SVG Points
+// ----------------------------------------------------------------------------
 
 
 /**
@@ -27,6 +52,7 @@ export function pointsToPath(points, closed=false) {
   return "M" + points.map(([x, y]) => `${x},${y}`).join("L") + (closed ? "Z" : "");
 }
 
+
 /**
  * Convert an array of point objects to an SVG path data string,
  * with just the point values.  Use for `d` attribute.
@@ -36,12 +62,10 @@ export function pointsToPathData(points) {
 }
 
 
-function makeSubsequences(arr, n) {
-  const arr2 = arr.concat(arr); // TODO: Not very robust
-  return arr.map((v, i) => {
-    return arr2.slice(i, i+ n);
-  })
-}
+
+// ----------------------------------------------------------------------------
+//   Modifying SVG Lines
+// ----------------------------------------------------------------------------
 
 
 export function getAngles(points) {
@@ -86,6 +110,11 @@ export function raiseLine(points, gap) {
 
 
 
+// ----------------------------------------------------------------------------
+//   Hexagons
+// ----------------------------------------------------------------------------
+
+
 export function hexagonPoints(x, y, radius) {
   const halfWidth = radius * Math.sqrt(3) / 2;
   return [
@@ -97,6 +126,7 @@ export function hexagonPoints(x, y, radius) {
       [ x - halfWidth, y - ( radius / 2 ) ],
   ];
 }
+
 
 export function hexagonPointsPath(x, y, radius) {
   return pointsToPath(hexagonPoints(x, y, radius), true)
