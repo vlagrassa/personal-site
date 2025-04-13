@@ -95,8 +95,10 @@
 
 
 {%- macro render_qualification(title, source, date) %}
-<dt class="text-start mb-1">{{ title }}</dt>
-<dd class="text-end fst-italic">{{ source }} ({{ date }})</dd>
+<div>
+  <dt class="text-start mb-1">{{ title }}</dt>
+  <dd class="text-end fst-italic">{{ source }} ({{ date }})</dd>
+</div>
 {%- endmacro %}
 
 

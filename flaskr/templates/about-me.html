@@ -77,9 +77,10 @@
         <!-- Dropdown Panels -->
         {%- call render_dropdown_panel_container() %}
 
-          {%- call render_dropdown_panel('Qualifications', start_open=(initial_tab=='qualifications')) %}
+          <!-- Qualifications (Education, Certifications) -->
+          {%- call render_dropdown_panel('Education & Certifications', start_open=(initial_tab=='qualifications')) %}
             <div class="w-100 pt-2 px-2">
-              <dl class="qualifications-container">
+              <dl class="qualifications-container d-flex flex-column gap-2">
                 {{ render_qualification(
                   "Master of Science, Computer Science",
                   "The University of Chicago", "2022"
@@ -87,6 +88,14 @@
                 {{ render_qualification(
                   "Bachelor of Arts, Linguistics",
                   "The University of Chicago", "2022"
+                ) }}
+                {{ render_qualification(
+                  "International Bacchalaureate Full Diploma",
+                  "Washington-Liberty High School", "2018"
+                ) }}
+                {{ render_qualification(
+                  "Summer Course, Cybersecurity",
+                  "Virginia Summer Residential Governor's School for Mathematics, Science, and Technology", "2018"
                 ) }}
               </dl>
             </div>
