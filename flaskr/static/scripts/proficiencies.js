@@ -5,6 +5,7 @@
 import {
   hexagonPoints,
   hexagonPointsPathData,
+  hexToCartesian,
   makeCurvedLine,
   pointsToPathData,
   raiseLine,
@@ -45,7 +46,7 @@ export function graph_proficiencies(container, data, config) {
 
   // Map the graph data to hex coordinates
   const plotData = config.labels.map(
-    (label, idx) => hexCoordinates(idx, data[label.id] || 0)
+    (label, idx) => hexToCartesian(idx, data[label.id] || 0)
   )
 
   // Plot the data
@@ -77,12 +78,12 @@ function addBackground(parent) {
   const g = parent.append('g')
 
   // Compute corners
-  const [x0, y0] = hexCoordinates(0, 5.1);
-  const [x1, y1] = hexCoordinates(1, 5.1);
-  const [x2, y2] = hexCoordinates(2, 5.1);
-  const [x3, y3] = hexCoordinates(3, 5.1);
-  const [x4, y4] = hexCoordinates(4, 5.1);
-  const [x5, y5] = hexCoordinates(5, 5.1);
+  const [x0, y0] = hexToCartesian(0, 5.1);
+  const [x1, y1] = hexToCartesian(1, 5.1);
+  const [x2, y2] = hexToCartesian(2, 5.1);
+  const [x3, y3] = hexToCartesian(3, 5.1);
+  const [x4, y4] = hexToCartesian(4, 5.1);
+  const [x5, y5] = hexToCartesian(5, 5.1);
 
   // Add the straight lines across the hexagon
   g.append('line')
@@ -120,7 +121,7 @@ function addBackground(parent) {
  * Returns the D3 object, so further attributes / styles / etc can be set.
  */
 function addLabel(parent, label, column, config) {
-  const [x, y] = hexCoordinates(column, 5.75);
+  const [x, y] = hexToCartesian(column, 5.75);
 
   const text_anchor = [
     'middle', 'start', 'start', 'middle', 'end', 'end',
@@ -194,26 +195,4 @@ function addHexagon(svg, radius, _class="", map=null) {
   return svg.append('path')
     .attr('d', points)
     .attr('class', _class)
-}
-
-
-
-// ----------------------------------------------------------------------------
-//   Coordinate Mapping
-// ----------------------------------------------------------------------------
-
-
-/**
- * Convert from "hex" coordinates (column, radius) to Cartesian coordinates (x, y)
- */
-function hexCoordinates(column, radius) {
-
-  // Convert to polar coordinates first
-  const r = radius * 10;
-  const t = (column - 1.5) * Math.PI / 3;
-
-  // Convert polar coordinates to Cartesian coordinates
-  return [
-    r * Math.cos(t), r * Math.sin(t)
-  ]
 }

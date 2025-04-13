@@ -10,6 +10,34 @@ function distance([x1, y1], [x2, y2]) {
 
 
 // ----------------------------------------------------------------------------
+//   Coordinate Mapping
+// ----------------------------------------------------------------------------
+
+
+/**
+ * Convert from "hex" coordinates (column, radius) to Cartesian coordinates (x, y)
+ *
+ * @param {number} column
+ *   The column within the hexagon, akin to polar angle. Starts from 0 <=> top point and moves clockwise.
+ *
+ * @param {number} radius
+ *   The distance from the center of the hexagon. Typically 1 is mapped to the edge.
+ */
+export function hexToCartesian(column, radius) {
+
+  // Convert to polar coordinates first
+  const r = radius * 10;
+  const t = (column - 1.5) * Math.PI / 3;
+
+  // Convert polar coordinates to Cartesian coordinates
+  return [
+    r * Math.cos(t), r * Math.sin(t)
+  ]
+}
+
+
+
+// ----------------------------------------------------------------------------
 //   Generic Array Operations
 // ----------------------------------------------------------------------------
 
