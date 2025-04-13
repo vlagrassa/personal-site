@@ -39,7 +39,7 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   const marginLeft   = 25;
   const marginRight  = 25;
   const marginTop    = 25;
-  const marginBottom = 25;
+  const marginBottom = 50;
 
   const plotWidth = width - marginLeft - marginRight;
 
@@ -116,6 +116,26 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   // Move labels down
   xAxisContainer.selectAll(".tick text").attr("y", 16);
 
+
+  // --------------------------------------------------------------------------
+  //   Horizontal Drag Bar
+  // --------------------------------------------------------------------------
+
+  const dragWidth = width - marginLeft - marginRight + 20;
+
+  // Create a container element for the drag bar
+  const dragBarParent = svg.append("g")
+    .attr("transform", `translate(${ marginLeft - 10 }, ${ height - 11 })`)
+
+  // Create the drag bar element
+  const setRange = createHorizontalDragComponent( dragBarParent, dragWidth, 10 )
+
+  // Create a callback to update the drag bar element from a D3 zoom transform
+  function setRangeFromTransform(transform) {
+    const dragPos = (-transform.x / plotWidth) * dragWidth / transform.k;
+    setRange(dragPos, dragPos + (dragWidth / transform.k))
+  }
+  setRangeFromTransform(currentTransform);
 
 
   // --------------------------------------------------------------------------
@@ -359,6 +379,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     paths.attr("d", (d) => {
       return line(d.values.map(v => [ xZoom(v.x), v.y ]), xZoom, y)
     })
+
+    // Update the drag bar
+    setRangeFromTransform(transform);
   }
 
   // prevent scrolling then apply the default filter
@@ -422,4 +445,110 @@ function iterateComputePathY(pathNode, x, cache = null) {
 
 function iterateComputePathDistance(pathNode, x, cache = null) {
   return iterateComputePathPt(pathNode, x, cache).dist
+}
+
+
+
+// ----------------------------------------------------------------------------
+//   Drag Bar
+// ----------------------------------------------------------------------------
+
+
+/**
+ * Create a horizontal scrollbar-esque component that controls and reflects
+ * both horizontal position and zoom level (i.e. horizontal bounds).
+ */
+function createHorizontalDragComponent(parent, width, height) {
+
+  // --------------------------------------------------------------------------
+  //   Create the track (background)
+  // --------------------------------------------------------------------------
+
+  // Container object for the track
+  const track = parent.append("g")
+    .attr("class", "track")
+
+  // Primary horizontal line
+  track.append("line")
+    .attr("x1", 0)
+    .attr("x2", width)
+    .attr("y1", height / 2)
+    .attr("y2", height / 2)
+
+  // Left cap
+  track.append("line")
+    .attr("x1", 0)
+    .attr("x2", 0)
+    .attr("y1", 0)
+    .attr("y2", height)
+
+  // Left decor
+  track.append("line")
+    .attr("x1", -2)
+    .attr("x2", -2)
+    .attr("y1", 1)
+    .attr("y2", height - 1)
+
+  // Right cap
+  track.append("line")
+    .attr("x1", width)
+    .attr("x2", width)
+    .attr("y1", 0)
+    .attr("y2", height)
+
+  // Right decor
+  track.append("line")
+    .attr("x1", width + 2)
+    .attr("x2", width + 2)
+    .attr("y1", 1)
+    .attr("y2", height - 1)
+
+
+  // --------------------------------------------------------------------------
+  //   Create the interactive dragging element
+  // --------------------------------------------------------------------------
+
+  // Container object for the drag bar
+  const drag = parent.append("g")
+    .attr("class", "drag")
+
+  // Primary body of the drag bar element
+  const dragBody = drag.append("rect")
+    .attr("y", 0)
+    .attr("height", height)
+    .attr("rx", 2)
+
+  // Decorative line on the left of the draggable element main body
+  const dragLeft = drag.append("line")
+    .attr("y1", 1)
+    .attr("y2", height - 1)
+
+  // Decorative line on the right of the draggable element main body
+  const dragRight = drag.append("line")
+    .attr("y1", 1)
+    .attr("y2", height - 1)
+
+
+  // --------------------------------------------------------------------------
+  //   Callback(s)
+  // --------------------------------------------------------------------------
+
+  // Callback to update the drag bar width & position to a given range
+  const setRange = (start, end) => {
+    dragBody
+      .attr("x", start)
+      .attr("width", end - start)
+    dragLeft
+      .attr("x1", start - 2)
+      .attr("x2", start - 2)
+    dragRight
+      .attr("x1", end + 2)
+      .attr("x2", end + 2)
+  }
+
+  // Initialize the range to the full width
+  setRange(0, width);
+
+  // Return the set range callback
+  return setRange;
 }

@@ -237,6 +237,20 @@ svg.graph-interests text.vertical-line-label {
   /* text-underline-offset: 10px; */
 }
 
+svg.graph-interests .track {
+  stroke: var(--color-gray);
+  fill: none;
+}
+
+svg.graph-interests .drag {
+  stroke: black;
+}
+
+svg.graph-interests .drag rect {
+  fill: white;
+  cursor: ew-resize;
+}
+
 
 /******************************************************************************
   Visualizations: Genres
