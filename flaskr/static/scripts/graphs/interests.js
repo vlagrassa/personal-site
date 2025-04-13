@@ -125,11 +125,13 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   //   Horizontal Drag Bar
   // --------------------------------------------------------------------------
 
-  const dragWidth = width - marginLeft - marginRight + 20;
+  // Drag bar should overshoot the plot by a bit (for aesthetics)
+  const dragBarOvershoot = 10;
+  const dragWidth = plotWidth + (2 * dragBarOvershoot);
 
   // Create a container element for the drag bar
   const dragBarParent = svg.append("g")
-    .attr("transform", `translate(${ marginLeft - 10 }, ${ height - 11 })`)
+    .attr("transform", `translate(${ marginLeft - dragBarOvershoot }, ${ height - 11 })`)
 
   // Create the drag bar element
   const setRange = createHorizontalDragComponent( dragBarParent, dragWidth, 10 )
