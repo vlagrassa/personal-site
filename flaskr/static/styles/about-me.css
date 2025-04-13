@@ -177,7 +177,14 @@
 }
 
 
+/******************************************************************************
+  Visualizations: Skills
+*/
 
+
+/******************************************************************************
+  Visualizations: Interests
+*/
 
 svg.graph-interests .x-axis .domain {
   stroke:       var(--color-off-black);
@@ -231,7 +238,9 @@ svg.graph-interests text.vertical-line-label {
 }
 
 
-
+/******************************************************************************
+  Visualizations: Genres
+*/
 
 svg.graph-genres .arc {
   fill-opacity: 0.6;
@@ -250,7 +259,9 @@ svg.graph-genres .arc.hidden {
 }
 
 
-
+/******************************************************************************
+  Visualizations: Vowels
+*/
 
 svg.graph-vowels .outline {
   stroke: var(--color-off-black);
