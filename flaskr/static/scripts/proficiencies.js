@@ -1,5 +1,14 @@
+// ----------------------------------------------------------------------------
+//   Imports
+// ----------------------------------------------------------------------------
+
 import { raiseLine, makeCurvedLine } from "./utils.js";
 
+
+
+// ----------------------------------------------------------------------------
+//   Main Function
+// ----------------------------------------------------------------------------
 
 
 export function graph_proficiencies(container, data, config) {
@@ -41,7 +50,9 @@ export function graph_proficiencies(container, data, config) {
 
 
 
-/* Graph Components */
+// ----------------------------------------------------------------------------
+//   Graph Components
+// ----------------------------------------------------------------------------
 
 
 /**
@@ -181,7 +192,9 @@ function addHexagon(svg, radius, _class="", map=null) {
 
 
 
-/* Coordinate Mapping */
+// ----------------------------------------------------------------------------
+//   Coordinate Mapping
+// ----------------------------------------------------------------------------
 
 
 /**
@@ -201,12 +214,15 @@ function hexCoordinates(column, radius) {
 
 
 
-/* Helper Functions */
+// ----------------------------------------------------------------------------
+//   Helper Functions
+// ----------------------------------------------------------------------------
 
 
 function pointsToPath(arr) {
   return arr.map(([x, y]) => `${x},${y}`).join(' ')
 }
+
 
 // Adapted from https://stackoverflow.com/a/67667511
 function hexagonPoints(x, y, radius) {
@@ -220,6 +236,7 @@ function hexagonPoints(x, y, radius) {
       [ x - halfWidth, y - ( radius / 2 ) ],
   ];
 }
+
 
 function hexagonPointsPath(x, y, radius) {
   return pointsToPath(hexagonPoints(x, y, radius))
