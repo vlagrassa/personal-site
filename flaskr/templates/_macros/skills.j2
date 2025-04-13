@@ -11,10 +11,19 @@
 
   <div id="{{ elementId }}" class="h-100 w-100"></div>
 
+  {# Overlay #}
   <div id="{{ elementId }}-overlay" class="proficiency-chart-overlay py-2 text-start">
+    {# <button id="{{elementId}}-button-hide" class="btn badge btn-clear float-end">↶</button> #}
+    {# <button id="{{elementId}}-button-hide" class="btn badge btn-clear float-end py-1">x</button> #}
+
+    {# Text Content #}
     <div id="{{ elementId }}-overlay-content">
     {{ render_content(config, header_level=6) }}
     </div>
+
+    {# Action buttons #}
+    <button id="{{elementId}}-button-hide" class="btn badge btn-primary py-1">Back to Graph</button>
+    <button id="{{elementId}}-button-link" class="btn badge btn-primary py-1">View Projects</button>
   </div>
 
 </div>
@@ -27,6 +36,8 @@
   const parent  = document.getElementById('{{ elementId }}')
   const overlay = document.getElementById('{{ elementId }}-overlay')
   const content = document.getElementById('{{ elementId }}-overlay-content')
+  const btnHide = document.getElementById('{{ elementId }}-button-hide')
+  const btnLink = document.getElementById('{{ elementId }}-button-link')
 
   let currentlySelected = null;
 
@@ -38,6 +49,7 @@
     currentlySelected = selected;
     overlay.classList.add('active');
     parent.querySelectorAll(`.label-text`).forEach(el => el.tabIndex = -1)
+    btnHide.focus();
   }
 
   // Hide the overlay element
@@ -46,6 +58,8 @@
     parent.querySelectorAll(`.label-text`).forEach(el => el.tabIndex = 0)
     parent.querySelector(`.label-text[data-label-id=${currentlySelected}]`).focus()
   }
+
+  if (btnHide) btnHide.onclick = hideOverlay
 
   const config = {
     'labels': [
