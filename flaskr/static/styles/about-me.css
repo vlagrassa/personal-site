@@ -1,3 +1,7 @@
+/******************************************************************************
+  Title
+*/
+
 #about-me-title-section, #about-me-title-section .hex-container-column {
   --s: 125px;
 }
@@ -13,6 +17,9 @@
 }
 
 
+/******************************************************************************
+  Basic Info
+*/
 
 #basic-info-card dl {
   display: grid;
@@ -26,6 +33,9 @@
 }
 
 
+/******************************************************************************
+  Programming Languages Bar Chart
+*/
 
 .bar-chart-table th {
   font-family: var(--font-head);
@@ -45,7 +55,6 @@
   user-select: none;
 }
 
-
 .bar-chart-item::before {
   content: '⬡⬡⬡⬡⬡';
   position: absolute;
@@ -64,6 +73,10 @@
 }
 
 
+/******************************************************************************
+  Qualifications
+*/
+
 .qualifications-container dd::before {
   content: "⬦";
   user-select: none;
@@ -71,6 +84,10 @@
   padding-right: 0.2em;
 }
 
+
+/******************************************************************************
+  High Scores
+*/
 
 .score-group-container h6 {
   font-size: 1em;
@@ -101,6 +118,9 @@
 }
 
 
+/******************************************************************************
+  Recent Activity
+*/
 
 #recent-activity tr:nth-of-type(2n+1) {
   border-top: 1px solid lightgray;
@@ -113,7 +133,9 @@
 }
 
 
-
+/******************************************************************************
+  Visualizations
+*/
 
 .vis-choice-button .card {
   transition: transform 100ms var(--transition-snappy);
@@ -273,6 +295,9 @@ svg.graph-vowels .spectrum-window .formant-line {
 }
 
 
+/******************************************************************************
+  Help Modal(s)
+*/
 
 .help-section-button {
   text-align: center;
