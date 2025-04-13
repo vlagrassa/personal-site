@@ -31,41 +31,47 @@
 <div style="width: 6px"></div>
 {%- endmacro -%}
 
-{%- macro render_quick_link_button(id, size=28, title="", icon="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", onclick="") -%}
+{%- macro render_quick_link_button(id, size=28, title="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", onclick="") -%}
 <button title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" onclick="{{ onclick }}">
-  {% call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
-    {{ icon }}
-  {% endcall %}
+  {%- with wrapped = caller() -%}
+  {%- call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) -%}
+    {{ wrapped }}
+  {%- endcall -%}
+  {%- endwith -%}
 </button>
 {%- endmacro -%}
 
-{%- macro render_quick_link_anchor(id, size=28, title="", icon="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", href="") -%}
+{%- macro render_quick_link_anchor(id, size=28, title="", label="", class="", adjust_icon_x="0px", adjust_icon_y="0px", href="") -%}
 <a title="{{ title }}" class="bg-transparent border-0 p-0 hex-button-labeled {{ class }}" href="{{ href }}">
-  {% call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) %}
-    {{ icon }}
-  {% endcall %}
+  {%- with wrapped = caller() -%}
+  {%- call render_quick_link_content(id, size=size, label=label, adjust_icon_x=adjust_icon_x, adjust_icon_y=adjust_icon_y) -%}
+    {{ wrapped }}
+  {%- endcall -%}
+  {%- endwith -%}
 </a>
 {%- endmacro -%}
 
 
 <span class="d-flex flex-wrap justify-content-center gap-{{ quick_links_gap }} row-gap-2">
 
-  {{ render_quick_link_button(
+  {% call render_quick_link_button(
     "quick-links-resume",
     title   = "Download résumé",
-    icon    = "file_save",
     label   = config.TEXT['sidebar.resume']
-  )}}
+  ) %}
+    file_save
+  {% endcall %}
 
-  {{ render_quick_link_anchor(
+  {% call render_quick_link_anchor(
     "quick-links-contact",
     title   = "Send email to connect@vlagrassa.dev",
-    icon    = "outgoing_mail",
     label   = config.TEXT['sidebar.contact'],
     href    = "mailto:connect@vlagrassa.dev",
     class   = "flex-row-reverse",
     adjust_icon_x = "1px",
     adjust_icon_y = "1px",
-  ) }}
+  ) %}
+    outgoing_mail
+  {% endcall %}
 
 </span>
