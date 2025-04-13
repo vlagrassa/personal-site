@@ -18,10 +18,9 @@
       stroke-width="{{ 20 / size }}"
     ></path>
   </svg>
-  <span
-    class="material-symbols-outlined material-symbols-inline"
-    style="position: absolute; top: 50%; left: 50%; transform: translate(calc(-50% + {{ adjust_icon_x }}), calc(-50% + {{ adjust_icon_y }})); color: white;"
-  >{{ caller() }}</span>
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(calc(-50% + {{ adjust_icon_x }}), calc(-50% + {{ adjust_icon_y }}));">
+    {{ caller() }}
+  </div>
 </div>
 <div class="px-2 d-flex flex-column justify-content-around">
   <div>
@@ -52,14 +51,19 @@
 {%- endmacro -%}
 
 
+{# Icons from Google Material Icons, downloaded as SVGs with weight 300 and size 16px #}
 <span class="d-flex flex-wrap justify-content-center gap-{{ quick_links_gap }} row-gap-2">
 
   {% call render_quick_link_button(
     "quick-links-resume",
     title   = "Download résumé",
-    label   = config.TEXT['sidebar.resume']
+    label   = config.TEXT['sidebar.resume'],
+    adjust_icon_y = "-1px",
   ) %}
-    file_save
+    {# Icon: file_save #}
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="16px" height="16px" fill="var(--color-off-white)">
+      <path d="M732-134.23 861.77-264 825-300.77l-67 67V-398h-52v164.23l-67-67L602.23-264 732-134.23ZM598-10v-52h268v52H598ZM266.31-154q-25.54 0-44.92-19.39Q202-192.77 202-218.31v-571.38q0-25.54 19.39-44.92Q240.77-854 266.31-854H576l182 182v194.31h-52V-634H538v-168H266.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v571.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h264v52h-264ZM254-206v-596 596Z"/>
+    </svg>
   {% endcall %}
 
   {% call render_quick_link_anchor(
@@ -71,7 +75,10 @@
     adjust_icon_x = "1px",
     adjust_icon_y = "1px",
   ) %}
-    outgoing_mail
+    {# Icon: outgoing_mail #}
+    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="var(--color-off-white)">
+      <path d="M723-206.23 686.23-243l65.62-67H586v-52h165.85l-65.62-67L723-465.77 849.77-336 723-206.23ZM170.31-298q-26.53 0-45.42-18.89T106-362.31v-379.38q0-26.53 18.89-45.42T170.31-806h474.95q27.26 0 46 18.89T710-741.69l1 174.15q2.5.77 5 1.16 2.5.38 5 .38-16.5 1-32.5 3.31t-30.5 6.54v-160.93L408-540.31 158-717.46v355.15q0 5.39 3.46 8.85t8.85 3.46h319.54q-.23 1.5-.04 5t.19 9q0 7.5 1.62 19 1.61 11.5 2.84 19H170.31Zm26.53-456L408-602.69 619.93-754H196.84ZM158-350V-754v404Z"/>
+    </svg>
   {% endcall %}
 
 </span>
