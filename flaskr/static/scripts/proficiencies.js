@@ -1,3 +1,7 @@
+import { raiseLine, makeCurvedLine } from "./utils.js";
+
+
+
 export function graph_proficiencies(container, data, config) {
 
   if (!config.labels) {
@@ -45,6 +49,13 @@ export function graph_proficiencies(container, data, config) {
  */
 function addBackground(parent) {
 
+  // Function to create a curved line
+  const line = d3.line()
+    .curve(d3.curveCardinalClosed.tension(0.8))
+
+  // Give a path curved edges, with the curve strength based on the `curve` parameter
+  const mapPoints = curve => pts => line( makeCurvedLine(pts, curve) )
+
   // Create a new group for the background
   const g = parent.append('g')
 
@@ -71,13 +82,14 @@ function addBackground(parent) {
     .attr('class', 'grid')
 
   // Add the hexagons themselves
-  addHexagon(g, 10, 'grid');
-  addHexagon(g, 20, 'grid');
-  addHexagon(g, 30, 'grid');
-  addHexagon(g, 40, 'grid');
-  addHexagon(g, 51, 'border-inner');
-  addHexagon(g, 53, 'border-outer');
-  addHexagon(g,  1, 'grid').style('fill', 'white');
+  // Edges are rounded, based on factor passed to `mapPoints` - I picked these heuristically (i.e. whatever looked good)
+  addHexagon(g, 10, 'grid', mapPoints(0.4));
+  addHexagon(g, 20, 'grid', mapPoints(0.55));
+  addHexagon(g, 30, 'grid', mapPoints(0.7));
+  addHexagon(g, 40, 'grid', mapPoints(0.85));
+  addHexagon(g, 51, 'border-inner', mapPoints(1));
+  addHexagon(g, 53, 'border-outer', mapPoints(1.25));
+  addHexagon(g,  1, 'grid', mapPoints(0)).style('fill', 'white');
 
   // Return the group element
   return g;
@@ -145,12 +157,25 @@ function addLabel(parent, label, column, config) {
 
 
 /**
- * Add a hexagon with a given radius and color.
+ * Add a hexagon with a given radius & class(es).
  * Returns the D3 object, so further attributes / styles / etc can be set.
+ *
+ * @param svg
+ *   The parent SVG element to draw to.
+ *
+ * @param {number} radius
+ *   The radius of the hexagon to create (centered around origin). Uses `hexagonPoints` functions to compute.
+ *
+ * @param {string} _class
+ *   CSS class(es) to add to the path object.
+ *
+ * @param {} [map=null]
+ *   Mapping function to transform hexagon points once they've been computed, e.g. to add a curve. Should convert points to points.
  */
-function addHexagon(svg, radius, _class="") {
-  return svg.append('polygon')
-    .attr('points', hexagonPointsPath(0, 0, radius))
+function addHexagon(svg, radius, _class="", map=null) {
+  const points = map ? map(hexagonPoints(0, 0, radius)) : hexagonPointsPath(0, 0, radius)
+  return svg.append('path')
+    .attr('d', points)
     .attr('class', _class)
 }
 
