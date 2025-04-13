@@ -26,9 +26,11 @@
 
 
 {% block body %}
+{% set center_only = false %}
 <div class="mb-5 h-100">
   <div class="row p-4 gy-0 gx-4 h-100">
 
+    {%- if not center_only %}
     <!-- Left Column -->
     <div class="col-3">
       <div id="left-column-container" class="row d-flex flex-column h-100">
@@ -119,9 +121,10 @@
       </div>
     </div>
     <!-- /Left Column -->
+    {%- endif %}
 
     <!-- Center Column -->
-    <div class="col-6 d-flex flex-column h-100">
+    <div class="{% if center_only %}col-12{% else %}col-6{% endif %} d-flex flex-column h-100">
       <div class="row">
 
         <!-- Basic Info -->
@@ -171,6 +174,7 @@
     <!-- /Center Column -->
 
     <!-- Right Column -->
+    {%- if not center_only %}
     <div class="col-3 d-flex flex-column h-100">
 
       <!-- Languages -->
@@ -230,6 +234,7 @@
 
     </div>
     <!-- /Right Column -->
+    {%- endif %}
 
   </div>
 </div>
