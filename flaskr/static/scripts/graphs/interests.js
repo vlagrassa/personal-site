@@ -5,14 +5,30 @@
     - https://observablehq.com/@radames/multi-line-chart-zoom
 */
 
+// ----------------------------------------------------------------------------
+//   Imports
+// ----------------------------------------------------------------------------
 
 import { ContinuousFunctionCache } from "../cache.js";
 
 
+// ----------------------------------------------------------------------------
+//   Main Function
+// ----------------------------------------------------------------------------
+
 export function graph_svg_interests(container, {schema, data}, config = {}) {
 
-  // Mape dates to date objects
+  // --------------------------------------------------------------------------
+  //   Pre-Processing
+  // --------------------------------------------------------------------------
+
+  // Map dates to date objects
   data = data.map((d) => Object.assign(d, {'date': new Date(d['date'])}));
+
+
+  // --------------------------------------------------------------------------
+  //   Size Config
+  // --------------------------------------------------------------------------
 
   const bounding_rect = container.getBoundingClientRect();
 
@@ -27,6 +43,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
   const plotWidth = width - marginLeft - marginRight;
 
+
+  // --------------------------------------------------------------------------
+  //   Create the main SVG container object
+  // --------------------------------------------------------------------------
+
   // Create the SVG container
   const svg = d3.create("svg")
     .attr('class', 'graph-interests')
@@ -34,6 +55,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     .attr("height", '100%')
     .attr("viewBox", [0, 0, width, height])
     .style("font-size", "10px")
+
+
+  // --------------------------------------------------------------------------
+  //   Scaling & Transform Objects
+  // --------------------------------------------------------------------------
 
   // Create the x-axis scale
   const x = d3.scaleUtc()
@@ -58,8 +84,10 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   let currentTransform = d3.zoomIdentity;
 
 
+  // --------------------------------------------------------------------------
+  //   Horizontal Axis
+  // --------------------------------------------------------------------------
 
-  /* Horizontal Axis */
 
   function formatDateTick(d) {
     return d.getUTCMonth() ? d.toLocaleString('en-us', { month: 'long' }) : d.getUTCFullYear();
@@ -90,7 +118,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
 
 
-  /* Vertical Axis */
+  // --------------------------------------------------------------------------
+  //   Vertical Axis
+  // --------------------------------------------------------------------------
 
   const yAxisLabels = {
     0.5: 'Dormant',
@@ -117,7 +147,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     .attr("text-anchor", "start")
 
 
-
+  // --------------------------------------------------------------------------
+  //   Plotted Data Paths
+  // --------------------------------------------------------------------------
 
   // Map data to a list of point objects
   const points = data.map((d) => ({ "x": d.date, "y": y( d.value ), "id": d.id }))
@@ -125,7 +157,7 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   // Group the points by series ID
   const groups = d3.rollup(points, values => ({ values, id: values[0].id}), d => d.id);
 
-  // Draw the lines.
+  // Draw the lines
   const line = d3.line()
     .curve(d3.curveBundle.beta(1))
 
@@ -154,6 +186,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   }))
 
 
+  // --------------------------------------------------------------------------
+  //   Vertical Line (Following Mouse)
+  // --------------------------------------------------------------------------
 
   // Add vertical line that follows mouse
   const verticalLineContainer = svg.append('g')
@@ -179,10 +214,13 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   markers.classed('vertical-marker', true);
 
 
+  // --------------------------------------------------------------------------
+  //   Post-Processing & Return
+  // --------------------------------------------------------------------------
+
   // Move the axes and axis markers above the plot lines in the rendering order
   xAxisContainer.raise();
   yAxisContainer.raise();
-
 
   // Add event handlers
   svg
@@ -191,14 +229,14 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
       .on("pointerleave", pointerleft)
       .on("touchstart", event => event.preventDefault())
 
-
+  // Return the SVG object
   return svg;
 
 
-  /*
-    Event Handlers
-    Coordinate which event functions to call when an event is fired.
-  */
+  // --------------------------------------------------------------------------
+  //   Event Handlers
+  //   Coordinate which event functions to call when an event is fired.
+  // --------------------------------------------------------------------------
 
   function pointermoved(event) {
     const [xm, ym] = d3.pointer(event);
@@ -243,10 +281,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   }
 
 
-
-  /*
-    Event Functions
-  */
+  // --------------------------------------------------------------------------
+  //   Event Functions
+  // --------------------------------------------------------------------------
 
   function drawVerticalLine(xm, heights) {
 
@@ -299,6 +336,13 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   }
 
 
+  // --------------------------------------------------------------------------
+  //   Zoom Functions
+  // --------------------------------------------------------------------------
+
+  /**
+   * Update to a new zoom transform.
+   */
   function zoomed({ transform }) {
 
     // Store the transformation for use by events
@@ -326,9 +370,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
 
 
-/*
-  Helper Functions
-*/
+// ----------------------------------------------------------------------------
+//   Helper Functions - Path Points & Distance
+// ----------------------------------------------------------------------------
 
 
 function iterateComputePathPt(pathNode, x, cache = null) {
@@ -370,9 +414,11 @@ function iterateComputePathPt(pathNode, x, cache = null) {
     : ContinuousFunctionCache.iterate(recurse, x, 0, pathNode.getTotalLength(), config)
 }
 
+
 function iterateComputePathY(pathNode, x, cache = null) {
   return iterateComputePathPt(pathNode, x, cache).point.y
 }
+
 
 function iterateComputePathDistance(pathNode, x, cache = null) {
   return iterateComputePathPt(pathNode, x, cache).dist
