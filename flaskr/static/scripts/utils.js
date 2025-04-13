@@ -115,6 +115,7 @@ export function raiseLine(points, gap) {
 // ----------------------------------------------------------------------------
 
 
+// Adapted from https://stackoverflow.com/a/67667511
 export function hexagonPoints(x, y, radius) {
   const halfWidth = radius * Math.sqrt(3) / 2;
   return [
@@ -130,4 +131,9 @@ export function hexagonPoints(x, y, radius) {
 
 export function hexagonPointsPath(x, y, radius) {
   return pointsToPath(hexagonPoints(x, y, radius), true)
+}
+
+
+export function hexagonPointsPathData(x, y, radius) {
+  return pointsToPathData(hexagonPoints(x, y, radius))
 }

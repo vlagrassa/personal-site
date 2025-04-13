@@ -2,7 +2,13 @@
 //   Imports
 // ----------------------------------------------------------------------------
 
-import { pointsToPathData, raiseLine, makeCurvedLine } from "./utils.js";
+import {
+  hexagonPoints,
+  hexagonPointsPathData,
+  makeCurvedLine,
+  pointsToPathData,
+  raiseLine,
+} from "./utils.js";
 
 
 
@@ -184,7 +190,7 @@ function addLabel(parent, label, column, config) {
  *   Mapping function to transform hexagon points once they've been computed, e.g. to add a curve. Should convert points to points.
  */
 function addHexagon(svg, radius, _class="", map=null) {
-  const points = map ? map(hexagonPoints(0, 0, radius)) : hexagonPointsPath(0, 0, radius)
+  const points = map ? map(hexagonPoints(0, 0, radius)) : hexagonPointsPathData(0, 0, radius)
   return svg.append('path')
     .attr('d', points)
     .attr('class', _class)
@@ -210,29 +216,4 @@ function hexCoordinates(column, radius) {
   return [
     r * Math.cos(t), r * Math.sin(t)
   ]
-}
-
-
-
-// ----------------------------------------------------------------------------
-//   Helper Functions
-// ----------------------------------------------------------------------------
-
-
-// Adapted from https://stackoverflow.com/a/67667511
-function hexagonPoints(x, y, radius) {
-  const halfWidth = radius * Math.sqrt(3) / 2;
-  return [
-      [ x,             y - ( radius     ) ],
-      [ x + halfWidth, y - ( radius / 2 ) ],
-      [ x + halfWidth, y + ( radius / 2 ) ],
-      [ x,             y + ( radius     ) ],
-      [ x - halfWidth, y + ( radius / 2 ) ],
-      [ x - halfWidth, y - ( radius / 2 ) ],
-  ];
-}
-
-
-function hexagonPointsPath(x, y, radius) {
-  return pointsToPathData(hexagonPoints(x, y, radius))
 }
