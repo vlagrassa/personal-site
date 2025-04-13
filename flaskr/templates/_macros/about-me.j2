@@ -3,8 +3,9 @@
 
 
 
-{%- macro render_basic_info(key, value) %}
-<dt class="text-end">{{ key }}</dt><dd class="mb-0">{{ value }}</dd>
+{%- macro render_basic_info(key, value="") %}
+<dt class="text-end">{{ key }}</dt>
+<dd class="mb-0">{% if caller %}{{ caller() }}{% else %}{{ value }}{% endif %}</dd>
 {%- endmacro %}
 
 

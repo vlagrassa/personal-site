@@ -22,10 +22,14 @@
 */
 
 #basic-info-card dl {
+  --num-cols: 3;
   display: grid;
-  grid-template-columns: repeat(3, fit-content(100%) auto);
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(var(--num-cols), fit-content(100%) auto);
+  grid-template-rows: auto;
   gap: 0.5em;
+  /* grid-auto-columns: 1fr; */
+  /* grid-auto-rows: 1fr; */
+  /* grid-auto-flow: column; */
 }
 
 #basic-info-card dt {

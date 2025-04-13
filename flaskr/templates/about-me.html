@@ -118,11 +118,12 @@
         <!-- Basic Info -->
         <div class="col-12">
           <div id="basic-info-card" class="card double-outline title-bottom px-3 py-2">
+            <!-- <h5 class="card-title">Basic Info</h5> -->
             <div class="card-body p-0">
               <dl class="mb-0 text-start p-1">
-                {{ render_basic_info('Class',      'Software Dev / Linguist') }}
-                {{ render_basic_info('Background', 'M.S. Comp Sci') }}
-                {{ render_basic_info('Pronouns',   'he / him') }}
+                {{ render_basic_info('Class',      'Software Dev') }}
+                {% call render_basic_info('Background') %}<abbr title="Computer Science">CS</abbr> // Linguistics{% endcall %}
+                {{ render_basic_info('Pronouns',   'he // him') }}
                 {{ render_basic_info('Level',      'Full-Stack') }}
                 {{ render_basic_info('Experience', '5+ years') }}
                 {{ render_basic_info('Alignment',  'Vim') }}
