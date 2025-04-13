@@ -186,19 +186,22 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   // Group the points by series ID
   const groups = d3.rollup(points, values => ({ values, id: values[0].id}), d => d.id);
 
-  // Draw the lines
+  // D3 function to draw data paths as curves
   const line = d3.line()
     .curve(d3.curveBundle.beta(1))
 
-  const paths = svg.append("g")
+  // Create a container for the data paths
+  const pathsContainer = svg.append("g")
       .attr("fill", "none")
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
-    .selectAll("path")
+      .attr("transform", `translate(${ marginLeft }, 0)`)
+
+  // Add the individual paths
+  const paths = pathsContainer.selectAll("path")
     .data(groups.values())
     .join("path")
       .attr("d", (d) => line( d.values.map(v => [ x(v.x), v.y ]), x, y ))
-      .attr("transform", `translate(${ marginLeft }, 0)`)
 
   paths.classed('data-path', true)
 
