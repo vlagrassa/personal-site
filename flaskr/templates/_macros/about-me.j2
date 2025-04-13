@@ -139,7 +139,9 @@
 {%- endmacro %}
 
 {%- macro render_human_language_entry(language, level) %}
-<div class="d-inline">{{ language }}&nbsp;<span class="text-body-secondary">({{ level }})</span></div>
+<div>
+  <dt>{{ language }}</dt><dd class="text-body-secondary">{{ level }}</dd>
+</div>
 {%- endmacro %}
 
 
