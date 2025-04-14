@@ -110,8 +110,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   // --------------------------------------------------------------------------
 
 
-  function formatDateTick(d) {
-    return d.getUTCMonth() ? d.toLocaleString('en-us', { month: 'long' }) : d.getUTCFullYear();
+  const dateTickMap = Object.fromEntries(schema.schema.xAxis.map((labels, idx) => [idx, labels]))
+
+  function formatDateTick(d, idx, arr) {
+    const label = dateTickMap[d.getUTCMonth()][initialLang]
+    return label ? `${label} ${d.getUTCFullYear()}` : '';
   }
 
   // Create the axis object
