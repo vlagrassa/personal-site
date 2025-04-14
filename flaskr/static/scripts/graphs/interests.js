@@ -29,6 +29,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   const languages   = config.languages       ?? [];
   const initialLang = config.initialLanguage ?? "en";
 
+  // State variables for mouse position
+  let xm = null, ym = null;
+
 
   // --------------------------------------------------------------------------
   //   Size Config
@@ -329,7 +332,11 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   }
 
   function showChartInteraction(event) {
-    const [xm, ym] = d3.pointer(event);
+
+    // If event is passed, update coords, otherwise use previous coords again
+    if (event) {
+      [xm, ym] = d3.pointer(event);
+    }
 
     // Compute the height of each graph line at the current mouse x-coordinate
     const heights = Object.fromEntries(pathNodes.map(
@@ -434,6 +441,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     paths.attr("d", (d) => {
       return line(d.values.map(v => [ xZoom(v.x), v.y ]), xZoom, y)
     })
+
+    // Update the vertical indicator line with saved mouse coords
+    showChartInteraction(null);
 
     // Update the drag bar
     setRangeFromTransform(transform);
