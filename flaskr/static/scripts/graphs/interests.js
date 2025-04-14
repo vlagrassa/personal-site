@@ -97,6 +97,7 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     d3.zoom()
       .scaleExtent([1, maxZoom])
       .translateExtent([[0, 0], [width, 0]])
+      .filter(filter)
       .on("zoom", zoomed)
   )
 
@@ -447,6 +448,15 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
     // Update the drag bar
     setRangeFromTransform(transform);
+  }
+
+  /**
+   * Reset the zoom transform
+   */
+  function resetZoom() {
+    svg.transition()
+      .duration(750)
+      .call(zoom.transform, d3.zoomIdentity);
   }
 
   // prevent scrolling then apply the default filter
