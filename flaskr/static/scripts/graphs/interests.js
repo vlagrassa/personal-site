@@ -29,6 +29,9 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   const languages   = config.languages       ?? [];
   const initialLang = config.initialLanguage ?? "en";
 
+  // Track current language
+  let currentLang = initialLang;
+
   // State variables for mouse position
   let xm = null, ym = null;
 
@@ -109,18 +112,21 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   //   Horizontal Axis
   // --------------------------------------------------------------------------
 
-
+  // Map schema values
   const dateTickMap = Object.fromEntries(schema.schema.xAxis.map((labels, idx) => [idx, labels]))
 
-  function formatDateTick(d, idx, arr) {
-    const label = dateTickMap[d.getUTCMonth()][initialLang]
-    return label ? `${label} ${d.getUTCFullYear()}` : '';
+  // Create a formatter for a given tick value with the given language
+  function formatDateTick(l) {
+    return (d, idx, arr) => {
+      const label = dateTickMap[d.getUTCMonth()][l]
+      return label ? `${label} ${d.getUTCFullYear()}` : '';
+    }
   }
 
   // Create the axis object
   const xAxis = d3.axisBottom(x)
     .ticks(width / 80)
-    .tickFormat(formatDateTick)
+    .tickFormat(formatDateTick(currentLang))
     .tickSize(0)
 
   // Add the axis to the graph
@@ -139,6 +145,25 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
 
   // Move labels down
   xAxisContainer.selectAll(".tick text").attr("y", 16);
+
+  // Update or refresh the x-axis
+  function refreshXAxis(transform) {
+    // Compute the scaled x-axis
+    const xZoom = transform.rescaleX(x);
+
+    // Update the labels
+    xAxisContainer.call(xAxis.scale( xZoom ));
+    xAxisContainer.selectAll(".tick text").attr("y", 16);
+  }
+
+  // When global language changes, update local state variable
+  document.addEventListener('change-settings', ({detail}) => {
+    if (detail.language) {
+      currentLang = detail.language;
+      xAxis.tickFormat(formatDateTick(currentLang));
+      refreshXAxis(currentTransform);
+    }
+  })
 
 
   // --------------------------------------------------------------------------
@@ -441,9 +466,8 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     // Compute the scaled x-axis
     const xZoom = transform.rescaleX(x);
 
-    // Update the x-axis labels
-    xAxisContainer.call(xAxis.scale( xZoom ));
-    xAxisContainer.selectAll(".tick text").attr("y", 16);
+    // Update the x-axis
+    refreshXAxis(transform);
 
     // Update the data paths
     paths.attr("d", (d) => {
