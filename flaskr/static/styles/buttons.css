@@ -17,6 +17,23 @@
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: var(--color-secondary-4);
   --bs-btn-disabled-border-color: var(--color-secondary-4);
+
+  transition:
+    color            .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color     .15s ease-in-out,
+    outline-color    .15s ease-in-out,
+    outline-width    .15s ease-in-out,
+    outline-offset   .15s ease-in-out,
+    box-shadow       .15s ease-in-out;
+
+  outline: 0px solid var(--bs-btn-border-color);
+  outline-offset: 0;
+}
+
+.badge.btn-custom:hover {
+  outline: 1px solid var(--bs-btn-hover-border-color);
+  outline-offset: 1px;
 }
 
 .btn-clear {
