@@ -60,6 +60,14 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
     .attr("viewBox", [0, 0, width, height])
     .style("font-size", "10px")
 
+  const defs = svg.append("defs")
+  defs.append("clipPath")
+    .attr("id", "graph-interests-plot-area-mask")
+    .style("pointer-events", "none")
+  .append("rect")
+    .attr("width",  plotWidth)
+    .attr("height", height)
+
 
   // --------------------------------------------------------------------------
   //   Scaling & Transform Objects
@@ -174,6 +182,10 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   yAxisContainer.selectAll(".tick text")
     .attr("x", -marginLeft + 5)
     .attr("text-anchor", "start")
+    .attr('stroke', 'white')
+    .attr('stroke-width', 8)
+    .attr('paint-order', "stroke")
+    .attr('stroke-linejoin', 'round')
 
 
   // --------------------------------------------------------------------------
@@ -196,6 +208,7 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .attr("transform", `translate(${ marginLeft }, 0)`)
+      .attr("clip-path", "url(#graph-interests-plot-area-mask)")
 
   // Add the individual paths
   const paths = pathsContainer.selectAll("path")
