@@ -264,6 +264,10 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   //   Vertical Line (Following Mouse)
   // --------------------------------------------------------------------------
 
+  function formatDateLabel(d) {
+    return d.toLocaleString('en-us', { month: 'long', year: 'numeric' });
+  }
+
   // Add vertical line that follows mouse
   const verticalLineContainer = svg.append('g')
   hideVerticalLine();
