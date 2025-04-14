@@ -25,6 +25,10 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   // Map dates to date objects
   data = data.map((d) => Object.assign(d, {'date': new Date(d['date'])}));
 
+  // Get values from config
+  const languages   = config.languages       ?? [];
+  const initialLang = config.initialLanguage ?? "en";
+
 
   // --------------------------------------------------------------------------
   //   Size Config
@@ -159,12 +163,8 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
   //   Vertical Axis
   // --------------------------------------------------------------------------
 
-  const yAxisLabels = {
-    0.5: 'Dormant',
-    2.0: 'Normal',
-    3.5: 'Moderate',
-    5.0: 'Obsessive',
-  }
+  // Read the y-axis labels from the schema, creating an object mapping y value to label object
+  const yAxisLabels = Object.fromEntries(schema.schema.yAxis.map(({value, label}) => [value, label]))
 
   // Create the axis object
   const yAxisContainer = svg.append("g")
@@ -173,19 +173,31 @@ export function graph_svg_interests(container, {schema, data}, config = {}) {
       .call(
         d3.axisLeft(y, 5)
           .ticks(10)
-          .tickFormat((d) => yAxisLabels[d])
+          .tickFormat((d) => (yAxisLabels[d] || {})[initialLang])
           .tickSize(0)
       )
       .call(g => g.select(".domain").remove())
 
   // Set axis label styling
-  yAxisContainer.selectAll(".tick text")
-    .attr("x", -marginLeft + 5)
-    .attr("text-anchor", "start")
-    .attr('stroke', 'white')
-    .attr('stroke-width', 8)
-    .attr('paint-order', "stroke")
-    .attr('stroke-linejoin', 'round')
+  yAxisContainer.selectAll(".tick")
+    .filter((d) => yAxisLabels[d])
+      .selectAll("text")
+      .data((d) => Object.keys(yAxisLabels[d] || {}).map(lang => {
+        return { lang, text: yAxisLabels[d][lang] };
+      }))
+      .join("text")
+        .attr("lang",      (d) => d.lang)
+        .attr("data-lang", (d) => d.lang)
+        .attr("class",     (d) => (d.lang === initialLang ? "" : "hide") + " label")
+        .attr('dominant-baseline', 'middle')
+        .text((d) => d.text)
+        .attr("x", -marginLeft + 5)
+        .attr("text-anchor", "start")
+        .attr('fill', "var(--color-off-black)")
+        .attr('stroke', 'white')
+        .attr('stroke-width', 8)
+        .attr('paint-order', "stroke")
+        .attr('stroke-linejoin', 'round')
 
 
   // --------------------------------------------------------------------------
